@@ -1,4 +1,4 @@
-import { loadExercise } from './exercise-loader.js';
+import {loadExercise} from './exercise-loader.js';
 
 function processData(data) {
     const exercises = [];
