@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+    <!-- Greek flag with 9 stripes (5 blue, 4 white) and blue canton -->
+
+    <!-- Blue canton -->
+    <rect x="0" y="0" width="11" height="11" fill="#0D5EAF"/>
+
+    <!-- White cross on canton -->
+    <rect x="4.5" y="0" width="2" height="11" fill="white"/>
+    <rect x="0" y="4.5" width="11" height="2" fill="white"/>
+
+    <!-- Stripes -->
+    <!-- Blue stripe 1 (top, partial due to canton) -->
+    <rect x="11" y="0" width="21" height="3.56" fill="#0D5EAF"/>
+
+    <!-- White stripe 1 -->
+    <rect x="0" y="3.56" width="32" height="3.56" fill="white"/>
+
+    <!-- Blue stripe 2 -->
+    <rect x="0" y="7.12" width="32" height="3.56" fill="#0D5EAF"/>
+
+    <!-- White stripe 2 -->
+    <rect x="0" y="10.68" width="32" height="3.56" fill="white"/>
+
+    <!-- Blue stripe 3 -->
+    <rect x="0" y="14.24" width="32" height="3.56" fill="#0D5EAF"/>
+
+    <!-- White stripe 3 -->
+    <rect x="0" y="17.8" width="32" height="3.56" fill="white"/>
+
+    <!-- Blue stripe 4 -->
+    <rect x="0" y="21.36" width="32" height="3.56" fill="#0D5EAF"/>
+
+    <!-- White stripe 4 -->
+    <rect x="0" y="24.92" width="32" height="3.56" fill="white"/>
+
+    <!-- Blue stripe 5 (bottom) -->
+    <rect x="0" y="28.48" width="32" height="3.52" fill="#0D5EAF"/>
+</svg>
