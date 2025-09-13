@@ -69,6 +69,12 @@ h1 {
     color: #666;
 }
 
+.language-note {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 10px;
+}
+
 .modules {
     text-align: center;
 }
