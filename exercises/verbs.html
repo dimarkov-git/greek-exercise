@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Εξάσκηση ρημάτων - Μάθε Ελληνικά</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <button onclick="window.location.href='../index.html'" class="btn-back">
+            ← Πίσω στο κύριο μενού
+        </button>
+        <h1>Εξάσκηση ρημάτων</h1>
+    </header>
+
+    <main>
+        <div class="exercise-container" id="exerciseContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+
+            <div class="exercise-content">
+                <div class="current-block">
+                    <p><strong id="currentBlock"></strong></p>
+                </div>
+
+                <div class="prompt">
+                    <h2 id="prompt"></h2>
+                </div>
+
+                <div class="input-section">
+                    <label for="userInput">
+                        <input type="text"
+                               id="userInput"
+                               class="answer-input"
+                               placeholder="Γράψτε την απάντηση"
+                               autocomplete="off">
+                    </label>
+                    <button id="submitBtn" class="btn-primary">Απάντηση</button>
+                </div>
+
+                <div id="correctAnswer" class="correct-answer hidden">
+                    <p>Σωστή απάντηση: <span id="correctForm"></span></p>
+                </div>
+
+            </div>
+
+            <div class="stats">
+                <span>Ερώτηση: <span id="currentQuestion"></span> / <span id="totalQuestions"></span></span>
+                <span>Σωστά: <span id="correctCount"></span></span>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../js/exercise-engine.js"></script>
+<script src="../js/verbs-exercise.js"></script>
+</body>
+</html>

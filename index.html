@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Μάθε Ελληνικά</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="language-selector">
+            <label for="languageSelect">
+                <select id="languageSelect" onchange="changeLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="ru">Русский</option>
+                </select>
+            </label>
+        </div>
+        <h1>Μάθε Ελληνικά</h1>
+        <p class="subtitle">Κατακτήστε την ελληνική γλώσσα μέσω διαδραστικών ασκήσεων</p>
+    </header>
+
+    <main>
+        <section class="modules">
+            <h2>Επιλέξτε Ενότητα</h2>
+            <div class="module-grid" id="module-grid">
+                <!-- Exercise cards will be dynamically loaded here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Μάθε Ελληνικά. Όλα τα δικαιώματα κατοχυρωμένα.</p>
+        <p>Από τον Ντένις με αγάπη</p>
+    </footer>
+</div>
+
+<script src="js/exercises.js"></script>
+<script>
+    // Language management
+    function getStoredLanguage() {
+        return localStorage.getItem('selectedLanguage') || 'en';
+    }
+
+    function setStoredLanguage(lang) {
+        localStorage.setItem('selectedLanguage', lang);
+    }
+
+    function changeLanguage(lang) {
+        setStoredLanguage(lang);
+        console.log('Language changed to:', lang);
+    }
+
+    // Initialize language selector on a page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedLang = getStoredLanguage();
+        const languageSelect = document.getElementById('languageSelect');
+        if (languageSelect) {
+            languageSelect.value = savedLang;
+        }
+    });
+</script>
+</body>
+</html>

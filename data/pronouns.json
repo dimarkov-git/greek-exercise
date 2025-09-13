@@ -1,0 +1,269 @@
+[
+  {
+    "name": "Προσωπικές Αντωνυμίες",
+    "nameI18n": {
+      "en": "Personal Pronouns",
+      "ru": "Личные местоимения"
+    },
+    "cases": [
+      {
+        "prompt": "1ο πρόσωπο ενικού (ονομαστική)",
+        "promptI18n": {
+          "en": "1st person singular (nominative)",
+          "ru": "1-е лицо ед.ч. (именительный)"
+        },
+        "correct": "εγώ"
+      },
+      {
+        "prompt": "2ο πρόσωπο ενικού (ονομαστική)",
+        "promptI18n": {
+          "en": "2nd person singular (nominative)",
+          "ru": "2-е лицо ед.ч. (именительный)"
+        },
+        "correct": "εσύ"
+      },
+      {
+        "prompt": "3ο πρόσωπο ενικού αρσενικό (ονομαστική)",
+        "promptI18n": {
+          "en": "3rd person singular masculine (nominative)",
+          "ru": "3-е лицо ед.ч., муж. (именительный)"
+        },
+        "correct": "αυτός"
+      },
+      {
+        "prompt": "3ο πρόσωπο ενικού θηλυκό (ονομαστική)",
+        "promptI18n": {
+          "en": "3rd person singular feminine (nominative)",
+          "ru": "3-е лицо ед.ч., жен. (именительный)"
+        },
+        "correct": "αυτή"
+      },
+      {
+        "prompt": "3ο πρόσωπο ενικού ουδέτερο (ονομαστική)",
+        "promptI18n": {
+          "en": "3rd person singular neuter (nominative)",
+          "ru": "3-е лицо ед.ч., ср. (именительный)"
+        },
+        "correct": "αυτό"
+      },
+      {
+        "prompt": "1ο πρόσωπο πληθυντικού (ονομαστική)",
+        "promptI18n": {
+          "en": "1st person plural (nominative)",
+          "ru": "1-е лицо мн.ч. (именительный)"
+        },
+        "correct": "εμείς"
+      },
+      {
+        "prompt": "2ο πρόσωπο πληθυντικού/ευγενείας (ονομαστική)",
+        "promptI18n": {
+          "en": "2nd person plural/polite (nominative)",
+          "ru": "2-е лицо мн.ч./вежл. (именительный)"
+        },
+        "correct": "εσείς"
+      },
+      {
+        "prompt": "3ο πρόσωπο πληθυντικού αρσενικό (ονομαστική)",
+        "promptI18n": {
+          "en": "3rd person plural masculine (nominative)",
+          "ru": "3-е лицо мн.ч., муж. (именительный)"
+        },
+        "correct": "αυτοί"
+      },
+      {
+        "prompt": "3ο πρόσωπο πληθυντικού θηλυκό (ονομαστική)",
+        "promptI18n": {
+          "en": "3rd person plural feminine (nominative)",
+          "ru": "3-е лицо мн.ч., жен. (именительный)"
+        },
+        "correct": "αυτές"
+      },
+      {
+        "prompt": "3ο πρόσωπο πληθυντικού ουδέτερο (ονομαστική)",
+        "promptI18n": {
+          "en": "3rd person plural neuter (nominative)",
+          "ru": "3-е лицо мн.ч., ср. (именительный)"
+        },
+        "correct": "αυτά"
+      }
+    ]
+  },
+  {
+    "name": "Κτητικές Αντωνυμίες",
+    "nameI18n": {
+      "en": "Possessive Pronouns",
+      "ru": "Притяжательные местоимения"
+    },
+    "cases": [
+      {
+        "prompt": "1ο πρόσωπο ενικού",
+        "promptI18n": {
+          "en": "1st person singular",
+          "ru": "1-е лицо ед.ч."
+        },
+        "correct": "μου"
+      },
+      {
+        "prompt": "2ο πρόσωπο ενικού",
+        "promptI18n": {
+          "en": "2nd person singular",
+          "ru": "2-е лицо ед.ч."
+        },
+        "correct": "σου"
+      },
+      {
+        "prompt": "3ο πρόσωπο ενικού αρσενικό",
+        "promptI18n": {
+          "en": "3rd person singular masculine",
+          "ru": "3-е лицо ед.ч., муж."
+        },
+        "correct": "του"
+      },
+      {
+        "prompt": "3ο πρόσωπο ενικού θηλυκό",
+        "promptI18n": {
+          "en": "3rd person singular feminine",
+          "ru": "3-е лицо ед.ч., жен."
+        },
+        "correct": "της"
+      },
+      {
+        "prompt": "3ο πρόσωπο ενικού ουδέτερο",
+        "promptI18n": {
+          "en": "3rd person singular neuter",
+          "ru": "3-е лицо ед.ч., ср."
+        },
+        "correct": "του"
+      },
+      {
+        "prompt": "1ο πρόσωπο πληθυντικού",
+        "promptI18n": {
+          "en": "1st person plural",
+          "ru": "1-е лицо мн.ч."
+        },
+        "correct": "μας"
+      },
+      {
+        "prompt": "2ο πρόσωπο πληθυντικού/ευγενείας",
+        "promptI18n": {
+          "en": "2nd person plural/polite",
+          "ru": "2-е лицо мн.ч./вежл."
+        },
+        "correct": "σας"
+      },
+      {
+        "prompt": "3ο πρόσωπο πληθυντικού",
+        "promptI18n": {
+          "en": "3rd person plural",
+          "ru": "3-е лицо мн.ч."
+        },
+        "correct": "τους"
+      }
+    ]
+  },
+  {
+    "name": "Δεικτικές Αντωνυμίες",
+    "nameI18n": {
+      "en": "Demonstrative Pronouns",
+      "ru": "Указательные местоимения"
+    },
+    "cases": [
+      {
+        "prompt": "Ενικός αρσενικό — αυτός",
+        "promptI18n": {
+          "en": "Singular masculine — this",
+          "ru": "Ед.ч. муж. — этот"
+        },
+        "correct": "αυτός"
+      },
+      {
+        "prompt": "Ενικός θηλυκό — αυτή",
+        "promptI18n": {
+          "en": "Singular feminine — this",
+          "ru": "Ед.ч. жен. — эта"
+        },
+        "correct": "αυτή"
+      },
+      {
+        "prompt": "Ενικός ουδέτερο — αυτό",
+        "promptI18n": {
+          "en": "Singular neuter — this",
+          "ru": "Ед.ч. ср. — это"
+        },
+        "correct": "αυτό"
+      },
+      {
+        "prompt": "Ενικός αρσενικό — εκείνος",
+        "promptI18n": {
+          "en": "Singular masculine — that",
+          "ru": "Ед.ч. муж. — тот"
+        },
+        "correct": "εκείνος"
+      },
+      {
+        "prompt": "Ενικός θηλυκό — εκείνη",
+        "promptI18n": {
+          "en": "Singular feminine — that",
+          "ru": "Ед.ч. жен. — та"
+        },
+        "correct": "εκείνη"
+      },
+      {
+        "prompt": "Ενικός ουδέτερο — εκείνο",
+        "promptI18n": {
+          "en": "Singular neuter — that",
+          "ru": "Ед.ч. ср. — то"
+        },
+        "correct": "εκείνο"
+      },
+      {
+        "prompt": "Πληθυντικός αρσενικό — αυτοί",
+        "promptI18n": {
+          "en": "Plural masculine — these",
+          "ru": "Мн.ч. муж. — эти"
+        },
+        "correct": "αυτοί"
+      },
+      {
+        "prompt": "Πληθυντικός θηλυκό — αυτές",
+        "promptI18n": {
+          "en": "Plural feminine — these",
+          "ru": "Мн.ч. жен. — эти"
+        },
+        "correct": "αυτές"
+      },
+      {
+        "prompt": "Πληθυντικός ουδέτερο — αυτά",
+        "promptI18n": {
+          "en": "Plural neuter — these",
+          "ru": "Мн.ч. ср. — эти"
+        },
+        "correct": "αυτά"
+      },
+      {
+        "prompt": "Πληθυντικός αρσενικό — εκείνοι",
+        "promptI18n": {
+          "en": "Plural masculine — those",
+          "ru": "Мн.ч. муж. — те"
+        },
+        "correct": "εκείνοι"
+      },
+      {
+        "prompt": "Πληθυντικός θηλυκό — εκείνες",
+        "promptI18n": {
+          "en": "Plural feminine — those",
+          "ru": "Мн.ч. жен. — те"
+        },
+        "correct": "εκείνες"
+      },
+      {
+        "prompt": "Πληθυντικός ουδέτερο — εκείνα",
+        "promptI18n": {
+          "en": "Plural neuter — those",
+          "ru": "Мн.ч. ср. — те"
+        },
+        "correct": "εκείνα"
+      }
+    ]
+  }
+]
