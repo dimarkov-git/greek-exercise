@@ -1,0 +1,42 @@
+[
+  {
+    "id": "pronouns",
+    "title": "Εξάσκηση αντωνυμιών",
+    "titleI18n": {
+      "en": "Pronouns practice",
+      "ru": "Практика местоимений"
+    },
+    "description": "Μάθετε τις ελληνικές αντωνυμίες",
+    "descriptionI18n": {
+      "en": "Learn Greek pronouns",
+      "ru": "Изучите греческие местоимения"
+    },
+    "buttonText": "Ξεκινήστε την άσκηση",
+    "buttonTextI18n": {
+      "en": "Start exercise",
+      "ru": "Начать упражнение"
+    },
+    "url": "exercises/pronouns.html",
+    "enabled": true
+  },
+  {
+    "id": "verbs",
+    "title": "Εξάσκηση ρημάτων",
+    "titleI18n": {
+      "en": "Verbs practice",
+      "ru": "Практика глаголов"
+    },
+    "description": "Κατακτήστε την κλίση βασικών ελληνικών ρημάτων",
+    "descriptionI18n": {
+      "en": "Master conjugation of basic Greek verbs",
+      "ru": "Освойте спряжение основных греческих глаголов"
+    },
+    "buttonText": "Ξεκινήστε την άσκηση",
+    "buttonTextI18n": {
+      "en": "Start exercise",
+      "ru": "Начать упражнение"
+    },
+    "url": "exercises/verbs.html",
+    "enabled": true
+  }
+]

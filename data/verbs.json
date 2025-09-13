@@ -1,0 +1,1427 @@
+[
+  {
+    "name": "είμαι",
+    "nameI18n": {
+      "en": "to be",
+      "ru": "быть"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I am",
+          "ru": "я есть"
+        },
+        "correct": "είμαι"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you are (singular)",
+          "ru": "ты есть"
+        },
+        "correct": "είσαι"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it is",
+          "ru": "он/она/оно есть"
+        },
+        "correct": "είναι"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we are",
+          "ru": "мы есть"
+        },
+        "correct": "είμαστε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you are (plural)",
+          "ru": "вы есть (мн.ч.)"
+        },
+        "correct": "είστε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they are",
+          "ru": "они есть"
+        },
+        "correct": "είναι"
+      }
+    ]
+  },
+  {
+    "name": "έχω",
+    "nameI18n": {
+      "en": "to have",
+      "ru": "иметь"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I have",
+          "ru": "я имею"
+        },
+        "correct": "έχω"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you have (singular)",
+          "ru": "ты имеешь"
+        },
+        "correct": "έχεις"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it has",
+          "ru": "он/она/оно имеет"
+        },
+        "correct": "έχει"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we have",
+          "ru": "мы имеем"
+        },
+        "correct": "έχουμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you have (plural)",
+          "ru": "вы имеете (мн.ч.)"
+        },
+        "correct": "έχετε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they have",
+          "ru": "они имеют"
+        },
+        "correct": "έχουν"
+      }
+    ]
+  },
+  {
+    "name": "είμαι (Μέλλοντας)",
+    "nameI18n": {
+      "en": "to be (future)",
+      "ru": "быть (будущее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I will be",
+          "ru": "я буду"
+        },
+        "correct": "θα είμαι"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you will be",
+          "ru": "ты будешь"
+        },
+        "correct": "θα είσαι"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it will be",
+          "ru": "он/она/оно будет"
+        },
+        "correct": "θα είναι"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we will be",
+          "ru": "мы будем"
+        },
+        "correct": "θα είμαστε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you will be (plural)",
+          "ru": "вы будете (мн.ч.)"
+        },
+        "correct": "θα είστε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they will be",
+          "ru": "они будут"
+        },
+        "correct": "θα είναι"
+      }
+    ]
+  },
+  {
+    "name": "είμαι (Αόριστος)",
+    "nameI18n": {
+      "en": "to be (past)",
+      "ru": "быть (прошедшее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I was",
+          "ru": "я был"
+        },
+        "correct": "ήμουν"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you were",
+          "ru": "ты был"
+        },
+        "correct": "ήσουν"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it was",
+          "ru": "он/она/оно был/была/было"
+        },
+        "correct": "ήταν"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we were",
+          "ru": "мы были"
+        },
+        "correct": "ήμασταν"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you were (plural)",
+          "ru": "вы были (мн.ч.)"
+        },
+        "correct": "ήσασταν"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they were",
+          "ru": "они были"
+        },
+        "correct": "ήταν"
+      }
+    ]
+  },
+  {
+    "name": "έχω (Μέλλοντας)",
+    "nameI18n": {
+      "en": "to have (future)",
+      "ru": "иметь (будущее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I will have",
+          "ru": "я буду иметь"
+        },
+        "correct": "θα έχω"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you will have",
+          "ru": "ты будешь иметь"
+        },
+        "correct": "θα έχεις"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it will have",
+          "ru": "он/она/оно будет иметь"
+        },
+        "correct": "θα έχει"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we will have",
+          "ru": "мы будем иметь"
+        },
+        "correct": "θα έχουμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you will have (plural)",
+          "ru": "вы будете иметь (мн.ч.)"
+        },
+        "correct": "θα έχετε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they will have",
+          "ru": "они будут иметь"
+        },
+        "correct": "θα έχουν"
+      }
+    ]
+  },
+  {
+    "name": "έχω (Αόριστος)",
+    "nameI18n": {
+      "en": "to have (past)",
+      "ru": "иметь (прошедшее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I had",
+          "ru": "я имел"
+        },
+        "correct": "είχα"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you had",
+          "ru": "ты имел"
+        },
+        "correct": "είχες"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it had",
+          "ru": "он/она/оно имел/имела/имело"
+        },
+        "correct": "είχε"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we had",
+          "ru": "мы имели"
+        },
+        "correct": "είχαμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you had (plural)",
+          "ru": "вы имели (мн.ч.)"
+        },
+        "correct": "είχατε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they had",
+          "ru": "они имели"
+        },
+        "correct": "είχαν"
+      }
+    ]
+  },
+  {
+    "name": "διαβάζω (Ενεστώτας)",
+    "nameI18n": {
+      "en": "to read (present)",
+      "ru": "читать (настоящее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I read",
+          "ru": "я читаю"
+        },
+        "correct": "διαβάζω"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you read",
+          "ru": "ты читаешь"
+        },
+        "correct": "διαβάζεις"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it reads",
+          "ru": "он/она/оно читает"
+        },
+        "correct": "διαβάζει"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we read",
+          "ru": "мы читаем"
+        },
+        "correct": "διαβάζουμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you read (plural)",
+          "ru": "вы читаете (мн.ч.)"
+        },
+        "correct": "διαβάζετε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they read",
+          "ru": "они читают"
+        },
+        "correct": "διαβάζουν"
+      }
+    ]
+  },
+  {
+    "name": "μιλάω (Ενεστώτας)",
+    "nameI18n": {
+      "en": "to speak (present)",
+      "ru": "говорить (настоящее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I speak",
+          "ru": "я говорю"
+        },
+        "correct": "μιλάω"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you speak",
+          "ru": "ты говоришь"
+        },
+        "correct": "μιλάς"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it speaks",
+          "ru": "он/она/оно говорит"
+        },
+        "correct": "μιλάει"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we speak",
+          "ru": "мы говорим"
+        },
+        "correct": "μιλάμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you speak (plural)",
+          "ru": "вы говорите (мн.ч.)"
+        },
+        "correct": "μιλάτε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they speak",
+          "ru": "они говорят"
+        },
+        "correct": "μιλάν"
+      }
+    ]
+  },
+  {
+    "name": "μπορώ (Ενεστώτας)",
+    "nameI18n": {
+      "en": "can (present)",
+      "ru": "мочь (настоящее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I can",
+          "ru": "я могу"
+        },
+        "correct": "μπορώ"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you can",
+          "ru": "ты можешь"
+        },
+        "correct": "μπορείς"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it can",
+          "ru": "он/она/оно может"
+        },
+        "correct": "μπορεί"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we can",
+          "ru": "мы можем"
+        },
+        "correct": "μπορούμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you can (plural)",
+          "ru": "вы можете (мн.ч.)"
+        },
+        "correct": "μπορείτε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they can",
+          "ru": "они могут"
+        },
+        "correct": "μπορούν"
+      }
+    ]
+  },
+  {
+    "name": "ακούω (Ενεστώτας)",
+    "nameI18n": {
+      "en": "to hear (present)",
+      "ru": "слышать (настоящее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I hear",
+          "ru": "я слышу"
+        },
+        "correct": "ακούω"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you hear",
+          "ru": "ты слышишь"
+        },
+        "correct": "ακούς"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it hears",
+          "ru": "он/она/оно слышит"
+        },
+        "correct": "ακούει"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we hear",
+          "ru": "мы слышим"
+        },
+        "correct": "ακούμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you hear (plural)",
+          "ru": "вы слышите (мн.ч.)"
+        },
+        "correct": "ακούτε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they hear",
+          "ru": "они слышат"
+        },
+        "correct": "ακούν"
+      }
+    ]
+  },
+  {
+    "name": "ντύνομαι (Ενεστώτας)",
+    "nameI18n": {
+      "en": "to get dressed (present)",
+      "ru": "одеваться (настоящее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I get dressed",
+          "ru": "я одеваюсь"
+        },
+        "correct": "ντύνομαι"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you get dressed",
+          "ru": "ты одеваешься"
+        },
+        "correct": "ντύνεσαι"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it gets dressed",
+          "ru": "он/она/оно одевается"
+        },
+        "correct": "ντύνεται"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we get dressed",
+          "ru": "мы одеваемся"
+        },
+        "correct": "ντυνόμαστε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you get dressed (plural)",
+          "ru": "вы одеваетесь (мн.ч.)"
+        },
+        "correct": "ντύνεστε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they get dressed",
+          "ru": "они одеваются"
+        },
+        "correct": "ντύνονται"
+      }
+    ]
+  },
+  {
+    "name": "κοιμάμαι (Ενεστώτας)",
+    "nameI18n": {
+      "en": "to sleep (present)",
+      "ru": "спать (настоящее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I sleep",
+          "ru": "я сплю"
+        },
+        "correct": "κοιμάμαι"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you sleep",
+          "ru": "ты спишь"
+        },
+        "correct": "κοιμάσαι"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it sleeps",
+          "ru": "он/она/оно спит"
+        },
+        "correct": "κοιμάται"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we sleep",
+          "ru": "мы спим"
+        },
+        "correct": "κοιμόμαστε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you sleep (plural)",
+          "ru": "вы спите (мн.ч.)"
+        },
+        "correct": "κοιμάστε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they sleep",
+          "ru": "они спят"
+        },
+        "correct": "κοιμούνται"
+      }
+    ]
+  },
+  {
+    "name": "διαβάζω (Μέλλοντας)",
+    "nameI18n": {
+      "en": "to read (future)",
+      "ru": "читать (будущее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I will read",
+          "ru": "я прочитаю"
+        },
+        "correct": "θα διαβάσω"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you will read",
+          "ru": "ты прочитаешь"
+        },
+        "correct": "θα διαβάσεις"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it will read",
+          "ru": "он/она/оно прочитает"
+        },
+        "correct": "θα διαβάσει"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we will read",
+          "ru": "мы прочитаем"
+        },
+        "correct": "θα διαβάσουμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you will read (plural)",
+          "ru": "вы прочитаете (мн.ч.)"
+        },
+        "correct": "θα διαβάσετε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they will read",
+          "ru": "они прочитают"
+        },
+        "correct": "θα διαβάσουν"
+      }
+    ]
+  },
+  {
+    "name": "μιλάω (Μέλλοντας)",
+    "nameI18n": {
+      "en": "to speak (future)",
+      "ru": "говорить (будущее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I will speak",
+          "ru": "я поговорю"
+        },
+        "correct": "θα μιλήσω"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you will speak",
+          "ru": "ты поговоришь"
+        },
+        "correct": "θα μιλήσεις"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it will speak",
+          "ru": "он/она/оно поговорит"
+        },
+        "correct": "θα μιλήσει"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we will speak",
+          "ru": "мы поговорим"
+        },
+        "correct": "θα μιλήσουμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you will speak (plural)",
+          "ru": "вы поговорите (мн.ч.)"
+        },
+        "correct": "θα μιλήσετε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they will speak",
+          "ru": "они поговорят"
+        },
+        "correct": "θα μιλήσουν"
+      }
+    ]
+  },
+  {
+    "name": "μπορώ (Μέλλοντας)",
+    "nameI18n": {
+      "en": "can (future)",
+      "ru": "мочь (будущее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I will be able to",
+          "ru": "я смогу"
+        },
+        "correct": "θα μπορέσω"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you will be able to",
+          "ru": "ты сможешь"
+        },
+        "correct": "θα μπορέσεις"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it will be able to",
+          "ru": "он/она/оно сможет"
+        },
+        "correct": "θα μπορέσει"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we will be able to",
+          "ru": "мы сможем"
+        },
+        "correct": "θα μπορέσουμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you will be able to (plural)",
+          "ru": "вы сможете (мн.ч.)"
+        },
+        "correct": "θα μπορέσετε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they will be able to",
+          "ru": "они смогут"
+        },
+        "correct": "θα μπορέσουν"
+      }
+    ]
+  },
+  {
+    "name": "ακούω (Μέλλοντας)",
+    "nameI18n": {
+      "en": "to hear (future)",
+      "ru": "слышать (будущее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I will hear",
+          "ru": "я услышу"
+        },
+        "correct": "θα ακούσω"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you will hear",
+          "ru": "ты услышишь"
+        },
+        "correct": "θα ακούσεις"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it will hear",
+          "ru": "он/она/оно услышит"
+        },
+        "correct": "θα ακούσει"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we will hear",
+          "ru": "мы услышим"
+        },
+        "correct": "θα ακούσουμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you will hear (plural)",
+          "ru": "вы услышите (мн.ч.)"
+        },
+        "correct": "θα ακούσετε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they will hear",
+          "ru": "они услышат"
+        },
+        "correct": "θα ακούσουν"
+      }
+    ]
+  },
+  {
+    "name": "ντύνομαι (Μέλλοντας)",
+    "nameI18n": {
+      "en": "to get dressed (future)",
+      "ru": "одеться (будущее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I will get dressed",
+          "ru": "я оденусь"
+        },
+        "correct": "θα ντυθώ"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you will get dressed",
+          "ru": "ты оденешься"
+        },
+        "correct": "θα ντυθείς"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it will get dressed",
+          "ru": "он/она/оно оденется"
+        },
+        "correct": "θα ντυθεί"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we will get dressed",
+          "ru": "мы оденемся"
+        },
+        "correct": "θα ντυθούμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you will get dressed (plural)",
+          "ru": "вы оденетесь (мн.ч.)"
+        },
+        "correct": "θα ντυθείτε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they will get dressed",
+          "ru": "они оденутся"
+        },
+        "correct": "θα ντυθούν"
+      }
+    ]
+  },
+  {
+    "name": "κοιμάμαι (Μέλλοντας)",
+    "nameI18n": {
+      "en": "to sleep (future)",
+      "ru": "спать (будущее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I will sleep",
+          "ru": "я засну"
+        },
+        "correct": "θα κοιμηθώ"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you will sleep",
+          "ru": "ты заснёшь"
+        },
+        "correct": "θα κοιμηθείς"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it will sleep",
+          "ru": "он/она/оно заснёт"
+        },
+        "correct": "θα κοιμηθεί"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we will sleep",
+          "ru": "мы заснём"
+        },
+        "correct": "θα κοιμηθούμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you will sleep (plural)",
+          "ru": "вы заснёте (мн.ч.)"
+        },
+        "correct": "θα κοιμηθείτε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they will sleep",
+          "ru": "они заснут"
+        },
+        "correct": "θα κοιμηθούν"
+      }
+    ]
+  },
+  {
+    "name": "διαβάζω (Αόριστος)",
+    "nameI18n": {
+      "en": "to read (past)",
+      "ru": "читать (прошедшее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I read (past)",
+          "ru": "я прочитал"
+        },
+        "correct": "διάβασα"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you read (past)",
+          "ru": "ты прочитал"
+        },
+        "correct": "διάβασες"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it read (past)",
+          "ru": "он/она/оно прочитал(а)"
+        },
+        "correct": "διάβασε"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we read (past)",
+          "ru": "мы прочитали"
+        },
+        "correct": "διαβάσαμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you read (past plural)",
+          "ru": "вы прочитали (мн.ч.)"
+        },
+        "correct": "διαβάσατε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they read (past)",
+          "ru": "они прочитали"
+        },
+        "correct": "διάβασαν"
+      }
+    ]
+  },
+  {
+    "name": "εκλέγω (Αόριστος)",
+    "nameI18n": {
+      "en": "to choose (past)",
+      "ru": "выбирать (прошедшее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I chose",
+          "ru": "я выбрал"
+        },
+        "correct": "έκλεισα"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you chose",
+          "ru": "ты выбрал"
+        },
+        "correct": "έκλεισες"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it chose",
+          "ru": "он/она/оно выбрал(а)"
+        },
+        "correct": "έκλεισε"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we chose",
+          "ru": "мы выбрали"
+        },
+        "correct": "κλείσαμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you chose (plural)",
+          "ru": "вы выбрали (мн.ч.)"
+        },
+        "correct": "κλείσατε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they chose",
+          "ru": "они выбрали"
+        },
+        "correct": "έκλεισαν"
+      }
+    ]
+  },
+  {
+    "name": "μιλάω (Αόριστος)",
+    "nameI18n": {
+      "en": "to speak (past)",
+      "ru": "говорить (прошедшее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I spoke",
+          "ru": "я говорил"
+        },
+        "correct": "μίλησα"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you spoke",
+          "ru": "ты говорил"
+        },
+        "correct": "μίλησες"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it spoke",
+          "ru": "он/она/оно говорил(а)"
+        },
+        "correct": "μίλησε"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we spoke",
+          "ru": "мы говорили"
+        },
+        "correct": "μιλήσαμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you spoke (plural)",
+          "ru": "вы говорили (мн.ч.)"
+        },
+        "correct": "μιλήσατε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they spoke",
+          "ru": "они говорили"
+        },
+        "correct": "μίλησαν"
+      }
+    ]
+  },
+  {
+    "name": "μπορώ (Αόριστος)",
+    "nameI18n": {
+      "en": "can (past)",
+      "ru": "мочь (прошедшее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I could",
+          "ru": "я смог"
+        },
+        "correct": "μπόρεσα"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you could",
+          "ru": "ты смог"
+        },
+        "correct": "μπόρεσες"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it could",
+          "ru": "он/она/оно смог(ла)"
+        },
+        "correct": "μπόρεσε"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we could",
+          "ru": "мы смогли"
+        },
+        "correct": "μπορέσαμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you could (plural)",
+          "ru": "вы смогли (мн.ч.)"
+        },
+        "correct": "μπορέσατε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they could",
+          "ru": "они смогли"
+        },
+        "correct": "μπόρεσαν"
+      }
+    ]
+  },
+  {
+    "name": "ακούω (Αόριστος)",
+    "nameI18n": {
+      "en": "to hear (past)",
+      "ru": "слышать (прошедшее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I heard",
+          "ru": "я услышал"
+        },
+        "correct": "άκουσα"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you heard",
+          "ru": "ты услышал"
+        },
+        "correct": "άκουσες"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it heard",
+          "ru": "он/она/оно услышал(а)"
+        },
+        "correct": "άκουσε"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we heard",
+          "ru": "мы услышали"
+        },
+        "correct": "ακούσαμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you heard (plural)",
+          "ru": "вы услышали (мн.ч.)"
+        },
+        "correct": "ακούσατε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they heard",
+          "ru": "они услышали"
+        },
+        "correct": "άκουσαν"
+      }
+    ]
+  },
+  {
+    "name": "ντύνομαι (Αόριστος)",
+    "nameI18n": {
+      "en": "to get dressed (past)",
+      "ru": "одеться (прошедшее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I got dressed",
+          "ru": "я оделся"
+        },
+        "correct": "ντύθηκα"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you got dressed",
+          "ru": "ты оделся"
+        },
+        "correct": "ντύθηκες"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it got dressed",
+          "ru": "он/она/оно оделся/оделась"
+        },
+        "correct": "ντύθηκε"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we got dressed",
+          "ru": "мы оделись"
+        },
+        "correct": "ντυθήκαμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you got dressed (plural)",
+          "ru": "вы оделись (мн.ч.)"
+        },
+        "correct": "ντυθήκατε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they got dressed",
+          "ru": "они оделись"
+        },
+        "correct": "ντύθηκαν"
+      }
+    ]
+  },
+  {
+    "name": "κοιμάμαι (Αόριστος)",
+    "nameI18n": {
+      "en": "to sleep (past)",
+      "ru": "спать (прошедшее)"
+    },
+    "cases": [
+      {
+        "prompt": "εγώ",
+        "promptI18n": {
+          "en": "I slept",
+          "ru": "я уснул"
+        },
+        "correct": "κοιμήθηκα"
+      },
+      {
+        "prompt": "εσύ",
+        "promptI18n": {
+          "en": "you slept",
+          "ru": "ты уснул"
+        },
+        "correct": "κοιμήθηκες"
+      },
+      {
+        "prompt": "αυτός/αυτή/αυτό",
+        "promptI18n": {
+          "en": "he/she/it slept",
+          "ru": "он/она/оно уснул(а)"
+        },
+        "correct": "κοιμήθηκε"
+      },
+      {
+        "prompt": "εμείς",
+        "promptI18n": {
+          "en": "we slept",
+          "ru": "мы уснули"
+        },
+        "correct": "κοιμηθήκαμε"
+      },
+      {
+        "prompt": "εσείς",
+        "promptI18n": {
+          "en": "you slept (plural)",
+          "ru": "вы уснули (мн.ч.)"
+        },
+        "correct": "κοιμηθήκατε"
+      },
+      {
+        "prompt": "αυτοί/αυτές/αυτά",
+        "promptI18n": {
+          "en": "they slept",
+          "ru": "они уснули"
+        },
+        "correct": "κοιμήθηκαν"
+      }
+    ]
+  }
+]
