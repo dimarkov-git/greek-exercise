@@ -83,3 +83,16 @@ To run the project locally:
 1. Open `index.html` in a web browser
 2. No build process or dependencies are required
 3. All exercises work offline once loaded
+
+## Deployment
+
+Every push to `main` automatically deploys the site to GitHub Pages. During the
+workflow run the [`scripts/versionize.sh`](scripts/versionize.sh) script appends
+the current commit's short hash as a `?v=<hash>` query string to all local
+`.css` and `.js` references in the HTML files so browsers always fetch the
+latest assets.
+
+The workflow publishes the directory indicated by the `PUBLISH_DIR` environment
+variable (default: repository root). If your site lives in a different
+subdirectory, edit `.github/workflows/pages.yml` and change `PUBLISH_DIR` to the
+folder you want to publish.
