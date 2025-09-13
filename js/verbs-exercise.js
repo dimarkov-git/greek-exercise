@@ -1,17 +1,4 @@
-const dataFile = '../data/verbs.json';
-
-async function loadPronounData() {
-    try {
-        const response = await fetch(dataFile);
-        if (!response.ok) {
-            throw new Error(`Failed to load data: ${response.status}`);
-        }
-        return await response.json();
-    } catch (error) {
-        console.error('Error loading data:', error);
-        return [];
-    }
-}
+import { loadExercise } from './exercise-loader.js';
 
 function processData(data) {
     const exercises = [];
@@ -29,12 +16,4 @@ function processData(data) {
     return exercises;
 }
 
-let exerciseEngine;
-
-document.addEventListener('DOMContentLoaded', async () => {
-    const language = localStorage.getItem('selectedLanguage') || 'en';
-
-    const pronounData = await loadPronounData();
-    exerciseEngine = new ExerciseEngine(pronounData, processData, language);
-    exerciseEngine.start();
-});
+loadExercise('../data/verbs.json', processData);
