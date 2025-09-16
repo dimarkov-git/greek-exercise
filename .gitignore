@@ -1,5 +1,29 @@
-node_modules
+# OS specific files
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# environment
+.env
+
+# IDE specific files
+/.idea
+/.vscode
+
+# LLM
+.claude
+CLAUDE.md
+
+# develop notes
+/.notes
+
+# runtime files
+/.runtime
+
+# dependensies
+node_modules
+
+# provided by template
 dist
 dist-ssr
 *.local
@@ -9,7 +33,3 @@ coverage
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-
-# LLM
-.claude
-CLAUDE.md
