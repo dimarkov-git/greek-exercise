@@ -3,3 +3,19 @@
 @theme {
 	--font-sans: Inter, sans-serif;
 }
+
+/* Dark theme support */
+:root {
+	color-scheme: light dark;
+}
+
+[data-theme="light"] {
+	color-scheme: light;
+}
+
+[data-theme="dark"] {
+	color-scheme: dark;
+}
+
+/* Configure Tailwind dark mode to use data-theme attribute */
+@variant dark ([data-theme="dark"] &);
