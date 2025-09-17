@@ -1,6 +1,6 @@
 # Getting started guide
 
-This guide will help you set up the development environment for the project.
+This guide will help you set up the development environment for **Learn Greek** application.
 
 ## 📋 Prerequisites
 
@@ -130,16 +130,19 @@ pnpm validate     # Run lint + test:ci + test:e2e:ci
 ### File structure overview
 
 ```
-greek-exercise/
-├── docs/                 # Documentation (English only)
-├── .notes/              # Personal notes (Russian OK, git-ignored)
+learn-greek/
+├── docs/                # Documentation
+├── .notes/              # Personal notes
 ├── src/                 # Source code
-│   ├── components/      # React components
-│   ├── pages/           # Page components
-│   ├── api/             # API functions
-│   ├── mocks/           # MSW mocks for development
-│   └── utils/           # Utilities and hooks
-├── tests/               # E2E tests
+│   ├── components/      # React components (UI, layout)
+│   ├── pages/           # Page components (HomePage, ExerciseLibrary, ExerciseBuilder)
+│   ├── api/             # API functions (translation system)
+│   ├── hooks/           # Custom hooks (useI18n)
+│   ├── stores/          # Zustand stores (settings)
+│   ├── contexts/        # React contexts (LanguageContext)
+│   ├── types/           # TypeScript definitions
+│   └── mocks/           # MSW mocks for translation API
+├── tests/               # E2E tests (Playwright)
 └── public/              # Static assets
 ```
 
@@ -225,7 +228,8 @@ npx playwright install
 ## 💡 Tips for backend developers
 
 - **Components are like functions**: Take props as input, return JSX as output
-- **State management**: Use React Query for server state, useState for local UI state
+- **State management**: Use TanStack Query for server state (translations), Zustand for client state (settings)
+- **i18n System**: JSON-based translations loaded via API endpoints with MSW mocking
 - **Styling**: Tailwind uses utility classes instead of writing custom CSS
 - **Testing**: Jest-like syntax with Vitest, but for React components
 - **Hot reload**: Save any file and see changes instantly in browser

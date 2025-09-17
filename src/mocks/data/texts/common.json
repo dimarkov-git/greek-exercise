@@ -1,0 +1,31 @@
+{
+	"navigation": {
+		"home": "navigation.home",
+		"library": "navigation.library",
+		"builder": "navigation.builder",
+		"profile": "navigation.profile"
+	},
+	"buttons": {
+		"start": "buttons.start",
+		"continue": "buttons.continue",
+		"next": "buttons.next",
+		"back": "buttons.back",
+		"save": "buttons.save",
+		"cancel": "buttons.cancel",
+		"edit": "buttons.edit",
+		"delete": "buttons.delete",
+		"create": "buttons.create"
+	},
+	"forms": {
+		"required": "forms.required",
+		"invalid": "forms.invalid",
+		"saved": "forms.saved",
+		"loading": "forms.loading"
+	},
+	"messages": {
+		"welcome": "messages.welcome",
+		"error": "messages.error",
+		"success": "messages.success",
+		"noData": "messages.noData"
+	}
+}

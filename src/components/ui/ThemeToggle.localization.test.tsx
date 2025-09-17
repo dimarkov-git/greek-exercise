@@ -9,6 +9,16 @@ vi.mock('@/stores/settings', () => ({
 	useSettingsStore: vi.fn()
 }))
 
+// Mock the i18n hook
+const mockT = vi.fn()
+vi.mock('@/hooks/useI18n', () => ({
+	useI18n: () => ({
+		t: mockT,
+		currentLanguage: 'el',
+		isLoading: false
+	})
+}))
+
 const mockUseSettingsStore = vi.mocked(useSettingsStore)
 
 describe('ThemeToggle localization', () => {
@@ -18,13 +28,22 @@ describe('ThemeToggle localization', () => {
 	})
 
 	it('shows correct Greek tooltips', () => {
+		mockT.mockImplementation((key: string) => {
+			const translations: Record<string, string> = {
+				lightTheme: 'Ανοιχτό',
+				darkTheme: 'Σκοτεινό'
+			}
+			return translations[key] || key
+		})
+
 		mockUseSettingsStore.mockReturnValue({
 			theme: 'light',
 			setTheme: mockSetTheme,
 			uiLanguage: 'el',
 			userLanguage: 'el',
 			setUiLanguage: vi.fn(),
-			setUserLanguage: vi.fn()
+			setUserLanguage: vi.fn(),
+			resetSettings: vi.fn()
 		})
 
 		render(<ThemeToggle />)
@@ -33,13 +52,22 @@ describe('ThemeToggle localization', () => {
 	})
 
 	it('shows correct Russian tooltips', () => {
+		mockT.mockImplementation((key: string) => {
+			const translations: Record<string, string> = {
+				lightTheme: 'Светлая',
+				darkTheme: 'Темная'
+			}
+			return translations[key] || key
+		})
+
 		mockUseSettingsStore.mockReturnValue({
 			theme: 'dark',
 			setTheme: mockSetTheme,
 			uiLanguage: 'ru',
 			userLanguage: 'ru',
 			setUiLanguage: vi.fn(),
-			setUserLanguage: vi.fn()
+			setUserLanguage: vi.fn(),
+			resetSettings: vi.fn()
 		})
 
 		render(<ThemeToggle />)

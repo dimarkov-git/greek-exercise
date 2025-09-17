@@ -9,6 +9,21 @@ vi.mock('@/stores/settings', () => ({
 	useSettingsStore: vi.fn()
 }))
 
+// Mock the i18n hook
+vi.mock('@/hooks/useI18n', () => ({
+	useI18n: () => ({
+		t: (key: string) => {
+			const translations: Record<string, string> = {
+				lightTheme: 'Light',
+				darkTheme: 'Dark'
+			}
+			return translations[key] || key
+		},
+		currentLanguage: 'en',
+		isLoading: false
+	})
+}))
+
 const mockUseSettingsStore = vi.mocked(useSettingsStore)
 
 describe('ThemeToggle rendering', () => {
@@ -24,7 +39,8 @@ describe('ThemeToggle rendering', () => {
 			uiLanguage: 'en',
 			userLanguage: 'en',
 			setUiLanguage: vi.fn(),
-			setUserLanguage: vi.fn()
+			setUserLanguage: vi.fn(),
+			resetSettings: vi.fn()
 		})
 
 		render(<ThemeToggle />)
@@ -42,7 +58,8 @@ describe('ThemeToggle rendering', () => {
 			uiLanguage: 'en',
 			userLanguage: 'en',
 			setUiLanguage: vi.fn(),
-			setUserLanguage: vi.fn()
+			setUserLanguage: vi.fn(),
+			resetSettings: vi.fn()
 		})
 
 		render(<ThemeToggle />)

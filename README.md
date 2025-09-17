@@ -1,16 +1,20 @@
-# Greek exercise
+# Learn Greek
 
-A language learning single-page application focused on Greek language exercises and practice.
+**Learn Greek** is an interactive language learning application focused on Greek language exercises and practice.
 
 ## Features
 
-- Interactive language learning exercises
-- Modern React-based user interface with responsive design
-- Built with [Vite 6](https://vitejs.dev), [React 19](https://reactjs.org), and [TypeScript 5](https://www.typescriptlang.org)
-- [Tailwind CSS v4](https://tailwindcss.com) for styling
-- [Biome V2](https://next.biomejs.dev) for linting, formatting and automatic import sorting
-- Comprehensive testing with [Vitest 3](https://vitest.dev/) and [Testing Library 16](https://testing-library.com/)
-- End-to-end testing with [Playwright 1.52](https://playwright.dev)
+- **📚 Exercise library** - Interactive language learning exercises
+- **🌍 Multilingual interface** - Greek, Russian, and English UI support
+- **🌓 Theme support** - Light and dark mode switching
+- **💾 Persistent settings** - User preferences saved locally
+- **🔄 Real-time language switching** - Instant interface language changes
+- **📱 Responsive design** - Modern React-based user interface
+- **🚀 Modern tech stack** - Built with [Vite 7](https://vitejs.dev), [React 19](https://reactjs.org), [TypeScript 5](https://www.typescriptlang.org)
+- **🎨 Tailwind CSS v4** - Modern styling framework
+- **📊 TanStack query** - Efficient data fetching and caching
+- **🛠️ Development tools** - [Biome V2](https://next.biomejs.dev) for linting and formatting
+- **🧪 Comprehensive testing** - [Vitest 3](https://vitest.dev/) + [Testing Library 16](https://testing-library.com/) + [Playwright](https://playwright.dev)
 
 ## Getting started
 

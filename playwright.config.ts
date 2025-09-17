@@ -14,7 +14,7 @@ export default defineConfig({
 			use: {...devices['Pixel 5']}
 		}
 	],
-	reporter: 'html',
+	reporter: [['html', {open: 'never'}]],
 	retries: process.env.CI ? 2 : 0,
 	testDir: './tests',
 	use: {

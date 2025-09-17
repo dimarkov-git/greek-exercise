@@ -1,16 +1,17 @@
 # Project structure
 
-This document explains the purpose of each file in the project.
+This document explains the purpose of each file in the **Learn Greek** application.
 
 ## 🏗️ Root configuration files
 
 ### package.json
 
-**Purpose**: Central npm/pnpm package configuration file
+**Purpose**: Central npm/pnpm package configuration file for Learn Greek app
 
-- Defines project dependencies (React 19, TanStack Query, React Router 7)
+- **Name**: `learn-greek` - Interactive Greek language learning application
+- Defines project dependencies (React 19, TanStack Query, React Router 7, Zustand, Valibot)
 - Contains scripts for development, building, testing
-- Settings for pnpm and MSW (Mock Service Worker)
+- Settings for pnpm and MSW (Mock Service Worker) for translation API mocking
 - Uses modern versions: React 19, TypeScript 5, Vite 7
 
 ### vite.config.ts
@@ -56,50 +57,86 @@ This document explains the purpose of each file in the project.
 
 - **main.tsx** - main application entry point
   - React Query Client setup for API request caching
-  - MSW (Mock Service Worker) initialization for API mocks in development
-  - Providers: QueryClient, BrowserRouter
+  - MSW (Mock Service Worker) initialization for translation API mocks
+  - Providers: QueryClient, LanguageProvider, BrowserRouter
   - React DevTools for query debugging
 
 ### Routing and components
 
 - **App.tsx** - root component with routing
-  - Uses React Router 7 for navigation
+  - Uses React Router 7 for navigation between HomePage, ExerciseLibrary, ExerciseBuilder
   - Error Boundary for error handling
-  - Lazy loading for Details page (code splitting)
+  - Lazy loading for exercise pages (code splitting)
   - Suspense for loading states
 
 ### Pages (pages/)
 
-- **Gallery.tsx** - main page with fruit gallery
-  - Uses Suspense Query for automatic loading/error states
-  - Grid layout with responsive design (1-3 columns)
-- **Details.tsx** - detailed page for individual fruit
+- **HomePage.tsx** - main landing page with navigation
+  - Settings panel with theme and language controls
+  - Navigation cards to Exercise Library and Builder
+  - Multilingual content with real-time language switching
+- **ExerciseLibrary.tsx** - browse available exercises (placeholder)
+- **ExerciseBuilder.tsx** - create custom exercises (placeholder)
 
 ### API layer (api/)
 
-- **fruits.ts** - functions for fruits API
+- **texts.ts** - translation and internationalization API
   - Uses Valibot for data schema validation
   - Type-safe API with automatic TypeScript type generation
-  - Fetch request error handling
+  - Functions: `getCommonTexts()`, `getTranslations(lang)`
+  - Supported languages: Greek (el), Russian (ru), English (en)
+  - Fetch request error handling with TanStack Query integration
 
 ### Components (components/)
 
-- **Fruit.tsx** - fruit card in gallery
+#### Layout components (components/layout/)
+- **Footer.tsx** - application footer with copyright and GitHub link
+- **MainNavigation.tsx** - main navigation cards for homepage
+- **SettingsPanel.tsx** - settings panel with theme and language controls
+
+#### UI components (components/ui/)
+- **LanguageSelector.tsx** - language selection buttons with flags
+- **NavigationCard.tsx** - reusable card for navigation links
+- **ThemeToggle.tsx** - theme switcher with animation
+- **UserLanguageSelector.tsx** - user language preference selector
+
+#### Utility components
 - **Head.tsx** - page meta tags management
-- **ImageAttribution.tsx** - image attribution
-- **LoadingOrError.tsx** - universal state component
+- **LoadingOrError.tsx** - universal loading and error state component
 
 ### Mocks and testing (mocks/)
 
 - **browser.ts** - MSW setup for browser
 - **server.ts** - MSW setup for Node.js (tests)
-- **handlers.ts** - mock API endpoint handlers
-- **data/fruits.json** - test fruit data
+- **handlers.ts** - mock API endpoint handlers for translations
+  - `/api/texts/common` - translation keys endpoint
+  - `/api/translations/{lang}` - localized strings by language
+- **data/texts/common.json** - translation key definitions
+- **data/translations/** - localized strings
+  - `el.json` - Greek translations
+  - `ru.json` - Russian translations
+  - `en.json` - English translations
 
-### Utils and hooks (utils/)
+### State management and hooks
 
-- **useMediaQuery.ts** - custom hook for media queries
-- **useMediaQuery.test.ts** - tests for the hook
+#### Stores (stores/)
+- **settings.ts** - Zustand store for app settings
+  - Theme persistence (light/dark)
+  - UI language (el/ru/en)
+  - User language preferences
+  - Local storage integration
+
+#### Hooks (hooks/)
+- **useI18n.ts** - main internationalization hook
+  - Integration with TanStack Query for translation loading
+  - Fallback translations for critical UI elements
+  - Translation function `t(key)` with caching
+- **useTranslation.ts** - alternative translation hook (unused)
+
+#### Contexts (contexts/)
+- **LanguageContext.tsx** - React context for language management
+  - Language state provider
+  - Language switching utilities
 
 ### Testing setup
 
@@ -154,25 +191,39 @@ This document explains the purpose of each file in the project.
 
 ### Modern technologies
 
-- **React 19** - latest stable version
-- **TypeScript 5** - strict typing
+- **React 19** - latest stable version with concurrent features
+- **TypeScript 5** - strict typing for better developer experience
 - **Vite 7** - fast build and HMR
-- **Tailwind CSS v4** - utility-first styles
+- **Tailwind CSS v4** - utility-first styles with CSS-in-JS support
+
+### Internationalization architecture
+
+- **JSON-based translations** - Structured data files for scalability
+- **API-driven loading** - Dynamic translation loading via MSW endpoints
+- **Multi-level fallbacks** - Graceful degradation for missing translations
+- **Language persistence** - User preferences stored in localStorage
+- **Real-time switching** - Instant UI updates without page reload
 
 ### State and data management
 
-- **TanStack Query** - server state caching and synchronization
+- **TanStack Query** - server state caching and synchronization for translations
+- **Zustand** - client state management for settings persistence
 - **Valibot** - data validation (lightweight Zod alternative)
-- **MSW** - API mocking in development
+- **MSW** - API mocking for translation endpoints in development
+- **React Context** - language state management across components
 
 ### Code quality
 
 - **100% test coverage** - mandatory requirement
 - **Biome** - unified tool for linting and formatting
 - **Strict TypeScript** - maximum type safety
+- **Component testing** - Comprehensive unit and integration tests
+- **E2E testing** - Playwright tests for critical user flows
 
 ### Performance optimizations
 
-- **Lazy loading** - code splitting for pages
-- **Image preloading** - font loading optimization
-- **React Suspense** - optimistic UI
+- **Lazy loading** - code splitting for exercise pages
+- **Font preloading** - Inter font optimization
+- **React Suspense** - optimistic UI with loading states
+- **Translation caching** - 30-minute cache for translation API calls
+- **Minimal bundle size** - Tree-shaking and efficient imports
