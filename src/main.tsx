@@ -10,37 +10,47 @@ import {LanguageProvider} from './contexts/LanguageContext'
 const queryClient = new QueryClient()
 
 async function enableMocking() {
-	// TODO: uncomment this line
-	// if (process.env.NODE_ENV !== 'development') {
-	//   return
-	// }
-	const {worker} = await import('./mocks/browser')
-	return worker.start({
-		serviceWorker: {
-			url: `${import.meta.env.BASE_URL}mockServiceWorker.js`
-		}
-	})
+	// We always use MSW for now
+	// if (import.meta.env.MODE === 'production') { return }
+
+	try {
+		const {worker} = await import('./mocks/browser')
+		return worker.start({
+			serviceWorker: {
+				url: `${import.meta.env.BASE_URL}mockServiceWorker.js`
+			},
+			onUnhandledRequest: 'bypass'
+		})
+	} catch (_error) {
+		// Don't throw error, just continue without mocking
+		return
+	}
 }
 
-const container = document.querySelector('#root')
+function renderApp() {
+	const container = document.querySelector('#root')
+	if (container) {
+		const root = createRoot(container)
+		root.render(
+			<StrictMode>
+				<QueryClientProvider client={queryClient}>
+					<ReactQueryDevtools initialIsOpen={false} />
+					<LanguageProvider defaultLanguage='el'>
+						<BrowserRouter>
+							<App />
+						</BrowserRouter>
+					</LanguageProvider>
+				</QueryClientProvider>
+			</StrictMode>
+		)
+	}
+}
+
+// Initialize MSW and render app
 enableMocking()
 	.then(() => {
-		if (container) {
-			const root = createRoot(container)
-			root.render(
-				<StrictMode>
-					<QueryClientProvider client={queryClient}>
-						<ReactQueryDevtools initialIsOpen={false} />
-						<LanguageProvider defaultLanguage='el'>
-							<BrowserRouter>
-								<App />
-							</BrowserRouter>
-						</LanguageProvider>
-					</QueryClientProvider>
-				</StrictMode>
-			)
-		}
+		renderApp()
 	})
-	.catch(error => {
-		throw new Error(`Failed to enable mocking: ${error}`)
+	.catch(() => {
+		renderApp()
 	})
