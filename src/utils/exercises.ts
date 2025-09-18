@@ -101,12 +101,12 @@ export function getCaseByIndices(
 	exercise: WordFormExercise,
 	blockIndex: number,
 	caseIndex: number
-): WordFormCase | null {
+): WordFormCase | undefined {
 	const block = exercise.blocks[blockIndex]
-	if (!block) return null
+	if (!block) return
 
 	const case_ = block.cases[caseIndex]
-	return case_ || null
+	return case_ || undefined
 }
 
 /**

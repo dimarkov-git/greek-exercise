@@ -91,9 +91,9 @@ export interface ExerciseResult {
 	totalCases: number
 	correctAnswers: number
 	incorrectAnswers: number
-	timeSpentMs: number
+	timeSpentMs?: number
 	completedAt: Date
-	accuracy: number // percentage of correct answers (0-100)
+	accuracy?: number // percentage of correct answers (0-100)
 }
 
 // Tag statistics (for analytics)

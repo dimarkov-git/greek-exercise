@@ -8,8 +8,8 @@ interface WordFormExerciseProps {
 		totalCases: number
 		correctAnswers: number
 		incorrectAnswers: number
-		timeSpentMs: number
-		accuracy: number
+		timeSpentMs?: number
+		accuracy?: number
 	}) => void
 	onExit?: () => void
 }

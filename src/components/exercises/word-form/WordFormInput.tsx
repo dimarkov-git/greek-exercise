@@ -109,7 +109,7 @@ function InputField({
 	onChange,
 	onKeyPress
 }: {
-	inputRef: React.RefObject<HTMLInputElement>
+	inputRef: React.RefObject<HTMLInputElement | null>
 	inputStyles: string
 	disabled: boolean
 	status: ExerciseStatus

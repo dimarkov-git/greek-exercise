@@ -267,11 +267,13 @@ function ExerciseFilters({
 								}`}
 								key={tag}
 								onClick={() => {
-									setSelectedTags(prev =>
-										prev.includes(tag)
-											? prev.filter(existingTag => existingTag !== tag)
-											: [...prev, tag]
-									)
+									if (selectedTags.includes(tag)) {
+										setSelectedTags(
+											selectedTags.filter(existingTag => existingTag !== tag)
+										)
+									} else {
+										setSelectedTags([...selectedTags, tag])
+									}
 								}}
 								type='button'
 							>

@@ -4,14 +4,16 @@ import {useWordFormExercise} from './hooks/useWordFormExercise'
 
 interface WordFormExerciseWrapperProps {
 	exercise: WordFormExerciseType
-	onComplete?: (result: {
-		exerciseId: string
-		totalCases: number
-		correctAnswers: number
-		incorrectAnswers: number
-		timeSpentMs: number
-		accuracy: number
-	}) => void
+	onComplete?:
+		| ((result: {
+				exerciseId: string
+				totalCases: number
+				correctAnswers: number
+				incorrectAnswers: number
+				timeSpentMs?: number
+				accuracy?: number
+		  }) => void)
+		| undefined
 	onExit?: () => void
 }
 

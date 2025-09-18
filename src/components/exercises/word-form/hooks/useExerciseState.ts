@@ -16,14 +16,16 @@ interface UseExerciseStateProps {
 	setStartTime: React.Dispatch<React.SetStateAction<number>>
 	correctCount: number
 	incorrectCount: number
-	onComplete?: (result: {
-		exerciseId: string
-		totalCases: number
-		correctAnswers: number
-		incorrectAnswers: number
-		timeSpentMs?: number
-		accuracy?: number
-	}) => void
+	onComplete?:
+		| ((result: {
+				exerciseId: string
+				totalCases: number
+				correctAnswers: number
+				incorrectAnswers: number
+				timeSpentMs?: number
+				accuracy?: number
+		  }) => void)
+		| undefined
 }
 
 export function useExerciseState(props: UseExerciseStateProps) {

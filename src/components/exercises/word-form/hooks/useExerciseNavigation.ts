@@ -13,12 +13,16 @@ interface UseExerciseNavigationProps {
 	setStatus: React.Dispatch<React.SetStateAction<ExerciseStatus>>
 	correctCount: number
 	incorrectCount: number
-	onComplete?: (result: {
-		exerciseId: string
-		totalCases: number
-		correctAnswers: number
-		incorrectAnswers: number
-	}) => void
+	onComplete?:
+		| ((result: {
+				exerciseId: string
+				totalCases: number
+				correctAnswers: number
+				incorrectAnswers: number
+				timeSpentMs?: number
+				accuracy?: number
+		  }) => void)
+		| undefined
 }
 
 export function useExerciseNavigation({

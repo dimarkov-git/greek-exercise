@@ -71,8 +71,8 @@ function useMobileDetection() {
 
 function useClickOutside(
 	isVisible: boolean,
-	hintRef: React.RefObject<HTMLDivElement>,
-	triggerRef: React.RefObject<HTMLButtonElement>,
+	hintRef: React.RefObject<HTMLDivElement | null>,
+	triggerRef: React.RefObject<HTMLButtonElement | null>,
 	onClose: () => void
 ) {
 	useEffect(() => {
@@ -111,7 +111,7 @@ function HintButton({
 	onToggle: () => void
 	onMouseEnter: () => void
 	onMouseLeave: () => void
-	triggerRef: React.RefObject<HTMLButtonElement>
+	triggerRef: React.RefObject<HTMLButtonElement | null>
 }) {
 	const handleClick = () => {
 		if (isMobile && 'vibrate' in navigator && !isVisible) {
@@ -161,7 +161,7 @@ function HintTooltip({
 }: {
 	placement: PlacementType
 	hintText: string
-	hintRef: React.RefObject<HTMLDivElement>
+	hintRef: React.RefObject<HTMLDivElement | null>
 }) {
 	return (
 		<motion.div

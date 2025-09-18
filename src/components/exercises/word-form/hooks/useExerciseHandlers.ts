@@ -22,14 +22,16 @@ interface UseExerciseHandlersProps {
 	triggerPulse: (isCorrect: boolean) => void
 	correctCount: number
 	incorrectCount: number
-	onComplete?: (result: {
-		exerciseId: string
-		totalCases: number
-		correctAnswers: number
-		incorrectAnswers: number
-		timeSpentMs?: number
-		accuracy?: number
-	}) => void
+	onComplete?:
+		| ((result: {
+				exerciseId: string
+				totalCases: number
+				correctAnswers: number
+				incorrectAnswers: number
+				timeSpentMs?: number
+				accuracy?: number
+		  }) => void)
+		| undefined
 }
 
 export function useExerciseHandlers(props: UseExerciseHandlersProps) {

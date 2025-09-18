@@ -21,13 +21,13 @@ interface ExerciseRendererProps {
 	correctCount: number
 	incorrectCount: number
 	currentCase: WordFormCase | undefined
-	currentBlock: WordFormBlock
+	currentBlock: WordFormBlock | undefined
 	pulseState: boolean | null
 	clearPulse: () => void
 	handleEvent: (event: ExerciseEvent) => void
 	handleSubmit: (answer: string) => void
 	handleAutoAdvanceToggle: () => void
-	onExit?: () => void
+	onExit?: (() => void) | undefined
 }
 
 export function ExerciseRenderer({
@@ -57,7 +57,12 @@ export function ExerciseRenderer({
 					exercise.titleI18n[userLanguage as Language] || exercise.title
 				}
 				incorrectCount={incorrectCount}
-				onExit={onExit}
+				onExit={
+					onExit ||
+					(() => {
+						// No-op function when onExit is not provided
+					})
+				}
 				onRestart={() => handleEvent({type: 'RESTART'})}
 				timeSpentMs={Date.now() - startTime}
 				totalCases={state.totalCases}
