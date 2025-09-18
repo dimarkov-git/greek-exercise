@@ -1,0 +1,186 @@
+{
+	"enabled": true,
+	"id": "verbs-be",
+	"type": "word-form",
+	"title": "Εξάσκηση ρήματος είμαι",
+	"titleI18n": {
+		"en": "Verb 'to be' practice",
+		"ru": "Практика глагола 'быть'"
+	},
+	"description": "Κατακτήστε την κλίση του ρήματος είμαι σε όλους τους χρόνους",
+	"descriptionI18n": {
+		"en": "Master conjugation of the verb 'to be' in all tenses",
+		"ru": "Освойте спряжение глагола 'быть' во всех временах"
+	},
+	"buttonText": "Ξεκινήστε την άσκηση",
+	"buttonTextI18n": {
+		"en": "Start exercise",
+		"ru": "Начать упражнение"
+	},
+	"tags": ["verbs", "irregular-verbs", "basic", "conjugation"],
+	"difficulty": "beginner",
+	"estimatedTimeMinutes": 5,
+	"settings": {
+		"autoAdvance": true,
+		"autoAdvanceDelayMs": 1500,
+		"allowSkip": false,
+		"shuffleCases": false
+	},
+	"blocks": [
+		{
+			"id": "be-present",
+			"name": "είμαι (Ενεστώτας)",
+			"nameHintI18n": {
+				"en": "to be (present tense)",
+				"ru": "быть (настоящее время)"
+			},
+			"cases": [
+				{
+					"id": "be-present-1s",
+					"prompt": "εγώ ___",
+					"promptHintI18n": {
+						"en": "I am",
+						"ru": "я есть"
+					},
+					"correct": ["είμαι"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "be-present-2s",
+					"prompt": "εσύ ___",
+					"promptHintI18n": {
+						"en": "you are (singular)",
+						"ru": "ты есть"
+					},
+					"correct": ["είσαι"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "be-present-3s",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": {
+						"en": "he/she/it is",
+						"ru": "он/она/оно есть"
+					},
+					"correct": ["είναι"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "be-present-1p",
+					"prompt": "εμείς ___",
+					"promptHintI18n": {
+						"en": "we are",
+						"ru": "мы есть"
+					},
+					"correct": ["είμαστε"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "be-present-2p",
+					"prompt": "εσείς ___",
+					"promptHintI18n": {
+						"en": "you are (plural)",
+						"ru": "вы есть"
+					},
+					"correct": ["είστε"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "be-present-3p",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": {
+						"en": "they are",
+						"ru": "они есть"
+					},
+					"correct": ["είναι"],
+					"hint": null,
+					"hintI18n": null
+				}
+			]
+		},
+		{
+			"id": "be-past-continuous",
+			"name": "ήμουν (Παρατατικός)",
+			"nameHintI18n": {
+				"en": "to be (past continuous)",
+				"ru": "быть (прошедшее время)"
+			},
+			"cases": [
+				{
+					"id": "be-past-1s",
+					"prompt": "εγώ ___",
+					"promptHintI18n": {
+						"en": "I was",
+						"ru": "я был/была"
+					},
+					"correct": ["ήμουν"],
+					"hint": "Χρησιμοποιείται για συνεχείς ενέργειες στο παρελθόν",
+					"hintI18n": {
+						"en": "Used for continuous actions in the past",
+						"ru": "Используется для продолжительных действий в прошлом"
+					}
+				},
+				{
+					"id": "be-past-2s",
+					"prompt": "εσύ ___",
+					"promptHintI18n": {
+						"en": "you were (singular)",
+						"ru": "ты был/была"
+					},
+					"correct": ["ήσουν"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "be-past-3s",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": {
+						"en": "he/she/it was",
+						"ru": "он/она/оно был/была/было"
+					},
+					"correct": ["ήταν"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "be-past-1p",
+					"prompt": "εμείς ___",
+					"promptHintI18n": {
+						"en": "we were",
+						"ru": "мы были"
+					},
+					"correct": ["ήμασταν"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "be-past-2p",
+					"prompt": "εσείς ___",
+					"promptHintI18n": {
+						"en": "you were (plural)",
+						"ru": "вы были"
+					},
+					"correct": ["ήσασταν"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "be-past-3p",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": {
+						"en": "they were",
+						"ru": "они были"
+					},
+					"correct": ["ήταν"],
+					"hint": null,
+					"hintI18n": null
+				}
+			]
+		}
+	]
+}

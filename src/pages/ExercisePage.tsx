@@ -1,0 +1,69 @@
+import {useCallback} from 'react'
+import {useNavigate, useParams} from 'react-router'
+import {WordFormExercise} from '@/components/exercises/word-form/WordFormExercise'
+import {LoadingOrError} from '@/components/LoadingOrError'
+import {useExercise} from '@/hooks/useExercises'
+import type {ExerciseResult} from '@/types/exercises'
+
+/**
+ * Page for running individual exercises
+ * Handles loading, error states, and exercise completion
+ */
+export function ExercisePage() {
+	const {exerciseId} = useParams()
+	const navigate = useNavigate()
+	const {data: exercise, isLoading, error} = useExercise(exerciseId)
+
+	const handleComplete = useCallback(
+		(_result: Omit<ExerciseResult, 'completedAt'>) => {
+			// Show completion stats briefly, then return to library
+			setTimeout(() => {
+				// biome-ignore lint/nursery/noFloatingPromises: navigate is synchronous
+				navigate('/exercises', {replace: true})
+			}, 3000)
+		},
+		[navigate]
+	)
+
+	const handleExit = useCallback(() => {
+		// biome-ignore lint/nursery/noFloatingPromises: navigate is synchronous
+		navigate('/exercises', {replace: true})
+	}, [navigate])
+
+	// Handle loading and error states
+	if (isLoading || error || !exercise) {
+		return <LoadingOrError {...(error && {error})} />
+	}
+
+	// Render exercise based on type
+	switch (exercise.type) {
+		case 'word-form':
+			return (
+				<WordFormExercise
+					exercise={exercise}
+					onComplete={handleComplete}
+					onExit={handleExit}
+				/>
+			)
+		default:
+			return (
+				<div className='flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900'>
+					<div className='text-center'>
+						<h2 className='mb-4 font-semibold text-red-600 text-xl'>
+							Unsupported Exercise Type
+						</h2>
+						<p className='mb-6 text-gray-600 dark:text-gray-400'>
+							Exercise type "{exercise.type}" is not yet implemented.
+						</p>
+						<button
+							className='rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700'
+							onClick={handleExit}
+							type='button'
+						>
+							Back to Library
+						</button>
+					</div>
+				</div>
+			)
+	}
+}

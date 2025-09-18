@@ -1,0 +1,93 @@
+import * as v from 'valibot'
+
+// Base schemas
+const LanguageSchema = v.picklist(['el', 'ru', 'en'] as const)
+const DifficultySchema = v.picklist([
+	'beginner',
+	'intermediate',
+	'advanced'
+] as const)
+
+// Schema for multilingual strings (Record<Language, string>)
+const I18nStringSchema = v.record(LanguageSchema, v.string())
+
+// Exercise settings schema
+export const ExerciseSettingsSchema = v.object({
+	autoAdvance: v.boolean(),
+	autoAdvanceDelayMs: v.number(),
+	allowSkip: v.boolean(),
+	shuffleCases: v.boolean()
+})
+
+// Individual case schema
+export const WordFormCaseSchema = v.object({
+	id: v.string(),
+	prompt: v.string(),
+	promptHintI18n: I18nStringSchema,
+	correct: v.array(v.string()),
+	hint: v.nullable(v.string()),
+	hintI18n: v.nullable(I18nStringSchema)
+})
+
+// Exercise block schema
+export const WordFormBlockSchema = v.object({
+	id: v.string(),
+	name: v.string(),
+	nameHintI18n: I18nStringSchema,
+	cases: v.array(WordFormCaseSchema)
+})
+
+// Complete exercise schema
+export const WordFormExerciseSchema = v.object({
+	enabled: v.boolean(),
+	id: v.string(),
+	type: v.literal('word-form'),
+	title: v.string(),
+	titleI18n: I18nStringSchema,
+	description: v.string(),
+	descriptionI18n: I18nStringSchema,
+	buttonText: v.string(),
+	buttonTextI18n: I18nStringSchema,
+	tags: v.array(v.string()),
+	difficulty: DifficultySchema,
+	estimatedTimeMinutes: v.number(),
+	settings: ExerciseSettingsSchema,
+	blocks: v.array(WordFormBlockSchema)
+})
+
+// Exercise metadata schema (for list display)
+export const ExerciseMetadataSchema = v.object({
+	id: v.string(),
+	type: v.picklist([
+		'word-form',
+		'translation',
+		'flashcard',
+		'multiple-choice'
+	]),
+	title: v.string(),
+	titleI18n: I18nStringSchema,
+	description: v.string(),
+	descriptionI18n: I18nStringSchema,
+	tags: v.array(v.string()),
+	difficulty: DifficultySchema,
+	estimatedTimeMinutes: v.number(),
+	totalBlocks: v.number(),
+	totalCases: v.number(),
+	enabled: v.boolean()
+})
+
+// Exercise list schema
+export const ExercisesListSchema = v.array(ExerciseMetadataSchema)
+
+// Validation utility functions
+export function validateWordFormExercise(data: unknown) {
+	return v.parse(WordFormExerciseSchema, data)
+}
+
+export function validateExercisesList(data: unknown) {
+	return v.parse(ExercisesListSchema, data)
+}
+
+export function validateWordFormBlock(data: unknown) {
+	return v.parse(WordFormBlockSchema, data)
+}

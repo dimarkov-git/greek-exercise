@@ -13,6 +13,10 @@ const ExerciseBuilder = lazy(async () =>
 	import('@/pages/ExerciseBuilder').then(m => ({default: m.ExerciseBuilder}))
 )
 
+const ExercisePage = lazy(async () =>
+	import('@/pages/ExercisePage').then(m => ({default: m.ExercisePage}))
+)
+
 function renderError({error}: FallbackProps) {
 	return <LoadingOrError error={error} />
 }
@@ -26,6 +30,7 @@ export function App() {
 						<Routes>
 							<Route element={<HomePage />} index={true} />
 							<Route element={<ExerciseLibrary />} path='/exercises' />
+							<Route element={<ExercisePage />} path='/exercise/:exerciseId' />
 							<Route element={<ExerciseBuilder />} path='/builder' />
 							<Route element={<Navigate replace={true} to='/' />} path='*' />
 						</Routes>
