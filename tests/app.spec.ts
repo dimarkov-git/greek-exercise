@@ -6,7 +6,8 @@ const BUILDER_TEXT_REGEX = /Κατασκευαστής Ασκήσεων|Exercise
 const GREEN_BG_REGEX = /bg-green-500/
 const MENU_BUTTON_REGEX = /Menu|Μενού|Меню/
 const _SETTINGS_TEXT_REGEX = /Settings|Настройки|Ρυθμίσεις/
-const USER_LANGUAGE_REGEX = /Language you know:|Язык, который вы знаете:|Γλώσσα που γνωρίζεις:/
+const USER_LANGUAGE_REGEX =
+	/Language you know:|Язык, который вы знаете:|Γλώσσα που γνωρίζεις:/
 
 test('renders homepage with navigation cards', async ({page}) => {
 	await page.goto('/')

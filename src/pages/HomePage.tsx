@@ -9,42 +9,53 @@ export function HomePage() {
 	return (
 		<>
 			<Head title={t('appTitle')} />
-			<div className='bg-gradient-to-br from-blue-50 to-indigo-100 py-8 transition-colors dark:from-gray-900 dark:to-gray-800'>
-				<div className='mx-auto max-w-7xl p-4'>
-					{/* Header */}
-					<motion.header
-						animate={{opacity: 1, y: 0}}
-						className='mb-12 text-center'
-						initial={{opacity: 0, y: -20}}
-					>
-						<motion.h1
-							animate={{opacity: 1}}
-							className='mb-4 font-bold text-4xl text-gray-900 md:text-6xl dark:text-white'
-							initial={{opacity: 0}}
-							transition={{delay: 0.3}}
+			<div className='bg-gray-50 transition-colors dark:bg-gray-900'>
+				{/* Hero Section */}
+				<div className='px-4 py-16'>
+					<div className='mx-auto max-w-6xl'>
+						<motion.div
+							animate={{opacity: 1, y: 0}}
+							className='relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-800 via-slate-900 to-indigo-900 px-8 py-16 text-center md:px-16 md:py-24'
+							initial={{opacity: 0, y: -20}}
 						>
-							{t('appTitle')}
-						</motion.h1>
+							{/* Background decoration */}
+							<div className='absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.3),transparent)]' />
 
-						<motion.p
-							animate={{opacity: 1}}
-							className='mx-auto max-w-2xl text-gray-600 text-xl dark:text-gray-300'
-							initial={{opacity: 0}}
-							transition={{delay: 0.4}}
+							{/* Content */}
+							<div className='relative'>
+								<motion.h1
+									animate={{opacity: 1}}
+									className='mb-6 font-bold text-4xl text-white md:text-6xl'
+									initial={{opacity: 0}}
+									transition={{delay: 0.3}}
+								>
+									{t('appTitle')}
+								</motion.h1>
+
+								<motion.p
+									animate={{opacity: 1}}
+									className='mx-auto max-w-2xl text-slate-300 text-xl leading-relaxed'
+									initial={{opacity: 0}}
+									transition={{delay: 0.4}}
+								>
+									{t('appSubtitle')}
+								</motion.p>
+							</div>
+						</motion.div>
+					</div>
+				</div>
+
+				{/* Navigation Cards Section */}
+				<div className='px-4 pb-16'>
+					<div className='mx-auto max-w-6xl'>
+						<motion.div
+							animate={{opacity: 1, y: 0}}
+							initial={{opacity: 0, y: 20}}
+							transition={{delay: 0.5}}
 						>
-							{t('appSubtitle')}
-						</motion.p>
-					</motion.header>
-
-					{/* Main Content - Navigation Cards */}
-					<motion.div
-						animate={{opacity: 1, y: 0}}
-						className='mx-auto max-w-4xl'
-						initial={{opacity: 0, y: 20}}
-						transition={{delay: 0.5}}
-					>
-						<MainNavigation />
-					</motion.div>
+							<MainNavigation />
+						</motion.div>
+					</div>
 				</div>
 			</div>
 		</>

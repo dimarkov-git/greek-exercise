@@ -13,7 +13,7 @@ export function ThemeToggle() {
 	return (
 		<motion.button
 			animate={{opacity: 1, scale: 1}}
-			className='flex items-center justify-center rounded-lg border border-gray-300 bg-white p-2 text-sm transition-all hover:border-gray-400 hover:shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:hover:border-gray-500'
+			className='flex items-center justify-center rounded-lg border border-gray-300 bg-white p-3 text-sm transition-all hover:border-gray-400 hover:shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:hover:border-gray-500'
 			initial={{opacity: 0, scale: 0.9}}
 			onClick={toggleTheme}
 			title={theme === 'light' ? t('darkTheme') : t('lightTheme')}

@@ -45,39 +45,33 @@ export function NavigationCard({
 		<Link className='block' to={to}>
 			<motion.div
 				animate={{opacity: 1, y: 0}}
-				className={`relative overflow-hidden rounded-2xl border-2 bg-white dark:bg-gray-900 ${colors.border} ${colors.hover}transition-all cursor-pointer shadow-lg duration-300 hover:shadow-xl`}
+				className='group relative cursor-pointer transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700'
 				initial={{opacity: 0, y: 20}}
 				whileHover={{
-					scale: 1.02,
-					y: -5
+					scale: 1.01
 				}}
-				whileTap={{scale: 0.98}}
+				whileTap={{scale: 0.99}}
 			>
-				{/* Gradient background */}
-				<div
-					className={`absolute inset-0 bg-gradient-to-br ${colors.bg} opacity-5`}
-				/>
-
 				{/* Content */}
-				<div className='relative p-8'>
+				<div className='p-8'>
 					<div className='mb-4 flex items-center gap-4'>
 						<div
-							className={`h-12 w-12 rounded-xl bg-gradient-to-br ${colors.bg}flex items-center justify-center text-2xl shadow-lg`}
+							className={`h-12 w-12 rounded-xl bg-gradient-to-br ${colors.bg} flex items-center justify-center text-2xl shadow-sm`}
 						>
 							{icon}
 						</div>
-						<h3 className='font-bold text-gray-900 text-xl dark:text-white'>
+						<h3 className='font-bold text-gray-900 text-xl group-hover:text-gray-700 dark:text-white dark:group-hover:text-gray-200'>
 							{title}
 						</h3>
 					</div>
 
-					<p className='text-gray-600 leading-relaxed dark:text-gray-400'>
+					<p className='text-gray-600 leading-relaxed group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-300'>
 						{description}
 					</p>
 
 					{/* Arrow indicator */}
 					<motion.div
-						className='absolute top-4 right-4 text-gray-400 dark:text-gray-600'
+						className='absolute top-4 right-4 text-gray-400 transition-colors duration-200 group-hover:text-gray-600 dark:text-gray-500 dark:group-hover:text-gray-400'
 						transition={{type: 'spring', stiffness: 400, damping: 20}}
 						whileHover={{x: 5}}
 					>
