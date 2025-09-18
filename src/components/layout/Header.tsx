@@ -24,7 +24,7 @@ export function Header({className}: HeaderProps) {
 	return (
 		<motion.header
 			animate={{opacity: 1, y: 0}}
-			className={`fixed top-0 z-50 w-full border-gray-200 border-b bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 ${
+			className={`fixed top-0 z-50 w-full border-gray-200 border-b bg-white/70 shadow-md backdrop-blur-md dark:border-gray-700 dark:bg-gray-800 ${
 				className || ''
 			}`}
 			initial={{opacity: 0, y: -20}}

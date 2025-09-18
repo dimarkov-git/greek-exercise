@@ -51,7 +51,7 @@ export function HeaderNavigation() {
 						}`}
 						to={item.path}
 					>
-						<span className='text-base'>{item.icon}</span>
+						{item.icon}
 						{item.label}
 					</Link>
 				</motion.div>
