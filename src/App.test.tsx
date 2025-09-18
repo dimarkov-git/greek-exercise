@@ -9,8 +9,12 @@ it.each(widths)(
 		window.happyDOM?.setViewport({width, height: 720})
 		render(<App />, {route: '/'})
 
-		// Homepage now shows 2 navigation cards plus 1 footer link
-		await expect(screen.findAllByRole('link')).resolves.toHaveLength(3)
+		// Homepage now shows:
+		// - Header: 4 links (logo, home, library, builder)
+		// - Main navigation: 2 cards
+		// - Footer: 1 link
+		// Total: 7 links
+		await expect(screen.findAllByRole('link')).resolves.toHaveLength(7)
 
 		// Verify we can find the navigation cards
 		await expect(
@@ -25,6 +29,6 @@ it.each(widths)(
 it('redirects to homepage when accessing invalid route', async () => {
 	render(<App />, {route: '/invalid-route'})
 
-	// Should redirect to homepage which shows navigation cards plus footer link
-	await expect(screen.findAllByRole('link')).resolves.toHaveLength(3)
+	// Should redirect to homepage which shows header links + navigation cards + footer link
+	await expect(screen.findAllByRole('link')).resolves.toHaveLength(7)
 })

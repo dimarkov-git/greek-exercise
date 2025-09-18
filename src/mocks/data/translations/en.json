@@ -31,5 +31,11 @@
 	"messages.welcome": "Welcome to Greek Exercise App",
 	"messages.error": "Something went wrong",
 	"messages.success": "Operation completed successfully",
-	"messages.noData": "No data available"
+	"messages.noData": "No data available",
+	"navigation.menu": "Menu",
+	"navigation.close": "Close",
+	"header.toggleTheme": "Toggle theme",
+	"header.selectLanguage": "Select language",
+	"userLanguageDescription": "Choose a language you already know. It will be used for hints in exercises.",
+	"userLanguageLabel": "Language you know:"
 }

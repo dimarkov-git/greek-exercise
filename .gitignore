@@ -13,6 +13,7 @@
 # LLM
 .claude
 CLAUDE.md
+.playwright-mcp
 
 # develop notes
 /.notes

@@ -3,6 +3,7 @@ import {useState} from 'react'
 import {Link} from 'react-router'
 import {Head} from '@/components/Head'
 import {LoadingOrError} from '@/components/LoadingOrError'
+import {UserLanguageSelector} from '@/components/ui/UserLanguageSelector'
 import {useExercises} from '@/hooks/useExercises'
 import {useI18n} from '@/hooks/useI18n'
 import {useSettingsStore} from '@/stores/settings'
@@ -193,6 +194,28 @@ function ExerciseCard({exercise, index}: ExerciseCardProps) {
 	)
 }
 
+function UserSettings({t}: {t: (key: string) => string}) {
+	return (
+		<motion.div
+			animate={{opacity: 1, y: 0}}
+			className='mb-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800'
+			initial={{opacity: 0, y: 20}}
+			transition={{delay: 0.1}}
+		>
+			<h3 className='mb-4 font-semibold text-gray-900 dark:text-white'>
+				{t('settings')}
+			</h3>
+
+			<div className='mb-4'>
+				<p className='mb-3 text-gray-600 text-sm dark:text-gray-400'>
+					{t('userLanguageDescription')}
+				</p>
+				<UserLanguageSelector />
+			</div>
+		</motion.div>
+	)
+}
+
 function ExerciseFilters({
 	selectedDifficulty,
 	setSelectedDifficulty,
@@ -330,6 +353,8 @@ export function ExerciseLibrary() {
 					{/* Content */}
 					{exercises && (
 						<>
+							<UserSettings t={t} />
+
 							<ExerciseFilters
 								allTags={allTags}
 								selectedDifficulty={selectedDifficulty}

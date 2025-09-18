@@ -20,7 +20,7 @@ export function UserLanguageSelector() {
 			transition={{delay: 0.1}}
 		>
 			<div className='block font-medium text-gray-700 text-sm dark:text-gray-300'>
-				{t('userLanguage')}
+				{t('userLanguageLabel')}
 			</div>
 			<div className='flex gap-1.5'>
 				{USER_LANGUAGES.map(language => (

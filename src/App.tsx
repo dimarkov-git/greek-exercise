@@ -3,6 +3,7 @@ import {ErrorBoundary, type FallbackProps} from 'react-error-boundary'
 import {Navigate, Route, Routes} from 'react-router'
 import {LoadingOrError} from '@/components/LoadingOrError'
 import {Footer} from '@/components/layout/Footer'
+import {Header} from '@/components/layout/Header'
 import {HomePage} from '@/pages/HomePage'
 
 const ExerciseLibrary = lazy(async () =>
@@ -24,9 +25,10 @@ function renderError({error}: FallbackProps) {
 export function App() {
 	return (
 		<div className='flex min-h-screen flex-col'>
+			<Header />
 			<ErrorBoundary fallbackRender={renderError}>
 				<Suspense fallback={<LoadingOrError />}>
-					<main className='flex-1'>
+					<main className='flex-1 pt-16'>
 						<Routes>
 							<Route element={<HomePage />} index={true} />
 							<Route element={<ExerciseLibrary />} path='/exercises' />

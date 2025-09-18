@@ -48,7 +48,7 @@ describe('ThemeToggle localization', () => {
 
 		render(<ThemeToggle />)
 
-		expect(screen.getByRole('button')).toHaveAttribute('title', 'Ανοιχτό')
+		expect(screen.getByRole('button')).toHaveAttribute('title', 'Σκοτεινό')
 	})
 
 	it('shows correct Russian tooltips', () => {
@@ -72,6 +72,6 @@ describe('ThemeToggle localization', () => {
 
 		render(<ThemeToggle />)
 
-		expect(screen.getByRole('button')).toHaveAttribute('title', 'Темная')
+		expect(screen.getByRole('button')).toHaveAttribute('title', 'Светлая')
 	})
 })

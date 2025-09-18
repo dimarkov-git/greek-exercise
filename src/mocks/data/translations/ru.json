@@ -31,5 +31,11 @@
 	"messages.welcome": "Добро пожаловать в приложение для изучения греческого",
 	"messages.error": "Что-то пошло не так",
 	"messages.success": "Операция выполнена успешно",
-	"messages.noData": "Нет доступных данных"
+	"messages.noData": "Нет доступных данных",
+	"navigation.menu": "Меню",
+	"navigation.close": "Закрыть",
+	"header.toggleTheme": "Переключить тему",
+	"header.selectLanguage": "Выбрать язык",
+	"userLanguageDescription": "Выберите язык, который вы уже знаете. Он будет использоваться для подсказок в упражнениях.",
+	"userLanguageLabel": "Язык, который вы знаете:"
 }

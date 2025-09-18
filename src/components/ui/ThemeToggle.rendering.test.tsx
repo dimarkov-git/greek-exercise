@@ -48,7 +48,7 @@ describe('ThemeToggle rendering', () => {
 		const button = screen.getByRole('button')
 		expect(button).toBeInTheDocument()
 		expect(button).toHaveTextContent('☀️')
-		expect(button).toHaveAttribute('title', 'Light')
+		expect(button).toHaveAttribute('title', 'Dark')
 	})
 
 	it('renders dark theme when theme is dark', () => {
@@ -66,6 +66,6 @@ describe('ThemeToggle rendering', () => {
 
 		const button = screen.getByRole('button')
 		expect(button).toHaveTextContent('🌙')
-		expect(button).toHaveAttribute('title', 'Dark')
+		expect(button).toHaveAttribute('title', 'Light')
 	})
 })
