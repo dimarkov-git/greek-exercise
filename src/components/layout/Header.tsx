@@ -1,6 +1,6 @@
 import {motion} from 'framer-motion'
 import {useState} from 'react'
-import {useLayout} from '@/contexts/LayoutContext'
+import {useLayout} from '@/hooks/useLayout'
 import {HeaderLogo} from './HeaderLogo'
 import {HeaderNavigation} from './HeaderNavigation'
 import {HeaderSettings} from './HeaderSettings'

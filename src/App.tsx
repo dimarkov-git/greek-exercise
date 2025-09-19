@@ -4,7 +4,8 @@ import {Navigate, Route, Routes} from 'react-router'
 import {LoadingOrError} from '@/components/LoadingOrError'
 import {Footer} from '@/components/layout/Footer'
 import {Header} from '@/components/layout/Header'
-import {LayoutProvider, useLayout} from '@/contexts/LayoutContext'
+import {LayoutProvider} from '@/contexts/LayoutContext'
+import {useLayout} from '@/hooks/useLayout'
 import {HomePage} from '@/pages/HomePage'
 
 const ExerciseLibrary = lazy(async () =>

@@ -1,34 +1,79 @@
+import {describe, expect, it} from 'vitest'
+import {VIEWPORT_SIZES} from '../tests/fixtures/test-data'
 import {App} from './App'
-import {render, screen} from './test-utils'
+import {render, screen, within} from './test-utils'
 
-const widths = [360, 1280]
+const viewports = [VIEWPORT_SIZES.mobile, VIEWPORT_SIZES.desktop]
 
-it.each(widths)(
-	'should show homepage navigation cards with %o viewport',
-	async width => {
-		window.happyDOM?.setViewport({width, height: 720})
-		render(<App />, {route: '/'})
+describe('App navigation', () => {
+	it.each(viewports)(
+		'shows header navigation at $width×$height viewport',
+		async viewport => {
+			window.happyDOM?.setViewport(viewport)
+			render(<App />, {route: '/'})
 
-		// Homepage now shows:
-		// - Header: 4 links (logo, home, library, builder)
-		// - Main navigation: 2 cards
-		// - Footer: 1 link
-		// Total: 7 links
-		await expect(screen.findAllByRole('link')).resolves.toHaveLength(7)
+			const header = await screen.findByRole('banner')
+			const headerScope = within(header)
 
-		// Verify we can find the navigation cards
+			await expect(
+				headerScope.findByRole('link', {name: /home/i})
+			).resolves.toBeInTheDocument()
+			await expect(
+				headerScope.findByRole('link', {name: /library/i})
+			).resolves.toBeInTheDocument()
+			await expect(
+				headerScope.findByRole('link', {name: /builder/i})
+			).resolves.toBeInTheDocument()
+		}
+	)
+
+	it.each(viewports)(
+		'shows main navigation cards at $width×$height viewport',
+		async viewport => {
+			window.happyDOM?.setViewport(viewport)
+			render(<App />, {route: '/'})
+
+			const main = await screen.findByRole('main')
+			const mainScope = within(main)
+
+			await expect(
+				mainScope.findByRole('link', {name: /exercise library/i})
+			).resolves.toBeInTheDocument()
+			await expect(
+				mainScope.findByRole('link', {name: /exercise builder/i})
+			).resolves.toBeInTheDocument()
+		}
+	)
+})
+
+describe('App footer', () => {
+	it.each(viewports)(
+		'shows footer links at $width×$height viewport',
+		async viewport => {
+			window.happyDOM?.setViewport(viewport)
+			render(<App />, {route: '/'})
+
+			const footer = await screen.findByRole('contentinfo')
+			const footerScope = within(footer)
+			const footerLinks = await footerScope.findAllByRole('link')
+
+			expect(footerLinks.length).toBeGreaterThanOrEqual(1)
+		}
+	)
+})
+
+describe('App routing', () => {
+	it('redirects unknown routes to the homepage', async () => {
+		render(<App />, {route: '/invalid-route'})
+
+		const main = await screen.findByRole('main')
+		const mainScope = within(main)
+
 		await expect(
-			screen.findByText(/Βιβλιοθήκη Ασκήσεων|Exercise Library/)
+			mainScope.findByRole('link', {name: /exercise library/i})
 		).resolves.toBeInTheDocument()
 		await expect(
-			screen.findByText(/Κατασκευαστής Ασκήσεων|Exercise Builder/)
+			mainScope.findByRole('link', {name: /exercise builder/i})
 		).resolves.toBeInTheDocument()
-	}
-)
-
-it('redirects to homepage when accessing invalid route', async () => {
-	render(<App />, {route: '/invalid-route'})
-
-	// Should redirect to homepage which shows header links + navigation cards + footer link
-	await expect(screen.findAllByRole('link')).resolves.toHaveLength(7)
+	})
 })

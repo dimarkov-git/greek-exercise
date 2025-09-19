@@ -1,12 +1,6 @@
 import type {ReactNode} from 'react'
-import {createContext, useContext, useState} from 'react'
-
-interface LayoutContextType {
-	headerEnabled: boolean
-	setHeaderEnabled: (enabled: boolean) => void
-}
-
-const LayoutContext = createContext<LayoutContextType | undefined>(undefined)
+import {useState} from 'react'
+import {LayoutContext} from './LayoutContextDefinition'
 
 interface LayoutProviderProps {
 	children: ReactNode
@@ -20,12 +14,4 @@ export function LayoutProvider({children}: LayoutProviderProps) {
 			{children}
 		</LayoutContext.Provider>
 	)
-}
-
-export function useLayout() {
-	const context = useContext(LayoutContext)
-	if (context === undefined) {
-		throw new Error('useLayout must be used within a LayoutProvider')
-	}
-	return context
 }

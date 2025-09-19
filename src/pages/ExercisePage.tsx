@@ -2,8 +2,8 @@ import {useCallback, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router'
 import {WordFormExercise} from '@/components/exercises/word-form/WordFormExercise'
 import {LoadingOrError} from '@/components/LoadingOrError'
-import {useLayout} from '@/contexts/LayoutContext'
 import {useExercise} from '@/hooks/useExercises'
+import {useLayout} from '@/hooks/useLayout'
 import type {ExerciseResult} from '@/types/exercises'
 
 /**

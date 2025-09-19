@@ -1,0 +1,73 @@
+/**
+ * Centralized test selectors for stable element identification
+ * Uses data-testid attributes instead of text-based selectors for language independence
+ */
+
+export const SELECTORS = {
+	// Navigation and Layout
+	navCardExercises: '[data-testid="nav-card-exercises"]',
+	navCardBuilder: '[data-testid="nav-card-builder"]',
+	exerciseBackButton: '[data-testid="exercise-back-button"]',
+
+	// Theme Controls
+	themeToggle: '[data-testid="theme-toggle"]',
+	themeDataAttr: '[data-current-theme]',
+
+	// Language Controls
+	uiLanguageDropdown: '[data-testid="ui-language-dropdown"]',
+	uiLanguageDropdownMenu: '[data-testid="ui-language-dropdown-menu"]',
+	uiLanguageOption: (lang: string) =>
+		`[data-testid="ui-language-option-${lang}"]`,
+	uiLanguageDataAttr: '[data-current-language]',
+
+	userLanguageSelector: '[data-testid="user-language-selector"]',
+	userLanguageOption: (lang: string) =>
+		`[data-testid="user-language-option-${lang}"]`,
+	userLanguageDataAttr: '[data-current-user-language]',
+
+	// Exercise Controls
+	exerciseInput: '[data-testid="exercise-input"]',
+	exerciseSubmitButton: '[data-testid="exercise-submit-button"]',
+	autoAdvanceToggle: '[data-testid="auto-advance-toggle"]',
+	exerciseProgress: '[data-testid="exercise-progress"]',
+	progressText: '[data-testid="progress-text"]',
+
+	// Generic Selectors
+	mainHeading: 'h1',
+	htmlElement: 'html',
+	textboxRole: 'role=textbox',
+	buttonRole: 'role=button',
+	linkRole: 'role=link'
+} as const
+
+/**
+ * Attribute selectors for data-driven testing
+ */
+export const DATA_ATTRIBUTES = {
+	theme: 'data-current-theme',
+	uiLanguage: 'data-current-language',
+	userLanguage: 'data-current-user-language',
+	inputStatus: 'data-status',
+	autoAdvanceEnabled: 'data-enabled',
+	userLangSelected: 'data-selected',
+	dropdownOpen: 'data-is-open'
+} as const
+
+/**
+ * CSS class selectors for state checking
+ */
+export const CSS_CLASSES = {
+	greenBackground: '.bg-green-500',
+	redText: '.text-red-600',
+	hiddenMobile: '.md\\:hidden'
+} as const
+
+/**
+ * Route patterns for URL validation
+ */
+export const ROUTES = {
+	home: '/',
+	exercises: '/exercises',
+	exerciseVerbsBe: /\/exercise\/verbs-be/,
+	exerciseVerbsHave: /\/exercise\/verbs-have/
+} as const

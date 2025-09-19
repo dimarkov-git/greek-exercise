@@ -125,6 +125,8 @@ function InputField({
 			<input
 				autoComplete='off'
 				className={inputStyles}
+				data-status={status}
+				data-testid='exercise-input'
 				disabled={disabled && status !== 'REQUIRE_CORRECTION'}
 				onBlur={onBlur}
 				onChange={onChange}
@@ -259,6 +261,8 @@ export function WordFormInput({
 			<div className='flex gap-3'>
 				<button
 					className={buttonStyles}
+					data-status={status}
+					data-testid='exercise-submit-button'
 					disabled={disabled || !value.trim()}
 					type='submit'
 				>

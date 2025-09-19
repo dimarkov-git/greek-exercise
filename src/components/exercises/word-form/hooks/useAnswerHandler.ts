@@ -131,20 +131,21 @@ function useTimer() {
 	return {setTimer}
 }
 
-export function useAnswerHandler({
-	exercise,
-	state,
+function useProcessAnswer({
 	status,
-	currentCase,
+	state,
+	exercise,
 	setState,
 	setStatus,
 	setCorrectCount,
 	setIncorrectCount,
 	triggerPulse,
-	handleContinue
-}: UseAnswerHandlerProps) {
-	const {setTimer} = useTimer()
-	const processAnswer = useCallback(
+	handleContinue,
+	setTimer
+}: Omit<UseAnswerHandlerProps, 'currentCase'> & {
+	setTimer: (callback: () => void, delay: number) => void
+}) {
+	return useCallback(
 		(answer: string, caseData: WordFormCase) => {
 			let isCorrect: boolean
 			try {
@@ -153,13 +154,13 @@ export function useAnswerHandler({
 				isCorrect = false
 			}
 
-			if (isCorrect) {
-				setState(prev => ({
-					...prev,
-					userAnswer: answer,
-					isCorrect
-				}))
+			setState(prev => ({
+				...prev,
+				userAnswer: answer,
+				isCorrect
+			}))
 
+			if (isCorrect) {
 				handleCorrectAnswer({
 					status,
 					setCorrectCount,
@@ -195,6 +196,34 @@ export function useAnswerHandler({
 			setTimer
 		]
 	)
+}
+
+export function useAnswerHandler({
+	exercise,
+	state,
+	status,
+	currentCase,
+	setState,
+	setStatus,
+	setCorrectCount,
+	setIncorrectCount,
+	triggerPulse,
+	handleContinue
+}: UseAnswerHandlerProps) {
+	const {setTimer} = useTimer()
+
+	const processAnswer = useProcessAnswer({
+		exercise,
+		state,
+		status,
+		setState,
+		setStatus,
+		setCorrectCount,
+		setIncorrectCount,
+		triggerPulse,
+		handleContinue,
+		setTimer
+	})
 
 	const validateInput = useCallback(
 		(answer: string) => {

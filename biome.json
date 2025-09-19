@@ -108,7 +108,7 @@
 			}
 		},
 		{
-			"includes": ["src/**/*.test.tsx"],
+			"includes": ["src/**/*.test.tsx", "tests/**/*.ts"],
 			"linter": {
 				"rules": {
 					"performance": {

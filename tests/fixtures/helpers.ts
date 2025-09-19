@@ -1,0 +1,168 @@
+import type {Page} from '@playwright/test'
+import {DATA_ATTRIBUTES, SELECTORS} from './selectors'
+import {TIMEOUTS, VIEWPORT_SIZES} from './test-data'
+
+// Regex constants for performance
+const START_EXERCISE_REGEX = /start exercise/i
+
+/**
+ * Common test helper functions for DRY test code
+ */
+
+export class TestHelpers {
+	private readonly page: Page
+
+	constructor(page: Page) {
+		this.page = page
+	}
+
+	/**
+	 * Wait for a specific timeout with optional description
+	 */
+	async wait(timeout: number, _description?: string) {
+		// Description parameter is used for debugging purposes
+		await this.page.waitForTimeout(timeout)
+	}
+
+	/**
+	 * Check if viewport is mobile sized
+	 */
+	isMobile(): boolean {
+		const viewport = this.page.viewportSize()
+		return viewport ? viewport.width < VIEWPORT_SIZES.tablet.width : false
+	}
+
+	/**
+	 * Check if viewport is desktop sized
+	 */
+	isDesktop(): boolean {
+		const viewport = this.page.viewportSize()
+		return viewport ? viewport.width >= VIEWPORT_SIZES.tablet.width : false
+	}
+
+	/**
+	 * Get current theme from HTML data attribute
+	 */
+	async getCurrentTheme(): Promise<string | null> {
+		return await this.page.locator('html').getAttribute(DATA_ATTRIBUTES.theme)
+	}
+
+	/**
+	 * Get current UI language from dropdown data attribute
+	 */
+	async getCurrentUILanguage(): Promise<string | null> {
+		const dropdown = this.page.locator(SELECTORS.uiLanguageDropdown).first()
+		return await dropdown.getAttribute(DATA_ATTRIBUTES.uiLanguage)
+	}
+
+	/**
+	 * Get current user language from selector data attribute
+	 */
+	async getCurrentUserLanguage(): Promise<string | null> {
+		const selector = this.page
+			.locator(SELECTORS.userLanguageSelector)
+			.locator('div')
+			.nth(1)
+		return await selector.getAttribute(DATA_ATTRIBUTES.userLanguage)
+	}
+
+	/**
+	 * Get exercise input status
+	 */
+	async getInputStatus(): Promise<string | null> {
+		return await this.page
+			.locator(SELECTORS.exerciseInput)
+			.getAttribute(DATA_ATTRIBUTES.inputStatus)
+	}
+
+	/**
+	 * Check if auto advance is enabled
+	 */
+	async isAutoAdvanceEnabled(): Promise<boolean> {
+		const enabled = await this.page
+			.locator(SELECTORS.autoAdvanceToggle)
+			.getAttribute(DATA_ATTRIBUTES.autoAdvanceEnabled)
+		return enabled === 'true'
+	}
+
+	/**
+	 * Fill input and submit answer
+	 */
+	async submitAnswer(answer: string) {
+		const input = this.page.locator(SELECTORS.exerciseInput)
+		await input.fill(answer)
+		await input.press('Enter')
+	}
+
+	/**
+	 * Click submit button instead of using Enter
+	 */
+	async clickSubmitButton() {
+		await this.page.locator(SELECTORS.exerciseSubmitButton).click()
+	}
+
+	/**
+	 * Navigate to home page and wait for load
+	 */
+	async goHome() {
+		await this.page.goto('/')
+		await this.page.locator(SELECTORS.mainHeading).waitFor()
+	}
+
+	/**
+	 * Navigate to exercises page and wait for load
+	 */
+	async goToExercises() {
+		await this.page.goto('/exercises')
+		await this.page.locator(SELECTORS.navCardExercises).first().waitFor()
+	}
+
+	/**
+	 * Start first exercise (verbs-be)
+	 */
+	async startFirstExercise() {
+		const exerciseCard = this.page
+			.locator('.grid.gap-6 .bg-white.rounded-lg.shadow-sm')
+			.first()
+		const startButton = exerciseCard.getByRole('link', {
+			name: START_EXERCISE_REGEX
+		})
+		await startButton.click()
+		await this.page.locator(SELECTORS.exerciseInput).waitFor()
+	}
+
+	/**
+	 * Start second exercise (verbs-have)
+	 */
+	async startSecondExercise() {
+		const exerciseCard = this.page
+			.locator('.grid.gap-6 .bg-white.rounded-lg.shadow-sm')
+			.nth(1)
+		const startButton = exerciseCard.getByRole('link', {
+			name: START_EXERCISE_REGEX
+		})
+		await startButton.click()
+		await this.page.locator(SELECTORS.exerciseInput).waitFor()
+	}
+
+	/**
+	 * Wait for auto advance to complete
+	 */
+	async waitForAutoAdvance() {
+		await this.wait(TIMEOUTS.autoAdvance, 'auto advance')
+	}
+
+	/**
+	 * Wait for answer processing
+	 */
+	async waitForAnswerProcessing() {
+		await this.wait(TIMEOUTS.fast, 'answer processing')
+	}
+
+	/**
+	 * Get progress text content
+	 */
+	async getProgressText(): Promise<string | null> {
+		return await this.page.locator(SELECTORS.progressText).textContent()
+	}
+}

@@ -41,8 +41,11 @@ export function NavigationCard({
 }: NavigationCardProps) {
 	const colors = colorClasses[color]
 
+	// Create test ID from the route path
+	const testId = `nav-card-${to.replace('/', '')}`
+
 	return (
-		<Link className='block' to={to}>
+		<Link className='block' data-testid={testId} to={to}>
 			<motion.div
 				animate={{opacity: 1, y: 0}}
 				className='group relative cursor-pointer transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700'

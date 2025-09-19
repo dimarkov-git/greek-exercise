@@ -17,6 +17,7 @@ function BackButton() {
 	return (
 		<Link
 			className='flex items-center gap-2 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
+			data-testid='exercise-back-button'
 			to='/exercises'
 		>
 			<svg
@@ -52,6 +53,8 @@ function AutoAdvanceToggle({
 					? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
 					: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
 			}`}
+			data-enabled={autoAdvanceEnabled}
+			data-testid='auto-advance-toggle'
 			onClick={onToggleAutoAdvance}
 			title={
 				autoAdvanceEnabled
@@ -98,12 +101,15 @@ function AutoAdvanceToggle({
 
 function ProgressBar({progress}: {progress: {current: number; total: number}}) {
 	return (
-		<div className='w-full'>
+		<div className='w-full' data-testid='exercise-progress'>
 			<div className='mb-2 flex items-center justify-between'>
 				<span className='text-gray-600 text-sm dark:text-gray-400'>
 					Прогресс
 				</span>
-				<span className='font-medium text-gray-900 text-sm dark:text-white'>
+				<span
+					className='font-medium text-gray-900 text-sm dark:text-white'
+					data-testid='progress-text'
+				>
 					{progress.current} из {progress.total}
 				</span>
 			</div>
