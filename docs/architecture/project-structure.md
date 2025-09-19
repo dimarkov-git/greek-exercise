@@ -72,11 +72,18 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 ### Pages (pages/)
 
 - **HomePage.tsx** - main landing page with navigation
-  - Settings panel with theme and language controls
+  - User language selector (for exercise hints)
   - Navigation cards to Exercise Library and Builder
   - Multilingual content with real-time language switching
-- **ExerciseLibrary.tsx** - browse available exercises (placeholder)
+- **ExerciseLibrary.tsx** - browse and filter available exercises
+  - Exercise cards with metadata (difficulty, time, tags)
+  - Tag-based filtering system
+  - Integration with MSW API endpoints
 - **ExerciseBuilder.tsx** - create custom exercises (placeholder)
+- **ExercisePage.tsx** - exercise execution page
+  - Dynamic exercise loading by ID
+  - Integration with word-form exercise system
+  - Progress tracking and completion handling
 
 ### API layer (api/)
 
@@ -91,14 +98,40 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 
 #### Layout components (components/layout/)
 - **Footer.tsx** - application footer with copyright and GitHub link
+- **Header.tsx** - main application header with adaptive navigation
+  - Desktop: full navigation bar with settings
+  - Mobile: burger menu with dropdown navigation
+  - Conditional rendering (hidden on exercise pages)
+- **HeaderLogo.tsx** - custom logo with Greek letters (ΕΛ)
+- **HeaderNavigation.tsx** - navigation menu for desktop and mobile
+- **HeaderSettings.tsx** - compact theme and language controls
 - **MainNavigation.tsx** - main navigation cards for homepage
-- **SettingsPanel.tsx** - settings panel with theme and language controls
+- **SettingsPanel.tsx** - settings panel with theme and language controls (legacy)
 
 #### UI components (components/ui/)
-- **LanguageSelector.tsx** - language selection buttons with flags
+- **CompactThemeToggle.tsx** - minimal theme switcher for header (icon only)
+- **LanguageDropdown.tsx** - dropdown language selector with flags
+- **LanguageSelector.tsx** - language selection buttons with flags (legacy)
 - **NavigationCard.tsx** - reusable card for navigation links
-- **ThemeToggle.tsx** - theme switcher with animation
+- **ThemeToggle.tsx** - theme switcher with animation (full version)
 - **UserLanguageSelector.tsx** - user language preference selector
+
+#### Exercise components (components/exercises/)
+
+##### Shared exercise components (components/exercises/shared/)
+- **ExerciseLayout.tsx** - common layout for all exercise types
+- **ExerciseHeader.tsx** - exercise header with progress and controls
+- **HintSystem.tsx** - adaptive hint system (hover/tap for translations)
+- **PulseEffect.tsx** - animated feedback (green/red pulse effects)
+
+##### Word-form exercise components (components/exercises/word-form/)
+- **WordFormExercise.tsx** - main word-form exercise controller
+- **WordFormExerciseWrapper.tsx** - wrapper for exercise page integration
+- **WordFormInput.tsx** - text input with validation and feedback
+- **WordFormFeedback.tsx** - answer feedback and correction display
+- **CompletionScreen.tsx** - exercise completion summary
+- **ExerciseContent.tsx** - exercise content renderer
+- **ExerciseRenderer.tsx** - exercise state machine renderer
 
 #### Utility components
 - **Head.tsx** - page meta tags management
@@ -108,14 +141,18 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 
 - **browser.ts** - MSW setup for browser
 - **server.ts** - MSW setup for Node.js (tests)
-- **handlers.ts** - mock API endpoint handlers for translations
+- **handlers.ts** - mock API endpoint handlers
   - `/api/texts/common` - translation keys endpoint
   - `/api/translations/{lang}` - localized strings by language
+  - `/api/exercises` - exercise metadata endpoint
+  - `/api/exercises/{id}` - specific exercise data endpoint
 - **data/texts/common.json** - translation key definitions
 - **data/translations/** - localized strings
   - `el.json` - Greek translations
   - `ru.json` - Russian translations
   - `en.json` - English translations
+- **data/exercises/** - exercise data files
+  - `verbs-be.json` - Greek verb conjugation exercise (είμαι)
 
 ### State management and hooks
 
@@ -132,6 +169,12 @@ This document explains the purpose of each file in the **Learn Greek** applicati
   - Fallback translations for critical UI elements
   - Translation function `t(key)` with caching
 - **useTranslation.ts** - alternative translation hook (unused)
+- **useExercises.ts** - exercise data management hooks
+  - `useExercises()` - fetch exercise metadata list
+  - `useExercise(id)` - fetch specific exercise data
+  - TanStack Query integration with caching
+- **usePulseEffect.ts** - pulse animation management hook
+- **useHintState.ts** - hint system state management hook
 
 #### Contexts (contexts/)
 - **LanguageContext.tsx** - React context for language management
@@ -144,6 +187,18 @@ This document explains the purpose of each file in the **Learn Greek** applicati
   - Initialize jest-dom matchers
   - MSW server setup for tests
 - **test-utils.tsx** - utilities for component rendering in tests
+
+### TypeScript types and schemas
+
+#### Types (types/)
+- **settings.ts** - app settings types (Language, Theme, AppSettings)
+- **exercises.ts** - exercise system types (WordFormExercise, ExerciseState, etc.)
+
+#### Schemas (schemas/)
+- **exercises.ts** - Valibot validation schemas for exercise JSON data
+
+#### Utils (utils/)
+- **exercises.ts** - exercise utilities (Greek text normalization, answer validation)
 
 ### Styles
 
@@ -195,6 +250,18 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 - **TypeScript 5** - strict typing for better developer experience
 - **Vite 7** - fast build and HMR
 - **Tailwind CSS v4** - utility-first styles with CSS-in-JS support
+- **React Router 7** - client-side routing with lazy loading
+- **Framer Motion** - smooth animations and transitions
+- **Biome** - unified linting and formatting tool
+
+### Exercise system architecture
+
+- **JSON-based exercises** - Structured data files for exercise configuration
+- **Type-safe validation** - Valibot schemas for exercise data integrity
+- **Modular components** - Reusable exercise components (shared/word-form)
+- **State machines** - Predictable exercise state transitions
+- **Greek text handling** - Unicode normalization and tone-aware comparison
+- **Hint system** - Adaptive UI (hover/tap) for multilingual hints
 
 ### Internationalization architecture
 
@@ -203,14 +270,16 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 - **Multi-level fallbacks** - Graceful degradation for missing translations
 - **Language persistence** - User preferences stored in localStorage
 - **Real-time switching** - Instant UI updates without page reload
+- **Dual language system** - UI language + user language for exercise hints
 
 ### State and data management
 
-- **TanStack Query** - server state caching and synchronization for translations
+- **TanStack Query** - server state caching and synchronization
 - **Zustand** - client state management for settings persistence
 - **Valibot** - data validation (lightweight Zod alternative)
-- **MSW** - API mocking for translation endpoints in development
+- **MSW** - comprehensive API mocking (translations + exercises)
 - **React Context** - language state management across components
+- **LocalStorage** - settings persistence with automatic synchronization
 
 ### Code quality
 
