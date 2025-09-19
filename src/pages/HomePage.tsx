@@ -1,10 +1,23 @@
 import {motion} from 'framer-motion'
 import {Head} from '@/components/Head'
 import {MainNavigation} from '@/components/layout/MainNavigation'
-import {useI18n} from '@/hooks/useI18n'
+import {TranslatedText} from '@/components/ui/TranslatedText'
+import {useTranslations} from '@/hooks/useTranslations'
+import type {TranslationRequest} from '@/types/translations'
+
+const HOME_PAGE_TRANSLATIONS: TranslationRequest[] = [
+	{
+		key: 'appTitle',
+		fallback: 'Learn Greek'
+	},
+	{
+		key: 'appSubtitle',
+		fallback: 'Interactive exercises for learning Greek language'
+	}
+]
 
 export function HomePage() {
-	const {t} = useI18n()
+	const {t, isLoading} = useTranslations(HOME_PAGE_TRANSLATIONS)
 
 	return (
 		<>
@@ -23,23 +36,37 @@ export function HomePage() {
 
 							{/* Content */}
 							<div className='relative'>
-								<motion.h1
+								<motion.div
 									animate={{opacity: 1}}
-									className='mb-6 font-bold text-4xl text-white md:text-6xl'
 									initial={{opacity: 0}}
 									transition={{delay: 0.3}}
 								>
-									{t('appTitle')}
-								</motion.h1>
+									<TranslatedText
+										as='h1'
+										className='mb-6 font-bold text-4xl text-white md:text-6xl'
+										isLoading={isLoading}
+										minAnimationMs={400}
+										skeletonHeight='4rem'
+										skeletonWidth='280px'
+										text={t('appTitle')}
+									/>
+								</motion.div>
 
-								<motion.p
+								<motion.div
 									animate={{opacity: 1}}
-									className='mx-auto max-w-2xl text-slate-300 text-xl leading-relaxed'
 									initial={{opacity: 0}}
 									transition={{delay: 0.4}}
 								>
-									{t('appSubtitle')}
-								</motion.p>
+									<TranslatedText
+										as='p'
+										className='mx-auto max-w-2xl text-slate-300 text-xl leading-relaxed'
+										isLoading={isLoading}
+										minAnimationMs={350}
+										skeletonHeight='1.5rem'
+										skeletonWidth='500px'
+										text={t('appSubtitle')}
+									/>
+								</motion.div>
 							</div>
 						</motion.div>
 					</div>

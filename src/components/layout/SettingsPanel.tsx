@@ -2,10 +2,18 @@ import {motion} from 'framer-motion'
 import {LanguageSelector} from '@/components/ui/LanguageSelector'
 import {ThemeToggle} from '@/components/ui/ThemeToggle'
 import {UserLanguageSelector} from '@/components/ui/UserLanguageSelector'
-import {useI18n} from '@/hooks/useI18n'
+import {useTranslations} from '@/hooks/useTranslations'
+import type {TranslationRequest} from '@/types/translations'
+
+const SETTINGS_PANEL_TRANSLATIONS: TranslationRequest[] = [
+	{
+		key: 'settings',
+		fallback: 'Settings'
+	}
+]
 
 export function SettingsPanel() {
-	const {t} = useI18n()
+	const {t} = useTranslations(SETTINGS_PANEL_TRANSLATIONS)
 
 	return (
 		<motion.div

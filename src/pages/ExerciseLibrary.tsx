@@ -5,9 +5,30 @@ import {Head} from '@/components/Head'
 import {LoadingOrError} from '@/components/LoadingOrError'
 import {UserLanguageSelector} from '@/components/ui/UserLanguageSelector'
 import {useExercises} from '@/hooks/useExercises'
-import {useI18n} from '@/hooks/useI18n'
+import {useTranslations} from '@/hooks/useTranslations'
 import {useSettingsStore} from '@/stores/settings'
 import type {ExerciseMetadata} from '@/types/exercises'
+import type {TranslationRequest} from '@/types/translations'
+
+const EXERCISE_LIBRARY_TRANSLATIONS: TranslationRequest[] = [
+	{
+		key: 'exerciseLibrary',
+		fallback: 'Exercise Library'
+	},
+	{
+		key: 'exerciseLibraryDesc',
+		fallback: 'Browse and execute available exercises'
+	},
+	{
+		key: 'settings',
+		fallback: 'Settings'
+	},
+	{
+		key: 'userLanguageDescription',
+		fallback:
+			'Choose a language you already know. It will be used for hints in exercises.'
+	}
+]
 
 interface ExerciseCardProps {
 	exercise: ExerciseMetadata
@@ -310,7 +331,7 @@ function ExerciseFilters({
 }
 
 export function ExerciseLibrary() {
-	const {t} = useI18n()
+	const {t} = useTranslations(EXERCISE_LIBRARY_TRANSLATIONS)
 	const {data: exercises, isLoading, error} = useExercises()
 	const [selectedTags, setSelectedTags] = useState<string[]>([])
 	const [selectedDifficulty, setSelectedDifficulty] = useState<string>('')

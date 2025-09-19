@@ -1,13 +1,42 @@
+import {TranslatedText} from '@/components/ui/TranslatedText'
+import {useTranslations} from '@/hooks/useTranslations'
+import type {TranslationRequest} from '@/types/translations'
+
+const copyrightKey = 'footer.copyright'
+const madeWithKey = 'footer.madeWith'
+
+const FOOTER_TRANSLATIONS: TranslationRequest[] = [
+	{
+		key: copyrightKey,
+		fallback: '© 2025 Learn Greek. All rights reserved.'
+	},
+	{
+		key: madeWithKey,
+		language: 'el',
+		fallback: 'Από τον Ντένις με αγάπη'
+	}
+]
+
 export function Footer() {
+	const {t, isLoading} = useTranslations(FOOTER_TRANSLATIONS)
+
 	return (
 		<footer className='border-gray-800 border-t bg-slate-900 text-gray-400'>
 			<div className='mx-auto max-w-7xl px-6 py-8'>
-				<div className='flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0'>
-					<p className='text-center text-sm md:text-left'>
-						© 2025 Μάθε Ελληνικά. Όλα τα δικαιώματα κατοχυρωμένα.
+				<div className='flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0 md:items-end'>
+					<div className='text-center text-sm md:text-left'>
+						<TranslatedText
+							isLoading={isLoading}
+							skeletonWidth='280px'
+							text={t(copyrightKey)}
+						/>
 						<br />
-						Από τον Ντένις με αγάπη
-					</p>
+						<TranslatedText
+							isLoading={isLoading}
+							skeletonWidth='180px'
+							text={t(madeWithKey)}
+						/>
+					</div>
 					<div className='flex space-x-6'>
 						<a
 							className='text-gray-400 transition-colors hover:text-gray-300'
@@ -15,7 +44,6 @@ export function Footer() {
 							rel='noopener noreferrer'
 							target='_blank'
 						>
-							<span className='sr-only'>GitHub</span>
 							<svg className='h-6 w-6' fill='currentColor' viewBox='0 0 24 24'>
 								<title>GitHub</title>
 								<path

@@ -1,10 +1,22 @@
 import {motion} from 'framer-motion'
-import {useI18n} from '@/hooks/useI18n'
+import {useTranslations} from '@/hooks/useTranslations'
 import {useSettingsStore} from '@/stores/settings'
+import type {TranslationRequest} from '@/types/translations'
+
+const THEME_TOGGLE_TRANSLATIONS: TranslationRequest[] = [
+	{
+		key: 'lightTheme',
+		fallback: 'Light'
+	},
+	{
+		key: 'darkTheme',
+		fallback: 'Dark'
+	}
+]
 
 export function ThemeToggle() {
 	const {theme, setTheme} = useSettingsStore()
-	const {t} = useI18n()
+	const {t} = useTranslations(THEME_TOGGLE_TRANSLATIONS)
 
 	const toggleTheme = () => {
 		setTheme(theme === 'light' ? 'dark' : 'light')

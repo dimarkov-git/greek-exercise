@@ -5,7 +5,6 @@ import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import {BrowserRouter} from 'react-router'
 import {App} from './App'
-import {LanguageProvider} from './contexts/LanguageContext'
 
 const queryClient = new QueryClient()
 
@@ -35,11 +34,9 @@ function renderApp() {
 			<StrictMode>
 				<QueryClientProvider client={queryClient}>
 					<ReactQueryDevtools initialIsOpen={false} />
-					<LanguageProvider defaultLanguage='el'>
-						<BrowserRouter>
-							<App />
-						</BrowserRouter>
-					</LanguageProvider>
+					<BrowserRouter>
+						<App />
+					</BrowserRouter>
 				</QueryClientProvider>
 			</StrictMode>
 		)

@@ -1,20 +1,17 @@
 import {delay, HttpResponse, http} from 'msw'
 import {validateWordFormExercise} from '@/schemas/exercises'
+import type {
+	SupportedLanguage,
+	TranslationsDatabase
+} from '@/types/translations'
 import {extractExerciseMetadata} from '@/utils/exercises'
 import verbsBeExercise from './data/exercises/verbs-be.json' with {type: 'json'}
 import verbsHaveExercise from './data/exercises/verbs-have.json' with {
 	type: 'json'
 }
-import commonTexts from './data/texts/common.json' with {type: 'json'}
-import elTranslations from './data/translations/el.json' with {type: 'json'}
-import enTranslations from './data/translations/en.json' with {type: 'json'}
-import ruTranslations from './data/translations/ru.json' with {type: 'json'}
+import translationsDatabase from './data/translations.json' with {type: 'json'}
 
-const translations = {
-	en: enTranslations,
-	ru: ruTranslations,
-	el: elTranslations
-}
+const translations = translationsDatabase as TranslationsDatabase
 
 // Exercise registry - in a real app this would be loaded dynamically
 const exerciseRegistry = new Map()
@@ -35,24 +32,81 @@ try {
 }
 
 export const handlers = [
-	http.get('/api/texts/common', async () => {
+	// New translation endpoint with key filtering
+	http.get('/api/translations', async ({request}) => {
 		await delay('real')
-		return HttpResponse.json(commonTexts)
-	}),
+		const url = new URL(request.url)
+		const lang = url.searchParams.get('lang') as SupportedLanguage
+		const keysParam = url.searchParams.get('keys')
 
-	http.get('/api/translations/:lang', async ({params}) => {
-		await delay('real')
-		const {lang} = params
-		const translation = translations[lang as keyof typeof translations]
+		if (!(lang && keysParam)) {
+			return HttpResponse.json(
+				{error: 'Missing required parameters: lang and keys'},
+				{status: 400}
+			)
+		}
 
-		if (!translation) {
+		const requestedKeys = keysParam.split(',')
+		const languageTranslations = translations[lang]
+
+		if (!languageTranslations) {
 			return HttpResponse.json(
 				{error: `Translation for language '${lang}' not found`},
 				{status: 404}
 			)
 		}
 
-		return HttpResponse.json(translation)
+		// Filter only requested keys
+		const filteredTranslations: Record<string, string> = {}
+		for (const key of requestedKeys) {
+			if (languageTranslations[key]) {
+				filteredTranslations[key] = languageTranslations[key]
+			} else if (lang !== 'en' && translations.en[key]) {
+				// Try English fallback if available and not already English
+				filteredTranslations[key] = translations.en[key]
+			}
+		}
+
+		return HttpResponse.json({translations: filteredTranslations})
+	}),
+
+	// POST endpoint for large key lists
+	http.post('/api/translations', async ({request}) => {
+		await delay('real')
+		const body = await request.json()
+		const {language, keys} = body as {
+			language: SupportedLanguage
+			keys: string[]
+		}
+
+		if (!(language && keys)) {
+			return HttpResponse.json(
+				{error: 'Missing required parameters: language and keys'},
+				{status: 400}
+			)
+		}
+
+		const languageTranslations = translations[language]
+
+		if (!languageTranslations) {
+			return HttpResponse.json(
+				{error: `Translation for language '${language}' not found`},
+				{status: 404}
+			)
+		}
+
+		// Filter only requested keys
+		const filteredTranslations: Record<string, string> = {}
+		for (const key of keys) {
+			if (languageTranslations[key]) {
+				filteredTranslations[key] = languageTranslations[key]
+			} else if (language !== 'en' && translations.en[key]) {
+				// Try English fallback if available and not already English
+				filteredTranslations[key] = translations.en[key]
+			}
+		}
+
+		return HttpResponse.json({translations: filteredTranslations})
 	}),
 
 	// Get list of exercises (metadata only)

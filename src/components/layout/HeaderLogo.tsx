@@ -1,9 +1,19 @@
 import {motion} from 'framer-motion'
 import {Link} from 'react-router'
-import {useI18n} from '@/hooks/useI18n'
+import {TranslatedText} from '@/components/ui/TranslatedText'
+import {useTranslations} from '@/hooks/useTranslations'
+import type {TranslationRequest} from '@/types/translations'
+
+const titleKey = 'app.title'
+
+const HEADER_LOGO_TRANSLATIONS: TranslationRequest[] = [
+	{
+		key: titleKey
+	}
+]
 
 export function HeaderLogo() {
-	const {t} = useI18n()
+	const {t, isLoading} = useTranslations(HEADER_LOGO_TRANSLATIONS)
 
 	return (
 		<motion.div
@@ -14,11 +24,15 @@ export function HeaderLogo() {
 		>
 			<Link className='flex items-center gap-3' to='/'>
 				<div className='flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-white'>
-					<span className='font-bold text-sm'>ΕΛ</span>
+					<span className='font-bold text-sm'>ΜΕ</span>
 				</div>
-				<span className='hidden font-semibold text-gray-900 text-lg sm:block dark:text-white'>
-					{t('appTitle')}
-				</span>
+				<TranslatedText
+					as='span'
+					className='hidden font-semibold text-gray-900 text-lg sm:block dark:text-white'
+					isLoading={isLoading}
+					skeletonWidth='120px'
+					text={t(titleKey)}
+				/>
 			</Link>
 		</motion.div>
 	)

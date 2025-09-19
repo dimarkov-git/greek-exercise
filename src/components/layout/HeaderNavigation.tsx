@@ -1,9 +1,30 @@
 import {motion} from 'framer-motion'
 import {Link, useLocation} from 'react-router'
-import {useI18n} from '@/hooks/useI18n'
+import {TranslatedText} from '@/components/ui/TranslatedText'
+import {useTranslations} from '@/hooks/useTranslations'
+import type {TranslationRequest} from '@/types/translations'
+
+const homeKey = 'navigation.home'
+const libraryKey = 'navigation.library'
+const builderKey = 'navigation.builder'
+
+const NAVIGATION_TRANSLATIONS: TranslationRequest[] = [
+	{
+		key: homeKey,
+		fallback: 'Home'
+	},
+	{
+		key: libraryKey,
+		fallback: 'Library'
+	},
+	{
+		key: builderKey,
+		fallback: 'Builder'
+	}
+]
 
 export function HeaderNavigation() {
-	const {t} = useI18n()
+	const {t, isLoading} = useTranslations(NAVIGATION_TRANSLATIONS)
 	const location = useLocation()
 
 	const isActive = (path: string) => {
@@ -14,17 +35,17 @@ export function HeaderNavigation() {
 	const navigationItems = [
 		{
 			path: '/',
-			label: t('navigation.home'),
+			label: t(homeKey),
 			icon: '🏠'
 		},
 		{
 			path: '/exercises',
-			label: t('navigation.library'),
+			label: t(libraryKey),
 			icon: '📚'
 		},
 		{
 			path: '/builder',
-			label: t('navigation.builder'),
+			label: t(builderKey),
 			icon: '🔧'
 		}
 	]
@@ -52,7 +73,11 @@ export function HeaderNavigation() {
 						to={item.path}
 					>
 						<span className='p-0.5'>{item.icon}</span>
-						{item.label}
+						<TranslatedText
+							isLoading={isLoading}
+							skeletonWidth='60px'
+							text={item.label}
+						/>
 					</Link>
 				</motion.div>
 			))}

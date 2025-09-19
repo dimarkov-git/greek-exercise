@@ -1,12 +1,20 @@
 import {motion} from 'framer-motion'
-import {useI18n} from '@/hooks/useI18n'
+import {useTranslations} from '@/hooks/useTranslations'
 import {useSettingsStore} from '@/stores/settings'
 import type {Language} from '@/types/settings'
 import {USER_LANGUAGES} from '@/types/settings'
+import type {TranslationRequest} from '@/types/translations'
+
+const USER_LANGUAGE_TRANSLATIONS: TranslationRequest[] = [
+	{
+		key: 'userLanguageLabel',
+		fallback: 'Language you know:'
+	}
+]
 
 export function UserLanguageSelector() {
 	const {userLanguage, setUserLanguage} = useSettingsStore()
-	const {t} = useI18n()
+	const {t} = useTranslations(USER_LANGUAGE_TRANSLATIONS)
 
 	const onLanguageChange = (language: Language) => {
 		setUserLanguage(language)

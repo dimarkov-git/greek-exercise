@@ -1,5 +1,17 @@
 import {motion} from 'framer-motion'
-import {useI18n} from '@/hooks/useI18n'
+import {useTranslations} from '@/hooks/useTranslations'
+import type {TranslationRequest} from '@/types/translations'
+
+const MOBILE_MENU_BUTTON_TRANSLATIONS: TranslationRequest[] = [
+	{
+		key: 'navigation.menu',
+		fallback: 'Menu'
+	},
+	{
+		key: 'navigation.close',
+		fallback: 'Close'
+	}
+]
 
 interface MobileMenuButtonProps {
 	isOpen: boolean
@@ -7,7 +19,7 @@ interface MobileMenuButtonProps {
 }
 
 export function MobileMenuButton({isOpen, onClick}: MobileMenuButtonProps) {
-	const {t} = useI18n()
+	const {t} = useTranslations(MOBILE_MENU_BUTTON_TRANSLATIONS)
 
 	return (
 		<motion.button

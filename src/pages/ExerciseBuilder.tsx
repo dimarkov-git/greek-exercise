@@ -1,10 +1,22 @@
 import {motion} from 'framer-motion'
 import {Link} from 'react-router'
 import {Head} from '@/components/Head'
-import {useI18n} from '@/hooks/useI18n'
+import {useTranslations} from '@/hooks/useTranslations'
+import type {TranslationRequest} from '@/types/translations'
+
+const EXERCISE_BUILDER_TRANSLATIONS: TranslationRequest[] = [
+	{
+		key: 'exerciseBuilder',
+		fallback: 'Exercise Builder'
+	},
+	{
+		key: 'exerciseBuilderDesc',
+		fallback: 'Create your own exercises'
+	}
+]
 
 export function ExerciseBuilder() {
-	const {t} = useI18n()
+	const {t} = useTranslations(EXERCISE_BUILDER_TRANSLATIONS)
 
 	return (
 		<>

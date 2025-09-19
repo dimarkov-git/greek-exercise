@@ -2,7 +2,27 @@ import {AnimatePresence, motion} from 'framer-motion'
 import {Link, useLocation} from 'react-router'
 import {LanguageDropdown} from '@/components/ui/LanguageDropdown'
 import {ThemeToggle} from '@/components/ui/ThemeToggle'
-import {useI18n} from '@/hooks/useI18n'
+import {useTranslations} from '@/hooks/useTranslations'
+import type {TranslationRequest} from '@/types/translations'
+
+const MOBILE_MENU_TRANSLATIONS: TranslationRequest[] = [
+	{
+		key: 'navigation.home',
+		fallback: 'Home'
+	},
+	{
+		key: 'navigation.library',
+		fallback: 'Library'
+	},
+	{
+		key: 'navigation.builder',
+		fallback: 'Builder'
+	},
+	{
+		key: 'settings',
+		fallback: 'Settings'
+	}
+]
 
 interface MobileMenuProps {
 	isOpen: boolean
@@ -10,7 +30,7 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({isOpen, onClose}: MobileMenuProps) {
-	const {t} = useI18n()
+	const {t} = useTranslations(MOBILE_MENU_TRANSLATIONS)
 	const location = useLocation()
 
 	const isActive = (path: string) => {
