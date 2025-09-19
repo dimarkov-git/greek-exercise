@@ -23,7 +23,7 @@ export function Footer() {
 	return (
 		<footer className='border-gray-800 border-t bg-slate-900 text-gray-400'>
 			<div className='mx-auto max-w-7xl px-6 py-8'>
-				<div className='flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0 md:items-end'>
+				<div className='flex flex-col items-center justify-between space-y-4 md:flex-row md:items-end md:space-y-0'>
 					<div className='text-center text-sm md:text-left'>
 						<TranslatedText
 							isLoading={isLoading}

@@ -1,7 +1,7 @@
 {
 	"el": {
 		"app.title": "Μάθε Ελληνικά",
-		"appSubtitle": "Διαδραστικές ασκήσεις για την εκμάθηση της ελληνικής γλώσσας",
+		"app.subtitle": "Διαδραστικές ασκήσεις για την εκμάθηση της ελληνικής γλώσσας",
 		"settings": "Ρυθμίσεις",
 		"interfaceLanguage": "Γλώσσα διεπαφής",
 		"userLanguage": "Η γλώσσα σας",
@@ -43,7 +43,7 @@
 	},
 	"en": {
 		"app.title": "Learn Greek",
-		"appSubtitle": "Interactive exercises for learning Greek language",
+		"app.subtitle": "Interactive exercises for learning Greek language",
 		"settings": "Settings",
 		"interfaceLanguage": "Interface language",
 		"userLanguage": "Your language",
@@ -85,7 +85,7 @@
 	},
 	"ru": {
 		"app.title": "Учим греческий",
-		"appSubtitle": "Интерактивные упражнения для изучения греческого языка",
+		"app.subtitle": "Интерактивные упражнения для изучения греческого языка",
 		"settings": "Настройки",
 		"interfaceLanguage": "Язык интерфейса",
 		"userLanguage": "Ваш язык",

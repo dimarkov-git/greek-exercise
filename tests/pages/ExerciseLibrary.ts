@@ -74,7 +74,7 @@ export class ExerciseLibrary {
 	}
 
 	async expectUserLanguageSelected(language: string) {
-		const option = this.page.locator(SELECTORS.USER_LANGUAGE_OPTION(language))
+		const option = this.page.locator(SELECTORS.userLanguageOption(language))
 		const isSelected = await option.getAttribute('data-selected')
 		expect(isSelected).toBe('true')
 	}

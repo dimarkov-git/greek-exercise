@@ -7,12 +7,10 @@ import type {TranslationRequest} from '@/types/translations'
 
 const HOME_PAGE_TRANSLATIONS: TranslationRequest[] = [
 	{
-		key: 'appTitle',
-		fallback: 'Learn Greek'
+		key: 'app.title'
 	},
 	{
-		key: 'appSubtitle',
-		fallback: 'Interactive exercises for learning Greek language'
+		key: 'app.subtitle'
 	}
 ]
 
@@ -21,7 +19,7 @@ export function HomePage() {
 
 	return (
 		<>
-			<Head title={t('appTitle')} />
+			<Head title={t('app.title')} />
 			<div className='bg-gray-50 transition-colors dark:bg-gray-900'>
 				{/* Hero Section */}
 				<div className='px-4 py-16'>
@@ -45,10 +43,9 @@ export function HomePage() {
 										as='h1'
 										className='mb-6 font-bold text-4xl text-white md:text-6xl'
 										isLoading={isLoading}
-										minAnimationMs={400}
 										skeletonHeight='4rem'
 										skeletonWidth='280px'
-										text={t('appTitle')}
+										text={t('app.title')}
 									/>
 								</motion.div>
 
@@ -61,10 +58,9 @@ export function HomePage() {
 										as='p'
 										className='mx-auto max-w-2xl text-slate-300 text-xl leading-relaxed'
 										isLoading={isLoading}
-										minAnimationMs={350}
 										skeletonHeight='1.5rem'
 										skeletonWidth='500px'
-										text={t('appSubtitle')}
+										text={t('app.subtitle')}
 									/>
 								</motion.div>
 							</div>
