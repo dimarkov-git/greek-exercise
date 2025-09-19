@@ -2,6 +2,9 @@ import {delay, HttpResponse, http} from 'msw'
 import {validateWordFormExercise} from '@/schemas/exercises'
 import {extractExerciseMetadata} from '@/utils/exercises'
 import verbsBeExercise from './data/exercises/verbs-be.json' with {type: 'json'}
+import verbsHaveExercise from './data/exercises/verbs-have.json' with {
+	type: 'json'
+}
 import commonTexts from './data/texts/common.json' with {type: 'json'}
 import elTranslations from './data/translations/el.json' with {type: 'json'}
 import enTranslations from './data/translations/en.json' with {type: 'json'}
@@ -19,6 +22,13 @@ const exerciseRegistry = new Map()
 // Register available exercises
 try {
 	const validatedExercise = validateWordFormExercise(verbsBeExercise)
+	exerciseRegistry.set(validatedExercise.id, validatedExercise)
+} catch {
+	// Exercise validation failed - skip this exercise silently
+}
+
+try {
+	const validatedExercise = validateWordFormExercise(verbsHaveExercise)
 	exerciseRegistry.set(validatedExercise.id, validatedExercise)
 } catch {
 	// Exercise validation failed - skip this exercise silently

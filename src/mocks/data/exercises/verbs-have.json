@@ -1,0 +1,110 @@
+{
+	"enabled": true,
+	"id": "verbs-have",
+	"type": "word-form",
+	"title": "Εξάσκηση ρήματος έχω",
+	"titleI18n": {
+		"en": "Verb 'to have' practice",
+		"ru": "Практика глагола 'иметь'"
+	},
+	"description": "Κατακτήστε την κλίση του ρήματος έχω σε όλους τους χρόνους",
+	"descriptionI18n": {
+		"en": "Master conjugation of the verb 'to have' in all tenses",
+		"ru": "Освойте спряжение глагола 'иметь' во всех временах"
+	},
+	"buttonText": "Ξεκινήστε την άσκηση",
+	"buttonTextI18n": {
+		"en": "Start exercise",
+		"ru": "Начать упражнение"
+	},
+	"tags": ["verbs", "irregular-verbs", "basic", "conjugation"],
+	"difficulty": "beginner",
+	"estimatedTimeMinutes": 5,
+	"settings": {
+		"autoAdvance": true,
+		"autoAdvanceDelayMs": 1500,
+		"allowSkip": false,
+		"shuffleCases": false
+	},
+	"blocks": [
+		{
+			"id": "have-present",
+			"name": "έχω (Ενεστώτας)",
+			"nameHintI18n": {
+				"en": "to have (present tense)",
+				"ru": "иметь (настоящее время)"
+			},
+			"cases": [
+				{
+					"id": "have-present-1s",
+					"prompt": "εγώ ___",
+					"promptHintI18n": {
+						"en": "I have",
+						"ru": "я имею"
+					},
+					"correct": ["έχω"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "have-present-2s",
+					"prompt": "εσύ ___",
+					"promptHintI18n": {
+						"en": "you have (singular)",
+						"ru": "ты имеешь"
+					},
+					"correct": ["έχεις"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "have-present-3s",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": {
+						"en": "he/she/it has",
+						"ru": "он/она/оно имеет"
+					},
+					"correct": ["έχει"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "have-present-1p",
+					"prompt": "εμείς ___",
+					"promptHintI18n": {
+						"en": "we have",
+						"ru": "мы имеем"
+					},
+					"correct": ["έχουμε"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "have-present-2p",
+					"prompt": "εσείς ___",
+					"promptHintI18n": {
+						"en": "you have (plural)",
+						"ru": "вы имеете"
+					},
+					"correct": ["έχετε"],
+					"hint": null,
+					"hintI18n": null
+				},
+				{
+					"id": "have-present-3p",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": {
+						"en": "they have",
+						"ru": "они имеют"
+					},
+					"correct": ["έχουν", "έχουνε"],
+					"hint": "Δύο σωστές απαντήσεις: έχουν ή έχουνε",
+					"hintI18n": {
+						"en": "Two correct answers: έχουν or έχουνε",
+						"ru": "Два правильных ответа: έχουν или έχουνε"
+					}
+				}
+			]
+		}
+	]
+}

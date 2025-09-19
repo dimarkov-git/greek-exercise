@@ -14,7 +14,7 @@ const I18nStringSchema = v.record(LanguageSchema, v.string())
 // Exercise settings schema
 export const ExerciseSettingsSchema = v.object({
 	autoAdvance: v.boolean(),
-	autoAdvanceDelayMs: v.number(),
+	autoAdvanceDelayMs: v.pipe(v.number(), v.minValue(0)),
 	allowSkip: v.boolean(),
 	shuffleCases: v.boolean()
 })
@@ -24,7 +24,7 @@ export const WordFormCaseSchema = v.object({
 	id: v.string(),
 	prompt: v.string(),
 	promptHintI18n: I18nStringSchema,
-	correct: v.array(v.string()),
+	correct: v.pipe(v.array(v.string()), v.minLength(1)),
 	hint: v.nullable(v.string()),
 	hintI18n: v.nullable(I18nStringSchema)
 })
@@ -34,7 +34,7 @@ export const WordFormBlockSchema = v.object({
 	id: v.string(),
 	name: v.string(),
 	nameHintI18n: I18nStringSchema,
-	cases: v.array(WordFormCaseSchema)
+	cases: v.pipe(v.array(WordFormCaseSchema), v.minLength(1))
 })
 
 // Complete exercise schema
@@ -50,9 +50,9 @@ export const WordFormExerciseSchema = v.object({
 	buttonTextI18n: I18nStringSchema,
 	tags: v.array(v.string()),
 	difficulty: DifficultySchema,
-	estimatedTimeMinutes: v.number(),
+	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
 	settings: ExerciseSettingsSchema,
-	blocks: v.array(WordFormBlockSchema)
+	blocks: v.pipe(v.array(WordFormBlockSchema), v.minLength(1))
 })
 
 // Exercise metadata schema (for list display)
@@ -70,9 +70,9 @@ export const ExerciseMetadataSchema = v.object({
 	descriptionI18n: I18nStringSchema,
 	tags: v.array(v.string()),
 	difficulty: DifficultySchema,
-	estimatedTimeMinutes: v.number(),
-	totalBlocks: v.number(),
-	totalCases: v.number(),
+	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
+	totalBlocks: v.pipe(v.number(), v.minValue(0)),
+	totalCases: v.pipe(v.number(), v.minValue(0)),
 	enabled: v.boolean()
 })
 

@@ -21,7 +21,6 @@ function LibraryHeader({t}: {t: (key: string) => string}) {
 			className='mb-12 text-center'
 			initial={{opacity: 0, y: 20}}
 		>
-			<div className='mb-4 text-6xl'>📚</div>
 			<h1 className='mb-4 font-bold text-4xl text-gray-900 dark:text-white'>
 				{t('exerciseLibrary')}
 			</h1>
