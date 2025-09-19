@@ -4,6 +4,7 @@ import {Navigate, Route, Routes} from 'react-router'
 import {LoadingOrError} from '@/components/LoadingOrError'
 import {Footer} from '@/components/layout/Footer'
 import {Header} from '@/components/layout/Header'
+import {LayoutProvider, useLayout} from '@/contexts/LayoutContext'
 import {HomePage} from '@/pages/HomePage'
 
 const ExerciseLibrary = lazy(async () =>
@@ -22,13 +23,15 @@ function renderError({error}: FallbackProps) {
 	return <LoadingOrError error={error} />
 }
 
-export function App() {
+function AppContent() {
+	const {headerEnabled} = useLayout()
+
 	return (
 		<div className='flex min-h-screen flex-col'>
 			<Header />
 			<ErrorBoundary fallbackRender={renderError}>
 				<Suspense fallback={<LoadingOrError />}>
-					<main className='flex-1 pt-16'>
+					<main className={`flex-1 ${headerEnabled ? 'pt-16' : 'pt-0'}`}>
 						<Routes>
 							<Route element={<HomePage />} index={true} />
 							<Route element={<ExerciseLibrary />} path='/exercises' />
@@ -41,5 +44,13 @@ export function App() {
 				<Footer />
 			</ErrorBoundary>
 		</div>
+	)
+}
+
+export function App() {
+	return (
+		<LayoutProvider>
+			<AppContent />
+		</LayoutProvider>
 	)
 }

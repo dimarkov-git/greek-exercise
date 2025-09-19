@@ -1,7 +1,8 @@
-import {useCallback} from 'react'
+import {useCallback, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router'
 import {WordFormExercise} from '@/components/exercises/word-form/WordFormExercise'
 import {LoadingOrError} from '@/components/LoadingOrError'
+import {useLayout} from '@/contexts/LayoutContext'
 import {useExercise} from '@/hooks/useExercises'
 import type {ExerciseResult} from '@/types/exercises'
 
@@ -12,7 +13,14 @@ import type {ExerciseResult} from '@/types/exercises'
 export function ExercisePage() {
 	const {exerciseId} = useParams()
 	const navigate = useNavigate()
+	const {setHeaderEnabled} = useLayout()
 	const {data: exercise, isLoading, error} = useExercise(exerciseId)
+
+	// Hide header on exercise pages
+	useEffect(() => {
+		setHeaderEnabled(false)
+		return () => setHeaderEnabled(true) // Cleanup on unmount
+	}, [setHeaderEnabled])
 
 	const handleComplete = useCallback(
 		(_result: Omit<ExerciseResult, 'completedAt'>) => {
