@@ -112,7 +112,8 @@
 			"linter": {
 				"rules": {
 					"performance": {
-						"useTopLevelRegex": "off"
+						"useTopLevelRegex": "off",
+						"noAwaitInLoops": "off"
 					}
 				}
 			}
