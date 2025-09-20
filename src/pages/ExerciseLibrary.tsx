@@ -24,8 +24,8 @@ const EXERCISE_LIBRARY_TRANSLATIONS: TranslationRequest[] = [
 		fallback: 'Settings'
 	},
 	{
-		key: 'userLanguage',
-		fallback: 'Your language'
+		key: 'hintLanguage',
+		fallback: 'Hint language'
 	},
 	{
 		key: 'userLanguageDescription',
@@ -185,13 +185,13 @@ function ExerciseGrid({
 	filteredExercises,
 	exercises,
 	setSelectedTags,
-	setSelectedDifficulty,
+	setSelectedDifficulties,
 	t
 }: {
 	filteredExercises: import('@/types/exercises').ExerciseMetadata[]
 	exercises: import('@/types/exercises').ExerciseMetadata[]
 	setSelectedTags: (tags: string[]) => void
-	setSelectedDifficulty: (difficulty: string) => void
+	setSelectedDifficulties: (difficulties: string[]) => void
 	t: (key: string) => string
 }) {
 	return (
@@ -246,7 +246,7 @@ function ExerciseGrid({
 						className='rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700'
 						onClick={() => {
 							setSelectedTags([])
-							setSelectedDifficulty('')
+							setSelectedDifficulties([])
 						}}
 						type='button'
 					>
@@ -372,9 +372,12 @@ function SettingsSummary({t}: {t: (key: string) => string}) {
 
 	const getLanguageFlag = (lang: string) => {
 		switch (lang) {
-			case 'ru': return '🇷🇺'
-			case 'en': return '🇺🇸'
-			default: return '🌐'
+			case 'ru':
+				return '🇷🇺'
+			case 'en':
+				return '🇺🇸'
+			default:
+				return '🌐'
 		}
 	}
 
@@ -382,7 +385,8 @@ function SettingsSummary({t}: {t: (key: string) => string}) {
 		<div className='px-6 pb-4'>
 			<div className='flex flex-wrap gap-2'>
 				<span className='inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 font-medium text-blue-800 text-xs dark:bg-blue-900 dark:text-blue-300'>
-					{t('userLanguage')}{t('ui.colon')} {getLanguageFlag(userLanguage)}
+					{t('hintLanguage')}
+					{t('ui.colon')} {getLanguageFlag(userLanguage)}
 				</span>
 			</div>
 		</div>
@@ -401,7 +405,7 @@ function UserSettings({t}: {t: (key: string) => string}) {
 		>
 			{/* Header with collapse button */}
 			<button
-				className='flex w-full items-center justify-between p-6 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-700'
+				className='flex w-full cursor-pointer items-center justify-between p-6 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-700'
 				onClick={() => setIsCollapsed(!isCollapsed)}
 				type='button'
 			>
@@ -418,9 +422,7 @@ function UserSettings({t}: {t: (key: string) => string}) {
 				</motion.span>
 			</button>
 
-			{isCollapsed && (
-				<SettingsSummary t={t} />
-			)}
+			{isCollapsed && <SettingsSummary t={t} />}
 
 			{/* Collapsible content */}
 			<AnimatePresence>
@@ -446,12 +448,12 @@ function UserSettings({t}: {t: (key: string) => string}) {
 }
 
 function DifficultyFilter({
-	selectedDifficulty,
-	setSelectedDifficulty,
+	selectedDifficulties,
+	setSelectedDifficulties,
 	t
 }: {
-	selectedDifficulty: string
-	setSelectedDifficulty: (difficulty: string) => void
+	selectedDifficulties: string[]
+	setSelectedDifficulties: (difficulties: string[]) => void
 	t: (key: string) => string
 }) {
 	return (
@@ -462,11 +464,11 @@ function DifficultyFilter({
 			<div className='flex flex-wrap gap-2'>
 				<button
 					className={`rounded-full px-3 py-1 font-medium text-sm transition-colors ${
-						selectedDifficulty === ''
+						selectedDifficulties.length === 0
 							? 'bg-blue-600 text-white'
 							: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
 					}`}
-					onClick={() => setSelectedDifficulty('')}
+					onClick={() => setSelectedDifficulties([])}
 					type='button'
 				>
 					{t('all')}
@@ -474,12 +476,20 @@ function DifficultyFilter({
 				{['a0', 'a1', 'a2', 'b1', 'b2', 'c1', 'c2'].map(difficulty => (
 					<button
 						className={`rounded-full px-3 py-1 font-medium text-sm transition-colors ${
-							selectedDifficulty === difficulty
+							selectedDifficulties.includes(difficulty)
 								? 'bg-blue-600 text-white'
 								: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
 						}`}
 						key={difficulty}
-						onClick={() => setSelectedDifficulty(difficulty)}
+						onClick={() => {
+							if (selectedDifficulties.includes(difficulty)) {
+								setSelectedDifficulties(
+									selectedDifficulties.filter(d => d !== difficulty)
+								)
+							} else {
+								setSelectedDifficulties([...selectedDifficulties, difficulty])
+							}
+						}}
 						type='button'
 					>
 						{t(`difficulty.${difficulty}`)}
@@ -538,25 +548,27 @@ function TagsFilter({
 }
 
 function FilterSummary({
-	selectedDifficulty,
+	selectedDifficulties,
 	selectedTags,
 	t
 }: {
-	selectedDifficulty: string
+	selectedDifficulties: string[]
 	selectedTags: string[]
 	t: (key: string) => string
 }) {
-	const hasActiveFilters = selectedDifficulty !== '' || selectedTags.length > 0
+	const hasActiveFilters =
+		selectedDifficulties.length > 0 || selectedTags.length > 0
 
 	if (!hasActiveFilters) return null
 
 	return (
 		<div className='px-6 pb-4'>
 			<div className='flex flex-wrap gap-2'>
-				{selectedDifficulty && (
+				{selectedDifficulties.length > 0 && (
 					<span className='inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 font-medium text-blue-800 text-xs dark:bg-blue-900 dark:text-blue-300'>
 						{t('difficulty')}
-						{t('ui.colon')} {t(`difficulty.${selectedDifficulty}`)}
+						{t('ui.colon')}{' '}
+						{selectedDifficulties.map(d => t(`difficulty.${d}`)).join(' ')}
 					</span>
 				)}
 				{selectedTags.map(tag => (
@@ -573,15 +585,15 @@ function FilterSummary({
 }
 
 function ExerciseFilters({
-	selectedDifficulty,
-	setSelectedDifficulty,
+	selectedDifficulties,
+	setSelectedDifficulties,
 	selectedTags,
 	setSelectedTags,
 	allTags,
 	t
 }: {
-	selectedDifficulty: string
-	setSelectedDifficulty: (difficulty: string) => void
+	selectedDifficulties: string[]
+	setSelectedDifficulties: (difficulties: string[]) => void
 	selectedTags: string[]
 	setSelectedTags: (tags: string[]) => void
 	allTags: string[]
@@ -597,7 +609,7 @@ function ExerciseFilters({
 			transition={{delay: 0.2}}
 		>
 			<button
-				className='flex w-full items-center justify-between p-6 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-700'
+				className='flex w-full cursor-pointer items-center justify-between p-6 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-700'
 				onClick={() => setIsCollapsed(!isCollapsed)}
 				type='button'
 			>
@@ -616,7 +628,7 @@ function ExerciseFilters({
 
 			{isCollapsed && (
 				<FilterSummary
-					selectedDifficulty={selectedDifficulty}
+					selectedDifficulties={selectedDifficulties}
 					selectedTags={selectedTags}
 					t={t}
 				/>
@@ -633,8 +645,8 @@ function ExerciseFilters({
 					>
 						<div className='px-6 pb-6'>
 							<DifficultyFilter
-								selectedDifficulty={selectedDifficulty}
-								setSelectedDifficulty={setSelectedDifficulty}
+								selectedDifficulties={selectedDifficulties}
+								setSelectedDifficulties={setSelectedDifficulties}
 								t={t}
 							/>
 							<TagsFilter
@@ -653,7 +665,7 @@ function ExerciseFilters({
 
 function useExerciseFiltering() {
 	const [selectedTags, setSelectedTags] = useState<string[]>([])
-	const [selectedDifficulty, setSelectedDifficulty] = useState<string>('')
+	const [selectedDifficulties, setSelectedDifficulties] = useState<string[]>([])
 
 	const filterExercises = (exercises: ExerciseMetadata[] | undefined) => {
 		if (!exercises) return []
@@ -668,7 +680,10 @@ function useExerciseFiltering() {
 			}
 
 			// Difficulty filter
-			if (selectedDifficulty && exercise.difficulty !== selectedDifficulty) {
+			if (
+				selectedDifficulties.length > 0 &&
+				!selectedDifficulties.includes(exercise.difficulty)
+			) {
 				return false
 			}
 
@@ -682,8 +697,8 @@ function useExerciseFiltering() {
 	return {
 		selectedTags,
 		setSelectedTags,
-		selectedDifficulty,
-		setSelectedDifficulty,
+		selectedDifficulties,
+		setSelectedDifficulties,
 		filterExercises,
 		getAllTags
 	}
@@ -695,8 +710,8 @@ export function ExerciseLibrary() {
 	const {
 		selectedTags,
 		setSelectedTags,
-		selectedDifficulty,
-		setSelectedDifficulty,
+		selectedDifficulties,
+		setSelectedDifficulties,
 		filterExercises,
 		getAllTags
 	} = useExerciseFiltering()
@@ -721,9 +736,9 @@ export function ExerciseLibrary() {
 
 							<ExerciseFilters
 								allTags={allTags}
-								selectedDifficulty={selectedDifficulty}
+								selectedDifficulties={selectedDifficulties}
 								selectedTags={selectedTags}
-								setSelectedDifficulty={setSelectedDifficulty}
+								setSelectedDifficulties={setSelectedDifficulties}
 								setSelectedTags={setSelectedTags}
 								t={t}
 							/>
@@ -731,7 +746,7 @@ export function ExerciseLibrary() {
 							<ExerciseGrid
 								exercises={exercises}
 								filteredExercises={filteredExercises}
-								setSelectedDifficulty={setSelectedDifficulty}
+								setSelectedDifficulties={setSelectedDifficulties}
 								setSelectedTags={setSelectedTags}
 								t={t}
 							/>
