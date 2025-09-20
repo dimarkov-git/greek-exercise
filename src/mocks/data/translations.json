@@ -82,7 +82,11 @@
 		"difficulty.b1": "Β1",
 		"difficulty.b2": "Β2",
 		"difficulty.c1": "Γ1",
-		"difficulty.c2": "Γ2"
+		"difficulty.c2": "Γ2",
+		"ui.expand": "Επέκταση",
+		"ui.collapse": "Σύμπτυξη",
+		"ui.chevronUp": "▲",
+		"ui.chevronDown": "▼"
 	},
 	"en": {
 		"app.title": "Learn Greek",
@@ -167,7 +171,11 @@
 		"difficulty.b1": "B1",
 		"difficulty.b2": "B2",
 		"difficulty.c1": "C1",
-		"difficulty.c2": "C2"
+		"difficulty.c2": "C2",
+		"ui.expand": "Expand",
+		"ui.collapse": "Collapse",
+		"ui.chevronUp": "▲",
+		"ui.chevronDown": "▼"
 	},
 	"ru": {
 		"app.title": "Учим греческий",
@@ -252,6 +260,10 @@
 		"difficulty.b1": "В1",
 		"difficulty.b2": "В2",
 		"difficulty.c1": "С1",
-		"difficulty.c2": "С2"
+		"difficulty.c2": "С2",
+		"ui.expand": "Развернуть",
+		"ui.collapse": "Свернуть",
+		"ui.chevronUp": "▲",
+		"ui.chevronDown": "▼"
 	}
 }

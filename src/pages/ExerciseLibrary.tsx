@@ -113,6 +113,18 @@ const EXERCISE_LIBRARY_TRANSLATIONS: TranslationRequest[] = [
 		fallback: '▼'
 	},
 	{
+		key: 'ui.chevronUp',
+		fallback: '▲'
+	},
+	{
+		key: 'ui.expand',
+		fallback: 'Expand'
+	},
+	{
+		key: 'ui.collapse',
+		fallback: 'Collapse'
+	},
+	{
 		key: 'difficulty.a0',
 		fallback: 'A0'
 	},
@@ -352,24 +364,146 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 }
 
 function UserSettings({t}: {t: (key: string) => string}) {
+	const [isCollapsed, setIsCollapsed] = useState(false)
+
 	return (
 		<motion.div
 			animate={{opacity: 1, y: 0}}
-			className='mb-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800'
+			className='mb-6 rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800'
 			initial={{opacity: 0, y: 20}}
 			transition={{delay: 0.1}}
 		>
-			<h3 className='mb-4 font-semibold text-gray-900 dark:text-white'>
-				{t('settings')}
-			</h3>
+			{/* Header with collapse button */}
+			<button
+				className='flex w-full items-center justify-between p-6 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-700'
+				onClick={() => setIsCollapsed(!isCollapsed)}
+				type='button'
+			>
+				<h3 className='font-semibold text-gray-900 dark:text-white'>
+					{t('settings')}
+				</h3>
+				<motion.span
+					animate={{rotate: isCollapsed ? 0 : 180}}
+					className='text-gray-500 transition-transform dark:text-gray-400'
+					title={isCollapsed ? t('ui.expand') : t('ui.collapse')}
+					transition={{duration: 0.2}}
+				>
+					{t('ui.chevronDown')}
+				</motion.span>
+			</button>
 
-			<div className='mb-4'>
-				<p className='mb-3 text-gray-600 text-sm dark:text-gray-400'>
-					{t('userLanguageDescription')}
-				</p>
-				<UserLanguageSelector />
-			</div>
+			{/* Collapsible content */}
+			<AnimatePresence>
+				{!isCollapsed && (
+					<motion.div
+						animate={{height: 'auto', opacity: 1}}
+						exit={{height: 0, opacity: 0}}
+						initial={{height: 0, opacity: 0}}
+						style={{overflow: 'hidden'}}
+						transition={{duration: 0.3}}
+					>
+						<div className='px-6 pb-6'>
+							<p className='mb-3 text-gray-600 text-sm dark:text-gray-400'>
+								{t('userLanguageDescription')}
+							</p>
+							<UserLanguageSelector />
+						</div>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</motion.div>
+	)
+}
+
+function DifficultyFilter({
+	selectedDifficulty,
+	setSelectedDifficulty,
+	t
+}: {
+	selectedDifficulty: string
+	setSelectedDifficulty: (difficulty: string) => void
+	t: (key: string) => string
+}) {
+	return (
+		<div className='mb-4'>
+			<div className='mb-2 block font-medium text-gray-700 text-sm dark:text-gray-300'>
+				{t('difficulty')}
+			</div>
+			<div className='flex flex-wrap gap-2'>
+				<button
+					className={`rounded-full px-3 py-1 font-medium text-sm transition-colors ${
+						selectedDifficulty === ''
+							? 'bg-blue-600 text-white'
+							: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
+					}`}
+					onClick={() => setSelectedDifficulty('')}
+					type='button'
+				>
+					{t('all')}
+				</button>
+				{['a0', 'a1', 'a2', 'b1', 'b2', 'c1', 'c2'].map(difficulty => (
+					<button
+						className={`rounded-full px-3 py-1 font-medium text-sm transition-colors ${
+							selectedDifficulty === difficulty
+								? 'bg-blue-600 text-white'
+								: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
+						}`}
+						key={difficulty}
+						onClick={() => setSelectedDifficulty(difficulty)}
+						type='button'
+					>
+						{t(`difficulty.${difficulty}`)}
+					</button>
+				))}
+			</div>
+		</div>
+	)
+}
+
+function TagsFilter({
+	selectedTags,
+	setSelectedTags,
+	allTags,
+	t
+}: {
+	selectedTags: string[]
+	setSelectedTags: (tags: string[]) => void
+	allTags: string[]
+	t: (key: string) => string
+}) {
+	if (allTags.length === 0) return null
+
+	return (
+		<div>
+			<div className='mb-2 block font-medium text-gray-700 text-sm dark:text-gray-300'>
+				{t('tags')}
+			</div>
+			<div className='flex flex-wrap gap-2'>
+				{allTags.map(tag => (
+					<button
+						className={`rounded-full px-3 py-1 font-medium text-sm transition-colors ${
+							selectedTags.includes(tag)
+								? 'bg-blue-600 text-white'
+								: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
+						}`}
+						key={tag}
+						onClick={() => {
+							if (selectedTags.includes(tag)) {
+								setSelectedTags(
+									selectedTags.filter(existingTag => existingTag !== tag)
+								)
+							} else {
+								setSelectedTags([...selectedTags, tag])
+							}
+						}}
+						type='button'
+					>
+						{t('ui.hashSymbol')}
+						{tag}
+					</button>
+				))}
+			</div>
+		</div>
 	)
 }
 
@@ -388,84 +522,58 @@ function ExerciseFilters({
 	allTags: string[]
 	t: (key: string) => string
 }) {
+	const [isCollapsed, setIsCollapsed] = useState(false)
+
 	return (
 		<motion.div
 			animate={{opacity: 1, y: 0}}
-			className='mb-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800'
+			className='mb-8 rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800'
 			initial={{opacity: 0, y: 20}}
 			transition={{delay: 0.2}}
 		>
-			<h3 className='mb-4 font-semibold text-gray-900 dark:text-white'>
-				{t('filters')}
-			</h3>
+			<button
+				className='flex w-full items-center justify-between p-6 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-700'
+				onClick={() => setIsCollapsed(!isCollapsed)}
+				type='button'
+			>
+				<h3 className='font-semibold text-gray-900 dark:text-white'>
+					{t('filters')}
+				</h3>
+				<motion.span
+					animate={{rotate: isCollapsed ? 0 : 180}}
+					className='text-gray-500 transition-transform dark:text-gray-400'
+					title={isCollapsed ? t('ui.expand') : t('ui.collapse')}
+					transition={{duration: 0.2}}
+				>
+					{t('ui.chevronDown')}
+				</motion.span>
+			</button>
 
-			{/* Difficulty Filter */}
-			<div className='mb-4'>
-				<div className='mb-2 block font-medium text-gray-700 text-sm dark:text-gray-300'>
-					{t('difficulty')}
-				</div>
-				<div className='flex flex-wrap gap-2'>
-					<button
-						className={`rounded-full px-3 py-1 font-medium text-sm transition-colors ${
-							selectedDifficulty === ''
-								? 'bg-blue-600 text-white'
-								: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
-						}`}
-						onClick={() => setSelectedDifficulty('')}
-						type='button'
+			<AnimatePresence>
+				{!isCollapsed && (
+					<motion.div
+						animate={{height: 'auto', opacity: 1}}
+						exit={{height: 0, opacity: 0}}
+						initial={{height: 0, opacity: 0}}
+						style={{overflow: 'hidden'}}
+						transition={{duration: 0.3}}
 					>
-						{t('all')}
-					</button>
-					{['a0', 'a1', 'a2', 'b1', 'b2', 'c1', 'c2'].map(difficulty => (
-						<button
-							className={`rounded-full px-3 py-1 font-medium text-sm transition-colors ${
-								selectedDifficulty === difficulty
-									? 'bg-blue-600 text-white'
-									: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
-							}`}
-							key={difficulty}
-							onClick={() => setSelectedDifficulty(difficulty)}
-							type='button'
-						>
-							{t(`difficulty.${difficulty}`)}
-						</button>
-					))}
-				</div>
-			</div>
-
-			{/* Tags Filter */}
-			{allTags.length > 0 && (
-				<div>
-					<div className='mb-2 block font-medium text-gray-700 text-sm dark:text-gray-300'>
-						{t('tags')}
-					</div>
-					<div className='flex flex-wrap gap-2'>
-						{allTags.map(tag => (
-							<button
-								className={`rounded-full px-3 py-1 font-medium text-sm transition-colors ${
-									selectedTags.includes(tag)
-										? 'bg-blue-600 text-white'
-										: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
-								}`}
-								key={tag}
-								onClick={() => {
-									if (selectedTags.includes(tag)) {
-										setSelectedTags(
-											selectedTags.filter(existingTag => existingTag !== tag)
-										)
-									} else {
-										setSelectedTags([...selectedTags, tag])
-									}
-								}}
-								type='button'
-							>
-								{t('ui.hashSymbol')}
-								{tag}
-							</button>
-						))}
-					</div>
-				</div>
-			)}
+						<div className='px-6 pb-6'>
+							<DifficultyFilter
+								selectedDifficulty={selectedDifficulty}
+								setSelectedDifficulty={setSelectedDifficulty}
+								t={t}
+							/>
+							<TagsFilter
+								allTags={allTags}
+								selectedTags={selectedTags}
+								setSelectedTags={setSelectedTags}
+								t={t}
+							/>
+						</div>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</motion.div>
 	)
 }
@@ -506,24 +614,6 @@ function useExerciseFiltering() {
 		filterExercises,
 		getAllTags
 	}
-}
-
-function BackToHomeSection({t}: {t: (key: string) => string}) {
-	return (
-		<motion.div
-			animate={{opacity: 1}}
-			className='mt-12 text-center'
-			initial={{opacity: 0}}
-			transition={{delay: 0.6}}
-		>
-			<Link
-				className='inline-flex items-center gap-2 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
-				to='/'
-			>
-				{t('ui.backToHome')}
-			</Link>
-		</motion.div>
-	)
 }
 
 export function ExerciseLibrary() {
@@ -574,8 +664,6 @@ export function ExerciseLibrary() {
 							/>
 						</>
 					)}
-
-					<BackToHomeSection t={t} />
 				</div>
 			</div>
 		</>
