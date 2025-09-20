@@ -89,7 +89,8 @@
 		"ui.chevronUp": "▲",
 		"ui.chevronDown": "▼",
 		"ui.colon": ":",
-		"exerciseCount": "Διαθέσιμες ασκήσεις: {filteredCount}"
+		"exerciseCount": "Διαθέσιμες ασκήσεις: {filteredCount}",
+		"startExercise": "Ξεκινήστε την άσκηση"
 	},
 	"en": {
 		"app.title": "Learn Greek",
@@ -181,7 +182,8 @@
 		"ui.chevronUp": "▲",
 		"ui.chevronDown": "▼",
 		"ui.colon": ":",
-		"exerciseCount": "Available exercises: {filteredCount}"
+		"exerciseCount": "Available exercises: {filteredCount}",
+		"startExercise": "Start Exercise"
 	},
 	"ru": {
 		"app.title": "Учим греческий",
@@ -273,6 +275,7 @@
 		"ui.chevronUp": "▲",
 		"ui.chevronDown": "▼",
 		"ui.colon": ":",
-		"exerciseCount": "Доступно упражнений: {filteredCount}"
+		"exerciseCount": "Доступно упражнений: {filteredCount}",
+		"startExercise": "Начать упражнение"
 	}
 }

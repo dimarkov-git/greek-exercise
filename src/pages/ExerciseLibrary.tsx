@@ -183,13 +183,11 @@ function LibraryHeader({t}: {t: (key: string) => string}) {
 
 function ExerciseGrid({
 	filteredExercises,
-	exercises,
 	setSelectedTags,
 	setSelectedDifficulties,
 	t
 }: {
 	filteredExercises: import('@/types/exercises').ExerciseMetadata[]
-	exercises: import('@/types/exercises').ExerciseMetadata[]
 	setSelectedTags: (tags: string[]) => void
 	setSelectedDifficulties: (difficulties: string[]) => void
 	t: (key: string) => string
@@ -203,8 +201,10 @@ function ExerciseGrid({
 				initial={{opacity: 0}}
 				transition={{delay: 0.3}}
 			>
-				{t('exerciseCount')
-					.replace('{filteredCount}', filteredExercises.length.toString())}
+				{t('exerciseCount').replace(
+					'{filteredCount}',
+					filteredExercises.length.toString()
+				)}
 			</motion.div>
 
 			{/* Exercises Grid */}
@@ -289,7 +289,7 @@ function getDifficultyLabel(difficulty: string, userLanguage: string): string {
 }
 
 function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
-	const {userLanguage} = useSettingsStore()
+	const {uiLanguage} = useSettingsStore()
 
 	return (
 		<motion.div
@@ -303,16 +303,16 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 				<div className='mb-4 flex items-start justify-between'>
 					<div className='flex-1'>
 						<h3 className='mb-2 font-semibold text-gray-900 text-lg dark:text-white'>
-							{exercise.titleI18n[userLanguage] || exercise.title}
+							{exercise.titleI18n[uiLanguage] || exercise.title}
 						</h3>
 						<p className='line-clamp-2 text-gray-600 text-sm dark:text-gray-400'>
-							{exercise.descriptionI18n[userLanguage] || exercise.description}
+							{exercise.descriptionI18n[uiLanguage] || exercise.description}
 						</p>
 					</div>
 					<span
 						className={`ml-3 rounded-full px-2 py-1 font-medium text-xs ${getDifficultyColor(exercise.difficulty)}`}
 					>
-						{getDifficultyLabel(exercise.difficulty, userLanguage)}
+						{getDifficultyLabel(exercise.difficulty, uiLanguage)}
 					</span>
 				</div>
 
@@ -767,7 +767,6 @@ export function ExerciseLibrary() {
 							/>
 
 							<ExerciseGrid
-								exercises={exercises}
 								filteredExercises={filteredExercises}
 								setSelectedDifficulties={setSelectedDifficulties}
 								setSelectedTags={setSelectedTags}
