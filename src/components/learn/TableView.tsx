@@ -51,6 +51,22 @@ const TABLE_VIEW_TRANSLATIONS: TranslationRequest[] = [
 	{
 		key: 'exercise.cases',
 		fallback: 'cases'
+	},
+	{
+		key: 'ui.clockIcon',
+		fallback: '⏱️'
+	},
+	{
+		key: 'ui.booksIcon',
+		fallback: '📚'
+	},
+	{
+		key: 'ui.notesIcon',
+		fallback: '📝'
+	},
+	{
+		key: 'ui.colon',
+		fallback: ': '
 	}
 ]
 
@@ -76,21 +92,24 @@ export function TableView({exercise}: TableViewProps) {
 				{/* Exercise Metadata */}
 				<div className='mb-4 flex flex-wrap gap-4 text-sm'>
 					<span className='inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'>
-						Difficulty: {exercise.difficulty.toUpperCase()}
+						{t('exercise.difficulty')}
+						{t('ui.colon')}
+						{exercise.difficulty.toUpperCase()}
 					</span>
 					<span className='inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-green-800 dark:bg-green-900/30 dark:text-green-300'>
-						⏱️ {exercise.estimatedTimeMinutes} min
+						{t('ui.clockIcon')} {exercise.estimatedTimeMinutes}{' '}
+						{t('exercise.minutes')}
 					</span>
 					<span className='inline-flex items-center rounded-full bg-purple-100 px-3 py-1 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300'>
-						📚 {exercise.blocks.length} blocks
+						{t('ui.booksIcon')} {exercise.blocks.length} {t('exercise.blocks')}
 					</span>
 					<span className='inline-flex items-center rounded-full bg-orange-100 px-3 py-1 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300'>
-						📝{' '}
+						{t('ui.notesIcon')}{' '}
 						{exercise.blocks.reduce(
 							(total, block) => total + block.cases.length,
 							0
 						)}{' '}
-						cases
+						{t('exercise.cases')}
 					</span>
 				</div>
 
@@ -102,7 +121,7 @@ export function TableView({exercise}: TableViewProps) {
 								className='inline-flex items-center rounded-full bg-gray-100 px-2 py-1 text-gray-600 text-xs dark:bg-gray-700 dark:text-gray-300'
 								key={tag}
 							>
-								#{tag}
+								{`#${tag}`}
 							</span>
 						))}
 					</div>
@@ -123,7 +142,9 @@ export function TableView({exercise}: TableViewProps) {
 						{/* Block Header */}
 						<div className='border-gray-200 border-b bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-800'>
 							<h5 className='font-medium text-gray-900 dark:text-white'>
-								{t('block')} {blockIndex + 1}: {block.name}
+								{t('block')} {blockIndex + 1}
+								{t('ui.colon')}
+								{block.name}
 							</h5>
 							<p className='text-gray-600 text-sm dark:text-gray-400'>
 								{block.nameHintI18n[userLanguage] || block.name}
@@ -136,7 +157,7 @@ export function TableView({exercise}: TableViewProps) {
 								<thead className='border-gray-200 border-b bg-gray-50 dark:border-gray-700 dark:bg-gray-800'>
 									<tr>
 										<th className='px-4 py-3 text-left font-medium text-gray-600 text-sm dark:text-gray-400'>
-											#
+											{t('ui.hashSymbol')}
 										</th>
 										<th className='px-4 py-3 text-left font-medium text-gray-600 text-sm dark:text-gray-400'>
 											{t('prompt')}
@@ -172,7 +193,7 @@ export function TableView({exercise}: TableViewProps) {
 													{caseItem.correct.map((answer, answerIndex) => (
 														<div
 															className='rounded bg-green-50 px-2 py-1 font-mono text-green-800 text-sm dark:bg-green-900/30 dark:text-green-300'
-															key={answerIndex}
+															key={`${answerIndex}-${answer}`}
 														>
 															{answer}
 														</div>
@@ -195,7 +216,7 @@ export function TableView({exercise}: TableViewProps) {
 													</div>
 												) : (
 													<span className='text-gray-400 text-sm dark:text-gray-600'>
-														—
+														{t('ui.emptyHint')}
 													</span>
 												)}
 											</td>

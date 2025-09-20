@@ -122,3 +122,43 @@ export type ExerciseEvent =
 	| {type: 'RESTART'}
 	| {type: 'TOGGLE_HINT'; hintType: 'name' | 'prompt' | 'additional'}
 	| {type: 'TOGGLE_AUTO_ADVANCE'}
+
+// JSON serialization type for exercises
+export interface WordFormExerciseJSON {
+	enabled: boolean
+	id: string
+	type: 'word-form'
+	title: string
+	titleI18n: Record<Language, string>
+	description: string
+	descriptionI18n: Record<Language, string>
+	buttonText: string
+	buttonTextI18n: Record<Language, string>
+	tags: string[]
+	difficulty: Difficulty
+	estimatedTimeMinutes: number
+	settings: ExerciseSettings
+	blocks: WordFormBlock[]
+}
+
+// Helper function to convert exercise to serializable JSON
+export function exerciseToJSON(
+	exercise: WordFormExercise
+): WordFormExerciseJSON {
+	return {
+		enabled: exercise.enabled,
+		id: exercise.id,
+		type: exercise.type,
+		title: exercise.title,
+		titleI18n: exercise.titleI18n,
+		description: exercise.description,
+		descriptionI18n: exercise.descriptionI18n,
+		buttonText: exercise.buttonText,
+		buttonTextI18n: exercise.buttonTextI18n,
+		tags: exercise.tags,
+		difficulty: exercise.difficulty,
+		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
+		settings: exercise.settings,
+		blocks: exercise.blocks
+	}
+}
