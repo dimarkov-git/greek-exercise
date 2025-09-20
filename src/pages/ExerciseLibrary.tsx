@@ -367,7 +367,7 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 	)
 }
 
-function SettingsSummary({t}: {t: (key: string) => string}) {
+function SettingsSummaryInline({t}: {t: (key: string) => string}) {
 	const {userLanguage} = useSettingsStore()
 
 	const getLanguageFlag = (lang: string) => {
@@ -382,14 +382,10 @@ function SettingsSummary({t}: {t: (key: string) => string}) {
 	}
 
 	return (
-		<div className='px-6 pb-4'>
-			<div className='flex flex-wrap gap-2'>
-				<span className='inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 font-medium text-blue-800 text-xs dark:bg-blue-900 dark:text-blue-300'>
-					{t('hintLanguage')}
-					{t('ui.colon')} {getLanguageFlag(userLanguage)}
-				</span>
-			</div>
-		</div>
+		<span className='text-gray-600 text-sm dark:text-gray-400'>
+			{t('hintLanguage')}
+			{t('ui.colon')} {getLanguageFlag(userLanguage)}
+		</span>
 	)
 }
 
@@ -409,9 +405,12 @@ function UserSettings({t}: {t: (key: string) => string}) {
 				onClick={() => setIsCollapsed(!isCollapsed)}
 				type='button'
 			>
-				<h3 className='font-semibold text-gray-900 dark:text-white'>
-					{t('settings')}
-				</h3>
+				<div className='flex flex-1 items-baseline gap-3'>
+					<h3 className='font-semibold text-gray-900 dark:text-white'>
+						{t('settings')}
+					</h3>
+					{isCollapsed && <SettingsSummaryInline t={t} />}
+				</div>
 				<motion.span
 					animate={{rotate: isCollapsed ? 0 : 180}}
 					className='text-gray-500 transition-transform dark:text-gray-400'
@@ -421,8 +420,6 @@ function UserSettings({t}: {t: (key: string) => string}) {
 					{t('ui.chevronDown')}
 				</motion.span>
 			</button>
-
-			{isCollapsed && <SettingsSummary t={t} />}
 
 			{/* Collapsible content */}
 			<AnimatePresence>
@@ -463,7 +460,7 @@ function DifficultyFilter({
 			</div>
 			<div className='flex flex-wrap gap-2'>
 				<button
-					className={`rounded-full px-3 py-1 font-medium text-sm transition-colors ${
+					className={`cursor-pointer rounded-full px-3 py-1 font-medium text-sm transition-colors ${
 						selectedDifficulties.length === 0
 							? 'bg-blue-600 text-white'
 							: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
@@ -475,7 +472,7 @@ function DifficultyFilter({
 				</button>
 				{['a0', 'a1', 'a2', 'b1', 'b2', 'c1', 'c2'].map(difficulty => (
 					<button
-						className={`rounded-full px-3 py-1 font-medium text-sm transition-colors ${
+						className={`cursor-pointer rounded-full px-3 py-1 font-medium text-sm transition-colors ${
 							selectedDifficulties.includes(difficulty)
 								? 'bg-blue-600 text-white'
 								: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
@@ -521,7 +518,7 @@ function TagsFilter({
 			<div className='flex flex-wrap gap-2'>
 				{allTags.map(tag => (
 					<button
-						className={`rounded-full px-3 py-1 font-medium text-sm transition-colors ${
+						className={`cursor-pointer rounded-full px-3 py-1 font-medium text-sm transition-colors ${
 							selectedTags.includes(tag)
 								? 'bg-blue-600 text-white'
 								: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
@@ -547,7 +544,7 @@ function TagsFilter({
 	)
 }
 
-function FilterSummary({
+function FilterSummaryInline({
 	selectedDifficulties,
 	selectedTags,
 	t
@@ -562,24 +559,49 @@ function FilterSummary({
 	if (!hasActiveFilters) return null
 
 	return (
-		<div className='px-6 pb-4'>
-			<div className='flex flex-wrap gap-2'>
-				{selectedDifficulties.length > 0 && (
-					<span className='inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 font-medium text-blue-800 text-xs dark:bg-blue-900 dark:text-blue-300'>
+		<div className='flex items-center gap-2 text-sm'>
+			{selectedDifficulties.length > 0 && (
+				<div className='flex items-center gap-1'>
+					<span className='text-gray-600 dark:text-gray-400'>
 						{t('difficulty')}
-						{t('ui.colon')}{' '}
-						{selectedDifficulties.map(d => t(`difficulty.${d}`)).join(' ')}
+						{t('ui.colon')}
 					</span>
-				)}
-				{selectedTags.map(tag => (
-					<span
-						className='inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 font-medium text-gray-800 text-xs dark:bg-gray-700 dark:text-gray-300'
-						key={tag}
-					>
-						{tag}
+					<div className='flex gap-1'>
+						{selectedDifficulties.map(d => (
+							<span
+								className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'
+								key={d}
+							>
+								{t(`difficulty.${d}`)}
+							</span>
+						))}
+					</div>
+				</div>
+			)}
+			{selectedTags.length > 0 && (
+				<div className='flex items-center gap-1'>
+					<span className='text-gray-600 dark:text-gray-400'>
+						{t('tags')}
+						{t('ui.colon')}
 					</span>
-				))}
-			</div>
+					<div className='flex gap-1'>
+						{selectedTags.slice(0, 3).map(tag => (
+							<span
+								className='inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-gray-700 text-xs dark:bg-gray-700 dark:text-gray-300'
+								key={tag}
+							>
+								{tag}
+							</span>
+						))}
+						{selectedTags.length > 3 && (
+							<span className='text-gray-500 text-xs dark:text-gray-400'>
+								{t('ui.plusSymbol')}
+								{selectedTags.length - 3}
+							</span>
+						)}
+					</div>
+				</div>
+			)}
 		</div>
 	)
 }
@@ -613,9 +635,18 @@ function ExerciseFilters({
 				onClick={() => setIsCollapsed(!isCollapsed)}
 				type='button'
 			>
-				<h3 className='font-semibold text-gray-900 dark:text-white'>
-					{t('filters')}
-				</h3>
+				<div className='flex flex-1 items-baseline gap-3'>
+					<h3 className='font-semibold text-gray-900 dark:text-white'>
+						{t('filters')}
+					</h3>
+					{isCollapsed && (
+						<FilterSummaryInline
+							selectedDifficulties={selectedDifficulties}
+							selectedTags={selectedTags}
+							t={t}
+						/>
+					)}
+				</div>
 				<motion.span
 					animate={{rotate: isCollapsed ? 0 : 180}}
 					className='text-gray-500 transition-transform dark:text-gray-400'
@@ -625,14 +656,6 @@ function ExerciseFilters({
 					{t('ui.chevronDown')}
 				</motion.span>
 			</button>
-
-			{isCollapsed && (
-				<FilterSummary
-					selectedDifficulties={selectedDifficulties}
-					selectedTags={selectedTags}
-					t={t}
-				/>
-			)}
 
 			<AnimatePresence>
 				{!isCollapsed && (
