@@ -24,6 +24,10 @@ const EXERCISE_LIBRARY_TRANSLATIONS: TranslationRequest[] = [
 		fallback: 'Settings'
 	},
 	{
+		key: 'userLanguage',
+		fallback: 'Your language'
+	},
+	{
 		key: 'userLanguageDescription',
 		fallback:
 			'Choose a language you already know. It will be used for hints in exercises.'
@@ -105,12 +109,12 @@ const EXERCISE_LIBRARY_TRANSLATIONS: TranslationRequest[] = [
 		fallback: 'Hint language'
 	},
 	{
-		key: 'ui.colon',
-		fallback: ': '
-	},
-	{
 		key: 'ui.chevronDown',
 		fallback: '▼'
+	},
+	{
+		key: 'ui.colon',
+		fallback: ':'
 	},
 	{
 		key: 'ui.chevronUp',
@@ -363,6 +367,28 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 	)
 }
 
+function SettingsSummary({t}: {t: (key: string) => string}) {
+	const {userLanguage} = useSettingsStore()
+
+	const getLanguageFlag = (lang: string) => {
+		switch (lang) {
+			case 'ru': return '🇷🇺'
+			case 'en': return '🇺🇸'
+			default: return '🌐'
+		}
+	}
+
+	return (
+		<div className='px-6 pb-4'>
+			<div className='flex flex-wrap gap-2'>
+				<span className='inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 font-medium text-blue-800 text-xs dark:bg-blue-900 dark:text-blue-300'>
+					{t('userLanguage')}{t('ui.colon')} {getLanguageFlag(userLanguage)}
+				</span>
+			</div>
+		</div>
+	)
+}
+
 function UserSettings({t}: {t: (key: string) => string}) {
 	const [isCollapsed, setIsCollapsed] = useState(false)
 
@@ -391,6 +417,10 @@ function UserSettings({t}: {t: (key: string) => string}) {
 					{t('ui.chevronDown')}
 				</motion.span>
 			</button>
+
+			{isCollapsed && (
+				<SettingsSummary t={t} />
+			)}
 
 			{/* Collapsible content */}
 			<AnimatePresence>
@@ -507,6 +537,41 @@ function TagsFilter({
 	)
 }
 
+function FilterSummary({
+	selectedDifficulty,
+	selectedTags,
+	t
+}: {
+	selectedDifficulty: string
+	selectedTags: string[]
+	t: (key: string) => string
+}) {
+	const hasActiveFilters = selectedDifficulty !== '' || selectedTags.length > 0
+
+	if (!hasActiveFilters) return null
+
+	return (
+		<div className='px-6 pb-4'>
+			<div className='flex flex-wrap gap-2'>
+				{selectedDifficulty && (
+					<span className='inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 font-medium text-blue-800 text-xs dark:bg-blue-900 dark:text-blue-300'>
+						{t('difficulty')}
+						{t('ui.colon')} {t(`difficulty.${selectedDifficulty}`)}
+					</span>
+				)}
+				{selectedTags.map(tag => (
+					<span
+						className='inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 font-medium text-gray-800 text-xs dark:bg-gray-700 dark:text-gray-300'
+						key={tag}
+					>
+						{tag}
+					</span>
+				))}
+			</div>
+		</div>
+	)
+}
+
 function ExerciseFilters({
 	selectedDifficulty,
 	setSelectedDifficulty,
@@ -548,6 +613,14 @@ function ExerciseFilters({
 					{t('ui.chevronDown')}
 				</motion.span>
 			</button>
+
+			{isCollapsed && (
+				<FilterSummary
+					selectedDifficulty={selectedDifficulty}
+					selectedTags={selectedTags}
+					t={t}
+				/>
+			)}
 
 			<AnimatePresence>
 				{!isCollapsed && (

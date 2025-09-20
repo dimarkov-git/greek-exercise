@@ -86,7 +86,8 @@
 		"ui.expand": "Επέκταση",
 		"ui.collapse": "Σύμπτυξη",
 		"ui.chevronUp": "▲",
-		"ui.chevronDown": "▼"
+		"ui.chevronDown": "▼",
+		"ui.colon": ":"
 	},
 	"en": {
 		"app.title": "Learn Greek",
@@ -175,7 +176,8 @@
 		"ui.expand": "Expand",
 		"ui.collapse": "Collapse",
 		"ui.chevronUp": "▲",
-		"ui.chevronDown": "▼"
+		"ui.chevronDown": "▼",
+		"ui.colon": ":"
 	},
 	"ru": {
 		"app.title": "Учим греческий",
@@ -264,6 +266,7 @@
 		"ui.expand": "Развернуть",
 		"ui.collapse": "Свернуть",
 		"ui.chevronUp": "▲",
-		"ui.chevronDown": "▼"
+		"ui.chevronDown": "▼",
+		"ui.colon": ":"
 	}
 }
