@@ -6,7 +6,7 @@ export type ExerciseType =
 	| 'translation'
 	| 'flashcard'
 	| 'multiple-choice'
-export type Difficulty = 'beginner' | 'intermediate' | 'advanced'
+export type Difficulty = 'a0' | 'a1' | 'a2' | 'b1' | 'b2' | 'c1' | 'c2'
 
 // Exercise settings
 export interface ExerciseSettings {

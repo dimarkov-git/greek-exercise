@@ -3,9 +3,13 @@ import * as v from 'valibot'
 // Base schemas
 const LanguageSchema = v.picklist(['el', 'ru', 'en'] as const)
 const DifficultySchema = v.picklist([
-	'beginner',
-	'intermediate',
-	'advanced'
+	'a0',
+	'a1',
+	'a2',
+	'b1',
+	'b2',
+	'c1',
+	'c2'
 ] as const)
 
 // Schema for multilingual strings (Record<Language, string>)

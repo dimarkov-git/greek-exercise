@@ -101,8 +101,44 @@ const EXERCISE_LIBRARY_TRANSLATIONS: TranslationRequest[] = [
 		fallback: '+'
 	},
 	{
-		key: 'ui.backToHome',
-		fallback: '← Back to Home'
+		key: 'ui.hintLanguage',
+		fallback: 'Hint language'
+	},
+	{
+		key: 'ui.colon',
+		fallback: ': '
+	},
+	{
+		key: 'ui.chevronDown',
+		fallback: '▼'
+	},
+	{
+		key: 'difficulty.a0',
+		fallback: 'A0'
+	},
+	{
+		key: 'difficulty.a1',
+		fallback: 'A1'
+	},
+	{
+		key: 'difficulty.a2',
+		fallback: 'A2'
+	},
+	{
+		key: 'difficulty.b1',
+		fallback: 'B1'
+	},
+	{
+		key: 'difficulty.b2',
+		fallback: 'B2'
+	},
+	{
+		key: 'difficulty.c1',
+		fallback: 'C1'
+	},
+	{
+		key: 'difficulty.c2',
+		fallback: 'C2'
 	}
 ]
 
@@ -208,11 +244,15 @@ function ExerciseGrid({
 
 function getDifficultyColor(difficulty: string): string {
 	switch (difficulty) {
-		case 'beginner':
+		case 'a0':
+		case 'a1':
 			return 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100'
-		case 'intermediate':
+		case 'a2':
+		case 'b1':
 			return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100'
-		case 'advanced':
+		case 'b2':
+		case 'c1':
+		case 'c2':
 			return 'bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100'
 		default:
 			return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100'
@@ -221,13 +261,14 @@ function getDifficultyColor(difficulty: string): string {
 
 function getDifficultyLabel(difficulty: string, userLanguage: string): string {
 	const labels = {
-		beginner: {en: 'Beginner', ru: 'Начальный', el: 'Αρχάριος'},
+		a0: {en: 'A0', ru: 'А0', el: 'Α0'},
+		a1: {en: 'A1', ru: 'А1', el: 'Α1'},
 		intermediate: {en: 'Intermediate', ru: 'Средний', el: 'Μεσαίος'},
 		advanced: {en: 'Advanced', ru: 'Продвинутый', el: 'Προχωρημένος'}
 	}
 	return (
 		labels[difficulty as keyof typeof labels]?.[
-			userLanguage as keyof typeof labels.beginner
+			userLanguage as keyof typeof labels.a0
 		] || difficulty
 	)
 }
@@ -375,7 +416,7 @@ function ExerciseFilters({
 					>
 						{t('all')}
 					</button>
-					{['beginner', 'intermediate', 'advanced'].map(difficulty => (
+					{['a0', 'a1', 'a2', 'b1', 'b2', 'c1', 'c2'].map(difficulty => (
 						<button
 							className={`rounded-full px-3 py-1 font-medium text-sm transition-colors ${
 								selectedDifficulty === difficulty
@@ -386,7 +427,7 @@ function ExerciseFilters({
 							onClick={() => setSelectedDifficulty(difficulty)}
 							type='button'
 						>
-							{difficulty}
+							{t(`difficulty.${difficulty}`)}
 						</button>
 					))}
 				</div>

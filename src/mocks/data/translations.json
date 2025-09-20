@@ -71,7 +71,18 @@
 		"exercise.hintIcon": "Εικονίδιο υπόδειξης",
 		"exercise.enterKeyName": "Enter",
 		"error.title": "Σφάλμα",
-		"error.couldNotLoadExercise": "Σφάλμα: Δεν ήταν δυνατή η φόρτωση της άσκησης"
+		"error.couldNotLoadExercise": "Σφάλμα: Δεν ήταν δυνατή η φόρτωση της άσκησης",
+		"filters": "Φίλτρα",
+		"difficulty": "Επίπεδο",
+		"tags": "Ετικέτες",
+		"all": "Όλα",
+		"difficulty.a0": "Α0",
+		"difficulty.a1": "Α1",
+		"difficulty.a2": "Α2",
+		"difficulty.b1": "Β1",
+		"difficulty.b2": "Β2",
+		"difficulty.c1": "Γ1",
+		"difficulty.c2": "Γ2"
 	},
 	"en": {
 		"app.title": "Learn Greek",
@@ -145,7 +156,18 @@
 		"exercise.hintIcon": "Hint icon",
 		"exercise.enterKeyName": "Enter",
 		"error.title": "Error",
-		"error.couldNotLoadExercise": "Error: Could not load exercise case"
+		"error.couldNotLoadExercise": "Error: Could not load exercise case",
+		"filters": "Filters",
+		"difficulty": "Difficulty",
+		"tags": "Tags",
+		"all": "All",
+		"difficulty.a0": "A0",
+		"difficulty.a1": "A1",
+		"difficulty.a2": "A2",
+		"difficulty.b1": "B1",
+		"difficulty.b2": "B2",
+		"difficulty.c1": "C1",
+		"difficulty.c2": "C2"
 	},
 	"ru": {
 		"app.title": "Учим греческий",
@@ -219,6 +241,17 @@
 		"exercise.hintIcon": "Значок подсказки",
 		"exercise.enterKeyName": "Enter",
 		"error.title": "Ошибка",
-		"error.couldNotLoadExercise": "Ошибка: Не удалось загрузить упражнение"
+		"error.couldNotLoadExercise": "Ошибка: Не удалось загрузить упражнение",
+		"filters": "Фильтры",
+		"difficulty": "Сложность",
+		"tags": "Теги",
+		"all": "Все",
+		"difficulty.a0": "А0",
+		"difficulty.a1": "А1",
+		"difficulty.a2": "А2",
+		"difficulty.b1": "В1",
+		"difficulty.b2": "В2",
+		"difficulty.c1": "С1",
+		"difficulty.c2": "С2"
 	}
 }
