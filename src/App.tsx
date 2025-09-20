@@ -20,6 +20,10 @@ const ExercisePage = lazy(async () =>
 	import('@/pages/ExercisePage').then(m => ({default: m.ExercisePage}))
 )
 
+const LearnPage = lazy(async () =>
+	import('@/pages/LearnPage').then(m => ({default: m.LearnPage}))
+)
+
 function renderError({error}: FallbackProps) {
 	return <LoadingOrError error={error} />
 }
@@ -37,6 +41,7 @@ function AppContent() {
 							<Route element={<HomePage />} index={true} />
 							<Route element={<ExerciseLibrary />} path='/exercises' />
 							<Route element={<ExercisePage />} path='/exercise/:exerciseId' />
+							<Route element={<LearnPage />} path='/learn/:exerciseId' />
 							<Route element={<ExerciseBuilder />} path='/builder' />
 							<Route element={<Navigate replace={true} to='/' />} path='*' />
 						</Routes>

@@ -43,12 +43,16 @@ export class ExerciseLibrary {
 	}
 
 	async startFirstExercise() {
-		const startButton = this.firstExerciseCard.locator(SELECTORS.startExerciseButton)
+		const startButton = this.firstExerciseCard.locator(
+			SELECTORS.startExerciseButton
+		)
 		await startButton.click()
 	}
 
 	async startSecondExercise() {
-		const startButton = this.secondExerciseCard.locator(SELECTORS.startExerciseButton)
+		const startButton = this.secondExerciseCard.locator(
+			SELECTORS.startExerciseButton
+		)
 		await startButton.click()
 	}
 

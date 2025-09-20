@@ -90,7 +90,20 @@
 		"ui.chevronDown": "▼",
 		"ui.colon": ":",
 		"exerciseCount": "Διαθέσιμες ασκήσεις: {filteredCount}",
-		"startExercise": "Ξεκινήστε την άσκηση"
+		"startExercise": "Ξεκινήστε την άσκηση",
+		"learnExercise": "Μελέτη άσκησης",
+		"learn": "Μελέτη",
+		"jsonView": "Προβολή JSON",
+		"tableView": "Προβολή πίνακα",
+		"copyJson": "Αντιγραφή JSON",
+		"exerciseStructure": "Δομή άσκησης",
+		"block": "Μπλοκ",
+		"case": "Περίπτωση",
+		"prompt": "Ερώτηση",
+		"answer": "Απάντηση",
+		"hint": "Υπόδειξη",
+		"jsonCopied": "JSON αντιγράφηκε στο πρόχειρο",
+		"copyFailed": "Αποτυχία αντιγραφής"
 	},
 	"en": {
 		"app.title": "Learn Greek",
@@ -183,7 +196,20 @@
 		"ui.chevronDown": "▼",
 		"ui.colon": ":",
 		"exerciseCount": "Available exercises: {filteredCount}",
-		"startExercise": "Start Exercise"
+		"startExercise": "Start Exercise",
+		"learnExercise": "Learn Exercise",
+		"learn": "Learn",
+		"jsonView": "JSON View",
+		"tableView": "Table View",
+		"copyJson": "Copy JSON",
+		"exerciseStructure": "Exercise Structure",
+		"block": "Block",
+		"case": "Case",
+		"prompt": "Prompt",
+		"answer": "Answer",
+		"hint": "Hint",
+		"jsonCopied": "JSON copied to clipboard",
+		"copyFailed": "Failed to copy"
 	},
 	"ru": {
 		"app.title": "Учим греческий",
@@ -276,6 +302,19 @@
 		"ui.chevronDown": "▼",
 		"ui.colon": ":",
 		"exerciseCount": "Доступно упражнений: {filteredCount}",
-		"startExercise": "Начать упражнение"
+		"startExercise": "Начать упражнение",
+		"learnExercise": "Изучить упражнение",
+		"learn": "Изучить",
+		"jsonView": "JSON вид",
+		"tableView": "Вид таблицы",
+		"copyJson": "Скопировать JSON",
+		"exerciseStructure": "Структура упражнения",
+		"block": "Блок",
+		"case": "Случай",
+		"prompt": "Вопрос",
+		"answer": "Ответ",
+		"hint": "Подсказка",
+		"jsonCopied": "JSON скопирован в буфер обмена",
+		"copyFailed": "Не удалось скопировать"
 	}
 }
