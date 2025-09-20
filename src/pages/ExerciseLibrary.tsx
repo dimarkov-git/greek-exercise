@@ -357,6 +357,7 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 				{/* Action */}
 				<Link
 					className='block w-full rounded-lg bg-blue-600 px-4 py-2 text-center font-medium text-white transition-colors hover:bg-blue-700'
+					data-testid='start-exercise-button'
 					to={`/exercise/${exercise.id}`}
 				>
 					{t('startExercise')}
@@ -389,7 +390,7 @@ function SettingsSummaryInline({t}: {t: (key: string) => string}) {
 }
 
 function UserSettings({t}: {t: (key: string) => string}) {
-	const [isCollapsed, setIsCollapsed] = useState(true)
+	const [isCollapsed, setIsCollapsed] = useState(false)
 
 	return (
 		<motion.div

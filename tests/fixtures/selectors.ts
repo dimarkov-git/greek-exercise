@@ -33,6 +33,7 @@ export const SELECTORS = {
 	// Exercise Controls
 	exerciseInput: '[data-testid="exercise-input"]',
 	exerciseSubmitButton: '[data-testid="exercise-submit-button"]',
+	startExerciseButton: '[data-testid="start-exercise-button"]',
 	autoAdvanceToggle: '[data-testid="auto-advance-toggle"]',
 	exerciseProgress: '[data-testid="exercise-progress"]',
 	progressText: '[data-testid="progress-text"]',

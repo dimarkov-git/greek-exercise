@@ -2,9 +2,6 @@ import {expect, type Locator, type Page} from '@playwright/test'
 import {TestHelpers} from '../fixtures/helpers'
 import {ROUTES, SELECTORS} from '../fixtures/selectors'
 
-// Regex constants for performance
-const START_EXERCISE_REGEX = /start exercise/i
-
 export class ExerciseLibrary {
 	private readonly page: Page
 
@@ -46,24 +43,18 @@ export class ExerciseLibrary {
 	}
 
 	async startFirstExercise() {
-		const startButton = this.firstExerciseCard.getByRole('link', {
-			name: START_EXERCISE_REGEX
-		})
+		const startButton = this.firstExerciseCard.locator(SELECTORS.startExerciseButton)
 		await startButton.click()
 	}
 
 	async startSecondExercise() {
-		const startButton = this.secondExerciseCard.getByRole('link', {
-			name: START_EXERCISE_REGEX
-		})
+		const startButton = this.secondExerciseCard.locator(SELECTORS.startExerciseButton)
 		await startButton.click()
 	}
 
 	async startExerciseByIndex(index: number) {
 		const exerciseCard = this.exerciseCards.nth(index)
-		const startButton = exerciseCard.getByRole('link', {
-			name: START_EXERCISE_REGEX
-		})
+		const startButton = exerciseCard.locator(SELECTORS.startExerciseButton)
 		await startButton.click()
 	}
 
