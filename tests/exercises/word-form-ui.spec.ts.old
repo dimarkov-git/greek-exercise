@@ -1,17 +1,19 @@
-import {expect, test} from '@playwright/test'
-import {EXERCISE_DATA, VIEWPORT_SIZES} from '../fixtures/test-data'
+import {expect, type Page, test} from '@playwright/test'
+import {EXERCISE_DATA, UI_TEXT, VIEWPORT_SIZES} from '../fixtures/test-data'
 import {ExerciseLibrary} from '../pages/ExerciseLibrary'
 import {ExercisePage} from '../pages/ExercisePage'
 
-test.describe('Word Form Exercise - UI Interactions', () => {
-	test.beforeEach(async ({page}) => {
-		const exerciseLibrary = new ExerciseLibrary(page)
-		const exercisePage = new ExercisePage(page)
+const commonSetup = async (page: Page) => {
+	const exerciseLibrary = new ExerciseLibrary(page)
+	const exercisePage = new ExercisePage(page)
 
-		await exerciseLibrary.goto()
-		await exerciseLibrary.startFirstExercise()
-		await exercisePage.expectPageLoaded()
-	})
+	await exerciseLibrary.goto()
+	await exerciseLibrary.startFirstExercise()
+	await exercisePage.expectPageLoaded()
+}
+
+test.describe('Word Form Exercise - Auto-Advance', () => {
+	test.beforeEach(commonSetup)
 
 	test('should handle auto-advance toggle functionality', async ({page}) => {
 		const exercisePage = new ExercisePage(page)
@@ -24,7 +26,7 @@ test.describe('Word Form Exercise - UI Interactions', () => {
 		await exercisePage.expectAutoAdvanceEnabled(false)
 
 		// Answer correctly - should show continue button instead of auto-advancing
-		await exercisePage.submitAnswer(EXERCISE_DATA.VERBS_BE.CORRECT_ANSWERS[0])
+		await exercisePage.submitAnswer(EXERCISE_DATA.verbsBe.correctAnswers[0])
 		await exercisePage.expectCorrectFeedback()
 
 		// Should show continue button
@@ -32,18 +34,22 @@ test.describe('Word Form Exercise - UI Interactions', () => {
 
 		// Click continue to proceed
 		await exercisePage.clickContinueButton()
-		await exercisePage.expectProgressText(/2.*(of|из|από).*\d+/)
+		await exercisePage.expectProgressText(UI_TEXT.progress.createPattern(2))
 
 		// Re-enable auto-advance
 		await exercisePage.toggleAutoAdvance()
 		await exercisePage.expectAutoAdvanceEnabled(true)
 
 		// Next answer should auto-advance
-		await exercisePage.submitAnswer(EXERCISE_DATA.VERBS_BE.CORRECT_ANSWERS[1])
+		await exercisePage.submitAnswer(EXERCISE_DATA.verbsBe.correctAnswers[1])
 		await exercisePage.waitForAutoAdvance()
 
-		await exercisePage.expectProgressText(/3.*(of|из|από).*\d+/)
+		await exercisePage.expectProgressText(UI_TEXT.progress.createPattern(3))
 	})
+})
+
+test.describe('Word Form Exercise - Hint System', () => {
+	test.beforeEach(commonSetup)
 
 	test('should display hint system on desktop', async ({page}) => {
 		await page.setViewportSize(VIEWPORT_SIZES.DESKTOP)
@@ -85,13 +91,17 @@ test.describe('Word Form Exercise - UI Interactions', () => {
 
 		// Document mobile hint behavior
 	})
+})
+
+test.describe('Word Form Exercise - Completion Actions', () => {
+	test.beforeEach(commonSetup)
 
 	test('should show completion screen with actions', async ({page}) => {
 		const exercisePage = new ExercisePage(page)
 
 		// Complete the exercise quickly
 		await exercisePage.answerUntilCompletion(
-			EXERCISE_DATA.VERBS_BE.CORRECT_ANSWERS
+			EXERCISE_DATA.verbsBe.correctAnswers
 		)
 
 		// Should show completion screen
@@ -110,7 +120,7 @@ test.describe('Word Form Exercise - UI Interactions', () => {
 
 		// Complete the exercise
 		await exercisePage.answerUntilCompletion(
-			EXERCISE_DATA.VERBS_BE.CORRECT_ANSWERS
+			EXERCISE_DATA.verbsBe.correctAnswers
 		)
 		await exercisePage.expectExerciseCompleted()
 
@@ -120,14 +130,18 @@ test.describe('Word Form Exercise - UI Interactions', () => {
 
 		// Should restart the exercise
 		await exercisePage.expectPageLoaded()
-		await exercisePage.expectProgressText(/1.*(of|из|από).*\d+/)
+		await exercisePage.expectProgressText(UI_TEXT.progress.createPattern(1))
 	})
+})
+
+test.describe('Word Form Exercise - Exit Functionality', () => {
+	test.beforeEach(commonSetup)
 
 	test('should handle exit functionality', async ({page}) => {
 		const exercisePage = new ExercisePage(page)
 
 		// Start exercise and answer one question
-		await exercisePage.submitAnswer(EXERCISE_DATA.VERBS_BE.CORRECT_ANSWERS[0])
+		await exercisePage.submitAnswer(EXERCISE_DATA.verbsBe.correctAnswers[0])
 		await exercisePage.waitForAutoAdvance()
 
 		// Use back button to exit
@@ -140,6 +154,10 @@ test.describe('Word Form Exercise - UI Interactions', () => {
 		const exerciseLibrary = new ExerciseLibrary(page)
 		await exerciseLibrary.expectPageLoaded()
 	})
+})
+
+test.describe('Word Form Exercise - Session Management', () => {
+	test.beforeEach(commonSetup)
 
 	test('should persist exercise progress during single session', async ({
 		page
@@ -147,7 +165,7 @@ test.describe('Word Form Exercise - UI Interactions', () => {
 		const exercisePage = new ExercisePage(page)
 
 		// Answer first question
-		await exercisePage.submitAnswer(EXERCISE_DATA.VERBS_BE.CORRECT_ANSWERS[0])
+		await exercisePage.submitAnswer(EXERCISE_DATA.verbsBe.correctAnswers[0])
 		await exercisePage.waitForAutoAdvance()
 
 		const _progressText = await exercisePage.progressText.textContent()
@@ -158,8 +176,12 @@ test.describe('Word Form Exercise - UI Interactions', () => {
 		// Exercise should restart (current behavior)
 		// In future versions, progress might persist
 		await exercisePage.expectPageLoaded()
-		await exercisePage.expectProgressText(/1.*(of|из|από).*\d+/)
+		await exercisePage.expectProgressText(UI_TEXT.progress.createPattern(1))
 	})
+})
+
+test.describe('Word Form Exercise - Keyboard Navigation', () => {
+	test.beforeEach(commonSetup)
 
 	test('should handle Tab key navigation', async ({page}) => {
 		const exercisePage = new ExercisePage(page)
@@ -168,7 +190,7 @@ test.describe('Word Form Exercise - UI Interactions', () => {
 		await exercisePage.expectInputFocused()
 
 		// Type answer
-		await page.keyboard.type(EXERCISE_DATA.VERBS_BE.CORRECT_ANSWERS[0])
+		await page.keyboard.type(EXERCISE_DATA.verbsBe.correctAnswers[0])
 
 		// Submit with Enter
 		await page.keyboard.press('Enter')
@@ -181,12 +203,16 @@ test.describe('Word Form Exercise - UI Interactions', () => {
 		const focusedElement = page.locator(':focus')
 		await expect(focusedElement).toBeVisible()
 	})
+})
+
+test.describe('Word Form Exercise - Button Interactions', () => {
+	test.beforeEach(commonSetup)
 
 	test('should handle submit button clicks', async ({page}) => {
 		const exercisePage = new ExercisePage(page)
 
 		// Fill input without pressing Enter
-		await exercisePage.fillInput(EXERCISE_DATA.VERBS_BE.CORRECT_ANSWERS[0])
+		await exercisePage.fillInput(EXERCISE_DATA.verbsBe.correctAnswers[0])
 
 		// Click submit button instead
 		await exercisePage.clickSubmitButton()
@@ -202,7 +228,7 @@ test.describe('Word Form Exercise - UI Interactions', () => {
 		await expect(exercisePage.submitButton).toBeDisabled()
 
 		// Fill input
-		await exercisePage.fillInput(EXERCISE_DATA.VERBS_BE.CORRECT_ANSWERS[0])
+		await exercisePage.fillInput(EXERCISE_DATA.verbsBe.correctAnswers[0])
 
 		// Submit button should now be enabled
 		await expect(exercisePage.submitButton).toBeEnabled()

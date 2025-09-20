@@ -1,4 +1,5 @@
 import {motion} from 'framer-motion'
+import {useTranslations} from '@/hooks/useTranslations'
 import type {ExerciseStatus} from '@/types/exercises'
 
 interface WordFormFeedbackProps {
@@ -19,27 +20,38 @@ interface ErrorFeedbackProps {
 }
 
 function SuccessFeedback({userAnswer}: SuccessFeedbackProps) {
+	const {t} = useTranslations([
+		{key: 'exercise.correctIcon', fallback: 'Correct answer'},
+		{key: 'exercise.correct', fallback: 'Correct'},
+		{key: 'exercise.correctAnswerIs', fallback: 'is correct.'},
+		{key: 'exercise.exclamationMark', fallback: '!'}
+	])
+
 	return (
 		<div className='rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20'>
 			<div className='flex items-center justify-center space-x-2 text-green-700 dark:text-green-300'>
 				<svg className='h-6 w-6' fill='currentColor' viewBox='0 0 20 20'>
-					<title>Correct answer</title>
+					<title>{t('exercise.correctIcon')}</title>
 					<path
 						clipRule='evenodd'
 						d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
 						fillRule='evenodd'
 					/>
 				</svg>
-				<span className='font-semibold text-lg'>Σωστό!</span>
+				<span className='font-semibold text-lg'>
+					{t('exercise.correct')}
+					{t('exercise.exclamationMark')}
+				</span>
 			</div>
 			<p className='mt-2 text-green-600 dark:text-green-400'>
-				Η απάντησή σας "{userAnswer}" είναι σωστή.
+				{userAnswer} {t('exercise.correctAnswerIs')}
 			</p>
 		</div>
 	)
 }
 
 function CorrectAnswersList({correctAnswers}: {correctAnswers: string[]}) {
+	// This component shows Greek answers, so we don't need translations here
 	return (
 		<div className='mt-3'>
 			<p className='mb-2 text-gray-600 text-sm dark:text-gray-400'>
@@ -67,23 +79,33 @@ function ErrorFeedback({
 	correctAnswers,
 	status
 }: ErrorFeedbackProps) {
+	const {t} = useTranslations([
+		{key: 'exercise.incorrectIcon', fallback: 'Incorrect answer'},
+		{key: 'exercise.incorrect', fallback: 'Incorrect'},
+		{key: 'exercise.yourAnswerIs', fallback: 'Your answer:'},
+		{
+			key: 'exercise.enterCorrectToContinue',
+			fallback: 'Enter one of the correct answers to continue'
+		}
+	])
+
 	return (
 		<div className='rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20'>
 			<div className='flex items-center justify-center space-x-2 text-red-700 dark:text-red-300'>
 				<svg className='h-6 w-6' fill='currentColor' viewBox='0 0 20 20'>
-					<title>Incorrect answer</title>
+					<title>{t('exercise.incorrectIcon')}</title>
 					<path
 						clipRule='evenodd'
 						d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'
 						fillRule='evenodd'
 					/>
 				</svg>
-				<span className='font-semibold text-lg'>Λάθος</span>
+				<span className='font-semibold text-lg'>{t('exercise.incorrect')}</span>
 			</div>
 
 			{userAnswer && (
 				<p className='mt-2 text-red-600 dark:text-red-400'>
-					Η απάντησή σας: "{userAnswer}"
+					{t('exercise.yourAnswerIs')} {userAnswer}
 				</p>
 			)}
 
@@ -96,7 +118,7 @@ function ErrorFeedback({
 					initial={{opacity: 0}}
 					transition={{delay: 0.5}}
 				>
-					Εισάγετε μία από τις σωστές απαντήσεις για να συνεχίσετε
+					{t('exercise.enterCorrectToContinue')}
 				</motion.p>
 			)}
 		</div>

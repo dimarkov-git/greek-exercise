@@ -105,13 +105,14 @@ function useTimer() {
 	const timerRef = useRef<NodeJS.Timeout | null>(null)
 
 	// Clear timer on component unmount
-	useEffect(() => {
-		return () => {
+	useEffect(
+		() => () => {
 			if (timerRef.current) {
 				clearTimeout(timerRef.current)
 			}
-		}
-	}, [])
+		},
+		[]
+	)
 
 	const clearTimer = useCallback(() => {
 		if (timerRef.current) {
@@ -226,13 +227,10 @@ export function useAnswerHandler({
 	})
 
 	const validateInput = useCallback(
-		(answer: string) => {
-			return (
-				(status === 'WAITING_INPUT' || status === 'REQUIRE_CORRECTION') &&
-				answer.trim() &&
-				currentCase
-			)
-		},
+		(answer: string) =>
+			(status === 'WAITING_INPUT' || status === 'REQUIRE_CORRECTION') &&
+			answer.trim() &&
+			currentCase,
 		[status, currentCase]
 	)
 

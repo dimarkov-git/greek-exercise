@@ -21,6 +21,55 @@ const MOBILE_MENU_TRANSLATIONS: TranslationRequest[] = [
 	{
 		key: 'settings',
 		fallback: 'Settings'
+	},
+	{
+		key: 'navigation.homeIcon',
+		fallback: 'Home icon'
+	},
+	{
+		key: 'navigation.libraryIcon',
+		fallback: 'Library icon'
+	},
+	{
+		key: 'navigation.builderIcon',
+		fallback: 'Builder icon'
+	}
+]
+
+const createNavigationItems = (t: (key: string) => string) => [
+	{
+		path: '/',
+		label: t('navigation.home'),
+		icon: (
+			<svg className='h-4 w-4 fill-current' viewBox='0 0 20 20'>
+				<title>{t('navigation.homeIcon')}</title>
+				<path d='M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z' />
+			</svg>
+		)
+	},
+	{
+		path: '/exercises',
+		label: t('navigation.library'),
+		icon: (
+			<svg className='h-4 w-4 fill-current' viewBox='0 0 20 20'>
+				<title>{t('navigation.libraryIcon')}</title>
+				<path d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' />
+			</svg>
+		)
+	},
+	{
+		path: '/builder',
+		label: t('navigation.builder'),
+		icon: (
+			<svg className='h-4 w-4 fill-current' viewBox='0 0 20 20'>
+				<title>{t('navigation.builderIcon')}</title>
+				<path
+					clipRule='evenodd'
+					d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z'
+					fillRule='evenodd'
+				/>
+			</svg>
+		)
 	}
 ]
 
@@ -38,42 +87,7 @@ export function MobileMenu({isOpen, onClose}: MobileMenuProps) {
 		return path !== '/' && location.pathname.startsWith(path)
 	}
 
-	const navigationItems = [
-		{
-			path: '/',
-			label: t('navigation.home'),
-			icon: (
-				<svg className='h-4 w-4 fill-current' viewBox='0 0 20 20'>
-					<title>Home icon</title>
-					<path d='M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z' />
-				</svg>
-			)
-		},
-		{
-			path: '/exercises',
-			label: t('navigation.library'),
-			icon: (
-				<svg className='h-4 w-4 fill-current' viewBox='0 0 20 20'>
-					<title>Library icon</title>
-					<path d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' />
-				</svg>
-			)
-		},
-		{
-			path: '/builder',
-			label: t('navigation.builder'),
-			icon: (
-				<svg className='h-4 w-4 fill-current' viewBox='0 0 20 20'>
-					<title>Builder icon</title>
-					<path
-						clipRule='evenodd'
-						d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z'
-						fillRule='evenodd'
-					/>
-				</svg>
-			)
-		}
-	]
+	const navigationItems = createNavigationItems(t)
 
 	return (
 		<AnimatePresence>
@@ -81,6 +95,7 @@ export function MobileMenu({isOpen, onClose}: MobileMenuProps) {
 				<motion.div
 					animate={{opacity: 1, height: 'auto'}}
 					className='border-gray-200 border-t md:hidden dark:border-gray-700'
+					data-testid='mobile-menu'
 					exit={{opacity: 0, height: 0}}
 					initial={{opacity: 0, height: 0}}
 					transition={{duration: 0.2}}

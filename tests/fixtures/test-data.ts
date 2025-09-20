@@ -30,7 +30,6 @@ export const EXERCISE_DATA = {
 			'είναι' // they are
 		],
 		alternativeAnswers: {
-			// Answers without tones should also work
 			toneFree: ['ειμαι', 'εισαι', 'ειναι', 'ειμαστε', 'ειστε', 'ειναι']
 		},
 		wrongAnswers: ['λάθος', 'ακόμα λάθος', 'test']
@@ -64,6 +63,28 @@ export const VIEWPORT_SIZES = {
 	mobile: {width: 375, height: 667},
 	tablet: {width: 768, height: 1024},
 	desktop: {width: 1280, height: 800}
+} as const
+
+/**
+ * UI text constants for language-specific content validation
+ */
+export const UI_TEXT = {
+	headings: {
+		greek: 'Μάθε Ελληνικά',
+		english: 'Learn Greek',
+		russian: 'Учим греческий'
+	},
+	menuLabels: {
+		// Regex pattern for menu button in all supported languages
+		menuButton: /menu|μενού|меню/i
+	},
+	progress: {
+		// Regex pattern for progress text like "2 of 6", "2 из 6", "2 από 6"
+		ofPattern: /of|из|από/,
+		// Helper function to create progress pattern for specific numbers
+		createPattern: (currentQuestion: number) =>
+			new RegExp(`${currentQuestion}.*(of|из|από).*\\d+`)
+	}
 } as const
 
 export const TIMEOUTS = {

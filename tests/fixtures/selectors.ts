@@ -8,10 +8,15 @@ export const SELECTORS = {
 	navCardExercises: '[data-testid="nav-card-exercises"]',
 	navCardBuilder: '[data-testid="nav-card-builder"]',
 	exerciseBackButton: '[data-testid="exercise-back-button"]',
+	mobileMenu: '[data-testid="mobile-menu"]',
+	mobileMenuLanguageDropdown:
+		'[data-testid="mobile-menu"] [data-testid="ui-language-dropdown"]',
 
 	// Theme Controls
 	themeToggle: '[data-testid="theme-toggle"]',
-	themeDataAttr: '[data-current-theme]',
+	mobileMenuThemeToggle:
+		'[data-testid="mobile-menu"] [data-testid="theme-toggle"]',
+	themeDataAttr: '[data-theme]',
 
 	// Language Controls
 	uiLanguageDropdown: '[data-testid="ui-language-dropdown"]',
@@ -44,7 +49,7 @@ export const SELECTORS = {
  * Attribute selectors for data-driven testing
  */
 export const DATA_ATTRIBUTES = {
-	theme: 'data-current-theme',
+	theme: 'data-theme',
 	uiLanguage: 'data-current-language',
 	userLanguage: 'data-current-user-language',
 	inputStatus: 'data-status',

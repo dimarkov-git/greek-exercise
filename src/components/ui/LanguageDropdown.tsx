@@ -10,6 +10,10 @@ const LANGUAGE_DROPDOWN_TRANSLATIONS: TranslationRequest[] = [
 	{
 		key: 'header.selectLanguage',
 		fallback: 'Select language'
+	},
+	{
+		key: 'ui.dropdownArrow',
+		fallback: 'Dropdown arrow'
 	}
 ]
 
@@ -19,6 +23,7 @@ interface DropdownButtonProps {
 	onToggle: () => void
 	title: string
 	uiLanguage: string
+	dropdownArrowTitle: string
 }
 
 function DropdownButton({
@@ -26,7 +31,8 @@ function DropdownButton({
 	isOpen,
 	onToggle,
 	title,
-	uiLanguage
+	uiLanguage,
+	dropdownArrowTitle
 }: DropdownButtonProps) {
 	return (
 		<motion.button
@@ -49,7 +55,7 @@ function DropdownButton({
 				className='ml-1 h-4 w-4 fill-current'
 				viewBox='0 0 12 12'
 			>
-				<title>Dropdown arrow</title>
+				<title>{dropdownArrowTitle}</title>
 				<path d='M6 8L2 4h8l-4 4z' />
 			</motion.svg>
 		</motion.button>
@@ -120,6 +126,7 @@ export function LanguageDropdown() {
 		<div className='relative'>
 			<DropdownButton
 				currentLanguage={currentLanguage}
+				dropdownArrowTitle={t('ui.dropdownArrow')}
 				isOpen={isOpen}
 				onToggle={() => setIsOpen(!isOpen)}
 				title={t('header.selectLanguage')}

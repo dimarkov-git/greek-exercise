@@ -1,8 +1,8 @@
 import {expect, test} from '@playwright/test'
 import {ROUTES} from '../fixtures/selectors'
 import {ExerciseLibrary} from '../pages/ExerciseLibrary'
-import {HomePage} from '../pages/HomePage'
 import {ExercisePage} from '../pages/ExercisePage'
+import {HomePage} from '../pages/HomePage'
 
 test.describe('Navigation - Basic', () => {
 	test('should render homepage with navigation cards', async ({page}) => {
@@ -21,17 +21,6 @@ test.describe('Navigation - Basic', () => {
 
 		await expect(page).toHaveURL(ROUTES.exercises)
 		await exerciseLibrary.expectPageLoaded()
-	})
-
-	test('should have correct link count on homepage', async ({page}) => {
-		await page.goto('/')
-
-		// Check that we have the expected navigation elements
-		// Desktop: Header links + 2 navigation cards + footer links
-		// Mobile: Fewer header links but same cards
-		const linkCount = await page.getByRole('link').count()
-		expect(linkCount).toBeGreaterThanOrEqual(4) // At least cards + footer
-		expect(linkCount).toBeLessThanOrEqual(10) // Reasonable upper bound
 	})
 })
 

@@ -1,3 +1,4 @@
+import {useTranslations} from '@/hooks/useTranslations'
 import {useSettingsStore} from '@/stores/settings'
 import type {
 	ExerciseEvent,
@@ -48,6 +49,13 @@ export function ExerciseRenderer({
 	onExit
 }: ExerciseRendererProps) {
 	const {userLanguage} = useSettingsStore()
+	const {t} = useTranslations([
+		{key: 'error.title', fallback: 'Error'},
+		{
+			key: 'error.couldNotLoadExercise',
+			fallback: 'Error: Could not load exercise case'
+		}
+	])
 
 	if (status === 'COMPLETED') {
 		return (
@@ -72,9 +80,9 @@ export function ExerciseRenderer({
 
 	if (!(currentCase && currentBlock)) {
 		return (
-			<ExerciseLayout title='Error'>
+			<ExerciseLayout title={t('error.title')}>
 				<div className='text-center text-red-600'>
-					Error: Could not load exercise case
+					{t('error.couldNotLoadExercise')}
 				</div>
 			</ExerciseLayout>
 		)

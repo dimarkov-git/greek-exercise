@@ -1,0 +1,104 @@
+import {expect, test} from '@playwright/test'
+import {
+	EXERCISE_DATA,
+	THEMES,
+	UI_TEXT,
+	VIEWPORT_SIZES
+} from '../fixtures/test-data'
+import {ExerciseLibrary} from '../pages/ExerciseLibrary'
+import {ExercisePage} from '../pages/ExercisePage'
+import {HomePage} from '../pages/HomePage'
+
+// Mobile test functions split for readability
+async function testMobileLayoutOnHomepage({page}) {
+	const homePage = new HomePage(page)
+
+	await homePage.goto()
+	await homePage.expectPageLoaded()
+
+	// Navigation cards should be visible and functional on mobile
+	await homePage.expectNavigationCardsVisible()
+
+	// Mobile menu button should be visible
+	const menuButton = page.getByRole('button', {name: /menu|μενού|меню/i})
+	await expect(menuButton).toBeVisible()
+}
+
+async function testMobileMenuFunctionality({page}) {
+	const homePage = new HomePage(page)
+
+	await homePage.goto()
+
+	// Open mobile menu
+	const menuButton = page.getByRole('button', {name: /menu|μενού|меню/i})
+	await menuButton.click()
+
+	// Theme toggle should be visible in mobile menu
+	const mobileThemeToggle = page.locator(
+		'.md\\:hidden [data-testid="theme-toggle"]'
+	)
+	await expect(mobileThemeToggle).toBeVisible()
+
+	// Language dropdown should be visible in mobile menu
+	const mobileLanguageDropdown = page.locator(
+		'.md\\:hidden [data-testid="ui-language-dropdown"]'
+	)
+	await expect(mobileLanguageDropdown).toBeVisible()
+}
+
+async function testMobileThemeSwitching({page}) {
+	const homePage = new HomePage(page)
+
+	await homePage.goto()
+	await homePage.expectTheme(THEMES.light)
+
+	// Open mobile menu
+	const menuButton = page.getByRole('button', {name: /menu|μενού|меню/i})
+	await menuButton.click()
+
+	// Toggle theme in mobile menu
+	const mobileThemeToggle = page.locator(
+		'.md\\:hidden [data-testid="theme-toggle"]'
+	)
+	await mobileThemeToggle.click()
+
+	await homePage.expectTheme(THEMES.dark)
+}
+
+async function testMobileExerciseFunctionality({page}) {
+	const exerciseLibrary = new ExerciseLibrary(page)
+	const exercisePage = new ExercisePage(page)
+
+	await exerciseLibrary.goto()
+	await exerciseLibrary.startFirstExercise()
+	await exercisePage.expectPageLoaded()
+
+	// Input should be visible and functional on mobile
+	await exercisePage.expectInputVisible()
+	await exercisePage.expectInputFocused()
+
+	// Submit answer on mobile
+	await exercisePage.submitAnswer(EXERCISE_DATA.verbsBe.correctAnswers[0])
+	await exercisePage.expectCorrectFeedback()
+
+	// Auto-advance should work on mobile
+	await exercisePage.waitForAutoAdvance()
+	await exercisePage.expectProgressText(UI_TEXT.progress.createPattern(2))
+}
+
+test.describe('Mobile Responsive Design', () => {
+	test.beforeEach(async ({page}) => {
+		await page.setViewportSize(VIEWPORT_SIZES.mobile)
+	})
+
+	test('should display mobile layout on homepage', testMobileLayoutOnHomepage)
+
+	test('should handle mobile menu functionality', testMobileMenuFunctionality)
+
+	test('should handle mobile theme switching', testMobileThemeSwitching)
+
+	test(
+		'should handle mobile exercise functionality',
+		testMobileExerciseFunctionality
+	)
+})

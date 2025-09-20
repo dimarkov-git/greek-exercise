@@ -84,4 +84,41 @@ export class HomePage {
 		await expect(this.mainHeading).toBeVisible()
 		await this.expectNavigationCardsVisible()
 	}
+
+	// Enhanced state validation methods
+	async expectLanguageDropdownClosed() {
+		const dropdown = this.uiLanguageDropdown
+		const isOpenAttribute = await dropdown.getAttribute('data-is-open')
+		expect(isOpenAttribute).toBe('false')
+
+		// Ensure dropdown menu is not visible
+		const dropdownMenu = this.page.locator(SELECTORS.uiLanguageDropdownMenu)
+		await expect(dropdownMenu).not.toBeVisible()
+	}
+
+	async expectLanguageDropdownOpen() {
+		const dropdown = this.uiLanguageDropdown
+		const isOpenAttribute = await dropdown.getAttribute('data-is-open')
+		expect(isOpenAttribute).toBe('true')
+
+		// Ensure dropdown menu is visible
+		const dropdownMenu = this.page.locator(SELECTORS.uiLanguageDropdownMenu)
+		await expect(dropdownMenu).toBeVisible()
+	}
+
+	async expectMobileMenuVisible() {
+		const mobileMenu = this.page.locator(SELECTORS.mobileMenu)
+		await expect(mobileMenu).toBeVisible()
+	}
+
+	async expectMobileMenuHidden() {
+		const mobileMenu = this.page.locator(SELECTORS.mobileMenu)
+		await expect(mobileMenu).not.toBeVisible()
+	}
+
+	async expectLanguageOptionAvailable(language: string) {
+		const option = this.page.locator(SELECTORS.uiLanguageOption(language))
+		await expect(option).toBeVisible()
+		await expect(option).toBeEnabled()
+	}
 }

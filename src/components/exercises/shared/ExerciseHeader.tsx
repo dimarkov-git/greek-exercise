@@ -1,5 +1,6 @@
 import {motion} from 'framer-motion'
 import {Link} from 'react-router'
+import {useTranslations} from '@/hooks/useTranslations'
 
 interface ExerciseHeaderProps {
 	title: string
@@ -14,6 +15,11 @@ interface ExerciseHeaderProps {
 }
 
 function BackButton() {
+	const {t} = useTranslations([
+		{key: 'exercise.backToLibrary', fallback: 'Back to library'},
+		{key: 'exercise.backArrow', fallback: 'Back arrow'}
+	])
+
 	return (
 		<Link
 			className='flex items-center gap-2 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
@@ -26,7 +32,7 @@ function BackButton() {
 				stroke='currentColor'
 				viewBox='0 0 24 24'
 			>
-				<title>Back arrow</title>
+				<title>{t('exercise.backArrow')}</title>
 				<path
 					d='M15 19l-7-7 7-7'
 					strokeLinecap='round'
@@ -34,7 +40,7 @@ function BackButton() {
 					strokeWidth={2}
 				/>
 			</svg>
-			Назад к библиотеке
+			{t('exercise.backToLibrary')}
 		</Link>
 	)
 }
@@ -46,6 +52,20 @@ function AutoAdvanceToggle({
 	onToggleAutoAdvance: () => void
 	autoAdvanceEnabled: boolean
 }) {
+	const {t} = useTranslations([
+		{key: 'exercise.autoAdvance', fallback: 'Auto-advance'},
+		{
+			key: 'exercise.autoAdvanceEnabled',
+			fallback: 'Auto-advance enabled - click to disable'
+		},
+		{
+			key: 'exercise.autoAdvanceDisabled',
+			fallback: 'Auto-advance disabled - click to enable'
+		},
+		{key: 'exercise.autoAdvanceEnabledIcon', fallback: 'Auto-advance enabled'},
+		{key: 'exercise.autoAdvanceDisabledIcon', fallback: 'Auto-advance disabled'}
+	])
+
 	return (
 		<button
 			className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors ${
@@ -58,8 +78,8 @@ function AutoAdvanceToggle({
 			onClick={onToggleAutoAdvance}
 			title={
 				autoAdvanceEnabled
-					? 'Автопереход включен - нажмите, чтобы выключить'
-					: 'Автопереход выключен - нажмите, чтобы включить'
+					? t('exercise.autoAdvanceEnabled')
+					: t('exercise.autoAdvanceDisabled')
 			}
 			type='button'
 		>
@@ -70,7 +90,7 @@ function AutoAdvanceToggle({
 					stroke='currentColor'
 					viewBox='0 0 24 24'
 				>
-					<title>Auto-advance enabled</title>
+					<title>{t('exercise.autoAdvanceEnabledIcon')}</title>
 					<path
 						d='M14.828 14.828a4 4 0 01-5.656 0M9 10h6m-3-3v6m3.586-5.414L16 7.172V20a2 2 0 01-2 2H10a2 2 0 01-2-2V7.172l.414-.414A2 2 0 009.828 6h4.344a2 2 0 011.414.586z'
 						strokeLinecap='round'
@@ -85,7 +105,7 @@ function AutoAdvanceToggle({
 					stroke='currentColor'
 					viewBox='0 0 24 24'
 				>
-					<title>Auto-advance disabled</title>
+					<title>{t('exercise.autoAdvanceDisabledIcon')}</title>
 					<path
 						d='M10 9v6m4-6v6'
 						strokeLinecap='round'
@@ -94,23 +114,28 @@ function AutoAdvanceToggle({
 					/>
 				</svg>
 			)}
-			Автопереход
+			{t('exercise.autoAdvance')}
 		</button>
 	)
 }
 
 function ProgressBar({progress}: {progress: {current: number; total: number}}) {
+	const {t} = useTranslations([
+		{key: 'exercise.progress', fallback: 'Progress'},
+		{key: 'exercise.progressOf', fallback: 'of'}
+	])
+
 	return (
 		<div className='w-full' data-testid='exercise-progress'>
 			<div className='mb-2 flex items-center justify-between'>
 				<span className='text-gray-600 text-sm dark:text-gray-400'>
-					Прогресс
+					{t('exercise.progress')}
 				</span>
 				<span
 					className='font-medium text-gray-900 text-sm dark:text-white'
 					data-testid='progress-text'
 				>
-					{progress.current} из {progress.total}
+					{progress.current} {t('exercise.progressOf')} {progress.total}
 				</span>
 			</div>
 

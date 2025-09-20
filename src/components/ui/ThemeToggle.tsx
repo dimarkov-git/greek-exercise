@@ -11,6 +11,14 @@ const THEME_TOGGLE_TRANSLATIONS: TranslationRequest[] = [
 	{
 		key: 'darkTheme',
 		fallback: 'Dark'
+	},
+	{
+		key: 'ui.sunEmoji',
+		fallback: '☀️'
+	},
+	{
+		key: 'ui.moonEmoji',
+		fallback: '🌙'
 	}
 ]
 
@@ -54,7 +62,7 @@ export function ThemeToggle() {
 						mass: 0.8
 					}}
 				>
-					☀️
+					{t('ui.sunEmoji')}
 				</motion.span>
 				<motion.span
 					animate={{
@@ -70,7 +78,7 @@ export function ThemeToggle() {
 						mass: 0.8
 					}}
 				>
-					🌙
+					{t('ui.moonEmoji')}
 				</motion.span>
 			</div>
 		</motion.button>

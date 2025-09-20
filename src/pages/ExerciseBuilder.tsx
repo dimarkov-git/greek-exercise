@@ -12,6 +12,18 @@ const EXERCISE_BUILDER_TRANSLATIONS: TranslationRequest[] = [
 	{
 		key: 'exerciseBuilderDesc',
 		fallback: 'Create your own exercises'
+	},
+	{
+		key: 'ui.toolsEmoji',
+		fallback: '🔧'
+	},
+	{
+		key: 'comingSoon',
+		fallback: 'Coming soon... 🚧'
+	},
+	{
+		key: 'ui.backToHome',
+		fallback: '← Back to Home'
 	}
 ]
 
@@ -32,7 +44,7 @@ export function ExerciseBuilder() {
 						className='py-16 text-center'
 						initial={{opacity: 0, y: 20}}
 					>
-						<div className='mb-8 text-6xl'>🔧</div>
+						<div className='mb-8 text-6xl'>{t('ui.toolsEmoji')}</div>
 						<h1 className='mb-4 font-bold text-4xl text-gray-900 dark:text-white'>
 							{t('exerciseBuilder')}
 						</h1>
@@ -40,13 +52,13 @@ export function ExerciseBuilder() {
 							{t('exerciseBuilderDesc')}
 						</p>
 						<p className='mb-8 text-gray-500 text-lg dark:text-gray-500'>
-							Coming soon... 🚧
+							{t('comingSoon')}
 						</p>
 						<Link
 							className='inline-flex items-center gap-2 rounded-lg bg-purple-500 px-6 py-3 text-white transition-colors hover:bg-purple-600'
 							to='/'
 						>
-							← Back to Home
+							{t('ui.backToHome')}
 						</Link>
 					</motion.div>
 				</div>

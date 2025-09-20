@@ -27,12 +27,89 @@ const EXERCISE_LIBRARY_TRANSLATIONS: TranslationRequest[] = [
 		key: 'userLanguageDescription',
 		fallback:
 			'Choose a language you already know. It will be used for hints in exercises.'
+	},
+	{
+		key: 'exerciseCount',
+		fallback: 'Showing {filteredCount} of {totalCount} exercises'
+	},
+	{
+		key: 'noExercisesFound',
+		fallback: 'No exercises found'
+	},
+	{
+		key: 'noExercisesFoundDesc',
+		fallback: 'Try adjusting your filters or browse all exercises'
+	},
+	{
+		key: 'clearFilters',
+		fallback: 'Clear Filters'
+	},
+	{
+		key: 'startExercise',
+		fallback: 'Start Exercise'
+	},
+	{
+		key: 'filters',
+		fallback: 'Filters'
+	},
+	{
+		key: 'difficulty',
+		fallback: 'Difficulty'
+	},
+	{
+		key: 'tags',
+		fallback: 'Tags'
+	},
+	{
+		key: 'all',
+		fallback: 'All'
+	},
+	{
+		key: 'ui.searchEmoji',
+		fallback: '🔍'
+	},
+	{
+		key: 'ui.documentEmoji',
+		fallback: '📝'
+	},
+	{
+		key: 'ui.booksEmoji',
+		fallback: '📚'
+	},
+	{
+		key: 'ui.timerEmoji',
+		fallback: '⏱️'
+	},
+	{
+		key: 'exercise.cases',
+		fallback: 'cases'
+	},
+	{
+		key: 'exercise.blocks',
+		fallback: 'blocks'
+	},
+	{
+		key: 'exercise.minutes',
+		fallback: 'min'
+	},
+	{
+		key: 'ui.hashSymbol',
+		fallback: '#'
+	},
+	{
+		key: 'ui.plusSymbol',
+		fallback: '+'
+	},
+	{
+		key: 'ui.backToHome',
+		fallback: '← Back to Home'
 	}
 ]
 
 interface ExerciseCardProps {
 	exercise: ExerciseMetadata
 	index: number
+	t: (key: string) => string
 }
 
 function LibraryHeader({t}: {t: (key: string) => string}) {
@@ -56,12 +133,14 @@ function ExerciseGrid({
 	filteredExercises,
 	exercises,
 	setSelectedTags,
-	setSelectedDifficulty
+	setSelectedDifficulty,
+	t
 }: {
 	filteredExercises: import('@/types/exercises').ExerciseMetadata[]
 	exercises: import('@/types/exercises').ExerciseMetadata[]
 	setSelectedTags: (tags: string[]) => void
 	setSelectedDifficulty: (difficulty: string) => void
+	t: (key: string) => string
 }) {
 	return (
 		<>
@@ -72,7 +151,9 @@ function ExerciseGrid({
 				initial={{opacity: 0}}
 				transition={{delay: 0.3}}
 			>
-				Showing {filteredExercises.length} of {exercises.length} exercises
+				{t('exerciseCount')
+					.replace('{filteredCount}', filteredExercises.length.toString())
+					.replace('{totalCount}', exercises.length.toString())}
 			</motion.div>
 
 			{/* Exercises Grid */}
@@ -84,7 +165,12 @@ function ExerciseGrid({
 			>
 				<AnimatePresence>
 					{filteredExercises.map((exercise, index) => (
-						<ExerciseCard exercise={exercise} index={index} key={exercise.id} />
+						<ExerciseCard
+							exercise={exercise}
+							index={index}
+							key={exercise.id}
+							t={t}
+						/>
 					))}
 				</AnimatePresence>
 			</motion.div>
@@ -97,12 +183,12 @@ function ExerciseGrid({
 					initial={{opacity: 0, y: 20}}
 					transition={{delay: 0.4}}
 				>
-					<div className='mb-4 text-6xl'>🔍</div>
+					<div className='mb-4 text-6xl'>{t('ui.searchEmoji')}</div>
 					<h3 className='mb-2 font-semibold text-gray-900 text-xl dark:text-white'>
-						No exercises found
+						{t('noExercisesFound')}
 					</h3>
 					<p className='mb-6 text-gray-600 dark:text-gray-400'>
-						Try adjusting your filters or browse all exercises
+						{t('noExercisesFoundDesc')}
 					</p>
 					<button
 						className='rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700'
@@ -112,7 +198,7 @@ function ExerciseGrid({
 						}}
 						type='button'
 					>
-						Clear Filters
+						{t('clearFilters')}
 					</button>
 				</motion.div>
 			)}
@@ -146,7 +232,7 @@ function getDifficultyLabel(difficulty: string, userLanguage: string): string {
 	)
 }
 
-function ExerciseCard({exercise, index}: ExerciseCardProps) {
+function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 	const {userLanguage} = useSettingsStore()
 
 	return (
@@ -182,12 +268,14 @@ function ExerciseCard({exercise, index}: ExerciseCardProps) {
 								className='rounded bg-blue-50 px-2 py-1 text-blue-600 text-xs dark:bg-blue-900/30 dark:text-blue-400'
 								key={tag}
 							>
-								#{tag}
+								{t('ui.hashSymbol')}
+								{tag}
 							</span>
 						))}
 						{exercise.tags.length > 3 && (
 							<span className='rounded bg-gray-50 px-2 py-1 text-gray-500 text-xs dark:bg-gray-700'>
-								+{exercise.tags.length - 3}
+								{t('ui.plusSymbol')}
+								{exercise.tags.length - 3}
 							</span>
 						)}
 					</div>
@@ -196,9 +284,17 @@ function ExerciseCard({exercise, index}: ExerciseCardProps) {
 				{/* Stats */}
 				<div className='mb-4 flex items-center justify-between text-gray-500 text-sm dark:text-gray-400'>
 					<div className='flex items-center gap-4'>
-						<span>📝 {exercise.totalCases} cases</span>
-						<span>📚 {exercise.totalBlocks} blocks</span>
-						<span>⏱️ {exercise.estimatedTimeMinutes} min</span>
+						<span>
+							{t('ui.documentEmoji')} {exercise.totalCases}{' '}
+							{t('exercise.cases')}
+						</span>
+						<span>
+							{t('ui.booksEmoji')} {exercise.totalBlocks} {t('exercise.blocks')}
+						</span>
+						<span>
+							{t('ui.timerEmoji')} {exercise.estimatedTimeMinutes}{' '}
+							{t('exercise.minutes')}
+						</span>
 					</div>
 				</div>
 
@@ -207,7 +303,7 @@ function ExerciseCard({exercise, index}: ExerciseCardProps) {
 					className='block w-full rounded-lg bg-blue-600 px-4 py-2 text-center font-medium text-white transition-colors hover:bg-blue-700'
 					to={`/exercise/${exercise.id}`}
 				>
-					Start Exercise
+					{t('startExercise')}
 				</Link>
 			</div>
 		</motion.div>
@@ -241,13 +337,15 @@ function ExerciseFilters({
 	setSelectedDifficulty,
 	selectedTags,
 	setSelectedTags,
-	allTags
+	allTags,
+	t
 }: {
 	selectedDifficulty: string
 	setSelectedDifficulty: (difficulty: string) => void
 	selectedTags: string[]
 	setSelectedTags: (tags: string[]) => void
 	allTags: string[]
+	t: (key: string) => string
 }) {
 	return (
 		<motion.div
@@ -257,13 +355,13 @@ function ExerciseFilters({
 			transition={{delay: 0.2}}
 		>
 			<h3 className='mb-4 font-semibold text-gray-900 dark:text-white'>
-				Filters
+				{t('filters')}
 			</h3>
 
 			{/* Difficulty Filter */}
 			<div className='mb-4'>
 				<div className='mb-2 block font-medium text-gray-700 text-sm dark:text-gray-300'>
-					Difficulty
+					{t('difficulty')}
 				</div>
 				<div className='flex flex-wrap gap-2'>
 					<button
@@ -275,7 +373,7 @@ function ExerciseFilters({
 						onClick={() => setSelectedDifficulty('')}
 						type='button'
 					>
-						All
+						{t('all')}
 					</button>
 					{['beginner', 'intermediate', 'advanced'].map(difficulty => (
 						<button
@@ -298,7 +396,7 @@ function ExerciseFilters({
 			{allTags.length > 0 && (
 				<div>
 					<div className='mb-2 block font-medium text-gray-700 text-sm dark:text-gray-300'>
-						Tags
+						{t('tags')}
 					</div>
 					<div className='flex flex-wrap gap-2'>
 						{allTags.map(tag => (
@@ -320,7 +418,8 @@ function ExerciseFilters({
 								}}
 								type='button'
 							>
-								#{tag}
+								{t('ui.hashSymbol')}
+								{tag}
 							</button>
 						))}
 					</div>
@@ -330,20 +429,14 @@ function ExerciseFilters({
 	)
 }
 
-export function ExerciseLibrary() {
-	const {t} = useTranslations(EXERCISE_LIBRARY_TRANSLATIONS)
-	const {data: exercises, isLoading, error} = useExercises()
+function useExerciseFiltering() {
 	const [selectedTags, setSelectedTags] = useState<string[]>([])
 	const [selectedDifficulty, setSelectedDifficulty] = useState<string>('')
 
-	// Get all unique tags
-	const allTags = exercises
-		? [...new Set(exercises.flatMap(ex => ex.tags))].sort()
-		: []
+	const filterExercises = (exercises: ExerciseMetadata[] | undefined) => {
+		if (!exercises) return []
 
-	// Filter exercises
-	const filteredExercises =
-		exercises?.filter(exercise => {
+		return exercises.filter(exercise => {
 			// Tag filter
 			if (selectedTags.length > 0) {
 				const hasSelectedTag = selectedTags.some(tag =>
@@ -358,7 +451,54 @@ export function ExerciseLibrary() {
 			}
 
 			return true
-		}) || []
+		})
+	}
+
+	const getAllTags = (exercises: ExerciseMetadata[] | undefined) =>
+		exercises ? [...new Set(exercises.flatMap(ex => ex.tags))].sort() : []
+
+	return {
+		selectedTags,
+		setSelectedTags,
+		selectedDifficulty,
+		setSelectedDifficulty,
+		filterExercises,
+		getAllTags
+	}
+}
+
+function BackToHomeSection({t}: {t: (key: string) => string}) {
+	return (
+		<motion.div
+			animate={{opacity: 1}}
+			className='mt-12 text-center'
+			initial={{opacity: 0}}
+			transition={{delay: 0.6}}
+		>
+			<Link
+				className='inline-flex items-center gap-2 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
+				to='/'
+			>
+				{t('ui.backToHome')}
+			</Link>
+		</motion.div>
+	)
+}
+
+export function ExerciseLibrary() {
+	const {t} = useTranslations(EXERCISE_LIBRARY_TRANSLATIONS)
+	const {data: exercises, isLoading, error} = useExercises()
+	const {
+		selectedTags,
+		setSelectedTags,
+		selectedDifficulty,
+		setSelectedDifficulty,
+		filterExercises,
+		getAllTags
+	} = useExerciseFiltering()
+
+	const allTags = getAllTags(exercises)
+	const filteredExercises = filterExercises(exercises)
 
 	return (
 		<>
@@ -381,6 +521,7 @@ export function ExerciseLibrary() {
 								selectedTags={selectedTags}
 								setSelectedDifficulty={setSelectedDifficulty}
 								setSelectedTags={setSelectedTags}
+								t={t}
 							/>
 
 							<ExerciseGrid
@@ -388,24 +529,12 @@ export function ExerciseLibrary() {
 								filteredExercises={filteredExercises}
 								setSelectedDifficulty={setSelectedDifficulty}
 								setSelectedTags={setSelectedTags}
+								t={t}
 							/>
 						</>
 					)}
 
-					{/* Back to Home */}
-					<motion.div
-						animate={{opacity: 1}}
-						className='mt-12 text-center'
-						initial={{opacity: 0}}
-						transition={{delay: 0.6}}
-					>
-						<Link
-							className='inline-flex items-center gap-2 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
-							to='/'
-						>
-							← Back to Home
-						</Link>
-					</motion.div>
+					<BackToHomeSection t={t} />
 				</div>
 			</div>
 		</>

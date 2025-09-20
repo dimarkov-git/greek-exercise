@@ -1,5 +1,6 @@
 import {motion} from 'framer-motion'
 import {useEffect, useRef, useState} from 'react'
+import {useTranslations} from '@/hooks/useTranslations'
 import type {ExerciseStatus} from '@/types/exercises'
 
 // Get input styling based on status
@@ -54,14 +55,17 @@ function getButtonStyles(
 }
 
 // Get button text based on status
-function getButtonText(status: ExerciseStatus): string {
+function getButtonText(
+	status: ExerciseStatus,
+	t: (key: string) => string
+): string {
 	switch (status) {
 		case 'CHECKING':
-			return 'Έλεγχος...'
+			return t('exercise.checking')
 		case 'REQUIRE_CORRECTION':
-			return 'Εισάγετε τη σωστή απάντηση'
+			return t('exercise.enterCorrectAnswer')
 		default:
-			return 'Υποβολή'
+			return t('exercise.submit')
 	}
 }
 
@@ -74,17 +78,29 @@ function LoadingIndicator() {
 }
 
 function KeyboardHint() {
+	const {t} = useTranslations([
+		{key: 'exercise.enterKey', fallback: 'to submit'},
+		{key: 'exercise.enterKeyName', fallback: 'Enter'}
+	])
+
 	return (
 		<div className='flex items-center text-gray-500 text-sm dark:text-gray-400'>
 			<kbd className='rounded bg-gray-100 px-2 py-1 font-mono text-xs dark:bg-gray-700'>
-				Enter
+				{t('exercise.enterKeyName')}
 			</kbd>
-			<span className='ml-2'>για υποβολή</span>
+			<span className='ml-2'>{t('exercise.enterKey')}</span>
 		</div>
 	)
 }
 
 function CorrectionHelpText() {
+	const {t} = useTranslations([
+		{
+			key: 'exercise.enterCorrectAnswerToContinue',
+			fallback: 'Please enter the correct answer to continue.'
+		}
+	])
+
 	return (
 		<motion.div
 			animate={{opacity: 1, height: 'auto'}}
@@ -92,7 +108,7 @@ function CorrectionHelpText() {
 			exit={{opacity: 0, height: 0}}
 			initial={{opacity: 0, height: 0}}
 		>
-			Παρακαλώ εισάγετε τη σωστή απάντηση για να συνεχίσετε.
+			{t('exercise.enterCorrectAnswerToContinue')}
 		</motion.div>
 	)
 }
@@ -233,9 +249,15 @@ export function WordFormInput({
 		autoFocus
 	})
 
+	const {t} = useTranslations([
+		{key: 'exercise.checking', fallback: 'Checking...'},
+		{key: 'exercise.submit', fallback: 'Submit'},
+		{key: 'exercise.enterCorrectAnswer', fallback: 'Enter correct answer'}
+	])
+
 	const inputStyles = getInputStyles(status, isFocused)
 	const buttonStyles = getButtonStyles(status, disabled, value)
-	const buttonText = getButtonText(status)
+	const buttonText = getButtonText(status, t)
 
 	return (
 		<motion.form

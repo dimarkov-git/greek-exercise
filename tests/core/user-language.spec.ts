@@ -1,4 +1,5 @@
-import {test} from '@playwright/test'
+import {expect, test} from '@playwright/test'
+import {SELECTORS} from '../fixtures/selectors'
 import {LANGUAGES} from '../fixtures/test-data'
 import {ExerciseLibrary} from '../pages/ExerciseLibrary'
 

@@ -18,9 +18,11 @@ export class TestHelpers {
 
 	/**
 	 * Wait for a specific timeout with optional description
+	 * @deprecated Use specific state-based waiting instead of arbitrary timeouts
 	 */
 	async wait(timeout: number, _description?: string) {
 		// Description parameter is used for debugging purposes
+		// TODO: Replace with state-based waiting
 		await this.page.waitForTimeout(timeout)
 	}
 
@@ -156,7 +158,7 @@ export class TestHelpers {
 	 * Wait for answer processing
 	 */
 	async waitForAnswerProcessing() {
-		await this.wait(TIMEOUTS.fast, 'answer processing')
+		await this.wait(TIMEOUTS.normal, 'answer processing')
 	}
 
 	/**

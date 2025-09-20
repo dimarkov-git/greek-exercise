@@ -1,6 +1,7 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import type React from 'react'
 import {useEffect, useRef, useState} from 'react'
+import {useTranslations} from '@/hooks/useTranslations'
 import {useSettingsStore} from '@/stores/settings'
 import type {Language} from '@/types/settings'
 
@@ -113,6 +114,10 @@ function HintButton({
 	onMouseLeave: () => void
 	triggerRef: React.RefObject<HTMLButtonElement | null>
 }) {
+	const {t} = useTranslations([
+		{key: 'exercise.hintIcon', fallback: 'Hint icon'}
+	])
+
 	const handleClick = () => {
 		if (isMobile && 'vibrate' in navigator && !isVisible) {
 			navigator.vibrate(50)
@@ -141,7 +146,7 @@ function HintButton({
 					stroke='currentColor'
 					viewBox='0 0 24 24'
 				>
-					<title>Hint icon</title>
+					<title>{t('exercise.hintIcon')}</title>
 					<path
 						d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
 						strokeLinecap='round'

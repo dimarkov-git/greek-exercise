@@ -20,7 +20,7 @@ async function enableMocking() {
 			},
 			onUnhandledRequest: 'bypass'
 		})
-	} catch (_error) {
+	} catch {
 		// Don't throw error, just continue without mocking
 		return
 	}

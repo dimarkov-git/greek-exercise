@@ -9,6 +9,10 @@ const titleKey = 'app.title'
 const HEADER_LOGO_TRANSLATIONS: TranslationRequest[] = [
 	{
 		key: titleKey
+	},
+	{
+		key: 'app.logoInitials',
+		fallback: 'ΜΕ'
 	}
 ]
 
@@ -24,7 +28,7 @@ export function HeaderLogo() {
 		>
 			<Link className='flex items-center gap-3' to='/'>
 				<div className='flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-white'>
-					<span className='font-bold text-sm'>ΜΕ</span>
+					<span className='font-bold text-sm'>{t('app.logoInitials')}</span>
 				</div>
 				<TranslatedText
 					as='span'
