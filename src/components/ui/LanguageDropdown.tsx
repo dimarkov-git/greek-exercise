@@ -14,6 +14,10 @@ const LANGUAGE_DROPDOWN_TRANSLATIONS: TranslationRequest[] = [
 	{
 		key: 'ui.dropdownArrow',
 		fallback: 'Dropdown arrow'
+	},
+	{
+		key: 'ui.selectedLanguage',
+		fallback: 'Selected language'
 	}
 ]
 
@@ -52,7 +56,7 @@ function DropdownButton({
 			<span className='text-lg'>{currentLanguage?.flag}</span>
 			<motion.svg
 				animate={{rotate: isOpen ? 180 : 0}}
-				className='ml-1 h-4 w-4 fill-current'
+				className='ml-1 h-4 w-4 fill-gray-600 dark:fill-gray-300'
 				viewBox='0 0 12 12'
 			>
 				<title>{dropdownArrowTitle}</title>
@@ -63,13 +67,17 @@ function DropdownButton({
 }
 
 interface DropdownMenuProps {
-	otherLanguages: Array<{code: string; flag: string; name: string}>
+	allLanguages: Array<{code: string; flag: string; name: string}>
+	currentLanguage: string
+	selectedLanguageTitle: string
 	onLanguageChange: (language: Language) => void
 	onClose: () => void
 }
 
 function DropdownMenu({
-	otherLanguages,
+	allLanguages,
+	currentLanguage,
+	selectedLanguageTitle,
 	onLanguageChange,
 	onClose
 }: DropdownMenuProps) {
@@ -91,18 +99,44 @@ function DropdownMenu({
 				transition={{duration: 0.15}}
 			>
 				<div className='py-1'>
-					{otherLanguages.map(language => (
-						<button
-							className='flex w-full items-center gap-2 px-4 py-2 text-left text-gray-700 text-sm transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
-							data-testid={`ui-language-option-${language.code}`}
-							key={language.code}
-							onClick={() => onLanguageChange(language.code as Language)}
-							type='button'
-						>
-							<span className='text-base'>{language.flag}</span>
-							<span>{language.name}</span>
-						</button>
-					))}
+					{allLanguages.map(language => {
+						const isActive = language.code === currentLanguage
+						return (
+							<button
+								className={`flex w-full items-center gap-2 px-4 py-2 text-left text-sm transition-colors ${
+									isActive
+										? 'cursor-default bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+										: 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+								}`}
+								data-testid={`ui-language-option-${language.code}`}
+								disabled={isActive}
+								key={language.code}
+								onClick={() =>
+									!isActive && onLanguageChange(language.code as Language)
+								}
+								type='button'
+							>
+								<span className='text-base'>{language.flag}</span>
+								<span className='flex-1'>{language.name}</span>
+								{isActive && (
+									<span className='text-blue-600 dark:text-blue-400'>
+										<svg
+											className='h-4 w-4'
+											fill='currentColor'
+											viewBox='0 0 20 20'
+										>
+											<title>{selectedLanguageTitle}</title>
+											<path
+												clipRule='evenodd'
+												d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
+												fillRule='evenodd'
+											/>
+										</svg>
+									</span>
+								)}
+							</button>
+						)
+					})}
 				</div>
 			</motion.div>
 		</>
@@ -115,7 +149,7 @@ export function LanguageDropdown() {
 	const [isOpen, setIsOpen] = useState(false)
 
 	const currentLanguage = UI_LANGUAGES.find(lang => lang.code === uiLanguage)
-	const otherLanguages = UI_LANGUAGES.filter(lang => lang.code !== uiLanguage)
+	const allLanguages = UI_LANGUAGES
 
 	const handleLanguageChange = (language: Language) => {
 		setUiLanguage(language)
@@ -135,9 +169,11 @@ export function LanguageDropdown() {
 			<AnimatePresence>
 				{isOpen && (
 					<DropdownMenu
+						allLanguages={allLanguages}
+						currentLanguage={uiLanguage}
 						onClose={() => setIsOpen(false)}
 						onLanguageChange={handleLanguageChange}
-						otherLanguages={otherLanguages}
+						selectedLanguageTitle={t('ui.selectedLanguage')}
 					/>
 				)}
 			</AnimatePresence>
