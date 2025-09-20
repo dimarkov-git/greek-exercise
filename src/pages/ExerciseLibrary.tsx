@@ -34,7 +34,7 @@ const EXERCISE_LIBRARY_TRANSLATIONS: TranslationRequest[] = [
 	},
 	{
 		key: 'exerciseCount',
-		fallback: 'Showing {filteredCount} of {totalCount} exercises'
+		fallback: 'Available exercises: {filteredCount}'
 	},
 	{
 		key: 'noExercisesFound',
@@ -204,8 +204,7 @@ function ExerciseGrid({
 				transition={{delay: 0.3}}
 			>
 				{t('exerciseCount')
-					.replace('{filteredCount}', filteredExercises.length.toString())
-					.replace('{totalCount}', exercises.length.toString())}
+					.replace('{filteredCount}', filteredExercises.length.toString())}
 			</motion.div>
 
 			{/* Exercises Grid */}
@@ -390,7 +389,7 @@ function SettingsSummaryInline({t}: {t: (key: string) => string}) {
 }
 
 function UserSettings({t}: {t: (key: string) => string}) {
-	const [isCollapsed, setIsCollapsed] = useState(false)
+	const [isCollapsed, setIsCollapsed] = useState(true)
 
 	return (
 		<motion.div
@@ -400,8 +399,8 @@ function UserSettings({t}: {t: (key: string) => string}) {
 			transition={{delay: 0.1}}
 		>
 			{/* Header with collapse button */}
-			<button
-				className='flex w-full cursor-pointer items-center justify-between p-6 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-700'
+			<motion.button
+				className='flex w-full cursor-pointer items-center justify-between p-6 text-left transition-all hover:bg-gray-50 hover:pb-7 dark:hover:bg-gray-700'
 				onClick={() => setIsCollapsed(!isCollapsed)}
 				type='button'
 			>
@@ -411,15 +410,16 @@ function UserSettings({t}: {t: (key: string) => string}) {
 					</h3>
 					{isCollapsed && <SettingsSummaryInline t={t} />}
 				</div>
-				<motion.span
+				<motion.svg
 					animate={{rotate: isCollapsed ? 0 : 180}}
-					className='text-gray-500 transition-transform dark:text-gray-400'
-					title={isCollapsed ? t('ui.expand') : t('ui.collapse')}
+					className='h-4 w-4 fill-gray-500 transition-transform dark:fill-gray-400'
 					transition={{duration: 0.2}}
+					viewBox='0 0 12 12'
 				>
-					{t('ui.chevronDown')}
-				</motion.span>
-			</button>
+					<title>{isCollapsed ? t('ui.expand') : t('ui.collapse')}</title>
+					<path d='M6 8L2 4h8l-4 4z' />
+				</motion.svg>
+			</motion.button>
 
 			{/* Collapsible content */}
 			<AnimatePresence>
@@ -553,31 +553,30 @@ function FilterSummaryInline({
 	selectedTags: string[]
 	t: (key: string) => string
 }) {
-	const hasActiveFilters =
-		selectedDifficulties.length > 0 || selectedTags.length > 0
-
-	if (!hasActiveFilters) return null
-
 	return (
 		<div className='flex items-center gap-2 text-sm'>
-			{selectedDifficulties.length > 0 && (
-				<div className='flex items-center gap-1'>
-					<span className='text-gray-600 dark:text-gray-400'>
-						{t('difficulty')}
-						{t('ui.colon')}
-					</span>
-					<div className='flex gap-1'>
-						{selectedDifficulties.map(d => (
+			<div className='flex items-center gap-1'>
+				<span className='text-gray-600 dark:text-gray-400'>
+					{t('difficulty')}
+					{t('ui.colon')}
+				</span>
+				<div className='flex gap-1'>
+					{selectedDifficulties.length === 0 ? (
+						<span className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'>
+							{t('all')}
+						</span>
+					) : (
+						selectedDifficulties.map(d => (
 							<span
 								className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'
 								key={d}
 							>
 								{t(`difficulty.${d}`)}
 							</span>
-						))}
-					</div>
+						))
+					)}
 				</div>
-			)}
+			</div>
 			{selectedTags.length > 0 && (
 				<div className='flex items-center gap-1'>
 					<span className='text-gray-600 dark:text-gray-400'>
@@ -630,8 +629,8 @@ function ExerciseFilters({
 			initial={{opacity: 0, y: 20}}
 			transition={{delay: 0.2}}
 		>
-			<button
-				className='flex w-full cursor-pointer items-center justify-between p-6 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-700'
+			<motion.button
+				className='flex w-full cursor-pointer items-center justify-between p-6 text-left transition-all hover:bg-gray-50 hover:pb-7 dark:hover:bg-gray-700'
 				onClick={() => setIsCollapsed(!isCollapsed)}
 				type='button'
 			>
@@ -647,15 +646,16 @@ function ExerciseFilters({
 						/>
 					)}
 				</div>
-				<motion.span
+				<motion.svg
 					animate={{rotate: isCollapsed ? 0 : 180}}
-					className='text-gray-500 transition-transform dark:text-gray-400'
-					title={isCollapsed ? t('ui.expand') : t('ui.collapse')}
+					className='h-4 w-4 fill-gray-500 transition-transform dark:fill-gray-400'
 					transition={{duration: 0.2}}
+					viewBox='0 0 12 12'
 				>
-					{t('ui.chevronDown')}
-				</motion.span>
-			</button>
+					<title>{isCollapsed ? t('ui.expand') : t('ui.collapse')}</title>
+					<path d='M6 8L2 4h8l-4 4z' />
+				</motion.svg>
+			</motion.button>
 
 			<AnimatePresence>
 				{!isCollapsed && (
