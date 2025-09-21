@@ -1,0 +1,130 @@
+{
+	"enabled": true,
+	"id": "verbs-aorist-tense",
+	"type": "word-form",
+	"title": "Συζυγία ρημάτων στον Αόριστο",
+	"titleI18n": {
+		"en": "Verb Conjugation in Aorist (Simple Past)",
+		"ru": "Спряжение глаголов в аористе (прошедшее простое)"
+	},
+	"description": "Εξάσκηση στη συζυγία ρημάτων όλων των ομάδων στον αόριστο.",
+	"descriptionI18n": {
+		"en": "Practice conjugating verbs from all groups in the aorist (simple past).",
+		"ru": "Упражнение по спряжению глаголов всех групп в аористе (простое прошедшее)."
+	},
+	"tags": ["verbs", "past-tense", "aorist"],
+	"difficulty": "a1",
+	"estimatedTimeMinutes": 10,
+	"settings": {
+		"autoAdvance": true,
+		"autoAdvanceDelayMs": 1500,
+		"allowSkip": false,
+		"shuffleCases": true
+	},
+	"blocks": [
+		{
+			"id": "read",
+			"name": "διαβάζω",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ ___", "correct": ["διάβασα"] },
+				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["διάβασες"] },
+				{ "id": "he", "prompt": "αυτός/αυτή/αυτό ___", "correct": ["διάβασε"] },
+				{ "id": "we", "prompt": "εμείς ___", "correct": ["διαβάσαμε"] },
+				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["διαβάσατε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"correct": ["διάβασαν", "διαβάσανε"]
+				}
+			]
+		},
+		{
+			"id": "speak",
+			"name": "μιλάω / μιλώ",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ ___", "correct": ["μίλησα"] },
+				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["μίλησες"] },
+				{ "id": "he", "prompt": "αυτός/αυτή/αυτό ___", "correct": ["μίλησε"] },
+				{ "id": "we", "prompt": "εμείς ___", "correct": ["μιλήσαμε"] },
+				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["μιλήσατε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"correct": ["μίλησαν", "μιλήσανε"]
+				}
+			]
+		},
+		{
+			"id": "can",
+			"name": "μπορώ",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ ___", "correct": ["μπόρεσα"] },
+				{
+					"id": "you-sg",
+					"prompt": "εσύ ___",
+					"correct": ["μππόρεσες", "μπόρεσες"]
+				},
+				{ "id": "he", "prompt": "αυτός/αυτή/αυτό ___", "correct": ["μπόρεσε"] },
+				{ "id": "we", "prompt": "εμείς ___", "correct": ["μπορέσαμε"] },
+				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["μπορέσατε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"correct": ["μπόρεσαν", "μπορέσανε"]
+				}
+			]
+		},
+		{
+			"id": "hear",
+			"name": "ακούω",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ ___", "correct": ["άκουσα"] },
+				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["άκουσες"] },
+				{ "id": "he", "prompt": "αυτός/αυτή/αυτό ___", "correct": ["άκουσε"] },
+				{ "id": "we", "prompt": "εμείς ___", "correct": ["ακούσαμε"] },
+				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["ακούσατε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"correct": ["άκουσαν", "ακούσανε"]
+				}
+			]
+		},
+		{
+			"id": "dress",
+			"name": "ντύνομαι",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ ___", "correct": ["ντύθηκα"] },
+				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["ντύθηκες"] },
+				{ "id": "he", "prompt": "αυτός/αυτή/αυτό ___", "correct": ["ντύθηκε"] },
+				{ "id": "we", "prompt": "εμείς ___", "correct": ["ντυθήκαμε"] },
+				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["ντυθήκατε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"correct": ["ντύθηκαν", "ντυθήκανε"]
+				}
+			]
+		},
+		{
+			"id": "sleep",
+			"name": "κοιμάμαι",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ ___", "correct": ["κοιμήθηκα"] },
+				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["κοιμήθηκες"] },
+				{
+					"id": "he",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"correct": ["κοιμήθηκε"]
+				},
+				{ "id": "we", "prompt": "εμείς ___", "correct": ["κοιμηθήκαμε"] },
+				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["κοιμηθήκατε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"correct": ["κοιμήθηκαν", "κοιμηθήκανε"]
+				}
+			]
+		}
+	]
+}

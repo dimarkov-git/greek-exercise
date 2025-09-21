@@ -1,0 +1,146 @@
+{
+	"enabled": true,
+	"id": "verbs-future-tense",
+	"type": "word-form",
+	"title": "Συζυγία ρημάτων στον Μέλλοντα",
+	"titleI18n": {
+		"en": "Verb Conjugation in Future Tense",
+		"ru": "Спряжение глаголов в будущем времени"
+	},
+	"description": "Εξάσκηση στη συζυγία ρημάτων όλων των ομάδων στον μέλλοντα.",
+	"descriptionI18n": {
+		"en": "Practice conjugating verbs from all groups in the future tense.",
+		"ru": "Упражнение по спряжению глаголов всех групп в будущем времени."
+	},
+	"tags": ["verbs", "future-tense"],
+	"difficulty": "a1",
+	"estimatedTimeMinutes": 10,
+	"settings": {
+		"autoAdvance": true,
+		"autoAdvanceDelayMs": 1500,
+		"allowSkip": false,
+		"shuffleCases": true
+	},
+	"blocks": [
+		{
+			"id": "read",
+			"name": "διαβάζω",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["διαβάσω"] },
+				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["διαβάσεις"] },
+				{
+					"id": "he",
+					"prompt": "αυτός/αυτή/αυτό θα ___",
+					"correct": ["διαβάσει"]
+				},
+				{ "id": "we", "prompt": "εμείς θα ___", "correct": ["διαβάσουμε"] },
+				{ "id": "you-pl", "prompt": "εσείς θα ___", "correct": ["διαβάσετε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά θα ___",
+					"correct": ["διαβάσουν", "διαβάσουνε"]
+				}
+			]
+		},
+		{
+			"id": "speak",
+			"name": "μιλάω / μιλώ",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["μιλήσω"] },
+				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["μιλήσεις"] },
+				{
+					"id": "he",
+					"prompt": "αυτός/αυτή/αυτό θα ___",
+					"correct": ["μιλήσει"]
+				},
+				{ "id": "we", "prompt": "εμείς θα ___", "correct": ["μιλήσουμε"] },
+				{ "id": "you-pl", "prompt": "εσείς θα ___", "correct": ["μιλήσετε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά θα ___",
+					"correct": ["μιλήσουν", "μιλήσουνε"]
+				}
+			]
+		},
+		{
+			"id": "can",
+			"name": "μπορώ",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["μπορέσω"] },
+				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["μπορέσεις"] },
+				{
+					"id": "he",
+					"prompt": "αυτός/αυτή/αυτό θα ___",
+					"correct": ["μπορέσει"]
+				},
+				{ "id": "we", "prompt": "εμείς θα ___", "correct": ["μπορέσουμε"] },
+				{ "id": "you-pl", "prompt": "εσείς θα ___", "correct": ["μπορέσετε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά θα ___",
+					"correct": ["μπορέσουν", "μπορέσουνε"]
+				}
+			]
+		},
+		{
+			"id": "hear",
+			"name": "ακούω",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["ακούσω"] },
+				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["ακούσεις"] },
+				{
+					"id": "he",
+					"prompt": "αυτός/αυτή/αυτό θα ___",
+					"correct": ["ακούσει"]
+				},
+				{ "id": "we", "prompt": "εμείς θα ___", "correct": ["ακούσουμε"] },
+				{ "id": "you-pl", "prompt": "εσείς θα ___", "correct": ["ακούσετε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά θα ___",
+					"correct": ["ακούσουν", "ακούσουνε"]
+				}
+			]
+		},
+		{
+			"id": "dress",
+			"name": "ντύνομαι",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["ντυθώ"] },
+				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["ντυθείς"] },
+				{
+					"id": "he",
+					"prompt": "αυτός/αυτή/αυτό θα ___",
+					"correct": ["ντυθεί"]
+				},
+				{ "id": "we", "prompt": "εμείς θα ___", "correct": ["ντυθούμε"] },
+				{ "id": "you-pl", "prompt": "εσείς θα ___", "correct": ["ντυθείτε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά θα ___",
+					"correct": ["ντυθούν", "ντυθούνε"]
+				}
+			]
+		},
+		{
+			"id": "sleep",
+			"name": "κοιμάμαι",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["κοιμηθώ"] },
+				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["κοιμηθείς"] },
+				{
+					"id": "he",
+					"prompt": "αυτός/αυτή/αυτό θα ___",
+					"correct": ["κοιμηθεί"]
+				},
+				{ "id": "we", "prompt": "εμείς θα ___", "correct": ["κοιμηθούμε"] },
+				{ "id": "you-pl", "prompt": "εσείς θα ___", "correct": ["κοιμηθείτε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά θα ___",
+					"correct": ["κοιμηθούν", "κοιμηθούνε"]
+				}
+			]
+		}
+	]
+}

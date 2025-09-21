@@ -1,0 +1,146 @@
+{
+	"enabled": true,
+	"id": "verbs-present-tense",
+	"type": "word-form",
+	"title": "Συζυγία ρημάτων στον Ενεστώτα",
+	"titleI18n": {
+		"en": "Verb Conjugation in Present Tense",
+		"ru": "Спряжение глаголов в настоящем времени"
+	},
+	"description": "Εξάσκηση στη συζυγία ρημάτων όλων των ομάδων στον ενεστώτα.",
+	"descriptionI18n": {
+		"en": "Practice conjugating verbs from all groups in the present tense.",
+		"ru": "Упражнение по спряжению глаголов всех групп в настоящем времени."
+	},
+	"tags": ["word-form", "verbs"],
+	"difficulty": "a1",
+	"estimatedTimeMinutes": 10,
+	"settings": {
+		"autoAdvance": true,
+		"autoAdvanceDelayMs": 1500,
+		"allowSkip": false,
+		"shuffleCases": true
+	},
+	"blocks": [
+		{
+			"id": "read",
+			"name": "διαβάζω",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ ___", "correct": ["διαβάζω"] },
+				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["διαβάζεις"] },
+				{
+					"id": "he",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"correct": ["διαβάζει"]
+				},
+				{ "id": "we", "prompt": "εμείς ___", "correct": ["διαβάζουμε"] },
+				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["διαβάζετε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"correct": ["διαβάζουν", "διαβάζουνε"]
+				}
+			]
+		},
+		{
+			"id": "speak",
+			"name": "μιλάω / μιλώ",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ ___", "correct": ["μιλάω", "μιλώ"] },
+				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["μιλάς"] },
+				{
+					"id": "he",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"correct": ["μιλάει", "μιλά"]
+				},
+				{ "id": "we", "prompt": "εμείς ___", "correct": ["μιλάμε"] },
+				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["μιλάτε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"correct": ["μιλάνε", "μιλούν", "μιλούνε"]
+				}
+			]
+		},
+		{
+			"id": "can",
+			"name": "μπορώ",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ ___", "correct": ["μπορώ"] },
+				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["μπορείς"] },
+				{ "id": "he", "prompt": "αυτός/αυτή/αυτό ___", "correct": ["μπορεί"] },
+				{ "id": "we", "prompt": "εμείς ___", "correct": ["μπορούμε"] },
+				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["μπορείτε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"correct": ["μπορούν", "μπορούνε"]
+				}
+			]
+		},
+		{
+			"id": "hear",
+			"name": "ακούω",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ ___", "correct": ["ακούω"] },
+				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["ακούς"] },
+				{ "id": "he", "prompt": "αυτός/αυτή/αυτό ___", "correct": ["ακούει"] },
+				{ "id": "we", "prompt": "εμείς ___", "correct": ["ακούμε"] },
+				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["ακούτε"] },
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"correct": ["ακούν", "ακούνε"]
+				}
+			]
+		},
+		{
+			"id": "dress",
+			"name": "ντύνομαι",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ ___", "correct": ["ντύνομαι"] },
+				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["ντύνεσαι"] },
+				{
+					"id": "he",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"correct": ["ντύνεται"]
+				},
+				{ "id": "we", "prompt": "εμείς ___", "correct": ["ντυνόμαστε"] },
+				{
+					"id": "you-pl",
+					"prompt": "εσείς ___",
+					"correct": ["ντύνεστε", "ντύνεσθε"]
+				},
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"correct": ["ντύνονται"]
+				}
+			]
+		},
+		{
+			"id": "sleep",
+			"name": "κοιμάμαι",
+			"cases": [
+				{ "id": "i", "prompt": "εγώ ___", "correct": ["κοιμάμαι"] },
+				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["κοιμάσαι"] },
+				{
+					"id": "he",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"correct": ["κοιμάται"]
+				},
+				{ "id": "we", "prompt": "εμείς ___", "correct": ["κοιμόμαστε"] },
+				{
+					"id": "you-pl",
+					"prompt": "εσείς ___",
+					"correct": ["κοιμάστε", "κοιμάσθε"]
+				},
+				{
+					"id": "they",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"correct": ["κοιμούνται"]
+				}
+			]
+		}
+	]
+}

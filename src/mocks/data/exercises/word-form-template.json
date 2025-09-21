@@ -12,7 +12,7 @@
 		"en": "This is a template for word form exercises",
 		"ru": "Это пример упражнения для форм слова"
 	},
-	"tags": ["word-form", "template"],
+	"tags": ["word-form", "test"],
 	"difficulty": "a1",
 	"estimatedTimeMinutes": 10,
 	"blocks": [
