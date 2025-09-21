@@ -100,6 +100,7 @@ export function ExerciseRenderer({
 					setState(prev => ({...prev, userAnswer: value}))
 				}
 				onPulseComplete={clearPulse}
+				onSkip={() => handleEvent({type: 'SKIP'})}
 				onSubmit={handleSubmit}
 				onToggleAutoAdvance={handleAutoAdvanceToggle}
 				pulseState={pulseState}

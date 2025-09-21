@@ -53,6 +53,11 @@ function handleCorrectAnswer({
 		setTimer(() => {
 			handleContinue()
 		}, autoAdvanceDelayMs)
+	} else {
+		// When autoAdvance is disabled, wait for user to continue manually
+		setTimer(() => {
+			setStatus('REQUIRE_CONTINUE')
+		}, 1000) // Brief delay to show green feedback
 	}
 }
 
@@ -237,12 +242,27 @@ export function useAnswerHandler({
 
 	const handleSubmitAnswer = useCallback(
 		(answer: string) => {
-			if (!(validateInput(answer) && currentCase)) return
+			if (!currentCase) return
+
+			// If in REQUIRE_CONTINUE state, just continue to next question
+			if (status === 'REQUIRE_CONTINUE') {
+				handleContinue()
+				return
+			}
+
+			if (!validateInput(answer)) return
 
 			setStatus('CHECKING')
 			processAnswer(answer, currentCase)
 		},
-		[validateInput, currentCase, setStatus, processAnswer]
+		[
+			validateInput,
+			currentCase,
+			setStatus,
+			processAnswer,
+			status,
+			handleContinue
+		]
 	)
 
 	return {handleSubmitAnswer}

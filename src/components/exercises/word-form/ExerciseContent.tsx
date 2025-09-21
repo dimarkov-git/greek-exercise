@@ -6,6 +6,7 @@ import type {
 	WordFormCase,
 	WordFormExercise
 } from '@/types/exercises'
+import {getExerciseSettings} from '@/types/exercises'
 import type {Language} from '@/types/settings'
 import {ExerciseHeader} from '../shared/ExerciseHeader'
 import {HintSystem} from '../shared/HintSystem'
@@ -61,6 +62,7 @@ interface ExerciseContentProps {
 	onSubmit: (answer: string) => void
 	onAnswerChange: (value: string) => void
 	onPulseComplete: () => void
+	onSkip: () => void
 }
 
 export function ExerciseContent({
@@ -74,7 +76,8 @@ export function ExerciseContent({
 	onToggleAutoAdvance,
 	onSubmit,
 	onAnswerChange,
-	onPulseComplete
+	onPulseComplete,
+	onSkip
 }: ExerciseContentProps) {
 	return (
 		<>
@@ -117,10 +120,14 @@ export function ExerciseContent({
 					onAnimationComplete={onPulseComplete}
 				>
 					<WordFormInput
+						allowSkip={getExerciseSettings(exercise).allowSkip}
 						disabled={
-							status !== 'WAITING_INPUT' && status !== 'REQUIRE_CORRECTION'
+							status !== 'WAITING_INPUT' &&
+							status !== 'REQUIRE_CORRECTION' &&
+							status !== 'REQUIRE_CONTINUE'
 						}
 						onChange={onAnswerChange}
+						onSkip={onSkip}
 						onSubmit={onSubmit}
 						placeholder='Εισάγετε την απάντησή σας...'
 						status={status}

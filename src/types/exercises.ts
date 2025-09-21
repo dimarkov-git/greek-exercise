@@ -118,6 +118,7 @@ export type ExerciseStatus =
 	| 'CORRECT_ANSWER' // correct answer (green pulse)
 	| 'WRONG_ANSWER' // wrong answer (red pulse + show correct)
 	| 'REQUIRE_CORRECTION' // require entering correct answer
+	| 'REQUIRE_CONTINUE' // correct answer, waiting for user to continue (when autoAdvance disabled)
 	| 'COMPLETED' // exercise completed
 
 // Event for state machine

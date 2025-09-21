@@ -20,6 +20,8 @@ function getInputStyles(status: ExerciseStatus, isFocused: boolean): string {
 		case 'WRONG_ANSWER':
 		case 'REQUIRE_CORRECTION':
 			return `${baseStyles} border-red-400 focus:ring-red-200 bg-red-50 dark:bg-red-900/20`
+		case 'REQUIRE_CONTINUE':
+			return `${baseStyles} border-green-400 focus:ring-green-200 bg-green-50 dark:bg-green-900/20`
 		case 'COMPLETED':
 			return `${baseStyles} border-gray-300 dark:border-gray-600 opacity-50`
 		default:
@@ -49,6 +51,8 @@ function getButtonStyles(
 			return `${baseStyles} bg-yellow-500 text-white animate-pulse`
 		case 'REQUIRE_CORRECTION':
 			return `${baseStyles} bg-red-500 hover:bg-red-600 text-white focus:ring-red-300`
+		case 'REQUIRE_CONTINUE':
+			return `${baseStyles} bg-green-500 hover:bg-green-600 text-white focus:ring-green-300`
 		default:
 			return `${baseStyles} bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-300`
 	}
@@ -64,6 +68,8 @@ function getButtonText(
 			return t('exercise.checking')
 		case 'REQUIRE_CORRECTION':
 			return t('exercise.enterCorrectAnswer')
+		case 'REQUIRE_CONTINUE':
+			return t('exercise.continue')
 		default:
 			return t('exercise.submit')
 	}
@@ -89,6 +95,23 @@ function KeyboardHint() {
 				{t('exercise.enterKeyName')}
 			</kbd>
 			<span className='ml-2'>{t('exercise.enterKey')}</span>
+		</div>
+	)
+}
+
+function ContinueHelpText() {
+	const {t} = useTranslations([
+		{
+			key: 'exercise.pressEnterToContinue',
+			fallback: 'Press Enter to continue to next question'
+		}
+	])
+
+	return (
+		<div className='text-center'>
+			<div className='text-green-600 text-sm dark:text-green-400'>
+				{t('exercise.pressEnterToContinue')}
+			</div>
 		</div>
 	)
 }
@@ -167,6 +190,8 @@ interface WordFormInputProps {
 	status: ExerciseStatus
 	placeholder?: string
 	autoFocus?: boolean
+	allowSkip?: boolean
+	onSkip?: () => void
 }
 
 function useWordFormInput({
@@ -231,7 +256,9 @@ export function WordFormInput({
 	disabled = false,
 	status,
 	placeholder = '',
-	autoFocus = true
+	autoFocus = true,
+	allowSkip = false,
+	onSkip
 }: WordFormInputProps) {
 	const {
 		inputRef,
@@ -252,7 +279,9 @@ export function WordFormInput({
 	const {t} = useTranslations([
 		{key: 'exercise.checking', fallback: 'Checking...'},
 		{key: 'exercise.submit', fallback: 'Submit'},
-		{key: 'exercise.enterCorrectAnswer', fallback: 'Enter correct answer'}
+		{key: 'exercise.enterCorrectAnswer', fallback: 'Enter correct answer'},
+		{key: 'exercise.continue', fallback: 'Continue'},
+		{key: 'exercise.skip', fallback: 'Skip'}
 	])
 
 	const inputStyles = getInputStyles(status, isFocused)
@@ -291,10 +320,23 @@ export function WordFormInput({
 					{buttonText}
 				</button>
 
-				{status === 'WAITING_INPUT' && <KeyboardHint />}
+				{allowSkip &&
+					(status === 'WAITING_INPUT' || status === 'REQUIRE_CORRECTION') && (
+						<button
+							className='rounded-lg bg-gray-200 px-4 py-3 font-medium text-gray-700 transition-all duration-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+							data-testid='exercise-skip-button'
+							onClick={onSkip}
+							type='button'
+						>
+							{t('exercise.skip')}
+						</button>
+					)}
+
+				{status === 'WAITING_INPUT' && !allowSkip && <KeyboardHint />}
 			</div>
 
 			{status === 'REQUIRE_CORRECTION' && <CorrectionHelpText />}
+			{status === 'REQUIRE_CONTINUE' && <ContinueHelpText />}
 		</motion.form>
 	)
 }
