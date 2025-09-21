@@ -20,7 +20,7 @@ interface UseExerciseHandlersProps {
 	setCorrectCount: React.Dispatch<React.SetStateAction<number>>
 	setIncorrectCount: React.Dispatch<React.SetStateAction<number>>
 	setStartTime: React.Dispatch<React.SetStateAction<number>>
-	triggerPulse: (isCorrect: boolean) => void
+	triggerPulse: (state: 'correct' | 'incorrect' | 'skip') => void
 	correctCount: number
 	incorrectCount: number
 	onComplete?:
@@ -56,7 +56,13 @@ export function useExerciseHandlers(props: UseExerciseHandlersProps) {
 				case 'CONTINUE':
 					return handleContinue()
 				case 'SKIP':
-					if (getExerciseSettings(props.exercise).allowSkip) handleContinue()
+					if (getExerciseSettings(props.exercise).allowSkip) {
+						props.triggerPulse('skip')
+						// Add a small delay before continuing to show the yellow pulse
+						setTimeout(() => {
+							handleContinue()
+						}, 600) // Match the pulse animation duration
+					}
 					return
 				case 'RESTART':
 					return handleRestart()
@@ -74,7 +80,8 @@ export function useExerciseHandlers(props: UseExerciseHandlersProps) {
 			handleRestart,
 			handleToggleAutoAdvance,
 			handleToggleHint,
-			props.exercise
+			props.exercise,
+			props.triggerPulse
 		]
 	)
 

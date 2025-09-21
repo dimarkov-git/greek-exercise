@@ -48,13 +48,13 @@ function getButtonStyles(
 
 	switch (status) {
 		case 'CHECKING':
-			return `${baseStyles} bg-yellow-500 text-white animate-pulse`
+			return `${baseStyles} bg-yellow-500 text-white animate-pulse cursor-pointer`
 		case 'REQUIRE_CORRECTION':
-			return `${baseStyles} bg-red-500 hover:bg-red-600 text-white focus:ring-red-300`
+			return `${baseStyles} bg-red-500 hover:bg-red-600 text-white focus:ring-red-300 cursor-pointer`
 		case 'REQUIRE_CONTINUE':
-			return `${baseStyles} bg-green-500 hover:bg-green-600 text-white focus:ring-green-300`
+			return `${baseStyles} bg-green-500 hover:bg-green-600 text-white focus:ring-green-300 cursor-pointer`
 		default:
-			return `${baseStyles} bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-300`
+			return `${baseStyles} bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-300 cursor-pointer`
 	}
 }
 
@@ -213,7 +213,11 @@ function useWordFormInput({
 	const [isFocused, setIsFocused] = useState(false)
 
 	useEffect(() => {
-		if (autoFocus && inputRef.current && status === 'WAITING_INPUT') {
+		if (
+			autoFocus &&
+			inputRef.current &&
+			(status === 'WAITING_INPUT' || status === 'REQUIRE_CORRECTION')
+		) {
 			inputRef.current.focus()
 		}
 	}, [autoFocus, status])
@@ -323,7 +327,7 @@ export function WordFormInput({
 				{allowSkip &&
 					(status === 'WAITING_INPUT' || status === 'REQUIRE_CORRECTION') && (
 						<button
-							className='rounded-lg bg-gray-200 px-4 py-3 font-medium text-gray-700 transition-all duration-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+							className='cursor-pointer rounded-lg bg-gray-200 px-4 py-3 font-medium text-gray-700 transition-all duration-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
 							data-testid='exercise-skip-button'
 							onClick={onSkip}
 							type='button'

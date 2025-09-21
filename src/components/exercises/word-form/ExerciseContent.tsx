@@ -10,7 +10,7 @@ import {getExerciseSettings} from '@/types/exercises'
 import type {Language} from '@/types/settings'
 import {ExerciseHeader} from '../shared/ExerciseHeader'
 import {HintSystem} from '../shared/HintSystem'
-import {PulseEffect} from '../shared/PulseEffect'
+import {PulseEffect, type PulseState} from '../shared/PulseEffect'
 import {WordFormFeedback} from './WordFormFeedback'
 import {WordFormInput} from './WordFormInput'
 
@@ -57,7 +57,7 @@ interface ExerciseContentProps {
 	state: ExerciseState
 	status: ExerciseStatus
 	userLanguage: Language
-	pulseState: boolean | null
+	pulseState: PulseState
 	onToggleAutoAdvance: () => void
 	onSubmit: (answer: string) => void
 	onAnswerChange: (value: string) => void
@@ -116,8 +116,8 @@ export function ExerciseContent({
 
 				{/* Input area with pulse effect */}
 				<PulseEffect
-					isCorrect={pulseState}
 					onAnimationComplete={onPulseComplete}
+					pulseState={pulseState}
 				>
 					<WordFormInput
 						allowSkip={getExerciseSettings(exercise).allowSkip}

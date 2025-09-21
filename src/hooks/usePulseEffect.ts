@@ -1,13 +1,14 @@
 import {useState} from 'react'
+import type {PulseState} from '@/components/exercises/shared/PulseEffect'
 
 /**
  * Hook for managing pulse animation state
  */
 export function usePulseEffect() {
-	const [pulseState, setPulseState] = useState<boolean | null>(null)
+	const [pulseState, setPulseState] = useState<PulseState>(null)
 
-	const triggerPulse = (isCorrect: boolean) => {
-		setPulseState(isCorrect)
+	const triggerPulse = (state: 'correct' | 'incorrect' | 'skip') => {
+		setPulseState(state)
 	}
 
 	const clearPulse = () => {

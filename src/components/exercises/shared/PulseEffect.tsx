@@ -1,49 +1,58 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import type {ReactNode} from 'react'
 
+export type PulseState = 'correct' | 'incorrect' | 'skip' | null
+
 interface PulseEffectProps {
 	children: ReactNode
-	isCorrect: boolean | null // null = no effect, true = green, false = red
+	pulseState: PulseState // null = no effect, 'correct' = green, 'incorrect' = red, 'skip' = yellow
 	onAnimationComplete?: (() => void) | undefined
 	className?: string
 }
 
-/**
- * Компонент для анимации импульса (зеленый/красный) после ответа
- * Используется для визуальной обратной связи при проверке ответов
- */
 export function PulseEffect({
 	children,
-	isCorrect,
+	pulseState,
 	onAnimationComplete,
 	className = ''
 }: PulseEffectProps) {
 	// Define colors for different states
-	const getEffectColors = (correct: boolean) => ({
-		shadow: correct
-			? 'rgba(34, 197, 94, 0.4)' // green for correct answer
-			: 'rgba(239, 68, 68, 0.4)', // red for incorrect answer
-		border: correct
-			? '#22c55e' // green border
-			: '#ef4444' // red border
-	})
+	const getEffectColors = (state: 'correct' | 'incorrect' | 'skip') => {
+		if (state === 'correct') {
+			return {
+				shadow: 'rgba(34, 197, 94, 0.4)', // green for correct answer
+				border: '#22c55e' // green border
+			}
+		}
+		if (state === 'incorrect') {
+			return {
+				shadow: 'rgba(239, 68, 68, 0.4)', // red for incorrect answer
+				border: '#ef4444' // red border
+			}
+		}
+		// skip case
+		return {
+			shadow: 'rgba(234, 179, 8, 0.4)', // yellow for skipped answer
+			border: '#eab308' // yellow border
+		}
+	}
 
 	return (
 		<div className={`relative ${className}`}>
 			<AnimatePresence>
-				{isCorrect !== null && (
+				{pulseState !== null && (
 					<motion.div
 						animate={{
 							scale: [1, 1.02, 1],
 							boxShadow: [
 								'0 0 0 0 transparent',
-								`0 0 0 8px ${getEffectColors(isCorrect).shadow}`,
+								`0 0 0 8px ${getEffectColors(pulseState).shadow}`,
 								'0 0 0 0 transparent'
 							],
 							borderWidth: ['0px', '2px', '0px'],
 							borderColor: [
 								'transparent',
-								getEffectColors(isCorrect).border,
+								getEffectColors(pulseState).border,
 								'transparent'
 							]
 						}}
@@ -84,7 +93,7 @@ export function PulseEffect({
 // Simple component for quick pulse usage
 interface QuickPulseProps {
 	children: ReactNode
-	trigger: boolean | null
+	trigger: PulseState
 	onComplete?: () => void
 	className?: string
 }
@@ -98,8 +107,8 @@ export function QuickPulse({
 	return (
 		<PulseEffect
 			className={className}
-			isCorrect={trigger}
 			onAnimationComplete={onComplete}
+			pulseState={trigger}
 		>
 			{children}
 		</PulseEffect>

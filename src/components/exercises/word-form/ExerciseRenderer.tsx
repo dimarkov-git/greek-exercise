@@ -23,7 +23,7 @@ interface ExerciseRendererProps {
 	incorrectCount: number
 	currentCase: WordFormCase | undefined
 	currentBlock: WordFormBlock | undefined
-	pulseState: boolean | null
+	pulseState: import('../shared/PulseEffect').PulseState
 	clearPulse: () => void
 	handleEvent: (event: ExerciseEvent) => void
 	handleSubmit: (answer: string) => void

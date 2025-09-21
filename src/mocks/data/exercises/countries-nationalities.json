@@ -6,6 +6,12 @@
 	"description": "Εξάσκηση με χώρες και τις εθνικότητες τους",
 	"difficulty": "a1",
 	"estimatedTimeMinutes": 15,
+	"settings": {
+		"autoAdvance": true,
+		"autoAdvanceDelayMs": 1500,
+		"allowSkip": true,
+		"shuffleCases": false
+	},
 	"blocks": [
 		{
 			"id": "america",

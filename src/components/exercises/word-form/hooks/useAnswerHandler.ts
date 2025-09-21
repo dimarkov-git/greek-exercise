@@ -17,14 +17,14 @@ interface UseAnswerHandlerProps {
 	setStatus: React.Dispatch<React.SetStateAction<ExerciseStatus>>
 	setCorrectCount: React.Dispatch<React.SetStateAction<number>>
 	setIncorrectCount: React.Dispatch<React.SetStateAction<number>>
-	triggerPulse: (isCorrect: boolean) => void
+	triggerPulse: (state: 'correct' | 'incorrect' | 'skip') => void
 	handleContinue: () => void
 }
 
 interface CorrectAnswerOptions {
 	status: ExerciseStatus
 	setCorrectCount: React.Dispatch<React.SetStateAction<number>>
-	triggerPulse: (isCorrect: boolean) => void
+	triggerPulse: (state: 'correct' | 'incorrect' | 'skip') => void
 	setStatus: React.Dispatch<React.SetStateAction<ExerciseStatus>>
 	autoAdvanceEnabled: boolean
 	handleContinue: () => void
@@ -46,7 +46,7 @@ function handleCorrectAnswer({
 	if (status === 'WAITING_INPUT') {
 		setCorrectCount(prev => prev + 1)
 	}
-	triggerPulse(true)
+	triggerPulse('correct')
 	setStatus('CORRECT_ANSWER')
 
 	if (autoAdvanceEnabled) {
@@ -65,7 +65,7 @@ interface IncorrectAnswerOptions {
 	status: ExerciseStatus
 	setIncorrectCount: React.Dispatch<React.SetStateAction<number>>
 	setState: React.Dispatch<React.SetStateAction<ExerciseState>>
-	triggerPulse: (isCorrect: boolean) => void
+	triggerPulse: (state: 'correct' | 'incorrect' | 'skip') => void
 	setStatus: React.Dispatch<React.SetStateAction<ExerciseStatus>>
 	answer: string
 	answerIsCorrect: boolean
@@ -99,7 +99,7 @@ function handleIncorrectAnswer({
 			incorrectAttempts: prev.incorrectAttempts + 1
 		}))
 	}
-	triggerPulse(false)
+	triggerPulse('incorrect')
 	setStatus('WRONG_ANSWER')
 
 	setTimeout(() => {
