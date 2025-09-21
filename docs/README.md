@@ -25,6 +25,7 @@ Step-by-step guides for developers:
 
 API documentation and data models:
 
+- [**exercise-json-format.md**](exercise-json-format.md) - Complete JSON structure specification for exercises
 - _Planned_: translation-endpoints.md, exercise-endpoints.md, data-models.md, msw-mocking.md
 
 ## 📋 Project documentation
