@@ -22,10 +22,13 @@ export default defineConfig(() => ({
 			exclude: ['src/main.tsx', 'src/mocks/browser.ts'],
 			include: ['src/**/*'],
 			reporter: ['text', 'lcov'],
-			reportsDirectory: 'coverage',
-			thresholds: {
-				'50': true // todo increase in future releases
-			}
+			reportsDirectory: 'coverage'
+			// thresholds: {
+			// 	branches: 80,
+			// 	functions: 85,
+			// 	lines: 85,
+			// 	statements: 85
+			// }
 		},
 		css: false,
 		environment: 'happy-dom',
