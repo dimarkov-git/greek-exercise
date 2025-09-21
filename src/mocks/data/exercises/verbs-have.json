@@ -7,97 +7,180 @@
 		"en": "Verb 'to have' practice",
 		"ru": "Практика глагола 'иметь'"
 	},
-	"description": "Κατακτήστε την κλίση του ρήματος έχω σε όλους τους χρόνους",
+	"description": "Κλίση του ρήματος έχω: Ενεστώτας, Παρατατικός, Μέλλοντας",
 	"descriptionI18n": {
-		"en": "Master conjugation of the verb 'to have' in all tenses",
-		"ru": "Освойте спряжение глагола 'иметь' во всех временах"
+		"en": "Conjugation of 'to have': present, imperfect, future",
+		"ru": "Спряжение глагола «иметь»: настоящее, прошедшее (имперфект), будущее"
 	},
-	"tags": ["word-form", "verbs", "irregular-verbs"],
-	"difficulty": "a0",
-	"estimatedTimeMinutes": 5,
-	"settings": {
-		"autoAdvance": true,
-		"autoAdvanceDelayMs": 1500,
-		"allowSkip": false,
-		"shuffleCases": false
-	},
+	"tags": ["word-form", "verbs", "common-verbs"],
+	"difficulty": "a1",
+	"estimatedTimeMinutes": 10,
 	"blocks": [
 		{
 			"id": "have-present",
 			"name": "έχω (Ενεστώτας)",
 			"nameHintI18n": {
-				"en": "to have (present tense)",
+				"en": "to have (present)",
 				"ru": "иметь (настоящее время)"
 			},
 			"cases": [
 				{
-					"id": "have-present-1s",
+					"id": "have-pres-1s",
 					"prompt": "εγώ ___",
-					"promptHintI18n": {
-						"en": "I have",
-						"ru": "я имею"
-					},
-					"correct": ["έχω"],
-					"hint": null,
-					"hintI18n": null
+					"promptHintI18n": { "en": "I have", "ru": "я имею/у меня есть" },
+					"correct": ["έχω"]
 				},
 				{
-					"id": "have-present-2s",
+					"id": "have-pres-2s",
 					"prompt": "εσύ ___",
 					"promptHintI18n": {
-						"en": "you have (singular)",
-						"ru": "ты имеешь"
+						"en": "you have (sg.)",
+						"ru": "ты имеешь/у тебя есть"
 					},
-					"correct": ["έχεις"],
-					"hint": null,
-					"hintI18n": null
+					"correct": ["έχεις"]
 				},
 				{
-					"id": "have-present-3s",
+					"id": "have-pres-3s",
 					"prompt": "αυτός/αυτή/αυτό ___",
 					"promptHintI18n": {
 						"en": "he/she/it has",
-						"ru": "он/она/оно имеет"
+						"ru": "он/она/оно имеет/у него(неё) есть"
 					},
-					"correct": ["έχει"],
-					"hint": null,
-					"hintI18n": null
+					"correct": ["έχει"]
 				},
 				{
-					"id": "have-present-1p",
+					"id": "have-pres-1p",
 					"prompt": "εμείς ___",
-					"promptHintI18n": {
-						"en": "we have",
-						"ru": "мы имеем"
-					},
-					"correct": ["έχουμε"],
-					"hint": null,
-					"hintI18n": null
+					"promptHintI18n": { "en": "we have", "ru": "мы имеем/у нас есть" },
+					"correct": ["έχουμε"]
 				},
 				{
-					"id": "have-present-2p",
+					"id": "have-pres-2p",
 					"prompt": "εσείς ___",
 					"promptHintI18n": {
-						"en": "you have (plural)",
-						"ru": "вы имеете"
+						"en": "you have (pl.)",
+						"ru": "вы имеете/у вас есть"
 					},
-					"correct": ["έχετε"],
-					"hint": null,
-					"hintI18n": null
+					"correct": ["έχετε"]
 				},
 				{
-					"id": "have-present-3p",
+					"id": "have-pres-3p",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": { "en": "they have", "ru": "они имеют/у них есть" },
+					"correct": ["έχουν", "έχουνε"]
+				}
+			]
+		},
+		{
+			"id": "have-imperfect",
+			"name": "είχα (Παρατατικός)",
+			"nameHintI18n": {
+				"en": "to have (imperfect)",
+				"ru": "иметь (имперфект, прош. длит.)"
+			},
+			"cases": [
+				{
+					"id": "have-impf-1s",
+					"prompt": "εγώ ___",
+					"promptHintI18n": { "en": "I had", "ru": "я имел(а)" },
+					"correct": ["είχα"]
+				},
+				{
+					"id": "have-impf-2s",
+					"prompt": "εσύ ___",
+					"promptHintI18n": { "en": "you had (sg.)", "ru": "ты имел(а)" },
+					"correct": ["είχες"]
+				},
+				{
+					"id": "have-impf-3s",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": {
+						"en": "he/she/it had",
+						"ru": "он/она/оно имел(а/о)"
+					},
+					"correct": ["είχε"]
+				},
+				{
+					"id": "have-impf-1p",
+					"prompt": "εμείς ___",
+					"promptHintI18n": { "en": "we had", "ru": "мы имели" },
+					"correct": ["είχαμε"]
+				},
+				{
+					"id": "have-impf-2p",
+					"prompt": "εσείς ___",
+					"promptHintI18n": { "en": "you had (pl.)", "ru": "вы имели" },
+					"correct": ["είχατε"]
+				},
+				{
+					"id": "have-impf-3p",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": { "en": "they had", "ru": "они имели" },
+					"correct": ["είχαν", "είχανε"]
+				}
+			]
+		},
+		{
+			"id": "have-future",
+			"name": "θα έχω (Μέλλοντας)",
+			"nameHintI18n": {
+				"en": "to have (future)",
+				"ru": "иметь (будущее время)"
+			},
+			"cases": [
+				{
+					"id": "have-fut-1s",
+					"prompt": "εγώ ___",
+					"promptHintI18n": {
+						"en": "I will have",
+						"ru": "я буду иметь/у меня будет"
+					},
+					"correct": ["θα έχω"]
+				},
+				{
+					"id": "have-fut-2s",
+					"prompt": "εσύ ___",
+					"promptHintI18n": {
+						"en": "you will have (sg.)",
+						"ru": "ты будешь иметь/у тебя будет"
+					},
+					"correct": ["θα έχεις"]
+				},
+				{
+					"id": "have-fut-3s",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": {
+						"en": "he/she/it will have",
+						"ru": "он/она/оно будет иметь/у него(неё) будет"
+					},
+					"correct": ["θα έχει"]
+				},
+				{
+					"id": "have-fut-1p",
+					"prompt": "εμείς ___",
+					"promptHintI18n": {
+						"en": "we will have",
+						"ru": "мы будем иметь/у нас будет"
+					},
+					"correct": ["θα έχουμε"]
+				},
+				{
+					"id": "have-fut-2p",
+					"prompt": "εσείς ___",
+					"promptHintI18n": {
+						"en": "you will have (pl.)",
+						"ru": "вы будете иметь/у вас будет"
+					},
+					"correct": ["θα έχετε"]
+				},
+				{
+					"id": "have-fut-3p",
 					"prompt": "αυτοί/αυτές/αυτά ___",
 					"promptHintI18n": {
-						"en": "they have",
-						"ru": "они имеют"
+						"en": "they will have",
+						"ru": "они будут иметь/у них будет"
 					},
-					"correct": ["έχουν", "έχουνε"],
-					"hint": "Δύο σωστές απαντήσεις: έχουν ή έχουνε",
-					"hintI18n": {
-						"en": "Two correct answers: έχουν or έχουνε",
-						"ru": "Два правильных ответа: έχουν или έχουνε"
-					}
+					"correct": ["θα έχουν", "θα έχουνε"]
 				}
 			]
 		}

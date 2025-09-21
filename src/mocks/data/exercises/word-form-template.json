@@ -15,12 +15,6 @@
 	"tags": ["word-form", "template"],
 	"difficulty": "a1",
 	"estimatedTimeMinutes": 10,
-	"settings": {
-		"autoAdvance": true,
-		"autoAdvanceDelayMs": 1500,
-		"allowSkip": false,
-		"shuffleCases": false
-	},
 	"blocks": [
 		{
 			"id": "word-example-1",
@@ -71,7 +65,16 @@
 				{
 					"id": "accusative-singular",
 					"prompt": "Δεν έχω ___",
-					"correct": ["λέξη"]
+					"promptHintI18n": {
+						"en": "I don't have ___",
+						"ru": "У меня нет ___"
+					},
+					"correct": ["λέξη"],
+					"hint": "λέξ_",
+					"hintI18n": {
+						"en": "accusative singular",
+						"ru": "вин. п., ед. ч."
+					}
 				},
 				{
 					"id": "nominative-plural",

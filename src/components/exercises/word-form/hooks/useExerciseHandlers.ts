@@ -6,6 +6,7 @@ import type {
 	WordFormCase,
 	WordFormExercise as WordFormExerciseType
 } from '@/types/exercises'
+import {getExerciseSettings} from '@/types/exercises'
 import {useAnswerHandler} from './useAnswerHandler'
 import {useExerciseState} from './useExerciseState'
 
@@ -55,7 +56,7 @@ export function useExerciseHandlers(props: UseExerciseHandlersProps) {
 				case 'CONTINUE':
 					return handleContinue()
 				case 'SKIP':
-					if (props.exercise.settings.allowSkip) handleContinue()
+					if (getExerciseSettings(props.exercise).allowSkip) handleContinue()
 					return
 				case 'RESTART':
 					return handleRestart()
@@ -73,7 +74,7 @@ export function useExerciseHandlers(props: UseExerciseHandlersProps) {
 			handleRestart,
 			handleToggleAutoAdvance,
 			handleToggleHint,
-			props.exercise.settings.allowSkip
+			props.exercise
 		]
 	)
 

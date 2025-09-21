@@ -53,7 +53,7 @@ export const WordFormExerciseSchema = v.object({
 	tags: v.array(v.string()),
 	difficulty: DifficultySchema,
 	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
-	settings: ExerciseSettingsSchema,
+	settings: v.optional(ExerciseSettingsSchema),
 	blocks: v.pipe(v.array(WordFormBlockSchema), v.minLength(1))
 })
 

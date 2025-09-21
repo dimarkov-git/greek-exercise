@@ -5,6 +5,7 @@ import type {
 	WordFormCase,
 	WordFormExercise
 } from '@/types/exercises'
+import {getExerciseSettings} from '@/types/exercises'
 import {checkAnswer} from '@/utils/exercises'
 
 interface UseAnswerHandlerProps {
@@ -169,7 +170,7 @@ function useProcessAnswer({
 					setStatus,
 					autoAdvanceEnabled: state.autoAdvanceEnabled,
 					handleContinue,
-					autoAdvanceDelayMs: exercise.settings.autoAdvanceDelayMs,
+					autoAdvanceDelayMs: getExerciseSettings(exercise).autoAdvanceDelayMs,
 					setTimer
 				})
 			} else {
@@ -187,14 +188,14 @@ function useProcessAnswer({
 		[
 			status,
 			state.autoAdvanceEnabled,
-			exercise.settings.autoAdvanceDelayMs,
 			triggerPulse,
 			handleContinue,
 			setCorrectCount,
 			setIncorrectCount,
 			setState,
 			setStatus,
-			setTimer
+			setTimer,
+			exercise
 		]
 	)
 }

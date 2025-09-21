@@ -4,6 +4,7 @@ import type {
 	ExerciseStatus,
 	WordFormExercise as WordFormExerciseType
 } from '@/types/exercises'
+import {getExerciseSettings} from '@/types/exercises'
 import {
 	getCaseByIndices,
 	getCompletedCasesCount,
@@ -27,7 +28,7 @@ export function useExerciseInitialization({
 		isCorrect: null,
 		completedCases: 0,
 		totalCases: getTotalCases(exercise),
-		autoAdvanceEnabled: exercise.settings.autoAdvance,
+		autoAdvanceEnabled: getExerciseSettings(exercise).autoAdvance,
 		incorrectAttempts: 0,
 		showNameHint: false,
 		showPromptHint: false,

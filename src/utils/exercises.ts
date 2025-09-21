@@ -3,6 +3,7 @@ import type {
 	WordFormCase,
 	WordFormExercise
 } from '@/types/exercises'
+import {getExerciseSettings} from '@/types/exercises'
 
 /**
  * Normalize Greek text for answer comparison
@@ -168,7 +169,9 @@ export function getCompletedCasesCount(
 export function shuffleExerciseCases(
 	exercise: WordFormExercise
 ): WordFormExercise {
-	if (!exercise.settings?.shuffleCases) {
+	const settings = getExerciseSettings(exercise)
+
+	if (!settings.shuffleCases) {
 		return exercise
 	}
 

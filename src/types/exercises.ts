@@ -16,6 +16,14 @@ export interface ExerciseSettings {
 	shuffleCases: boolean // whether to shuffle question order
 }
 
+// Default exercise settings
+export const DEFAULT_EXERCISE_SETTINGS: ExerciseSettings = {
+	autoAdvance: true,
+	autoAdvanceDelayMs: 1500,
+	allowSkip: false,
+	shuffleCases: false
+}
+
 // Exercise block (e.g., "είμαι in present tense")
 export interface WordFormBlock {
 	id: string // unique block identifier
@@ -46,7 +54,7 @@ export interface WordFormExercise {
 	tags: string[] // filtering tags (e.g., ["verbs", "irregular-verbs", "basic"])
 	difficulty: Difficulty
 	estimatedTimeMinutes: number // estimated completion time
-	settings: ExerciseSettings
+	settings?: ExerciseSettings // optional settings, defaults will be applied
 	blocks: WordFormBlock[]
 }
 
@@ -137,6 +145,18 @@ export interface WordFormExerciseJSON {
 	blocks: WordFormBlock[]
 }
 
+/**
+ * Get exercise settings with defaults applied for missing values
+ */
+export function getExerciseSettings(
+	exercise: WordFormExercise
+): ExerciseSettings {
+	return {
+		...DEFAULT_EXERCISE_SETTINGS,
+		...exercise.settings
+	}
+}
+
 // Helper function to convert exercise to serializable JSON
 export function exerciseToJSON(
 	exercise: WordFormExercise
@@ -152,7 +172,7 @@ export function exerciseToJSON(
 		tags: exercise.tags,
 		difficulty: exercise.difficulty,
 		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
-		settings: exercise.settings,
+		settings: getExerciseSettings(exercise),
 		blocks: exercise.blocks
 	}
 }
