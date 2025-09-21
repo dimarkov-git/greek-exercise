@@ -32,7 +32,7 @@ export function MobileMenuButton({isOpen, onClick}: MobileMenuButtonProps) {
 			whileTap={{scale: 0.95}}
 		>
 			<svg
-				className={`h-6 w-6 transition-transform ${isOpen ? 'rotate-90' : ''}`}
+				className={`h-6 w-6 text-gray-700 transition-transform dark:text-gray-300 ${isOpen ? 'rotate-90' : ''}`}
 				fill='none'
 				stroke='currentColor'
 				viewBox='0 0 24 24'
