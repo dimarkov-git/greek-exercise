@@ -12,7 +12,7 @@
 		"en": "Practice conjugating verbs from all groups in the aorist (simple past).",
 		"ru": "Упражнение по спряжению глаголов всех групп в аористе (простое прошедшее)."
 	},
-	"tags": ["verbs", "past-tense", "aorist"],
+	"tags": ["word-form", "verbs"],
 	"difficulty": "a1",
 	"estimatedTimeMinutes": 10,
 	"settings": {

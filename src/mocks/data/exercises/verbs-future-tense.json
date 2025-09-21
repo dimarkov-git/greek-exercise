@@ -12,7 +12,7 @@
 		"en": "Practice conjugating verbs from all groups in the future tense.",
 		"ru": "Упражнение по спряжению глаголов всех групп в будущем времени."
 	},
-	"tags": ["verbs", "future-tense"],
+	"tags": ["word-form", "verbs"],
 	"difficulty": "a1",
 	"estimatedTimeMinutes": 10,
 	"settings": {
