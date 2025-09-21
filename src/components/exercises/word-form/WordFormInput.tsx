@@ -249,49 +249,39 @@ function useWordFormInput({
 	}
 }
 
-/**
- * Input field component for word form exercises
- * Handles user input, validation, and submission
- */
-export function WordFormInput({
-	value,
-	onChange,
-	onSubmit,
-	disabled = false,
+function WordFormContent({
+	inputRef,
+	setIsFocused,
+	handleSubmit,
+	handleChange,
+	handleKeyPress,
+	inputStyles,
+	buttonStyles,
+	buttonText,
+	disabled,
 	status,
-	placeholder = '',
-	autoFocus = true,
-	allowSkip = false,
-	onSkip
-}: WordFormInputProps) {
-	const {
-		inputRef,
-		isFocused,
-		setIsFocused,
-		handleSubmit,
-		handleChange,
-		handleKeyPress
-	} = useWordFormInput({
-		value,
-		onChange,
-		onSubmit,
-		disabled,
-		status,
-		autoFocus
-	})
-
-	const {t} = useTranslations([
-		{key: 'exercise.checking', fallback: 'Checking...'},
-		{key: 'exercise.submit', fallback: 'Submit'},
-		{key: 'exercise.enterCorrectAnswer', fallback: 'Enter correct answer'},
-		{key: 'exercise.continue', fallback: 'Continue'},
-		{key: 'exercise.skip', fallback: 'Skip'}
-	])
-
-	const inputStyles = getInputStyles(status, isFocused)
-	const buttonStyles = getButtonStyles(status, disabled, value)
-	const buttonText = getButtonText(status, t)
-
+	value,
+	placeholder,
+	allowSkip,
+	onSkip,
+	t
+}: {
+	inputRef: React.RefObject<HTMLInputElement | null>
+	setIsFocused: (focused: boolean) => void
+	handleSubmit: (e: React.FormEvent) => void
+	handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+	handleKeyPress: (e: React.KeyboardEvent) => void
+	inputStyles: string
+	buttonStyles: string
+	buttonText: string
+	disabled: boolean
+	status: ExerciseStatus
+	value: string
+	placeholder: string
+	allowSkip: boolean
+	onSkip?: (() => void) | undefined
+	t: (key: string) => string
+}) {
 	return (
 		<motion.form
 			animate={{opacity: 1, y: 0}}
@@ -342,5 +332,62 @@ export function WordFormInput({
 			{status === 'REQUIRE_CORRECTION' && <CorrectionHelpText />}
 			{status === 'REQUIRE_CONTINUE' && <ContinueHelpText />}
 		</motion.form>
+	)
+}
+
+/**
+ * Input field component for word form exercises
+ * Handles user input, validation, and submission
+ */
+export function WordFormInput({
+	value,
+	onChange,
+	onSubmit,
+	disabled = false,
+	status,
+	placeholder = '',
+	autoFocus = true,
+	allowSkip = false,
+	onSkip
+}: WordFormInputProps) {
+	const hookData = useWordFormInput({
+		value,
+		onChange,
+		onSubmit,
+		disabled,
+		status,
+		autoFocus
+	})
+
+	const {t} = useTranslations([
+		{key: 'exercise.checking', fallback: 'Checking...'},
+		{key: 'exercise.submit', fallback: 'Submit'},
+		{key: 'exercise.enterCorrectAnswer', fallback: 'Enter correct answer'},
+		{key: 'exercise.continue', fallback: 'Continue'},
+		{key: 'exercise.skip', fallback: 'Skip'}
+	])
+
+	const inputStyles = getInputStyles(status, hookData.isFocused)
+	const buttonStyles = getButtonStyles(status, disabled, value)
+	const buttonText = getButtonText(status, t)
+
+	return (
+		<WordFormContent
+			allowSkip={allowSkip}
+			buttonStyles={buttonStyles}
+			buttonText={buttonText}
+			disabled={disabled}
+			handleChange={hookData.handleChange}
+			handleKeyPress={hookData.handleKeyPress}
+			handleSubmit={hookData.handleSubmit}
+			inputRef={hookData.inputRef}
+			inputStyles={inputStyles}
+			onSkip={onSkip}
+			placeholder={placeholder}
+			setIsFocused={hookData.setIsFocused}
+			status={status}
+			t={t}
+			value={value}
+		/>
 	)
 }

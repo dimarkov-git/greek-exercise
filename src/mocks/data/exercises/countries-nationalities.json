@@ -4,6 +4,7 @@
 	"type": "word-form",
 	"title": "Χώρες και Εθνικότητες",
 	"description": "Εξάσκηση με χώρες και τις εθνικότητες τους",
+	"tags": ["word-form"],
 	"difficulty": "a1",
 	"estimatedTimeMinutes": 15,
 	"settings": {

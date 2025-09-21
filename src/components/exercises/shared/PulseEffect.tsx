@@ -10,33 +10,32 @@ interface PulseEffectProps {
 	className?: string
 }
 
+function getEffectColors(state: 'correct' | 'incorrect' | 'skip') {
+	if (state === 'correct') {
+		return {
+			shadow: 'rgba(34, 197, 94, 0.4)', // green for correct answer
+			border: '#22c55e' // green border
+		}
+	}
+	if (state === 'incorrect') {
+		return {
+			shadow: 'rgba(239, 68, 68, 0.4)', // red for incorrect answer
+			border: '#ef4444' // red border
+		}
+	}
+	// skip case
+	return {
+		shadow: 'rgba(234, 179, 8, 0.4)', // yellow for skipped answer
+		border: '#eab308' // yellow border
+	}
+}
+
 export function PulseEffect({
 	children,
 	pulseState,
 	onAnimationComplete,
 	className = ''
 }: PulseEffectProps) {
-	// Define colors for different states
-	const getEffectColors = (state: 'correct' | 'incorrect' | 'skip') => {
-		if (state === 'correct') {
-			return {
-				shadow: 'rgba(34, 197, 94, 0.4)', // green for correct answer
-				border: '#22c55e' // green border
-			}
-		}
-		if (state === 'incorrect') {
-			return {
-				shadow: 'rgba(239, 68, 68, 0.4)', // red for incorrect answer
-				border: '#ef4444' // red border
-			}
-		}
-		// skip case
-		return {
-			shadow: 'rgba(234, 179, 8, 0.4)', // yellow for skipped answer
-			border: '#eab308' // yellow border
-		}
-	}
-
 	return (
 		<div className={`relative ${className}`}>
 			<AnimatePresence>
