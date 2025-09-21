@@ -18,8 +18,9 @@ export function loadExercises(): Map<string, WordFormExercise> {
 				validatedExercise.id,
 				validatedExercise as WordFormExercise
 			)
-		} catch {
-			// Exercise validation failed - skip this exercise silently
+		} catch (error) {
+			// biome-ignore lint/suspicious/noConsole: This is intentional debug logging for exercise loading
+			console.error(`Failed to load exercise from ${_path}:`, error)
 		}
 	}
 

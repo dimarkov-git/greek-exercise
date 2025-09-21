@@ -7,19 +7,14 @@
 		"en": "Verb 'to be' practice",
 		"ru": "Практика глагола 'быть'"
 	},
-	"description": "Κατακτήστε την κλίση του ρήματος είμαι σε όλους τους χρόνους",
+	"description": "Κλίση του ρήματος είμαι σε όλους τους βασικούς χρόνους",
 	"descriptionI18n": {
-		"en": "Master conjugation of the verb 'to be' in all tenses",
-		"ru": "Освойте спряжение глагола 'быть' во всех временах"
+		"en": "Conjugation of 'to be' in all basic tenses",
+		"ru": "Спряжение глагола «быть» во всех основных временах"
 	},
-	"buttonText": "Ξεκινήστε την άσκηση",
-	"buttonTextI18n": {
-		"en": "Start exercise",
-		"ru": "Начать упражнение"
-	},
-	"tags": ["verbs", "irregular-verbs", "basic", "conjugation"],
+	"tags": ["word-form", "verbs", "irregular-verbs"],
 	"difficulty": "a1",
-	"estimatedTimeMinutes": 5,
+	"estimatedTimeMinutes": 10,
 	"settings": {
 		"autoAdvance": true,
 		"autoAdvanceDelayMs": 1500,
@@ -31,154 +26,256 @@
 			"id": "be-present",
 			"name": "είμαι (Ενεστώτας)",
 			"nameHintI18n": {
-				"en": "to be (present tense)",
+				"en": "to be (present)",
 				"ru": "быть (настоящее время)"
 			},
 			"cases": [
 				{
 					"id": "be-present-1s",
 					"prompt": "εγώ ___",
-					"promptHintI18n": {
-						"en": "I am",
-						"ru": "я есть"
-					},
-					"correct": ["είμαι"],
-					"hint": null,
-					"hintI18n": null
+					"promptHintI18n": { "en": "I am", "ru": "я есть" },
+					"correct": ["είμαι"]
 				},
 				{
 					"id": "be-present-2s",
 					"prompt": "εσύ ___",
-					"promptHintI18n": {
-						"en": "you are (singular)",
-						"ru": "ты есть"
-					},
-					"correct": ["είσαι"],
-					"hint": null,
-					"hintI18n": null
+					"promptHintI18n": { "en": "you are (sg.)", "ru": "ты есть" },
+					"correct": ["είσαι"]
 				},
 				{
 					"id": "be-present-3s",
 					"prompt": "αυτός/αυτή/αυτό ___",
-					"promptHintI18n": {
-						"en": "he/she/it is",
-						"ru": "он/она/оно есть"
-					},
-					"correct": ["είναι"],
-					"hint": null,
-					"hintI18n": null
+					"promptHintI18n": { "en": "he/she/it is", "ru": "он/она/оно есть" },
+					"correct": ["είναι"]
 				},
 				{
 					"id": "be-present-1p",
 					"prompt": "εμείς ___",
-					"promptHintI18n": {
-						"en": "we are",
-						"ru": "мы есть"
-					},
-					"correct": ["είμαστε"],
-					"hint": null,
-					"hintI18n": null
+					"promptHintI18n": { "en": "we are", "ru": "мы есть" },
+					"correct": ["είμαστε"]
 				},
 				{
 					"id": "be-present-2p",
 					"prompt": "εσείς ___",
-					"promptHintI18n": {
-						"en": "you are (plural)",
-						"ru": "вы есть"
-					},
-					"correct": ["είστε"],
-					"hint": null,
-					"hintI18n": null
+					"promptHintI18n": { "en": "you are (pl.)", "ru": "вы есть" },
+					"correct": ["είστε", "είσαστε"]
 				},
 				{
 					"id": "be-present-3p",
 					"prompt": "αυτοί/αυτές/αυτά ___",
-					"promptHintI18n": {
-						"en": "they are",
-						"ru": "они есть"
-					},
-					"correct": ["είναι"],
-					"hint": null,
-					"hintI18n": null
+					"promptHintI18n": { "en": "they are", "ru": "они есть" },
+					"correct": ["είναι"]
 				}
 			]
 		},
 		{
-			"id": "be-past-continuous",
+			"id": "be-imperfect",
 			"name": "ήμουν (Παρατατικός)",
 			"nameHintI18n": {
-				"en": "to be (past continuous)",
-				"ru": "быть (прошедшее время)"
+				"en": "to be (imperfect)",
+				"ru": "быть (имперфект, прош. длит.)"
 			},
 			"cases": [
 				{
-					"id": "be-past-1s",
+					"id": "be-imperf-1s",
 					"prompt": "εγώ ___",
-					"promptHintI18n": {
-						"en": "I was",
-						"ru": "я был/была"
-					},
-					"correct": ["ήμουν"],
-					"hint": "Χρησιμοποιείται για συνεχείς ενέργειες στο παρελθόν",
-					"hintI18n": {
-						"en": "Used for continuous actions in the past",
-						"ru": "Используется для продолжительных действий в прошлом"
-					}
+					"promptHintI18n": { "en": "I was", "ru": "я был/была" },
+					"correct": ["ήμουν"]
 				},
 				{
-					"id": "be-past-2s",
+					"id": "be-imperf-2s",
 					"prompt": "εσύ ___",
-					"promptHintI18n": {
-						"en": "you were (singular)",
-						"ru": "ты был/была"
-					},
-					"correct": ["ήσουν"],
-					"hint": null,
-					"hintI18n": null
+					"promptHintI18n": { "en": "you were (sg.)", "ru": "ты был/была" },
+					"correct": ["ήσουν"]
 				},
 				{
-					"id": "be-past-3s",
+					"id": "be-imperf-3s",
 					"prompt": "αυτός/αυτή/αυτό ___",
 					"promptHintI18n": {
 						"en": "he/she/it was",
 						"ru": "он/она/оно был/была/было"
 					},
-					"correct": ["ήταν"],
-					"hint": null,
-					"hintI18n": null
+					"correct": ["ήταν", "ήτανε"]
 				},
 				{
-					"id": "be-past-1p",
+					"id": "be-imperf-1p",
+					"prompt": "εμείς ___",
+					"promptHintI18n": { "en": "we were", "ru": "мы были" },
+					"correct": ["ήμασταν"]
+				},
+				{
+					"id": "be-imperf-2p",
+					"prompt": "εσείς ___",
+					"promptHintI18n": { "en": "you were (pl.)", "ru": "вы были" },
+					"correct": ["ήσασταν", "ήσαστε"]
+				},
+				{
+					"id": "be-imperf-3p",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": { "en": "they were", "ru": "они были" },
+					"correct": ["ήταν", "ήτανε"]
+				}
+			]
+		},
+		{
+			"id": "be-aorist",
+			"name": "ήμουν (Αόριστος)",
+			"nameHintI18n": {
+				"en": "to be (aorist, simple past)",
+				"ru": "быть (аорист, прош. прост.)"
+			},
+			"cases": [
+				{
+					"id": "be-aor-1s",
+					"prompt": "εγώ ___",
+					"promptHintI18n": {
+						"en": "I was (once)",
+						"ru": "я был/была (разово)"
+					},
+					"correct": ["ήμουν"]
+				},
+				{
+					"id": "be-aor-2s",
+					"prompt": "εσύ ___",
+					"promptHintI18n": {
+						"en": "you were (once)",
+						"ru": "ты был/была (разово)"
+					},
+					"correct": ["ήσουν"]
+				},
+				{
+					"id": "be-aor-3s",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": {
+						"en": "he/she/it was (once)",
+						"ru": "он/она/оно был/была/было (разово)"
+					},
+					"correct": ["ήταν", "ήτανε"]
+				},
+				{
+					"id": "be-aor-1p",
 					"prompt": "εμείς ___",
 					"promptHintI18n": {
-						"en": "we were",
-						"ru": "мы были"
+						"en": "we were (once)",
+						"ru": "мы были (разово)"
 					},
-					"correct": ["ήμασταν"],
-					"hint": null,
-					"hintI18n": null
+					"correct": ["ήμασταν"]
 				},
 				{
-					"id": "be-past-2p",
+					"id": "be-aor-2p",
 					"prompt": "εσείς ___",
 					"promptHintI18n": {
-						"en": "you were (plural)",
-						"ru": "вы были"
+						"en": "you were (pl., once)",
+						"ru": "вы были (разово)"
 					},
-					"correct": ["ήσασταν"],
-					"hint": null,
-					"hintI18n": null
+					"correct": ["ήσασταν", "ήσαστε"]
 				},
 				{
-					"id": "be-past-3p",
+					"id": "be-aor-3p",
 					"prompt": "αυτοί/αυτές/αυτά ___",
 					"promptHintI18n": {
-						"en": "they were",
-						"ru": "они были"
+						"en": "they were (once)",
+						"ru": "они были (разово)"
 					},
-					"correct": ["ήταν"],
-					"hint": null,
-					"hintI18n": null
+					"correct": ["ήταν", "ήτανε"]
+				}
+			]
+		},
+		{
+			"id": "be-perfect",
+			"name": "έχω υπάρξει (Παρακείμενος)",
+			"nameHintI18n": {
+				"en": "to be (perfect)",
+				"ru": "быть (перфект)"
+			},
+			"cases": [
+				{
+					"id": "be-perf-1s",
+					"prompt": "εγώ ___",
+					"promptHintI18n": { "en": "I have been", "ru": "я был/бывала" },
+					"correct": ["έχω υπάρξει"]
+				},
+				{
+					"id": "be-perf-2s",
+					"prompt": "εσύ ___",
+					"promptHintI18n": { "en": "you have been", "ru": "ты был/бывала" },
+					"correct": ["έχεις υπάρξει"]
+				},
+				{
+					"id": "be-perf-3s",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": {
+						"en": "he/she/it has been",
+						"ru": "он/она/оно был/была"
+					},
+					"correct": ["έχει υπάρξει"]
+				},
+				{
+					"id": "be-perf-1p",
+					"prompt": "εμείς ___",
+					"promptHintI18n": { "en": "we have been", "ru": "мы были" },
+					"correct": ["έχουμε υπάρξει"]
+				},
+				{
+					"id": "be-perf-2p",
+					"prompt": "εσείς ___",
+					"promptHintI18n": { "en": "you have been (pl.)", "ru": "вы были" },
+					"correct": ["έχετε υπάρξει"]
+				},
+				{
+					"id": "be-perf-3p",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": { "en": "they have been", "ru": "они были" },
+					"correct": ["έχουν υπάρξει"]
+				}
+			]
+		},
+		{
+			"id": "be-future",
+			"name": "θα είμαι (Μέλλοντας)",
+			"nameHintI18n": {
+				"en": "to be (future)",
+				"ru": "быть (будущее время)"
+			},
+			"cases": [
+				{
+					"id": "be-fut-1s",
+					"prompt": "εγώ ___",
+					"promptHintI18n": { "en": "I will be", "ru": "я буду" },
+					"correct": ["θα είμαι"]
+				},
+				{
+					"id": "be-fut-2s",
+					"prompt": "εσύ ___",
+					"promptHintI18n": { "en": "you will be (sg.)", "ru": "ты будешь" },
+					"correct": ["θα είσαι"]
+				},
+				{
+					"id": "be-fut-3s",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": {
+						"en": "he/she/it will be",
+						"ru": "он/она/оно будет"
+					},
+					"correct": ["θα είναι"]
+				},
+				{
+					"id": "be-fut-1p",
+					"prompt": "εμείς ___",
+					"promptHintI18n": { "en": "we will be", "ru": "мы будем" },
+					"correct": ["θα είμαστε"]
+				},
+				{
+					"id": "be-fut-2p",
+					"prompt": "εσείς ___",
+					"promptHintI18n": { "en": "you will be (pl.)", "ru": "вы будете" },
+					"correct": ["θα είστε", "θα είσαστε"]
+				},
+				{
+					"id": "be-fut-3p",
+					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": { "en": "they will be", "ru": "они будут" },
+					"correct": ["θα είναι"]
 				}
 			]
 		}

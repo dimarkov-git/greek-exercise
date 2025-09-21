@@ -27,10 +27,10 @@ export const ExerciseSettingsSchema = v.object({
 export const WordFormCaseSchema = v.object({
 	id: v.string(),
 	prompt: v.string(),
-	promptHintI18n: I18nStringSchema,
+	promptHintI18n: v.optional(I18nStringSchema),
 	correct: v.pipe(v.array(v.string()), v.minLength(1)),
-	hint: v.nullable(v.string()),
-	hintI18n: v.nullable(I18nStringSchema)
+	hint: v.optional(v.string()),
+	hintI18n: v.optional(I18nStringSchema)
 })
 
 // Exercise block schema
@@ -50,8 +50,6 @@ export const WordFormExerciseSchema = v.object({
 	titleI18n: I18nStringSchema,
 	description: v.string(),
 	descriptionI18n: I18nStringSchema,
-	buttonText: v.string(),
-	buttonTextI18n: I18nStringSchema,
 	tags: v.array(v.string()),
 	difficulty: DifficultySchema,
 	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),

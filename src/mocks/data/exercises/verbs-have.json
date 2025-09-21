@@ -12,12 +12,7 @@
 		"en": "Master conjugation of the verb 'to have' in all tenses",
 		"ru": "Освойте спряжение глагола 'иметь' во всех временах"
 	},
-	"buttonText": "Ξεκινήστε την άσκηση",
-	"buttonTextI18n": {
-		"en": "Start exercise",
-		"ru": "Начать упражнение"
-	},
-	"tags": ["verbs", "irregular-verbs", "basic", "conjugation"],
+	"tags": ["word-form", "verbs", "irregular-verbs"],
 	"difficulty": "a0",
 	"estimatedTimeMinutes": 5,
 	"settings": {

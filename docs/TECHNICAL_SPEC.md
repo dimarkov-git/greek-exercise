@@ -227,8 +227,6 @@ interface WordFormExercise {
   titleI18n: Record<Language, string>
   description: string
   descriptionI18n: Record<Language, string>
-  buttonText: string
-  buttonTextI18n: Record<Language, string>
 
   // Classification
   tags: string[]

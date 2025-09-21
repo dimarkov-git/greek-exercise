@@ -184,7 +184,7 @@ export function TableView({exercise}: TableViewProps) {
 													{caseItem.prompt}
 												</div>
 												<div className='text-gray-500 text-sm dark:text-gray-400'>
-													{caseItem.promptHintI18n[userLanguage] ||
+													{caseItem.promptHintI18n?.[userLanguage] ||
 														caseItem.prompt}
 												</div>
 											</td>

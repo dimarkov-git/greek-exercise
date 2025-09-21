@@ -1,0 +1,93 @@
+{
+	"enabled": true,
+	"id": "template",
+	"type": "word-form",
+	"title": "Μορφές της λέξης",
+	"titleI18n": {
+		"en": "Word form",
+		"ru": "Формы слова"
+	},
+	"description": "Πρότυπο για ασκήσεις τύπων λέξεων",
+	"descriptionI18n": {
+		"en": "This is a template for word form exercises",
+		"ru": "Это пример упражнения для форм слова"
+	},
+	"tags": ["word-form", "template"],
+	"difficulty": "a1",
+	"estimatedTimeMinutes": 10,
+	"settings": {
+		"autoAdvance": true,
+		"autoAdvanceDelayMs": 1500,
+		"allowSkip": false,
+		"shuffleCases": false
+	},
+	"blocks": [
+		{
+			"id": "word-example-1",
+			"name": "λέξη",
+			"nameHintI18n": {
+				"en": "word",
+				"ru": "слово"
+			},
+			"cases": [
+				{
+					"id": "singular",
+					"prompt": "μία ___",
+					"promptHintI18n": {
+						"en": "singular",
+						"ru": "ед. ч."
+					},
+					"correct": ["λέξη"],
+					"hint": "λέξ_",
+					"hintI18n": {
+						"en": "wor_",
+						"ru": "слов_"
+					}
+				},
+				{
+					"id": "plural",
+					"prompt": "πολλές ___",
+					"promptHintI18n": {
+						"en": "plural",
+						"ru": "мн. ч."
+					},
+					"correct": ["λέξεις"],
+					"hint": "λέξ__",
+					"hintI18n": {
+						"en": "wor__",
+						"ru": "слов_"
+					}
+				}
+			]
+		},
+		{
+			"id": "word-example-2",
+			"name": "λέξη",
+			"nameHintI18n": {
+				"en": "word",
+				"ru": "слово"
+			},
+			"cases": [
+				{
+					"id": "accusative-singular",
+					"prompt": "Δεν έχω ___",
+					"correct": ["λέξη"]
+				},
+				{
+					"id": "nominative-plural",
+					"prompt": "Ποιες είναι οι σωστές ___",
+					"promptHintI18n": {
+						"en": "What are the correct ___",
+						"ru": "Какие правильные ___"
+					},
+					"correct": ["λέξεις"],
+					"hint": "λέξ__",
+					"hintI18n": {
+						"en": "nominative plural",
+						"ru": "им. п., мн. ч."
+					}
+				}
+			]
+		}
+	]
+}

@@ -39,11 +39,6 @@ Every exercise follows this basic structure:
     "en": "English description",
     "ru": "Russian description"
   },
-  "buttonText": "Greek button text",
-  "buttonTextI18n": {
-    "en": "English button text",
-    "ru": "Russian button text"
-  },
   "tags": ["tag1", "tag2"],
   "difficulty": "beginner",
   "estimatedTimeMinutes": 5,
@@ -72,11 +67,6 @@ Based on the existing `verbs-be.json`:
   "descriptionI18n": {
     "en": "Master conjugation of the verb 'to be' in all tenses",
     "ru": "Освойте спряжение глагола 'быть' во всех временах"
-  },
-  "buttonText": "Ξεκινήστε την άσκηση",
-  "buttonTextI18n": {
-    "en": "Start exercise",
-    "ru": "Начать упражнение"
   },
   "tags": ["verbs", "irregular-verbs", "basic", "conjugation"],
   "difficulty": "beginner",
@@ -126,8 +116,6 @@ Based on the existing `verbs-be.json`:
 | `titleI18n` | object | ✅ | Translated titles (`en`, `ru`) |
 | `description` | string | ✅ | Greek description |
 | `descriptionI18n` | object | ✅ | Translated descriptions |
-| `buttonText` | string | ✅ | Greek button text |
-| `buttonTextI18n` | object | ✅ | Translated button text |
 | `tags` | string[] | ✅ | Tags for filtering/grouping |
 | `difficulty` | string | ✅ | `"beginner"` \\| `"intermediate"` \\| `"advanced"` |
 | `estimatedTimeMinutes` | number | ✅ | Estimated completion time |

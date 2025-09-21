@@ -28,10 +28,10 @@ export interface WordFormBlock {
 export interface WordFormCase {
 	id: string // unique case identifier
 	prompt: string // question in Greek (main study language)
-	promptHintI18n: Record<Language, string> // hints in user's language
+	promptHintI18n?: Record<Language, string> // hints in user's language (optional)
 	correct: string[] // correct answers in Greek (multiple answers supported)
-	hint?: string | null // additional hint in Greek (optional)
-	hintI18n?: Record<Language, string> | null // additional hint in user's language
+	hint?: string // additional hint in Greek (optional)
+	hintI18n?: Record<Language, string> // additional hint in user's language (optional)
 }
 
 // Complete exercise structure
@@ -43,8 +43,6 @@ export interface WordFormExercise {
 	titleI18n: Record<Language, string> // title in interface languages
 	description: string // description in Greek
 	descriptionI18n: Record<Language, string> // description in interface languages
-	buttonText: string // button text in Greek
-	buttonTextI18n: Record<Language, string> // button text in interface languages
 	tags: string[] // filtering tags (e.g., ["verbs", "irregular-verbs", "basic"])
 	difficulty: Difficulty
 	estimatedTimeMinutes: number // estimated completion time
@@ -132,8 +130,6 @@ export interface WordFormExerciseJSON {
 	titleI18n: Record<Language, string>
 	description: string
 	descriptionI18n: Record<Language, string>
-	buttonText: string
-	buttonTextI18n: Record<Language, string>
 	tags: string[]
 	difficulty: Difficulty
 	estimatedTimeMinutes: number
@@ -153,8 +149,6 @@ export function exerciseToJSON(
 		titleI18n: exercise.titleI18n,
 		description: exercise.description,
 		descriptionI18n: exercise.descriptionI18n,
-		buttonText: exercise.buttonText,
-		buttonTextI18n: exercise.buttonTextI18n,
 		tags: exercise.tags,
 		difficulty: exercise.difficulty,
 		estimatedTimeMinutes: exercise.estimatedTimeMinutes,

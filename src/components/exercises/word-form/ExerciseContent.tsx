@@ -13,6 +13,42 @@ import {PulseEffect} from '../shared/PulseEffect'
 import {WordFormFeedback} from './WordFormFeedback'
 import {WordFormInput} from './WordFormInput'
 
+function PromptWithHint({currentCase}: {currentCase: WordFormCase}) {
+	return (
+		<div className='text-center'>
+			{currentCase.promptHintI18n ? (
+				<HintSystem
+					className='font-bold text-2xl text-blue-600 dark:text-blue-400'
+					hints={currentCase.promptHintI18n}
+					primaryText={currentCase.prompt}
+				/>
+			) : (
+				<div className='font-bold text-2xl text-blue-600 dark:text-blue-400'>
+					{currentCase.prompt}
+				</div>
+			)}
+		</div>
+	)
+}
+
+function AdditionalHint({currentCase}: {currentCase: WordFormCase}) {
+	if (!currentCase.hint) return null
+
+	return (
+		<div className='text-center text-gray-600 text-sm dark:text-gray-400'>
+			{currentCase.hintI18n ? (
+				<HintSystem
+					className='italic'
+					hints={currentCase.hintI18n}
+					primaryText={currentCase.hint}
+				/>
+			) : (
+				<span className='italic'>{currentCase.hint}</span>
+			)}
+		</div>
+	)
+}
+
 interface ExerciseContentProps {
 	exercise: WordFormExercise
 	currentBlock: WordFormBlock
@@ -64,28 +100,10 @@ export function ExerciseContent({
 				</div>
 
 				{/* Current prompt with hint */}
-				<div className='text-center'>
-					<HintSystem
-						className='font-bold text-2xl text-blue-600 dark:text-blue-400'
-						hints={currentCase.promptHintI18n}
-						primaryText={currentCase.prompt}
-					/>
-				</div>
+				<PromptWithHint currentCase={currentCase} />
 
 				{/* Additional hint (if exists) */}
-				{currentCase.hint && (
-					<div className='text-center text-gray-600 text-sm dark:text-gray-400'>
-						{currentCase.hintI18n ? (
-							<HintSystem
-								className='italic'
-								hints={currentCase.hintI18n}
-								primaryText={currentCase.hint}
-							/>
-						) : (
-							<span className='italic'>{currentCase.hint}</span>
-						)}
-					</div>
-				)}
+				<AdditionalHint currentCase={currentCase} />
 
 				{/* Input area with pulse effect */}
 				<PulseEffect
