@@ -108,9 +108,12 @@
 			}
 		},
 		{
-			"includes": ["src/**/*.test.tsx", "tests/**/*.ts"],
+			"includes": ["src/**/*.test.tsx", "src/**/*.test.ts", "tests/**/*.ts"],
 			"linter": {
 				"rules": {
+					"correctness": {
+						"noUndeclaredDependencies": "off"
+					},
 					"performance": {
 						"useTopLevelRegex": "off",
 						"noAwaitInLoops": "off"

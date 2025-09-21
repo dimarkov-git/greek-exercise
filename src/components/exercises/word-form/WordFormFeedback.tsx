@@ -147,9 +147,11 @@ export function WordFormFeedback({
 	return (
 		<motion.div
 			animate={{opacity: 1, y: 0, scale: 1}}
+			aria-live='polite'
 			className='space-y-3 text-center'
 			exit={{opacity: 0, y: -20, scale: 0.95}}
 			initial={{opacity: 0, y: 20, scale: 0.95}}
+			role='status'
 			transition={{duration: 0.3, ease: 'easeOut'}}
 		>
 			{isCorrect && <SuccessFeedback userAnswer={userAnswer} />}

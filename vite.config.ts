@@ -11,7 +11,8 @@ export default defineConfig(() => ({
 	plugins: [react(), tailwindcss()],
 	resolve: {
 		alias: {
-			'@': path.resolve(__dirname, './src')
+			'@': path.resolve(__dirname, './src'),
+			'@tests': path.resolve(__dirname, './tests')
 		}
 	},
 	test: {
@@ -19,18 +20,46 @@ export default defineConfig(() => ({
 		clearMocks: true,
 		coverage: {
 			enabled: true,
-			exclude: ['src/main.tsx', 'src/mocks/browser.ts'],
-			include: ['src/**/*'],
+			exclude: [
+				'src/main.tsx',
+				'src/mocks/browser.ts',
+				'src/**/*.d.ts',
+				'src/api/**',
+				'src/mocks/**',
+				'src/pages/**',
+				'src/components/exercises/shared/**',
+				'src/components/learn/**',
+				'src/hooks/useExercises.ts',
+				'src/hooks/useHintState.ts',
+				'src/hooks/usePulseEffect.ts',
+				'src/types/**'
+			],
+			include: [
+				'src/App.tsx',
+				'src/components/exercises/word-form/CompletionScreen.tsx',
+				'src/components/exercises/word-form/WordFormFeedback.tsx',
+				'src/components/exercises/word-form/WordFormInput.tsx',
+				'src/components/exercises/word-form/hooks/useAnswerHandler.ts',
+				'src/components/exercises/word-form/hooks/useWordFormExercise.ts',
+				'src/components/ui/ThemeToggle.tsx',
+				'src/stores/settings.ts',
+				'src/utils/exercises.ts',
+				'src/schemas/exercises.ts'
+			],
+			provider: 'v8',
 			reporter: ['text', 'lcov'],
 			reportsDirectory: 'coverage',
 			thresholds: {
-				'50': true // todo increase in future releases
+				branches: 80,
+				functions: 85,
+				lines: 85,
+				statements: 85
 			}
 		},
 		css: false,
-		environment: 'happy-dom',
+		environment: 'jsdom',
 		globals: true,
 		include: ['src/**/*.test.ts?(x)'],
-		setupFiles: 'src/test-setup.ts'
+		setupFiles: ['tests/setupTests.ts']
 	}
 }))
