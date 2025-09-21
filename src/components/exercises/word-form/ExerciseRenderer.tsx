@@ -62,7 +62,7 @@ export function ExerciseRenderer({
 			<CompletionScreen
 				correctCount={correctCount}
 				exerciseTitle={
-					exercise.titleI18n[userLanguage as Language] || exercise.title
+					exercise.titleI18n?.[userLanguage as Language] || exercise.title
 				}
 				incorrectCount={incorrectCount}
 				onExit={
@@ -90,7 +90,7 @@ export function ExerciseRenderer({
 
 	return (
 		<ExerciseLayout
-			title={exercise.titleI18n[userLanguage as Language] || exercise.title}
+			title={exercise.titleI18n?.[userLanguage as Language] || exercise.title}
 		>
 			<ExerciseContent
 				currentBlock={currentBlock}

@@ -79,20 +79,28 @@ export function getTotalCases(exercise: WordFormExercise): number {
 export function extractExerciseMetadata(
 	exercise: WordFormExercise
 ): ExerciseMetadata {
-	return {
+	const result: ExerciseMetadata = {
 		id: exercise.id,
 		type: exercise.type,
 		title: exercise.title,
-		titleI18n: exercise.titleI18n,
 		description: exercise.description,
-		descriptionI18n: exercise.descriptionI18n,
-		tags: exercise.tags,
+		tags: exercise.tags || [],
 		difficulty: exercise.difficulty,
 		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
 		totalBlocks: exercise.blocks.length,
 		totalCases: getTotalCases(exercise),
 		enabled: exercise.enabled
 	}
+
+	if (exercise.titleI18n) {
+		result.titleI18n = exercise.titleI18n
+	}
+
+	if (exercise.descriptionI18n) {
+		result.descriptionI18n = exercise.descriptionI18n
+	}
+
+	return result
 }
 
 /**

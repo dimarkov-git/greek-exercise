@@ -28,7 +28,7 @@ export const DEFAULT_EXERCISE_SETTINGS: ExerciseSettings = {
 export interface WordFormBlock {
 	id: string // unique block identifier
 	name: string // block name in Greek (main study language)
-	nameHintI18n: Record<Language, string> // hints in user's language
+	nameHintI18n?: Record<Language, string> // hints in user's language (optional)
 	cases: WordFormCase[]
 }
 
@@ -48,10 +48,10 @@ export interface WordFormExercise {
 	id: string
 	type: 'word-form'
 	title: string // title in Greek
-	titleI18n: Record<Language, string> // title in interface languages
+	titleI18n?: Record<Language, string> // title in interface languages (optional)
 	description: string // description in Greek
-	descriptionI18n: Record<Language, string> // description in interface languages
-	tags: string[] // filtering tags (e.g., ["verbs", "irregular-verbs", "basic"])
+	descriptionI18n?: Record<Language, string> // description in interface languages (optional)
+	tags?: string[] // filtering tags (optional, defaults to empty array)
 	difficulty: Difficulty
 	estimatedTimeMinutes: number // estimated completion time
 	settings?: ExerciseSettings // optional settings, defaults will be applied
@@ -80,9 +80,9 @@ export interface ExerciseMetadata {
 	id: string
 	type: ExerciseType
 	title: string
-	titleI18n: Record<Language, string>
+	titleI18n?: Record<Language, string>
 	description: string
-	descriptionI18n: Record<Language, string>
+	descriptionI18n?: Record<Language, string>
 	tags: string[]
 	difficulty: Difficulty
 	estimatedTimeMinutes: number
@@ -135,9 +135,9 @@ export interface WordFormExerciseJSON {
 	id: string
 	type: 'word-form'
 	title: string
-	titleI18n: Record<Language, string>
+	titleI18n?: Record<Language, string>
 	description: string
-	descriptionI18n: Record<Language, string>
+	descriptionI18n?: Record<Language, string>
 	tags: string[]
 	difficulty: Difficulty
 	estimatedTimeMinutes: number
@@ -161,18 +161,26 @@ export function getExerciseSettings(
 export function exerciseToJSON(
 	exercise: WordFormExercise
 ): WordFormExerciseJSON {
-	return {
+	const result: WordFormExerciseJSON = {
 		enabled: exercise.enabled,
 		id: exercise.id,
 		type: exercise.type,
 		title: exercise.title,
-		titleI18n: exercise.titleI18n,
 		description: exercise.description,
-		descriptionI18n: exercise.descriptionI18n,
-		tags: exercise.tags,
+		tags: exercise.tags || [],
 		difficulty: exercise.difficulty,
 		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
 		settings: getExerciseSettings(exercise),
 		blocks: exercise.blocks
 	}
+
+	if (exercise.titleI18n) {
+		result.titleI18n = exercise.titleI18n
+	}
+
+	if (exercise.descriptionI18n) {
+		result.descriptionI18n = exercise.descriptionI18n
+	}
+
+	return result
 }

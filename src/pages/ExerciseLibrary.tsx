@@ -307,10 +307,10 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 				<div className='mb-4 flex items-start justify-between'>
 					<div className='flex-1'>
 						<h3 className='mb-2 font-semibold text-gray-900 text-lg dark:text-white'>
-							{exercise.titleI18n[uiLanguage] || exercise.title}
+							{exercise.titleI18n?.[uiLanguage] || exercise.title}
 						</h3>
 						<p className='line-clamp-2 text-gray-600 text-sm dark:text-gray-400'>
-							{exercise.descriptionI18n[uiLanguage] || exercise.description}
+							{exercise.descriptionI18n?.[uiLanguage] || exercise.description}
 						</p>
 					</div>
 					<span

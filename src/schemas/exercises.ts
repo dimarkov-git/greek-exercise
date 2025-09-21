@@ -37,7 +37,7 @@ export const WordFormCaseSchema = v.object({
 export const WordFormBlockSchema = v.object({
 	id: v.string(),
 	name: v.string(),
-	nameHintI18n: I18nStringSchema,
+	nameHintI18n: v.optional(I18nStringSchema),
 	cases: v.pipe(v.array(WordFormCaseSchema), v.minLength(1))
 })
 
@@ -47,10 +47,10 @@ export const WordFormExerciseSchema = v.object({
 	id: v.string(),
 	type: v.literal('word-form'),
 	title: v.string(),
-	titleI18n: I18nStringSchema,
+	titleI18n: v.optional(I18nStringSchema),
 	description: v.string(),
-	descriptionI18n: I18nStringSchema,
-	tags: v.array(v.string()),
+	descriptionI18n: v.optional(I18nStringSchema),
+	tags: v.optional(v.array(v.string()), []),
 	difficulty: DifficultySchema,
 	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
 	settings: v.optional(ExerciseSettingsSchema),
@@ -67,9 +67,9 @@ export const ExerciseMetadataSchema = v.object({
 		'multiple-choice'
 	]),
 	title: v.string(),
-	titleI18n: I18nStringSchema,
+	titleI18n: v.optional(I18nStringSchema),
 	description: v.string(),
-	descriptionI18n: I18nStringSchema,
+	descriptionI18n: v.optional(I18nStringSchema),
 	tags: v.array(v.string()),
 	difficulty: DifficultySchema,
 	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),

@@ -91,6 +91,22 @@
 					}
 				}
 			]
+		},
+		{
+			"id": "simple-example",
+			"name": "απλό παράδειγμα",
+			"cases": [
+				{
+					"id": "simple-case-1",
+					"prompt": "ένα ___",
+					"correct": ["παράδειγμα"]
+				},
+				{
+					"id": "simple-case-2",
+					"prompt": "δύο ___",
+					"correct": ["παραδείγματα"]
+				}
+			]
 		}
 	]
 }

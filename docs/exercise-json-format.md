@@ -48,25 +48,25 @@ Currently supported exercise type:
 
 #### Required fields
 
-| Field                  | Type                       | Description                              | Validation                                                 |
-| ---------------------- | -------------------------- | ---------------------------------------- | ---------------------------------------------------------- |
-| `enabled`              | `boolean`                  | Whether exercise is visible in library   | Required                                                   |
-| `id`                   | `string`                   | Unique exercise identifier               | Required, used for routing                                 |
-| `type`                 | `"word-form"`              | Exercise type (currently only word-form) | Required, must be literal "word-form"                      |
-| `title`                | `string`                   | Exercise title in Greek                  | Required                                                   |
-| `titleI18n`            | `Record<Language, string>` | Translated titles for interface          | Required, must contain 'en', 'ru', 'el'                    |
-| `description`          | `string`                   | Exercise description in Greek            | Required                                                   |
-| `descriptionI18n`      | `Record<Language, string>` | Translated descriptions                  | Required, must contain 'en', 'ru', 'el'                    |
-| `tags`                 | `string[]`                 | Filtering tags for library               | Required                                                   |
-| `difficulty`           | `Difficulty`               | Exercise difficulty level                | Required, one of: "a0", "a1", "a2", "b1", "b2", "c1", "c2" |
-| `estimatedTimeMinutes` | `number`                   | Estimated completion time                | Required, must be ≥ 0                                      |
-| `blocks`               | `WordFormBlock[]`          | Exercise content blocks                  | Required, must contain ≥ 1 block                           |
+| Field                  | Type             | Description                              | Validation                                                 |
+| ---------------------- | ---------------- | ---------------------------------------- | ---------------------------------------------------------- |
+| `enabled`              | `boolean`        | Whether exercise is visible in library   | Required                                                   |
+| `id`                   | `string`         | Unique exercise identifier               | Required, used for routing                                 |
+| `type`                 | `"word-form"`    | Exercise type (currently only word-form) | Required, must be literal "word-form"                      |
+| `title`                | `string`         | Exercise title in Greek                  | Required                                                   |
+| `description`          | `string`         | Exercise description in Greek            | Required                                                   |
+| `difficulty`           | `Difficulty`     | Exercise difficulty level                | Required, one of: "a0", "a1", "a2", "b1", "b2", "c1", "c2" |
+| `estimatedTimeMinutes` | `number`         | Estimated completion time                | Required, must be ≥ 0                                      |
+| `blocks`               | `WordFormBlock[]`| Exercise content blocks                  | Required, must contain ≥ 1 block                           |
 
 #### Optional fields
 
-| Field      | Type               | Description                     | Default               |
-| ---------- | ------------------ | ------------------------------- | --------------------- |
-| `settings` | `ExerciseSettings` | Exercise behavior configuration | Applied from defaults |
+| Field            | Type                       | Description                                      | Default               |
+| ---------------- | -------------------------- | ------------------------------------------------ | --------------------- |
+| `titleI18n`      | `Record<Language, string>` | Translated titles (en/ru), el version in title   | Uses `title` if missing |
+| `descriptionI18n`| `Record<Language, string>` | Translated descriptions (en/ru), el version in description | Uses `description` if missing |
+| `tags`           | `string[]`                 | Filtering tags for library                       | Empty array []        |
+| `settings`       | `ExerciseSettings`         | Exercise behavior configuration                  | Applied from defaults |
 
 ### Exercise settings
 
@@ -104,12 +104,12 @@ Each block represents a thematic group of related questions:
 }
 ```
 
-| Field          | Type                       | Description             | Required | Effect on UI                   |
-| -------------- | -------------------------- | ----------------------- | -------- | ------------------------------ |
-| `id`           | `string`                   | Unique block identifier | ✓        | Used internally, not displayed |
-| `name`         | `string`                   | Block name in Greek     | ✓        | Displayed as section header    |
-| `nameHintI18n` | `Record<Language, string>` | Translation hints       | ✓        | Shown via hint system button   |
-| `cases`        | `WordFormCase[]`           | Individual questions    | ✓        | Must contain ≥ 1 case          |
+| Field          | Type                       | Description                      | Required | Effect on UI                   |
+| -------------- | -------------------------- | -------------------------------- | -------- | ------------------------------ |
+| `id`           | `string`                   | Unique block identifier          | ✓        | Used internally, not displayed |
+| `name`         | `string`                   | Block name in Greek              | ✓        | Displayed as section header    |
+| `nameHintI18n` | `Record<Language, string>` | Hint translations (en/ru), optional | ✗        | Shown via hint system button if present |
+| `cases`        | `WordFormCase[]`           | Individual questions             | ✓        | Must contain ≥ 1 case          |
 
 ### Individual cases (questions)
 
@@ -189,14 +189,16 @@ The hint system provides contextual help through interactive buttons:
 - `en` - English (fallback)
 - `ru` - Russian
 
-### Translation requirements
+### Translation behavior
 
-All `*I18n` fields must include translations for all supported languages:
+- Greek text is stored in the main fields (`title`, `description`, `name`, etc.)
+- `*I18n` fields contain only translations to interface languages (en/ru)
+- All `*I18n` fields are optional - if missing, the Greek text is used as fallback
 
 ```json
 {
+	"title": "Ελληνικός τίτλος",
 	"titleI18n": {
-		"el": "Greek title",
 		"en": "English title",
 		"ru": "Russian title"
 	}
@@ -205,18 +207,45 @@ All `*I18n` fields must include translations for all supported languages:
 
 ### Fallback chain
 
-1. User's selected interface language
-2. English (`en`)
-3. Translation key itself (error state)
+1. User's selected interface language from `*I18n` object
+2. Greek text from main field (`title`, `description`, etc.)
+3. Empty string for optional hints (no hint displayed)
 
 ## Example exercises
 
-### Minimal exercise
+### Minimal exercise (without translations)
 
 ```json
 {
 	"enabled": true,
 	"id": "minimal-example",
+	"type": "word-form",
+	"title": "Παράδειγμα",
+	"description": "Απλό παράδειγμα",
+	"difficulty": "a1",
+	"estimatedTimeMinutes": 5,
+	"blocks": [
+		{
+			"id": "block-1",
+			"name": "Λέξη",
+			"cases": [
+				{
+					"id": "case-1",
+					"prompt": "μία ___",
+					"correct": ["λέξη"]
+				}
+			]
+		}
+	]
+}
+```
+
+### Exercise with translations
+
+```json
+{
+	"enabled": true,
+	"id": "translated-example",
 	"type": "word-form",
 	"title": "Παράδειγμα",
 	"titleI18n": {

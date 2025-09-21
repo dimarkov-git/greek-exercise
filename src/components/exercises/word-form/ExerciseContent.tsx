@@ -86,17 +86,23 @@ export function ExerciseContent({
 					current: state.completedCases + 1,
 					total: state.totalCases
 				}}
-				title={exercise.titleI18n[userLanguage] || exercise.title}
+				title={exercise.titleI18n?.[userLanguage] || exercise.title}
 			/>
 
 			<div className='space-y-8'>
 				{/* Block name with hint */}
 				<div className='text-center'>
-					<HintSystem
-						className='font-semibold text-gray-800 text-xl dark:text-gray-200'
-						hints={currentBlock.nameHintI18n}
-						primaryText={currentBlock.name}
-					/>
+					{currentBlock.nameHintI18n ? (
+						<HintSystem
+							className='font-semibold text-gray-800 text-xl dark:text-gray-200'
+							hints={currentBlock.nameHintI18n}
+							primaryText={currentBlock.name}
+						/>
+					) : (
+						<div className='font-semibold text-gray-800 text-xl dark:text-gray-200'>
+							{currentBlock.name}
+						</div>
+					)}
 				</div>
 
 				{/* Current prompt with hint */}

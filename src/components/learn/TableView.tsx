@@ -114,7 +114,7 @@ export function TableView({exercise}: TableViewProps) {
 				</div>
 
 				{/* Tags */}
-				{exercise.tags.length > 0 && (
+				{exercise.tags && exercise.tags.length > 0 && (
 					<div className='flex flex-wrap gap-2'>
 						{exercise.tags.map(tag => (
 							<span
@@ -147,7 +147,7 @@ export function TableView({exercise}: TableViewProps) {
 								{block.name}
 							</h5>
 							<p className='text-gray-600 text-sm dark:text-gray-400'>
-								{block.nameHintI18n[userLanguage] || block.name}
+								{block.nameHintI18n?.[userLanguage] || block.name}
 							</p>
 						</div>
 
