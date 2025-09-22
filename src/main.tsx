@@ -1,53 +1,65 @@
 import './global.css'
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
-import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
-import {HashRouter} from 'react-router'
 import {App} from './App'
+import {AppErrorBoundary} from './app/AppErrorBoundary'
+import {AppProviders} from './app/AppProviders'
+import {AppRouter} from './app/AppRouter'
+import {environment} from './config/environment'
 
-const queryClient = new QueryClient()
-
-async function enableMocking() {
-	// We always use MSW for now
-	// if (import.meta.env.MODE === 'production') { return }
-
-	try {
-		const {worker} = await import('./mocks/browser')
-		return worker.start({
-			serviceWorker: {
-				url: `${import.meta.env.BASE_URL}mockServiceWorker.js`
-			},
-			onUnhandledRequest: 'bypass'
-		})
-	} catch {
-		// Don't throw error, just continue without mocking
+async function startMockServiceWorker() {
+	if (!environment.enableMockServiceWorker) {
 		return
 	}
+
+	const {worker} = await import('./mocks/browser')
+
+	await worker.start({
+		serviceWorker: {
+			url: `${import.meta.env.BASE_URL}mockServiceWorker.js`
+		},
+		onUnhandledRequest: environment.isDevelopment ? 'warn' : 'bypass'
+	})
 }
 
-function renderApp() {
+function renderApplication() {
 	const container = document.querySelector('#root')
-	if (container) {
-		const root = createRoot(container)
-		root.render(
-			<StrictMode>
-				<QueryClientProvider client={queryClient}>
-					<ReactQueryDevtools initialIsOpen={false} />
-					<HashRouter>
+
+	if (!container) {
+		throw new Error('Application root element "#root" not found')
+	}
+
+	const root = createRoot(container)
+
+	root.render(
+		<StrictMode>
+			<AppErrorBoundary>
+				<AppProviders>
+					<AppRouter>
 						<App />
-					</HashRouter>
-				</QueryClientProvider>
-			</StrictMode>
-		)
+					</AppRouter>
+				</AppProviders>
+			</AppErrorBoundary>
+		</StrictMode>
+	)
+}
+
+async function bootstrap() {
+	try {
+		await startMockServiceWorker()
+	} catch (error) {
+		if (environment.isDevelopment) {
+			// biome-ignore lint/suspicious/noConsole: development diagnostics
+			console.warn('Failed to start Mock Service Worker', error)
+		}
+	} finally {
+		renderApplication()
 	}
 }
 
-// Initialize MSW and render app
-enableMocking()
-	.then(() => {
-		renderApp()
-	})
-	.catch(() => {
-		renderApp()
-	})
+bootstrap().catch(error => {
+	if (environment.isDevelopment) {
+		// biome-ignore lint/suspicious/noConsole: development diagnostics
+		console.error('Application bootstrap failed', error)
+	}
+})

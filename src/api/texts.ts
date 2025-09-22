@@ -1,18 +1,32 @@
 import * as v from 'valibot'
+import {requestJson} from './httpClient'
 
-// Schema for translations (key-value pairs)
 const Translations = v.record(v.string(), v.string())
 export type Translations = v.InferOutput<typeof Translations>
 
-// Supported languages
 export type SupportedLanguage = 'en' | 'ru' | 'el'
 
+interface TranslationsResponse {
+	translations: Translations
+}
+
 export async function getTranslations(
-	lang: SupportedLanguage
+	language: SupportedLanguage,
+	keys: string[]
 ): Promise<Translations> {
-	const response = await fetch(`/api/translations/${lang}`)
-	if (!response.ok) {
-		throw new Error(`Failed to fetch translations for language: ${lang}`)
-	}
-	return v.parse(Translations, await response.json())
+	const response = await requestJson<
+		TranslationsResponse,
+		{
+			language: SupportedLanguage
+			keys: string[]
+		}
+	>('/api/translations', {
+		method: 'POST',
+		body: {
+			language,
+			keys
+		}
+	})
+
+	return v.parse(Translations, response.translations)
 }

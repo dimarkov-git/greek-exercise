@@ -1,4 +1,5 @@
 import {useQuery} from '@tanstack/react-query'
+import {HttpError, requestJson} from '@/api/httpClient'
 import {
 	validateExercisesList,
 	validateWordFormExercise
@@ -9,17 +10,8 @@ import type {ExerciseMetadata, WordFormExercise} from '@/types/exercises'
  * Fetch exercises list from API
  */
 async function fetchExercises(): Promise<ExerciseMetadata[]> {
-	const response = await fetch('/api/exercises')
+	const data = await requestJson<unknown>('/api/exercises')
 
-	if (!response.ok) {
-		throw new Error(
-			`Failed to fetch exercises: ${response.status} ${response.statusText}`
-		)
-	}
-
-	const data = await response.json()
-
-	// Validate response with Valibot
 	return validateExercisesList(data) as ExerciseMetadata[]
 }
 
@@ -27,24 +19,34 @@ async function fetchExercises(): Promise<ExerciseMetadata[]> {
  * Fetch specific exercise by ID
  */
 async function fetchExercise(id: string): Promise<WordFormExercise> {
-	const response = await fetch(`/api/exercises/${id}`)
+	try {
+		const data = await requestJson<unknown>(`/api/exercises/${id}`)
+		return validateWordFormExercise(data) as WordFormExercise
+	} catch (error) {
+		if (error instanceof HttpError) {
+			if (error.status === 404) {
+				throw new HttpError(`Exercise with id '${id}' not found`, {
+					status: error.status,
+					statusText: error.statusText,
+					url: error.url,
+					method: error.method,
+					body: error.body
+				})
+			}
 
-	if (!response.ok) {
-		if (response.status === 404) {
-			throw new Error(`Exercise with id '${id}' not found`)
+			if (error.status === 403) {
+				throw new HttpError(`Exercise '${id}' is not available`, {
+					status: error.status,
+					statusText: error.statusText,
+					url: error.url,
+					method: error.method,
+					body: error.body
+				})
+			}
 		}
-		if (response.status === 403) {
-			throw new Error(`Exercise '${id}' is not available`)
-		}
-		throw new Error(
-			`Failed to fetch exercise: ${response.status} ${response.statusText}`
-		)
+
+		throw error
 	}
-
-	const data = await response.json()
-
-	// Validate response with Valibot
-	return validateWordFormExercise(data) as WordFormExercise
 }
 
 /**
@@ -77,13 +79,13 @@ export function useExercise(id: string | undefined) {
 		staleTime: 30 * 60 * 1000, // 30 minutes
 		gcTime: 60 * 60 * 1000, // 1 hour
 		retry: (failureCount, error) => {
-			// Don't retry on 404 or 403 errors
 			if (
-				error.message.includes('not found') ||
-				error.message.includes('not available')
+				error instanceof HttpError &&
+				(error.status === 403 || error.status === 404)
 			) {
 				return false
 			}
+
 			return failureCount < 2
 		},
 		refetchOnWindowFocus: false

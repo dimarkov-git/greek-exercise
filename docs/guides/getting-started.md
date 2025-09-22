@@ -19,11 +19,11 @@ This guide will help you set up the development environment for **Learn Greek** 
 #### 2. Install Node.js (via Homebrew)
 
 ```bash
-# Install Node.js LTS version
-brew install node
+# Install Node.js 24 LTS
+brew install node@24
 
 # Verify installation
-node --version  # Should show v20.x.x or later
+node --version  # Should show v24.x.x
 npm --version   # Should show v10.x.x or later
 ```
 
@@ -34,7 +34,7 @@ npm --version   # Should show v10.x.x or later
 npm install -g pnpm
 
 # Verify installation
-pnpm --version  # Should show v10.x.x or later
+pnpm --version  # Should show v10.x.x
 ```
 
 #### 4. Install Git (if not already installed)
@@ -75,6 +75,18 @@ pnpm dev
 ```
 
 The application will automatically open in your browser at `http://localhost:5173`
+
+## ⚙️ Environment configuration
+
+You can control runtime behaviour with optional environment variables (place them in `.env.local` when developing):
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `VITE_ENABLE_MSW` | `true` (only outside production/test) | Start Mock Service Worker for local API mocks. Set to `false` to hit a real backend. |
+| `VITE_ENABLE_QUERY_DEVTOOLS` | `true` in development | Lazily load React Query Devtools. Set to `false` to skip the bundle. |
+| `VITE_ROUTER_MODE` | `browser` (`memory` during Vitest) | Choose routing strategy (`browser`, `hash`, or `memory`). |
+
+Changes require restarting `pnpm dev` to take effect.
 
 ## 🧪 Testing setup
 
@@ -132,14 +144,14 @@ pnpm validate     # Run lint + test:ci + test:e2e:ci
 ```
 learn-greek/
 ├── docs/                # Documentation
-├── .notes/              # Personal notes
 ├── src/                 # Source code
+│   ├── app/             # Application providers, router, error boundaries
+│   ├── api/             # API utilities (HTTP client, translation helpers)
 │   ├── components/      # React components (UI, layout)
+│   ├── config/          # Environment feature flags
+│   ├── hooks/           # Custom hooks (useTranslations, useExercises)
 │   ├── pages/           # Page components (HomePage, ExerciseLibrary, ExerciseBuilder)
-│   ├── api/             # API functions (translation system)
-│   ├── hooks/           # Custom hooks (useI18n)
 │   ├── stores/          # Zustand stores (settings)
-│   ├── contexts/        # React contexts (LanguageContext)
 │   ├── types/           # TypeScript definitions
 │   └── mocks/           # MSW mocks for translation API
 ├── tests/               # E2E tests (Playwright)

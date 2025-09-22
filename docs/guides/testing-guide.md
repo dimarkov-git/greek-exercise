@@ -197,6 +197,12 @@ pnpm test:e2e:ci
 npx playwright install
 ```
 
+> **Note**
+> The application automatically switches to hash-based routing when it detects
+> a Playwright-driven browser session (`navigator.webdriver`). This keeps the
+> generated URLs aligned with the `/#/` patterns that the E2E suite asserts
+> against while leaving production builds on the standard history API router.
+
 ### Page Object Model (POM)
 
 ```typescript

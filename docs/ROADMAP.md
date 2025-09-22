@@ -6,7 +6,7 @@ This document captures the refactor-first plan for aligning the Learn Greek appl
 
 ### 1.1 Architecture
 - The application is orchestrated from `App`, which lazily mounts top-level routes and exposes layout context for the header configuration.
-- The entry point always starts MSW and React Query Devtools and renders the SPA through `HashRouter`, a setup that is convenient in development but blocks a clean production or SSR boot path.
+- The entry point now boots through an environment-aware pipeline (Phase 0) that only starts MSW/Devtools when enabled and defaults to a production-safe router.
 
 ### 1.2 Data and internationalization
 - The Zustand settings store manipulates `document.documentElement` inside setters and persistence callbacks, which tightly couples it to the browser and complicates testing or SSR.
@@ -34,10 +34,11 @@ This document captures the refactor-first plan for aligning the Learn Greek appl
 
 ## 4. Phase roadmap
 
-### Phase 0 – Foundations
-1. Introduce environment-aware bootstrap: optional MSW/Devtools, production-safe router, and error boundaries prepared for real API integration.
-2. Establish a shared HTTP layer (typed `fetch` wrapper) with retry/error policies aligned with MSW mocks.
-3. Audit dependencies, remove dead packages, lock versions, and document runtime requirements in the setup guides.
+### Phase 0 – Foundations *(completed)*
+1. ✅ Introduce environment-aware bootstrap: optional MSW/Devtools, production-safe router, and error boundaries prepared for real API integration.
+   - Normalize environment flag access to use typed `import.meta.env` properties and Vitest runtime detection helpers.
+2. ✅ Establish a shared HTTP layer (typed `fetch` wrapper) with retry/error policies aligned with MSW mocks.
+3. ✅ Audit dependencies, remove dead packages, lock versions, and document runtime requirements in the setup guides.
 
 ### Phase 1 – Architecture decomposition
 1. Break the exercise library into page, container, filter panel, card list, and data adapters; target ≤100-line components and introduce slice-like boundaries inspired by FSD.

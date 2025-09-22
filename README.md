@@ -50,6 +50,14 @@ pnpm dev
 
 **Full setup guide:** [docs/guides/getting-started.md](docs/guides/getting-started.md)
 
+### Environment configuration
+
+Set optional environment variables in `.env.local` to customise the runtime:
+
+- `VITE_ENABLE_MSW` (default: `true` in non-production environments) – toggle Mock Service Worker.
+- `VITE_ENABLE_QUERY_DEVTOOLS` (default: `true` in development) – load React Query Devtools lazily.
+- `VITE_ROUTER_MODE` (default: `browser`, `memory` for Vitest) – choose between browser/history/hash routers.
+
 ## Scripts
 
 - `pnpm dev` - start a development server with hot reload.
