@@ -41,7 +41,7 @@ This document captures the refactor-first plan for aligning the Learn Greek appl
 3. ✅ Audit dependencies, remove dead packages, lock versions, and document runtime requirements in the setup guides.
 
 ### Phase 1 – Architecture decomposition
-1. Break the exercise library into page, container, filter panel, card list, and data adapters; target ≤100-line components and introduce slice-like boundaries inspired by FSD.
+1. ✅ Break the exercise library into page, container, filter panel, card list, and data adapters; establish slice-like boundaries inspired by FSD and document the new directory layout.
 2. Extract word-form exercise state into a dedicated reducer or state machine with explicit events, selectors, and memoized derivations.
 3. Standardize layout and shell components, limit cross-module imports, and prepare for route-based code splitting.
 
