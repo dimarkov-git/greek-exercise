@@ -43,6 +43,17 @@ App (Root)
 - **LanguageDropdown.tsx** - Dropdown language selection with flags
 - **UserLanguageSelector.tsx** - User preference language selector
 
+#### 📚 Exercise library slice (`pages/exercise-library/`)
+
+**Purpose**: Structured browsing experience for the exercise catalogue
+
+- **ExerciseLibrary.tsx** – page container that orchestrates data loading, translations, and feature slices
+- **components/LibraryHeader.tsx** – animated hero header for the page
+- **components/UserSettings.tsx** – collapsible settings summary with user language selector
+- **components/ExerciseFilters.tsx** – collapsible filters with difficulty/tag chips and inline summary state
+- **components/ExerciseGrid.tsx** – animated card grid with empty state and CTA buttons
+- **hooks/useExerciseFiltering.ts** – memoised filtering logic with reset helper used by the page container
+
 #### 🎯 Exercise components
 
 **Purpose**: Exercise system implementation

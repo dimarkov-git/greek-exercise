@@ -80,12 +80,14 @@ This document explains the purpose of each file in the **Learn Greek** applicati
   - User language selector (for exercise hints)
   - Navigation cards to Exercise Library and Builder
   - Multilingual content with real-time language switching
-- **ExerciseLibrary.tsx** - browse and filter available exercises
-  - Exercise cards with metadata (difficulty, time, tags)
-  - Tag-based filtering system
-  - Integration with MSW API endpoints
-- **ExerciseBuilder.tsx** - create custom exercises (placeholder)
-- **ExercisePage.tsx** - exercise execution page
+- **exercise-library/** – modular exercise library slice following the Phase 1 roadmap refactor
+  - `ExerciseLibrary.tsx` – top-level page container that wires translations, data fetching, and feature slices
+  - `components/` – presentation units (`LibraryHeader`, `UserSettings`, `ExerciseFilters`, `ExerciseGrid`) with isolated styling/animation concerns
+  - `hooks/useExerciseFiltering.ts` – encapsulated filtering state with memoised selectors and reset helpers
+  - `constants.ts` – consolidated translation catalogue for the page
+- **ExerciseLibrary.tsx** – re-export for backwards compatibility with existing route loaders/tests
+- **ExerciseBuilder.tsx** – create custom exercises (placeholder)
+- **ExercisePage.tsx** – exercise execution page
   - Dynamic exercise loading by ID
   - Integration with word-form exercise system
   - Progress tracking and completion handling
