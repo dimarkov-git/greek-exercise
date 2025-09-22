@@ -23,5 +23,10 @@ export function WordFormExerciseWrapper(props: WordFormExerciseWrapperProps) {
 		onComplete: props.onComplete
 	})
 
-	return <ExerciseRenderer {...hookResult} onExit={props.onExit} />
+	return (
+		<ExerciseRenderer
+			{...hookResult}
+			{...(props.onExit ? {onExit: props.onExit} : {})}
+		/>
+	)
 }

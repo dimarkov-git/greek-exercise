@@ -1,51 +1,133 @@
 import {useTranslations} from '@/hooks/useTranslations'
 import {useSettingsStore} from '@/stores/settings'
-import type {
-	ExerciseEvent,
-	ExerciseState,
-	ExerciseStatus,
-	WordFormBlock,
-	WordFormCase,
-	WordFormExercise
-} from '@/types/exercises'
+import type {ExerciseEvent} from '@/types/exercises'
 import type {Language} from '@/types/settings'
 import {ExerciseLayout} from '../shared/ExerciseLayout'
 import {CompletionScreen} from './CompletionScreen'
 import {ExerciseContent} from './ExerciseContent'
+import type {WordFormViewState} from './hooks/useWordFormExercise'
 
 interface ExerciseRendererProps {
-	exercise: WordFormExercise
-	state: ExerciseState
-	setState: React.Dispatch<React.SetStateAction<ExerciseState>>
-	status: ExerciseStatus
-	startTime: number
-	correctCount: number
-	incorrectCount: number
-	currentCase: WordFormCase | undefined
-	currentBlock: WordFormBlock | undefined
+	state: WordFormViewState
 	pulseState: import('../shared/PulseEffect').PulseState
 	clearPulse: () => void
 	handleEvent: (event: ExerciseEvent) => void
 	handleSubmit: (answer: string) => void
 	handleAutoAdvanceToggle: () => void
-	onExit?: (() => void) | undefined
+	handleAnswerChange: (value: string) => void
+	onExit?: () => void
+}
+
+interface CompletedViewProps {
+	state: WordFormViewState
+	exerciseTitle: string
+	onExit?: () => void
+	onRestart: () => void
+}
+
+function CompletedView({
+	state,
+	exerciseTitle,
+	onExit,
+	onRestart
+}: CompletedViewProps) {
+	const handleExit =
+		onExit ??
+		(() => {
+			/* no-op exit handler */
+		})
+
+	return (
+		<CompletionScreen
+			correctCount={state.stats.correct}
+			exerciseTitle={exerciseTitle}
+			incorrectCount={state.stats.incorrect}
+			onExit={handleExit}
+			onRestart={onRestart}
+			timeSpentMs={Date.now() - state.startedAt}
+			totalCases={state.progress.total}
+		/>
+	)
+}
+
+interface MissingCaseViewProps {
+	title: string
+	message: string
+}
+
+function MissingCaseView({title, message}: MissingCaseViewProps) {
+	return (
+		<ExerciseLayout title={title}>
+			<div className='text-center text-red-600'>{message}</div>
+		</ExerciseLayout>
+	)
+}
+
+interface RendererContentProps {
+	state: WordFormViewState
+	pulseState: import('../shared/PulseEffect').PulseState
+	clearPulse: () => void
+	exerciseTitle: string
+	userLanguage: Language
+	onSkip: () => void
+	onSubmit: (answer: string) => void
+	onToggleAutoAdvance: () => void
+	onAnswerChange: (value: string) => void
+	errorTitle: string
+	errorMessage: string
+}
+
+function RendererContent({
+	state,
+	pulseState,
+	clearPulse,
+	exerciseTitle,
+	userLanguage,
+	onSkip,
+	onSubmit,
+	onToggleAutoAdvance,
+	onAnswerChange,
+	errorTitle,
+	errorMessage
+}: RendererContentProps) {
+	const {currentCase, currentBlock} = state
+
+	if (!(currentCase && currentBlock)) {
+		return <MissingCaseView message={errorMessage} title={errorTitle} />
+	}
+
+	return (
+		<ExerciseLayout title={exerciseTitle}>
+			<ExerciseContent
+				autoAdvanceEnabled={state.autoAdvanceEnabled}
+				currentBlock={currentBlock}
+				currentCase={currentCase}
+				exercise={state.exercise}
+				isCorrect={state.answer.isCorrect}
+				onAnswerChange={onAnswerChange}
+				onPulseComplete={clearPulse}
+				onSkip={onSkip}
+				onSubmit={onSubmit}
+				onToggleAutoAdvance={onToggleAutoAdvance}
+				progress={state.progress}
+				pulseState={pulseState}
+				showAnswer={state.answer.showAnswer}
+				status={state.status}
+				userAnswer={state.answer.value}
+				userLanguage={userLanguage}
+			/>
+		</ExerciseLayout>
+	)
 }
 
 export function ExerciseRenderer({
-	exercise,
 	state,
-	setState,
-	status,
-	startTime,
-	correctCount,
-	incorrectCount,
-	currentCase,
-	currentBlock,
 	pulseState,
 	clearPulse,
 	handleEvent,
 	handleSubmit,
 	handleAutoAdvanceToggle,
+	handleAnswerChange,
 	onExit
 }: ExerciseRendererProps) {
 	const {userLanguage} = useSettingsStore()
@@ -57,57 +139,33 @@ export function ExerciseRenderer({
 		}
 	])
 
-	if (status === 'COMPLETED') {
-		return (
-			<CompletionScreen
-				correctCount={correctCount}
-				exerciseTitle={
-					exercise.titleI18n?.[userLanguage as Language] || exercise.title
-				}
-				incorrectCount={incorrectCount}
-				onExit={
-					onExit ||
-					(() => {
-						// No-op function when onExit is not provided
-					})
-				}
-				onRestart={() => handleEvent({type: 'RESTART'})}
-				timeSpentMs={Date.now() - startTime}
-				totalCases={state.totalCases}
-			/>
-		)
-	}
+	const exerciseTitle =
+		state.exercise.titleI18n?.[userLanguage as Language] || state.exercise.title
 
-	if (!(currentCase && currentBlock)) {
+	if (state.status === 'COMPLETED') {
 		return (
-			<ExerciseLayout title={t('error.title')}>
-				<div className='text-center text-red-600'>
-					{t('error.couldNotLoadExercise')}
-				</div>
-			</ExerciseLayout>
+			<CompletedView
+				exerciseTitle={exerciseTitle}
+				onRestart={() => handleEvent({type: 'RESTART'})}
+				state={state}
+				{...(onExit ? {onExit} : {})}
+			/>
 		)
 	}
 
 	return (
-		<ExerciseLayout
-			title={exercise.titleI18n?.[userLanguage as Language] || exercise.title}
-		>
-			<ExerciseContent
-				currentBlock={currentBlock}
-				currentCase={currentCase}
-				exercise={exercise}
-				onAnswerChange={value =>
-					setState(prev => ({...prev, userAnswer: value}))
-				}
-				onPulseComplete={clearPulse}
-				onSkip={() => handleEvent({type: 'SKIP'})}
-				onSubmit={handleSubmit}
-				onToggleAutoAdvance={handleAutoAdvanceToggle}
-				pulseState={pulseState}
-				state={state}
-				status={status}
-				userLanguage={userLanguage}
-			/>
-		</ExerciseLayout>
-	)
+		<RendererContent
+			clearPulse={clearPulse}
+			errorMessage={t('error.couldNotLoadExercise')}
+			errorTitle={t('error.title')}
+			exerciseTitle={exerciseTitle}
+			onAnswerChange={handleAnswerChange}
+			onSkip={() => handleEvent({type: 'SKIP'})}
+			onSubmit={handleSubmit}
+			onToggleAutoAdvance={handleAutoAdvanceToggle}
+			pulseState={pulseState}
+			state={state}
+                        userLanguage={userLanguage}
+                />
+        )
 }

@@ -1,6 +1,5 @@
 import {AnimatePresence} from 'framer-motion'
 import type {
-	ExerciseState,
 	ExerciseStatus,
 	WordFormBlock,
 	WordFormCase,
@@ -54,8 +53,15 @@ interface ExerciseContentProps {
 	exercise: WordFormExercise
 	currentBlock: WordFormBlock
 	currentCase: WordFormCase
-	state: ExerciseState
 	status: ExerciseStatus
+	progress: {
+		current: number
+		total: number
+	}
+	autoAdvanceEnabled: boolean
+	userAnswer: string
+	showAnswer: boolean
+	isCorrect: boolean | null
 	userLanguage: Language
 	pulseState: PulseState
 	onToggleAutoAdvance: () => void
@@ -69,8 +75,12 @@ export function ExerciseContent({
 	exercise,
 	currentBlock,
 	currentCase,
-	state,
 	status,
+	progress,
+	autoAdvanceEnabled,
+	userAnswer,
+	showAnswer,
+	isCorrect,
 	userLanguage,
 	pulseState,
 	onToggleAutoAdvance,
@@ -82,12 +92,12 @@ export function ExerciseContent({
 	return (
 		<>
 			<ExerciseHeader
-				autoAdvanceEnabled={state.autoAdvanceEnabled}
+				autoAdvanceEnabled={autoAdvanceEnabled}
 				blockName={currentBlock.name}
 				onToggleAutoAdvance={onToggleAutoAdvance}
 				progress={{
-					current: state.completedCases + 1,
-					total: state.totalCases
+					current: progress.current,
+					total: progress.total
 				}}
 				title={exercise.titleI18n?.[userLanguage] || exercise.title}
 			/>
@@ -131,18 +141,18 @@ export function ExerciseContent({
 						onSubmit={onSubmit}
 						placeholder='Εισάγετε την απάντησή σας...'
 						status={status}
-						value={state.userAnswer}
+						value={userAnswer}
 					/>
 				</PulseEffect>
 
 				{/* Feedback area */}
 				<AnimatePresence>
-					{state.showAnswer && currentCase && (
+					{showAnswer && currentCase && (
 						<WordFormFeedback
 							correctAnswers={currentCase.correct}
-							isCorrect={state.isCorrect}
+							isCorrect={isCorrect}
 							status={status}
-							userAnswer={state.userAnswer}
+							userAnswer={userAnswer}
 						/>
 					)}
 				</AnimatePresence>

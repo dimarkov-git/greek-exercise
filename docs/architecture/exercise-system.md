@@ -162,6 +162,13 @@ const exerciseStateMachine = {
 }
 ```
 
+### Implementation details
+
+- The reducer lives in `src/components/exercises/word-form/state/wordFormMachine.ts` and owns the authoritative exercise context (status, cursor indices, answer feedback flags, statistics, hints, etc.).
+- Selectors (`selectCurrentCase`, `selectProgress`, `selectStats`, ...) keep view components free from traversal logic and memoise expensive lookups over blocks/cases.
+- `useWordFormExercise` (in `hooks/useWordFormExercise.ts`) wires the reducer to React via `useReducer`, exposes the derived view model, and centralises side effects (auto-advance timers, skip delays, completion payloads).
+- Presentation components consume the view model only, meaning they cannot accidentally mutate reducer state—this keeps transitions predictable and ready for future unit tests around the machine itself.
+
 ## 🗃️ Data persistence
 
 ### MSW API endpoints
