@@ -47,4 +47,4 @@ pnpm dev
 
 ## Documentation
 
-For detailed documentation, see [docs/README.md](docs/README.md).
+- [Project documentation index](docs/README.md)
