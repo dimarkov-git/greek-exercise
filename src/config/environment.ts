@@ -13,8 +13,6 @@ const globalObject = globalThis as {readonly __VITEST__?: unknown}
 
 const isTest = mode === 'test' || typeof globalObject.__VITEST__ !== 'undefined'
 
-const routerModeEnv = env.VITE_ROUTER_MODE as string | undefined
-
 const isAutomationEnvironment = (() => {
 	if (typeof navigator === 'undefined') {
 		return false
@@ -49,13 +47,16 @@ function normalizeRouterMode(
 	return fallback
 }
 
+const routerModeEnv = env.VITE_ROUTER_MODE as string | undefined
 const routerMode = normalizeRouterMode(routerModeEnv, derivedRouterMode)
 
-const enableMockServiceWorker =
-	env.VITE_ENABLE_MSW !== 'false' && !env.PROD && !isTest
+const enableMockServiceWorker = env.VITE_ENABLE_MSW
+	? env.VITE_ENABLE_MSW === 'true'
+	: !(env.PROD || isTest)
 
-const enableQueryDevtools =
-	env.VITE_ENABLE_QUERY_DEVTOOLS !== 'false' && env.DEV && !isTest
+const enableQueryDevtools = env.VITE_ENABLE_QUERY_DEVTOOLS
+	? env.VITE_ENABLE_QUERY_DEVTOOLS === 'true'
+	: env.DEV && !isTest
 
 export const environment = {
 	mode,
