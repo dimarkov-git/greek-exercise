@@ -162,11 +162,14 @@ function InputField({
 	return (
 		<div className='relative'>
 			<input
+				autoCapitalize='none'
 				autoComplete='off'
+				autoCorrect='off'
 				className={inputStyles}
 				data-status={status}
 				data-testid='exercise-input'
 				disabled={disabled && status !== 'REQUIRE_CORRECTION'}
+				inputMode='text'
 				onBlur={onBlur}
 				onChange={onChange}
 				onFocus={onFocus}
