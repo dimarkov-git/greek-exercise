@@ -94,27 +94,28 @@ function useInitializedWordFormState(exercise: WordFormExerciseType) {
 }
 
 function useDerivedWordFormData(state: WordFormMachineState) {
-        const currentBlock = useMemo(
-                () => selectCurrentBlock(state),
-                [state.exercise, state.currentBlockIndex]
-        )
-        const currentCase = useMemo(
-                () => selectCurrentCase(state),
-                [state.exercise, state.currentBlockIndex, state.currentCaseIndex]
-        )
-        const progress = useMemo(
-                () => selectProgress(state),
-                [
-                        state.exercise,
-                        state.currentBlockIndex,
-                        state.currentCaseIndex,
-                        state.totalCases
-                ]
-        )
-        const stats = useMemo(() => selectStats(state), [state.stats])
-        const hints = useMemo(() => selectHintVisibility(state), [state.hints])
+	const currentBlock = useMemo(
+		() => selectCurrentBlock(state),
+		[state.exercise, state.currentBlockIndex, state]
+	)
+	const currentCase = useMemo(
+		() => selectCurrentCase(state),
+		[state.exercise, state.currentBlockIndex, state.currentCaseIndex, state]
+	)
+	const progress = useMemo(
+		() => selectProgress(state),
+		[
+			state.exercise,
+			state.currentBlockIndex,
+			state.currentCaseIndex,
+			state.totalCases,
+			state
+		]
+	)
+	const stats = useMemo(() => selectStats(state), [state.stats, state])
+	const hints = useMemo(() => selectHintVisibility(state), [state.hints, state])
 
-        return {currentBlock, currentCase, progress, stats, hints}
+	return {currentBlock, currentCase, progress, stats, hints}
 }
 
 function useAnswerChange(dispatch: Dispatch<WordFormMachineAction>) {
@@ -299,13 +300,14 @@ function useStatusEffects({
 			}
 		}
 		return
-        }, [
-                dispatch,
-                handleContinue,
-                state.autoAdvanceEnabled,
-                state.exercise,
-                state.status
-        ])
+	}, [
+		dispatch,
+		handleContinue,
+		state.autoAdvanceEnabled,
+		state.exercise,
+		state.status,
+		state
+	])
 }
 
 function useWordFormEventHandler({

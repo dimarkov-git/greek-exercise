@@ -165,7 +165,7 @@ export function ExerciseRenderer({
 			onToggleAutoAdvance={handleAutoAdvanceToggle}
 			pulseState={pulseState}
 			state={state}
-                        userLanguage={userLanguage}
-                />
-        )
+			userLanguage={userLanguage}
+		/>
+	)
 }
