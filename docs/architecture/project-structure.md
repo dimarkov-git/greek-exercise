@@ -65,14 +65,14 @@ This document explains the purpose of each file in the **Learn Greek** applicati
   - `AppErrorBoundary.tsx` – top-level error boundary showing `LoadingOrError`
   - `QueryDevtools.tsx` – lazy React Query Devtools loader (development only)
   - `queryClient.ts` – shared query client factory with sensible defaults
+  - `routes/AppRoutes.tsx` – centralised route definitions with lazy page loading and nested shell layout
+  - `shell/AppShell.tsx` – shared header/main/footer wrapper that manages the layout context and suspense boundaries
 - **config/environment.ts** – runtime feature flags (router mode, MSW, devtools)
 
 ### Routing and components
 
-- **App.tsx** – root component with routing
-  - Uses React Router 7 for navigation between HomePage, ExerciseLibrary, ExerciseBuilder
-  - Lazy loading for exercise pages (code splitting)
-  - Suspense for loading states while translations/data resolve
+- **App.tsx** – delegates to `AppRoutes` for navigation
+  - Keeps the root component thin so the shell and routing concerns live in `app/`
 
 ### Pages (pages/)
 
