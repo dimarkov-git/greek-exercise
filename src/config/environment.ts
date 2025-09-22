@@ -14,7 +14,30 @@ const globalObject = globalThis as {readonly __VITEST__?: unknown}
 const isTest = mode === 'test' || typeof globalObject.__VITEST__ !== 'undefined'
 
 const routerModeEnv = env.VITE_ROUTER_MODE as string | undefined
-const derivedRouterMode: RouterMode = isTest ? 'memory' : 'browser'
+
+const isAutomationEnvironment = (() => {
+	if (typeof navigator === 'undefined') {
+		return false
+	}
+
+	if (navigator.webdriver) {
+		return true
+	}
+
+	const userAgent = navigator.userAgent ?? ''
+
+	return userAgent.toLowerCase().includes('playwright')
+})()
+
+let derivedRouterMode: RouterMode
+
+if (isTest) {
+	derivedRouterMode = 'memory'
+} else if (isAutomationEnvironment) {
+	derivedRouterMode = 'hash'
+} else {
+	derivedRouterMode = 'browser'
+}
 
 function normalizeRouterMode(
 	value: string | undefined,
