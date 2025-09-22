@@ -242,6 +242,36 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 
 - **.gitignore** - Git exclusions (node_modules, dist, .env, etc.)
 
+## 🎯 Key files and their purposes
+
+### Application entry points
+
+- **`src/main.tsx`** - App entry point with MSW setup and providers
+- **`src/App.tsx`** - Main routing and error boundary setup
+
+### Core functionality
+
+- **`src/api/texts.ts`** - Translation API functions with Valibot validation
+- **`src/hooks/useI18n.ts`** - Main internationalization hook with TanStack Query
+- **`src/hooks/useExercises.ts`** - Exercise data management hooks
+- **`src/stores/settings.ts`** - Zustand store for app settings and language management
+
+### Type system and validation
+
+- **`src/types/exercises.ts`** - TypeScript types for exercise system
+- **`src/schemas/exercises.ts`** - Valibot validation schemas for exercises
+- **`src/utils/exercises.ts`** - Greek text processing utilities
+
+### UI components
+
+- **`src/components/layout/Header.tsx`** - Adaptive header navigation
+- **`src/components/exercises/`** - Exercise system components
+
+### Development and testing
+
+- **`src/mocks/`** - MSW configuration with translation and exercise endpoints
+- **`vite.config.ts`** - Vite configuration with path aliases (@/ → src/)
+
 ## 🎯 Architectural decisions
 
 ### Modern technologies

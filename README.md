@@ -16,11 +16,27 @@
 - **🛠️ Development tools** - [Biome V2](https://next.biomejs.dev) for linting and formatting
 - **🧪 Comprehensive testing** - [Vitest 3](https://vitest.dev/) + [Testing Library 16](https://testing-library.com/) + [Playwright](https://playwright.dev)
 
+## Tech stack
+
+- **React 19** + **TypeScript 5** - Modern UI framework with strict typing
+- **React Router 7** - Client-side routing and navigation
+- **Tailwind CSS v4** - Utility-first styling framework
+- **TanStack Query** - Efficient data fetching and caching
+- **Valibot** - Runtime validation and type safety
+- **Zustand** - Lightweight state management
+- **Vitest** + **Testing Library** - Unit and integration testing
+- **Playwright** - End-to-end testing
+- **Biome v2** - Fast linting and code formatting
+- **MSW** - API mocking for development and testing
+
 ## Getting started
+
+**Prerequisites:** Node 24.x LTS, PNPM 10
 
 Clone the repository and install dependencies:
 
-```
+```bash
+corepack enable && pnpm -v
 git clone <repository-url>
 cd greek-exercise
 pnpm install
@@ -28,9 +44,11 @@ pnpm install
 
 Start the development server:
 
-```
+```bash
 pnpm dev
 ```
+
+**Full setup guide:** [docs/guides/getting-started.md](docs/guides/getting-started.md)
 
 ## Scripts
 
@@ -47,4 +65,4 @@ pnpm dev
 
 ## Documentation
 
-For detailed documentation, see [docs/README.md](docs/README.md).
+- [Project documentation index](docs/README.md)
