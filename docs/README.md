@@ -9,7 +9,8 @@ Technical architecture and system design:
 - [**project-structure.md**](architecture/project-structure.md) – Complete project structure and file organization.
 - [**component-architecture.md**](architecture/component-architecture.md) – Component system and design patterns.
 - [**exercise-system.md**](architecture/exercise-system.md) – Exercise system architecture and data flow.
-- _Planned_: i18n-system.md, data-flow.md, performance.md.
+- [**performance.md**](architecture/performance.md) – Performance budgets, KPIs, and optimization guidelines.
+- _Planned_: i18n-system.md, data-flow.md.
 
 ### `guides/`
 
@@ -17,7 +18,9 @@ Step-by-step guides for developers:
 
 - [**getting-started.md**](guides/getting-started.md) – Complete setup guide for macOS users.
 - [**exercise-development.md**](guides/exercise-development.md) – Creating and configuring exercises.
-- _Planned_: development-workflow.md, testing-guide.md, translation-management.md, deployment.md.
+- [**testing-guide.md**](guides/testing-guide.md) – Comprehensive testing guidelines with Vitest and Playwright.
+- [**accessibility.md**](guides/accessibility.md) – Accessibility standards and implementation patterns.
+- _Planned_: development-workflow.md, translation-management.md, deployment.md.
 
 ### `api/`
 
