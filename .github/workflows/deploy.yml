@@ -43,6 +43,8 @@ jobs:
         run: pnpm build
         env:
           BASE_URL: /greek-exercise/
+          VITE_ROUTER_MODE: hash
+          VITE_ENABLE_MSW: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
