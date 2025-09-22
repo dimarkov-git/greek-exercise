@@ -42,7 +42,10 @@ This document captures the refactor-first plan for aligning the Learn Greek appl
 
 ### Phase 1 – Architecture decomposition
 1. ✅ Break the exercise library into page, container, filter panel, card list, and data adapters; establish slice-like boundaries inspired by FSD and document the new directory layout.
-2. Extract word-form exercise state into a dedicated reducer or state machine with explicit events, selectors, and memoized derivations.
+2. ✅ Extract the word-form exercise state into a dedicated reducer with explicit events, selectors, and memoized derivations; expose a view-model hook that feeds the renderer without leaking internal state mutations.
+   - Reducer logic now routes through small, intention-revealing handlers (`handleAnswerCorrect`, `handleAdvance`, etc.) to satisfy Biome's complexity guardrails and keep future unit tests focused.
+   - The `useWordFormExercise` view-model is composed from dedicated helper hooks (initialisation, derived selectors, timers, and event handlers) that isolate side effects while honouring React's Rules of Hooks.
+   - Presentation is split into thin render helpers, keeping `ExerciseRenderer` under the 50-line limit and allowing completion/error states to be reused in Playwright/Vitest harnesses.
 3. Standardize layout and shell components, limit cross-module imports, and prepare for route-based code splitting.
 
 ### Phase 2 – Domain and data layer
