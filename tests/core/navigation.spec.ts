@@ -47,7 +47,7 @@ test.describe('Navigation - Advanced', () => {
 		const exercisePage = new ExercisePage(page)
 
 		// Direct navigation to exercise should work
-		await page.goto('/exercise/verbs-be')
+		await page.goto(ROUTES.exercisePath('verbs-be'))
 		await exercisePage.expectPageLoaded()
 
 		// Should be able to navigate back

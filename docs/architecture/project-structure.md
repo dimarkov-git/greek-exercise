@@ -58,7 +58,7 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 - **main.tsx** - main application entry point
   - React Query Client setup for API request caching
   - MSW (Mock Service Worker) initialization for translation API mocks
-  - Providers: QueryClient, LanguageProvider, BrowserRouter
+  - Providers: QueryClient, LanguageProvider, HashRouter
   - React DevTools for query debugging
 
 ### Routing and components

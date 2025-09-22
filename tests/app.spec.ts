@@ -1,4 +1,5 @@
 import {expect, test} from '@playwright/test'
+import {ROUTES} from './fixtures/selectors'
 
 test.describe('App', () => {
 	test('loads without errors', async ({page}) => {
@@ -9,7 +10,7 @@ test.describe('App', () => {
 			}
 		})
 
-		await page.goto('/')
+		await page.goto(ROUTES.home)
 
 		// Basic render check
 		await expect(page.locator('body')).toBeVisible()
