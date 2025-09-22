@@ -1,55 +1,5 @@
-import {lazy, Suspense} from 'react'
-import {Navigate, Route, Routes} from 'react-router'
-import {LoadingOrError} from '@/components/LoadingOrError'
-import {Footer} from '@/components/layout/Footer'
-import {Header} from '@/components/layout/Header'
-import {LayoutProvider} from '@/contexts/LayoutContext'
-import {useLayout} from '@/hooks/useLayout'
-import {HomePage} from '@/pages/HomePage'
-
-const ExerciseLibrary = lazy(async () =>
-	import('@/pages/ExerciseLibrary').then(m => ({default: m.ExerciseLibrary}))
-)
-
-const ExerciseBuilder = lazy(async () =>
-	import('@/pages/ExerciseBuilder').then(m => ({default: m.ExerciseBuilder}))
-)
-
-const ExercisePage = lazy(async () =>
-	import('@/pages/ExercisePage').then(m => ({default: m.ExercisePage}))
-)
-
-const LearnPage = lazy(async () =>
-	import('@/pages/LearnPage').then(m => ({default: m.LearnPage}))
-)
-
-function AppContent() {
-	const {headerEnabled} = useLayout()
-
-	return (
-		<div className='flex min-h-screen flex-col'>
-			<Header />
-			<Suspense fallback={<LoadingOrError />}>
-				<main className={`flex-1 ${headerEnabled ? 'pt-16' : 'pt-0'}`}>
-					<Routes>
-						<Route element={<HomePage />} index={true} />
-						<Route element={<ExerciseLibrary />} path='/exercises' />
-						<Route element={<ExercisePage />} path='/exercise/:exerciseId' />
-						<Route element={<LearnPage />} path='/learn/:exerciseId' />
-						<Route element={<ExerciseBuilder />} path='/builder' />
-						<Route element={<Navigate replace={true} to='/' />} path='*' />
-					</Routes>
-				</main>
-			</Suspense>
-			<Footer />
-		</div>
-	)
-}
+import {AppRoutes} from './app/routes/AppRoutes'
 
 export function App() {
-	return (
-		<LayoutProvider>
-			<AppContent />
-		</LayoutProvider>
-	)
+	return <AppRoutes />
 }

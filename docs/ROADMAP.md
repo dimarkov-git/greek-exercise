@@ -46,7 +46,10 @@ This document captures the refactor-first plan for aligning the Learn Greek appl
    - Reducer logic now routes through small, intention-revealing handlers (`handleAnswerCorrect`, `handleAdvance`, etc.) to satisfy Biome's complexity guardrails and keep future unit tests focused.
    - The `useWordFormExercise` view-model is composed from dedicated helper hooks (initialisation, derived selectors, timers, and event handlers) that isolate side effects while honouring React's Rules of Hooks.
    - Presentation is split into thin render helpers, keeping `ExerciseRenderer` under the 50-line limit and allowing completion/error states to be reused in Playwright/Vitest harnesses.
-3. Standardize layout and shell components, limit cross-module imports, and prepare for route-based code splitting.
+3. ✅ Standardize layout and shell components, limit cross-module imports, and prepare for route-based code splitting.
+   - Introduced an `AppShell` wrapper that hosts the header, main outlet, and footer behind a shared `LayoutProvider`.
+   - Centralised routing in `app/routes/AppRoutes` to keep page imports isolated and enable nested layout-aware route definitions.
+   - Shifted suspense fallbacks into the shell so lazy routes render within a consistent frame while code splitting remains opt-in per page.
 
 ### Phase 2 – Domain and data layer
 1. Define exercise domain models and adapters that transform raw JSON or API payloads into view models shared by exercises and library listings.
