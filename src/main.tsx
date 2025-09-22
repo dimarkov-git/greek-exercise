@@ -16,7 +16,7 @@ async function startMockServiceWorker() {
 
 	await worker.start({
 		serviceWorker: {
-			url: `${import.meta.env.BASE_URL}mockServiceWorker.js`
+			url: `${environment.baseUrl}mockServiceWorker.js`
 		},
 		onUnhandledRequest: environment.isDevelopment ? 'warn' : 'bypass'
 	})

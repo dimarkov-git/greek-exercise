@@ -63,6 +63,7 @@ export const environment = {
 	isDevelopment: env.DEV,
 	isProduction: env.PROD,
 	isTest,
+	baseUrl: env.BASE_URL || './',
 	routerMode,
 	enableMockServiceWorker,
 	enableQueryDevtools
