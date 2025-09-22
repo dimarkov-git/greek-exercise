@@ -55,19 +55,24 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 
 ### Entry point
 
-- **main.tsx** - main application entry point
-  - React Query Client setup for API request caching
-  - MSW (Mock Service Worker) initialization for translation API mocks
-  - Providers: QueryClient, LanguageProvider, HashRouter
-  - React DevTools for query debugging
+- **main.tsx** – environment-aware bootstrap
+  - Conditionally starts MSW mocks outside production and test environments
+  - Wraps the SPA with shared providers, router selection, and the global error boundary
+  - Chooses router mode (`browser`, `hash`, `memory`) via `AppRouter`
+- **app/** – application shell utilities
+  - `AppProviders.tsx` – React Query provider + optional devtools loader
+  - `AppRouter.tsx` – environment-driven router selection with React Router 7 futures enabled
+  - `AppErrorBoundary.tsx` – top-level error boundary showing `LoadingOrError`
+  - `QueryDevtools.tsx` – lazy React Query Devtools loader (development only)
+  - `queryClient.ts` – shared query client factory with sensible defaults
+- **config/environment.ts** – runtime feature flags (router mode, MSW, devtools)
 
 ### Routing and components
 
-- **App.tsx** - root component with routing
+- **App.tsx** – root component with routing
   - Uses React Router 7 for navigation between HomePage, ExerciseLibrary, ExerciseBuilder
-  - Error Boundary for error handling
   - Lazy loading for exercise pages (code splitting)
-  - Suspense for loading states
+  - Suspense for loading states while translations/data resolve
 
 ### Pages (pages/)
 
@@ -87,12 +92,11 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 
 ### API layer (api/)
 
-- **texts.ts** - translation and internationalization API
-  - Uses Valibot for data schema validation
-  - Type-safe API with automatic TypeScript type generation
-  - Functions: `getCommonTexts()`, `getTranslations(lang)`
-  - Supported languages: Greek (el), Russian (ru), English (en)
-  - Fetch request error handling with TanStack Query integration
+- **httpClient.ts** – typed HTTP utilities (JSON wrapper with retry + error metadata)
+- **texts.ts** – translation API helpers
+  - Uses `httpClient` for consistent error handling
+  - Validates responses with Valibot
+  - Functions: `getTranslations(language, keys)`
 
 ### Components (components/)
 

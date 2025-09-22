@@ -1,5 +1,6 @@
 import {useQuery} from '@tanstack/react-query'
 import {useEffect, useRef, useState} from 'react'
+import {requestJson} from '@/api/httpClient'
 import {useSettingsStore} from '@/stores/settings'
 import type {
 	SupportedLanguage,
@@ -20,35 +21,25 @@ async function fetchTranslations(
 	const keysParam = keys.join(',')
 	const url = `/api/translations?lang=${language}&keys=${encodeURIComponent(keysParam)}`
 
-	// If URL is too long, use POST instead
 	if (url.length > 2000) {
-		const response = await fetch('/api/translations', {
+		const data = await requestJson<
+			TranslationsResponse,
+			{
+				language: SupportedLanguage
+				keys: string[]
+			}
+		>('/api/translations', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
+			body: {
 				language,
 				keys
-			})
+			}
 		})
 
-		if (!response.ok) {
-			throw new Error(`Failed to fetch translations: ${response.statusText}`)
-		}
-
-		const data: TranslationsResponse = await response.json()
 		return data.translations
 	}
 
-	// Use GET for shorter requests
-	const response = await fetch(url)
-
-	if (!response.ok) {
-		throw new Error(`Failed to fetch translations: ${response.statusText}`)
-	}
-
-	const data: TranslationsResponse = await response.json()
+	const data = await requestJson<TranslationsResponse>(url)
 	return data.translations
 }
 

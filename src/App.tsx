@@ -1,5 +1,4 @@
 import {lazy, Suspense} from 'react'
-import {ErrorBoundary, type FallbackProps} from 'react-error-boundary'
 import {Navigate, Route, Routes} from 'react-router'
 import {LoadingOrError} from '@/components/LoadingOrError'
 import {Footer} from '@/components/layout/Footer'
@@ -24,31 +23,25 @@ const LearnPage = lazy(async () =>
 	import('@/pages/LearnPage').then(m => ({default: m.LearnPage}))
 )
 
-function renderError({error}: FallbackProps) {
-	return <LoadingOrError error={error} />
-}
-
 function AppContent() {
 	const {headerEnabled} = useLayout()
 
 	return (
 		<div className='flex min-h-screen flex-col'>
 			<Header />
-			<ErrorBoundary fallbackRender={renderError}>
-				<Suspense fallback={<LoadingOrError />}>
-					<main className={`flex-1 ${headerEnabled ? 'pt-16' : 'pt-0'}`}>
-						<Routes>
-							<Route element={<HomePage />} index={true} />
-							<Route element={<ExerciseLibrary />} path='/exercises' />
-							<Route element={<ExercisePage />} path='/exercise/:exerciseId' />
-							<Route element={<LearnPage />} path='/learn/:exerciseId' />
-							<Route element={<ExerciseBuilder />} path='/builder' />
-							<Route element={<Navigate replace={true} to='/' />} path='*' />
-						</Routes>
-					</main>
-				</Suspense>
-				<Footer />
-			</ErrorBoundary>
+			<Suspense fallback={<LoadingOrError />}>
+				<main className={`flex-1 ${headerEnabled ? 'pt-16' : 'pt-0'}`}>
+					<Routes>
+						<Route element={<HomePage />} index={true} />
+						<Route element={<ExerciseLibrary />} path='/exercises' />
+						<Route element={<ExercisePage />} path='/exercise/:exerciseId' />
+						<Route element={<LearnPage />} path='/learn/:exerciseId' />
+						<Route element={<ExerciseBuilder />} path='/builder' />
+						<Route element={<Navigate replace={true} to='/' />} path='*' />
+					</Routes>
+				</main>
+			</Suspense>
+			<Footer />
 		</div>
 	)
 }

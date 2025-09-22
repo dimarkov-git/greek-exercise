@@ -64,14 +64,16 @@ export function useI18n() {
 **Purpose**: Type-safe API functions for fetching translations
 
 ```typescript
-export async function getTranslations(lang: SupportedLanguage): Promise<Translations>
-export async function getCommonTexts(): Promise<CommonTexts>
+export async function getTranslations(
+  language: SupportedLanguage,
+  keys: string[],
+): Promise<Translations>
 ```
 
 **Features**:
 - Valibot schema validation for runtime type safety
-- Standardized error handling
-- RESTful API endpoints: `/api/translations/{lang}`
+- Standardized error handling via the shared HTTP client
+- RESTful API endpoints: `GET /api/translations?lang=<code>&keys=<comma-separated>` with automatic POST fallback
 
 ### 4. Translation data (`src/mocks/data/translations/`)
 
@@ -99,9 +101,12 @@ src/mocks/data/translations/
 **Purpose**: Development-time translation API mocking
 
 ```typescript
-http.get('/api/translations/:lang', async ({params}) => {
-  const translation = translations[lang]
-  return HttpResponse.json(translation)
+http.get('/api/translations', async ({request}) => {
+  const url = new URL(request.url)
+  const lang = url.searchParams.get('lang')
+  const keys = url.searchParams.get('keys')?.split(',') ?? []
+  // ...filter translations
+  return HttpResponse.json({ translations: filteredTranslations })
 })
 ```
 
@@ -263,7 +268,7 @@ Valibot schemas ensure runtime type safety:
 
 ```typescript
 // Automatic validation on fetch
-const translations = await getTranslations('en') // Type-safe result
+const translations = await getTranslations('en', ['app.title', 'navigation.home'])
 ```
 
 ## Key design decisions
