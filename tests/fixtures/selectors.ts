@@ -3,6 +3,18 @@
  * Uses data-testid attributes instead of text-based selectors for language independence
  */
 
+const HASH_PREFIX = '/#'
+
+const normalizePath = (path: string) =>
+	path.startsWith('/') ? path : `/${path}`
+
+const withHashPath = (path: string) => {
+	const normalized = normalizePath(path)
+	return normalized === '/' ? `${HASH_PREFIX}/` : `${HASH_PREFIX}${normalized}`
+}
+
+const withHashRegex = (path: string) => new RegExp(withHashPath(path))
+
 export const SELECTORS = {
 	// Navigation and Layout
 	navCardExercises: '[data-testid="nav-card-exercises"]',
@@ -72,8 +84,9 @@ export const CSS_CLASSES = {
  * Route patterns for URL validation
  */
 export const ROUTES = {
-	home: '/',
-	exercises: '/exercises',
-	exerciseVerbsBe: /\/exercise\/verbs-be/,
-	exerciseVerbsHave: /\/exercise\/verbs-have/
+	home: withHashPath('/'),
+	exercises: withHashPath('/exercises'),
+	exercisePath: (slug: string) => withHashPath(`/exercise/${slug}`),
+	exerciseVerbsBe: withHashRegex('/exercise/verbs-be'),
+	exerciseVerbsHave: withHashRegex('/exercise/verbs-have')
 } as const

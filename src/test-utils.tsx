@@ -2,7 +2,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {type RenderOptions, render as rtlRender} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import type {PropsWithChildren, ReactElement} from 'react'
-import {BrowserRouter} from 'react-router'
+import {HashRouter} from 'react-router'
 
 export const queryClient = new QueryClient({
 	defaultOptions: {
@@ -16,14 +16,21 @@ export function render(
 		reactStrictMode: true
 	}
 ) {
-	window.history.pushState({}, '', route)
+	const normalizedRoute = route?.startsWith('#')
+		? route.slice(1)
+		: (route ?? '/')
+	const formattedRoute = normalizedRoute.startsWith('/')
+		? normalizedRoute
+		: `/${normalizedRoute}`
+
+	window.location.hash = `#${formattedRoute}`
 
 	return {
 		user: userEvent.setup(),
 		...rtlRender(ui, {
 			wrapper: ({children}: PropsWithChildren) => (
 				<QueryClientProvider client={queryClient}>
-					<BrowserRouter>{children}</BrowserRouter>
+					<HashRouter>{children}</HashRouter>
 				</QueryClientProvider>
 			),
 			...options

@@ -1,5 +1,5 @@
 import type {Page} from '@playwright/test'
-import {DATA_ATTRIBUTES, SELECTORS} from './selectors'
+import {DATA_ATTRIBUTES, ROUTES, SELECTORS} from './selectors'
 import {TIMEOUTS, VIEWPORT_SIZES} from './test-data'
 
 // Regex constants for performance
@@ -107,7 +107,7 @@ export class TestHelpers {
 	 * Navigate to home page and wait for load
 	 */
 	async goHome() {
-		await this.page.goto('/')
+		await this.page.goto(ROUTES.home)
 		await this.page.locator(SELECTORS.mainHeading).waitFor()
 	}
 
@@ -115,7 +115,7 @@ export class TestHelpers {
 	 * Navigate to exercises page and wait for load
 	 */
 	async goToExercises() {
-		await this.page.goto('/exercises')
+		await this.page.goto(ROUTES.exercises)
 		await this.page.locator(SELECTORS.navCardExercises).first().waitFor()
 	}
 

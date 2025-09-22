@@ -3,7 +3,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
-import {BrowserRouter} from 'react-router'
+import {HashRouter} from 'react-router'
 import {App} from './App'
 
 const queryClient = new QueryClient()
@@ -34,9 +34,9 @@ function renderApp() {
 			<StrictMode>
 				<QueryClientProvider client={queryClient}>
 					<ReactQueryDevtools initialIsOpen={false} />
-					<BrowserRouter basename={import.meta.env.BASE_URL}>
+					<HashRouter>
 						<App />
-					</BrowserRouter>
+					</HashRouter>
 				</QueryClientProvider>
 			</StrictMode>
 		)

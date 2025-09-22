@@ -1,5 +1,5 @@
 import {expect, test} from '@playwright/test'
-import {SELECTORS} from '../fixtures/selectors'
+import {ROUTES, SELECTORS} from '../fixtures/selectors'
 import {THEMES, UI_TEXT, VIEWPORT_SIZES} from '../fixtures/test-data'
 import {HomePage} from '../pages/HomePage'
 
@@ -90,7 +90,7 @@ test.describe('Theme - Persistence', () => {
 
 		// Navigate to exercises page
 		await homePage.clickExercisesCard()
-		await expect(page).toHaveURL('/exercises')
+		await expect(page).toHaveURL(ROUTES.exercises)
 
 		// Theme should persist
 		await expect(page.locator('html')).toHaveAttribute(
@@ -99,7 +99,7 @@ test.describe('Theme - Persistence', () => {
 		)
 
 		// Navigate back to home
-		await page.goto('/')
+		await page.goto(ROUTES.home)
 		await homePage.expectTheme(THEMES.dark)
 	})
 })
