@@ -4,7 +4,7 @@ const RETRYABLE_STATUS_CODES = new Set([408, 425, 429, 500, 502, 503, 504])
 const DEFAULT_RETRY_COUNT = 2
 const DEFAULT_RETRY_DELAY_MS = 250
 
-type JsonValue =
+export type JsonValue =
 	| null
 	| boolean
 	| number

@@ -1,39 +1,53 @@
 import {useQuery} from '@tanstack/react-query'
-import {useEffect, useRef, useState} from 'react'
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import type {JsonValue} from '@/api/httpClient'
 import {requestJson} from '@/api/httpClient'
+import type {
+	DictionaryKeys,
+	TranslationDictionary,
+	Translator
+} from '@/i18n/dictionary'
+import type {TranslationRegistryKey} from '@/i18n/generated/translation-registry'
 import {useSettingsStore} from '@/stores/settings'
 import type {
 	SupportedLanguage,
+	TranslationMissingPolicy,
 	TranslationOptions,
 	TranslationRequest,
-	TranslationResult
+	TranslationResult,
+	TranslationStatus
 } from '@/types/translations'
-import {getRandomFictionalText} from '@/types/translations'
 
 interface TranslationsResponse {
-	translations: TranslationResult
+	readonly translations: TranslationResult
 }
+
+type TranslationFetchPayload = {
+	readonly language: SupportedLanguage
+	readonly keys: TranslationRegistryKey[]
+} & Record<string, JsonValue>
+
+const LANGUAGE_CHANGE_DELAY_MS = 300
 
 async function fetchTranslations(
 	language: SupportedLanguage,
-	keys: string[]
+	keys: readonly TranslationRegistryKey[]
 ): Promise<TranslationResult> {
 	const keysParam = keys.join(',')
 	const url = `/api/translations?lang=${language}&keys=${encodeURIComponent(keysParam)}`
 
 	if (url.length > 2000) {
+		const payload: TranslationFetchPayload = {
+			language,
+			keys: [...keys]
+		}
+
 		const data = await requestJson<
 			TranslationsResponse,
-			{
-				language: SupportedLanguage
-				keys: string[]
-			}
+			TranslationFetchPayload
 		>('/api/translations', {
 			method: 'POST',
-			body: {
-				language,
-				keys
-			}
+			body: payload
 		})
 
 		return data.translations
@@ -43,13 +57,15 @@ async function fetchTranslations(
 	return data.translations
 }
 
+function isTestEnvironment() {
+	return typeof globalThis !== 'undefined' && '__VITEST__' in globalThis
+}
+
 function getDefaultLanguage(): SupportedLanguage {
-	// Check if we're in test environment via global variables
-	if (typeof globalThis !== 'undefined' && '__VITEST__' in globalThis) {
+	if (isTestEnvironment()) {
 		return 'en'
 	}
 
-	// Check browser environment for test indicators
 	if (
 		typeof window !== 'undefined' &&
 		(window.location.href.includes('test') || document.title.includes('test'))
@@ -57,125 +73,255 @@ function getDefaultLanguage(): SupportedLanguage {
 		return 'en'
 	}
 
-	// Default to Greek for production
 	return 'el'
 }
 
-function createGetTranslation(
+interface ResolvedTranslation {
+	readonly value: string
+	readonly missing: boolean
+}
+
+function resolveTranslation(
+	request: TranslationRequest,
 	translations: TranslationResult | undefined,
-	fictionalLanguage: boolean
-) {
-	return (request: TranslationRequest): string => {
-		const {key, fallback} = request
+	missingPolicy: TranslationMissingPolicy
+): ResolvedTranslation {
+	const translation = translations?.[request.key]
 
-		if (!translations) {
-			return fallback || key
-		}
-
-		const translation = translations[key]
-		if (translation) {
-			return translation
-		}
-
-		if (fallback) {
-			return fallback
-		}
-
-		if (fictionalLanguage) {
-			return getRandomFictionalText()
-		}
-
-		return key
+	if (typeof translation === 'string') {
+		return {value: translation, missing: false}
 	}
+
+	const fallbackValue = missingPolicy === 'key' ? request.key : request.fallback
+	return {value: fallbackValue, missing: true}
 }
 
-function createTranslationFunction(
-	requests: TranslationRequest[],
-	getTranslation: (request: TranslationRequest) => string,
-	fictionalLanguage: boolean
-) {
-	return (key: string): string => {
-		const request = requests.find(req => req.key === key)
-		if (!request) {
-			return fictionalLanguage ? getRandomFictionalText() : key
-		}
-		return getTranslation(request)
+export interface UseTranslationsResult<
+	TDict extends TranslationDictionary<TranslationRegistryKey>
+> {
+	readonly t: Translator<DictionaryKeys<TDict>>
+	readonly translations: Record<DictionaryKeys<TDict>, string>
+	readonly currentLanguage: SupportedLanguage
+	readonly isLoading: boolean
+	readonly error: Error | null
+	readonly missingKeys: readonly DictionaryKeys<TDict>[]
+	readonly status: TranslationStatus
+}
+
+function normalizeError(error: unknown, hasError: boolean): Error | null {
+	if (!error) {
+		return hasError ? new Error('Unknown translation error') : null
 	}
+
+	if (error instanceof Error) {
+		return error
+	}
+
+	if (typeof error === 'string') {
+		return new Error(error)
+	}
+
+	return new Error('Unknown translation error')
 }
 
-function createTranslationMap(
-	requests: TranslationRequest[],
-	getTranslation: (request: TranslationRequest) => string
-): Record<string, string> {
-	return requests.reduce(
-		(acc, request) => {
-			acc[request.key] = getTranslation(request)
-			return acc
-		},
-		{} as Record<string, string>
-	)
+function useCurrentLanguage(): SupportedLanguage {
+	const uiLanguage = useSettingsStore(state => state.uiLanguage)
+	return uiLanguage ?? getDefaultLanguage()
 }
 
-export function useTranslations(
-	requests: TranslationRequest[],
-	options: TranslationOptions = {}
+function useTranslationQuery(
+	dictionary: TranslationDictionary<TranslationRegistryKey>,
+	currentLanguage: SupportedLanguage
 ) {
-	const {uiLanguage} = useSettingsStore()
-	const {fictionalLanguage = true} = options
+	const retryAttempts = isTestEnvironment() ? 0 : 2
+
+	return useQuery({
+		queryKey: ['translations', currentLanguage, dictionary.cacheKey],
+		queryFn: () => fetchTranslations(currentLanguage, dictionary.lookupKeys),
+		staleTime: Number.POSITIVE_INFINITY,
+		retry: retryAttempts
+	})
+}
+
+function useLanguageLoadingState(
+	currentLanguage: SupportedLanguage,
+	isQueryLoading: boolean
+): boolean {
 	const [isLanguageLoading, setIsLanguageLoading] = useState(false)
 	const previousLanguageRef = useRef<SupportedLanguage | undefined>(undefined)
 
-	const currentLanguage = uiLanguage || getDefaultLanguage()
-	const allKeys = Array.from(new Set(requests.map(req => req.key)))
-
-	const {
-		data: translations,
-		isLoading: isQueryLoading,
-		error
-	} = useQuery({
-		queryKey: ['new-translations', currentLanguage, allKeys.sort()],
-		queryFn: () => fetchTranslations(currentLanguage, allKeys),
-		staleTime: Number.POSITIVE_INFINITY,
-		retry: 2
-	})
-
-	// Track language changes to force loading state
 	useEffect(() => {
+		const previousLanguage = previousLanguageRef.current
+
 		if (
-			previousLanguageRef.current !== undefined &&
-			previousLanguageRef.current !== currentLanguage
+			previousLanguage !== undefined &&
+			previousLanguage !== currentLanguage
 		) {
 			setIsLanguageLoading(true)
-			const timer = setTimeout(() => {
+			const timer = globalThis.setTimeout(() => {
 				setIsLanguageLoading(false)
-			}, 300) // Minimum animation duration
+			}, LANGUAGE_CHANGE_DELAY_MS)
 			previousLanguageRef.current = currentLanguage
-			return () => clearTimeout(timer)
+			return () => globalThis.clearTimeout(timer)
 		}
+
 		previousLanguageRef.current = currentLanguage
 		return
 	}, [currentLanguage])
 
-	// Reset loading state when query starts loading
 	useEffect(() => {
-		if (isQueryLoading) {
+		if (!isQueryLoading) {
 			setIsLanguageLoading(false)
 		}
 	}, [isQueryLoading])
 
-	const getTranslation = createGetTranslation(translations, fictionalLanguage)
-	const t = createTranslationFunction(
-		requests,
-		getTranslation,
-		fictionalLanguage
-	)
-	const translationMap = createTranslationMap(requests, getTranslation)
+	return isLanguageLoading
+}
+
+interface TranslationStateResult<
+	TDict extends TranslationDictionary<TranslationRegistryKey>
+> {
+	readonly translationMap: Record<DictionaryKeys<TDict>, string>
+	readonly missingKeys: readonly DictionaryKeys<TDict>[]
+}
+
+function computeTranslationState<
+	const TDict extends TranslationDictionary<TranslationRegistryKey>
+>(
+	dictionary: TDict,
+	translations: TranslationResult | undefined,
+	missingPolicy: TranslationMissingPolicy
+): TranslationStateResult<TDict> {
+	type DictionaryKey = DictionaryKeys<TDict>
+	const result = {} as Record<DictionaryKey, string>
+	const missing: DictionaryKey[] = []
+
+	for (const key of dictionary.keys) {
+		const request = dictionary.getRequest(key)
+		const {value, missing: isMissing} = resolveTranslation(
+			request,
+			translations,
+			missingPolicy
+		)
+
+		result[key as DictionaryKey] = value
+
+		if (isMissing) {
+			missing.push(key as DictionaryKey)
+		}
+	}
 
 	return {
-		t,
+		translationMap: result,
+		missingKeys: Object.freeze([...missing]) as readonly DictionaryKey[]
+	}
+}
+
+function useDictionaryState<
+	const TDict extends TranslationDictionary<TranslationRegistryKey>
+>(
+	dictionary: TDict,
+	translations: TranslationResult | undefined,
+	missingPolicy: TranslationMissingPolicy
+) {
+	const {translationMap, missingKeys} = useMemo(
+		() => computeTranslationState(dictionary, translations, missingPolicy),
+		[dictionary, missingPolicy, translations]
+	)
+
+	type DictionaryKey = DictionaryKeys<TDict>
+
+	const translator = useCallback<Translator<DictionaryKey>>(
+		key => translationMap[key],
+		[translationMap]
+	)
+
+	return {translationMap, translator, missingKeys}
+}
+
+interface StatusComputationInput {
+	readonly isQueryLoading: boolean
+	readonly isLanguageLoading: boolean
+	readonly error: Error | null
+	readonly missingKeysCount: number
+	readonly totalKeys: number
+}
+
+function determineTranslationStatus({
+	isQueryLoading,
+	isLanguageLoading,
+	error,
+	missingKeysCount,
+	totalKeys
+}: StatusComputationInput): TranslationStatus {
+	if (isQueryLoading || isLanguageLoading) {
+		return 'loading'
+	}
+
+	if (error) {
+		return 'error'
+	}
+
+	if (missingKeysCount === 0) {
+		return 'complete'
+	}
+
+	if (missingKeysCount === totalKeys) {
+		return 'missing'
+	}
+
+	return 'partial'
+}
+
+export function useTranslations<
+	const TDict extends TranslationDictionary<TranslationRegistryKey>
+>(
+	dictionary: TDict,
+	options: TranslationOptions = {}
+): UseTranslationsResult<TDict> {
+	const missingPolicy: TranslationMissingPolicy =
+		options.missingPolicy ?? 'fallback'
+
+	const currentLanguage = useCurrentLanguage()
+
+	const {
+		data: translations,
+		isLoading: isQueryLoading,
+		error: queryError,
+		status: queryStatus
+	} = useTranslationQuery(dictionary, currentLanguage)
+
+	const isLanguageLoading = useLanguageLoadingState(
+		currentLanguage,
+		isQueryLoading
+	)
+
+	const {translationMap, translator, missingKeys} = useDictionaryState(
+		dictionary,
+		translations,
+		missingPolicy
+	)
+
+	const normalizedError = useMemo(
+		() => normalizeError(queryError, queryStatus === 'error'),
+		[queryError, queryStatus]
+	)
+
+	const status = determineTranslationStatus({
+		isQueryLoading,
+		isLanguageLoading,
+		error: normalizedError,
+		missingKeysCount: missingKeys.length,
+		totalKeys: dictionary.keys.length
+	})
+
+	return {
+		t: translator,
 		translations: translationMap,
 		currentLanguage,
 		isLoading: isQueryLoading || isLanguageLoading,
-		error: error as Error | null
+		error: normalizedError,
+		missingKeys,
+		status
 	}
 }

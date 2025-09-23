@@ -1,4 +1,6 @@
 import {delay, HttpResponse, http} from 'msw'
+import type {TranslationRegistryKey} from '@/i18n/generated/translation-registry'
+import {translationRegistry} from '@/i18n/generated/translation-registry'
 import type {
 	SupportedLanguage,
 	TranslationsDatabase
@@ -11,6 +13,14 @@ const translations = translationsDatabase as TranslationsDatabase
 
 // Exercise registry - loaded dynamically from JSON files
 const exerciseRegistry = loadExercises()
+
+function normalizeTranslationKeys(
+	keys: readonly string[]
+): TranslationRegistryKey[] {
+	return keys
+		.map(key => key.trim())
+		.filter((key): key is TranslationRegistryKey => key in translationRegistry)
+}
 
 export const handlers = [
 	// New translation endpoint with key filtering
@@ -27,7 +37,7 @@ export const handlers = [
 			)
 		}
 
-		const requestedKeys = keysParam.split(',')
+		const requestedKeys = normalizeTranslationKeys(keysParam.split(','))
 		const languageTranslations = translations[lang]
 
 		if (!languageTranslations) {
@@ -38,13 +48,20 @@ export const handlers = [
 		}
 
 		// Filter only requested keys
-		const filteredTranslations: Record<string, string> = {}
+		const filteredTranslations: Partial<
+			Record<TranslationRegistryKey, string>
+		> = {}
 		for (const key of requestedKeys) {
-			if (languageTranslations[key]) {
-				filteredTranslations[key] = languageTranslations[key]
-			} else if (lang !== 'en' && translations.en[key]) {
-				// Try English fallback if available and not already English
-				filteredTranslations[key] = translations.en[key]
+			const value = languageTranslations[key]
+
+			if (typeof value === 'string') {
+				filteredTranslations[key] = value
+			} else if (lang !== 'en') {
+				const fallbackValue = translations.en?.[key]
+
+				if (typeof fallbackValue === 'string') {
+					filteredTranslations[key] = fallbackValue
+				}
 			}
 		}
 
@@ -77,13 +94,22 @@ export const handlers = [
 		}
 
 		// Filter only requested keys
-		const filteredTranslations: Record<string, string> = {}
-		for (const key of keys) {
-			if (languageTranslations[key]) {
-				filteredTranslations[key] = languageTranslations[key]
-			} else if (language !== 'en' && translations.en[key]) {
-				// Try English fallback if available and not already English
-				filteredTranslations[key] = translations.en[key]
+		const normalizedKeys = normalizeTranslationKeys(keys)
+		const filteredTranslations: Partial<
+			Record<TranslationRegistryKey, string>
+		> = {}
+
+		for (const key of normalizedKeys) {
+			const value = languageTranslations[key]
+
+			if (typeof value === 'string') {
+				filteredTranslations[key] = value
+			} else if (language !== 'en') {
+				const fallbackValue = translations.en?.[key]
+
+				if (typeof fallbackValue === 'string') {
+					filteredTranslations[key] = fallbackValue
+				}
 			}
 		}
 

@@ -3,17 +3,10 @@ import {motion} from 'framer-motion'
 import {useForm} from 'react-hook-form'
 import {z} from 'zod'
 import {useTranslations} from '@/hooks/useTranslations'
+import {languageSelectorTranslations} from '@/i18n/dictionaries'
 import {useSettingsStore} from '@/stores/settings'
 import type {Language} from '@/types/settings'
 import {UI_LANGUAGES} from '@/types/settings'
-import type {TranslationRequest} from '@/types/translations'
-
-const LANGUAGE_SELECTOR_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: 'interfaceLanguage',
-		fallback: 'Interface language'
-	}
-]
 
 const LanguageSchema = z.object({
 	uiLanguage: z.enum(['el', 'ru', 'en'])
@@ -21,7 +14,7 @@ const LanguageSchema = z.object({
 
 export function LanguageSelector() {
 	const {uiLanguage, setUiLanguage} = useSettingsStore()
-	const {t} = useTranslations(LANGUAGE_SELECTOR_TRANSLATIONS)
+	const {t} = useTranslations(languageSelectorTranslations)
 
 	const {setValue} = useForm({
 		resolver: zodResolver(LanguageSchema),

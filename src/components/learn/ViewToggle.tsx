@@ -1,27 +1,16 @@
 import {motion} from 'framer-motion'
 import {useTranslations} from '@/hooks/useTranslations'
-import type {TranslationRequest} from '@/types/translations'
-
-const VIEW_TOGGLE_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: 'jsonView',
-		fallback: 'JSON View'
-	},
-	{
-		key: 'tableView',
-		fallback: 'Table View'
-	}
-]
+import {viewToggleTranslations} from '@/i18n/dictionaries'
 
 type ViewMode = 'json' | 'table'
 
 interface ViewToggleProps {
-	viewMode: ViewMode
-	onViewModeChange: (mode: ViewMode) => void
+	readonly viewMode: ViewMode
+	readonly onViewModeChange: (mode: ViewMode) => void
 }
 
 export function ViewToggle({viewMode, onViewModeChange}: ViewToggleProps) {
-	const {t} = useTranslations(VIEW_TOGGLE_TRANSLATIONS)
+	const {t} = useTranslations(viewToggleTranslations)
 
 	return (
 		<div className='flex rounded-lg border border-gray-200 bg-white p-1 shadow-sm dark:border-gray-600 dark:bg-gray-800'>

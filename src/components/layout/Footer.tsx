@@ -1,28 +1,12 @@
 import {TranslatedText} from '@/components/ui/TranslatedText'
 import {useTranslations} from '@/hooks/useTranslations'
-import type {TranslationRequest} from '@/types/translations'
+import {footerTranslations} from '@/i18n/dictionaries'
 
 const copyrightKey = 'footer.copyright'
 const madeWithKey = 'footer.madeWith'
 
-const FOOTER_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: copyrightKey,
-		fallback: '© 2025 Learn Greek. All rights reserved.'
-	},
-	{
-		key: madeWithKey,
-		language: 'el',
-		fallback: 'Από τον Ντένις με αγάπη'
-	},
-	{
-		key: 'footer.github',
-		fallback: 'GitHub'
-	}
-]
-
 export function Footer() {
-	const {t, isLoading} = useTranslations(FOOTER_TRANSLATIONS)
+	const {t, isLoading} = useTranslations(footerTranslations)
 
 	return (
 		<footer className='border-gray-800 border-t bg-slate-900 text-gray-400'>

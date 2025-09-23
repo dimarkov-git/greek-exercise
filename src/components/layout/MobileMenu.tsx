@@ -3,32 +3,17 @@ import {Link, useLocation} from 'react-router'
 import {LanguageDropdown} from '@/components/ui/LanguageDropdown'
 import {ThemeToggle} from '@/components/ui/ThemeToggle'
 import {useTranslations} from '@/hooks/useTranslations'
-import type {TranslationRequest} from '@/types/translations'
-
-const MOBILE_MENU_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: 'navigation.home',
-		fallback: 'Home'
-	},
-	{
-		key: 'navigation.library',
-		fallback: 'Library'
-	},
-	{
-		key: 'navigation.builder',
-		fallback: 'Builder'
-	},
-	{
-		key: 'settings',
-		fallback: 'Settings'
-	}
-]
+import type {MobileMenuTranslationKey} from '@/i18n/dictionaries'
+import {mobileMenuTranslations} from '@/i18n/dictionaries'
+import type {Translator} from '@/i18n/dictionary'
 
 const HOME_ICON = '🏠'
 const LIBRARY_ICON = '📚'
 const BUILDER_ICON = '🔧'
 
-const createNavigationItems = (t: (key: string) => string) => [
+type MobileMenuTranslator = Translator<MobileMenuTranslationKey>
+
+const createNavigationItems = (t: MobileMenuTranslator) => [
 	{
 		path: '/',
 		label: t('navigation.home'),
@@ -47,17 +32,20 @@ const createNavigationItems = (t: (key: string) => string) => [
 ]
 
 interface MobileMenuProps {
-	id: string
-	isOpen: boolean
-	onClose: () => void
+	readonly id: string
+	readonly isOpen: boolean
+	readonly onClose: () => void
 }
 
 export function MobileMenu({id, isOpen, onClose}: MobileMenuProps) {
-	const {t} = useTranslations(MOBILE_MENU_TRANSLATIONS)
+	const {t} = useTranslations(mobileMenuTranslations)
 	const location = useLocation()
 
 	const isActive = (path: string) => {
-		if (path === '/' && location.pathname === '/') return true
+		if (path === '/' && location.pathname === '/') {
+			return true
+		}
+
 		return path !== '/' && location.pathname.startsWith(path)
 	}
 
@@ -92,7 +80,6 @@ export function MobileMenu({id, isOpen, onClose}: MobileMenuProps) {
 							</Link>
 						))}
 
-						{/* Mobile Settings */}
 						<div className='border-gray-200 border-t pt-3 dark:border-gray-700'>
 							<div className='flex items-center justify-between px-3 py-2'>
 								<span className='font-medium text-gray-700 text-sm dark:text-gray-300'>

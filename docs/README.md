@@ -41,3 +41,9 @@ API documentation and data models:
 - [Overview](reports/phase-2/overview.md) – Architecture snapshot, goals, scope, dependencies, and risks.
 - [Execution report](reports/phase-2/execution-report.md) – Command outcomes, coverage, bundle metrics, and audit logs.
 - [ADRs](reports/phase-2/adrs) – Accepted decisions for the Learn page refactor and related tooling.
+
+### Phase 3 artefacts
+
+- [Overview](reports/phase-3/overview.md) – Translation registry architecture, scope, dependencies, and risk log.
+- [Execution report](reports/phase-3/execution-report.md) – Lint/test/e2e outcomes, coverage, and change summary.
+- [ADRs](reports/phase-3/adrs) – Decisions covering generated dictionaries and settings synchronisation.

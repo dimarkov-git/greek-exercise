@@ -2,22 +2,12 @@ import {motion} from 'framer-motion'
 import {Link} from 'react-router'
 import {TranslatedText} from '@/components/ui/TranslatedText'
 import {useTranslations} from '@/hooks/useTranslations'
-import type {TranslationRequest} from '@/types/translations'
+import {headerLogoTranslations} from '@/i18n/dictionaries'
 
 const titleKey = 'app.title'
 
-const HEADER_LOGO_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: titleKey
-	},
-	{
-		key: 'app.logoInitials',
-		fallback: 'ΜΕ'
-	}
-]
-
 export function HeaderLogo() {
-	const {t, isLoading} = useTranslations(HEADER_LOGO_TRANSLATIONS)
+	const {t, isLoading} = useTranslations(headerLogoTranslations)
 
 	return (
 		<motion.div

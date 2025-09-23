@@ -5,23 +5,8 @@ import {LoadingOrError} from '@/components/LoadingOrError'
 import {useExercise} from '@/hooks/useExercises'
 import {useLayout} from '@/hooks/useLayout'
 import {useTranslations} from '@/hooks/useTranslations'
+import {exerciseUiTranslations} from '@/i18n/dictionaries'
 import type {ExerciseResult} from '@/types/exercises'
-import type {TranslationRequest} from '@/types/translations'
-
-const EXERCISE_PAGE_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: 'exercise.unsupportedType',
-		fallback: 'Unsupported Exercise Type'
-	},
-	{
-		key: 'exercise.notImplemented',
-		fallback: 'Exercise type "{type}" is not yet implemented.'
-	},
-	{
-		key: 'exercise.backToLibrary',
-		fallback: 'Back to Library'
-	}
-]
 
 /**
  * Page for running individual exercises
@@ -32,7 +17,7 @@ export function ExercisePage() {
 	const navigate = useNavigate()
 	const {setHeaderEnabled} = useLayout()
 	const {data: exercise, isLoading, error} = useExercise(exerciseId)
-	const {t} = useTranslations(EXERCISE_PAGE_TRANSLATIONS)
+	const {t} = useTranslations(exerciseUiTranslations)
 
 	// Hide header on exercise pages
 	useEffect(() => {

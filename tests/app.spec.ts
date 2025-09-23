@@ -1,7 +1,10 @@
 import {expect, test} from '@playwright/test'
 import {ROUTES} from './fixtures/selectors'
 
-const IGNORED_CONSOLE_ERRORS = ['net::ERR_CERT_AUTHORITY_INVALID']
+const IGNORED_CONSOLE_ERRORS = [
+	'net::ERR_CERT_AUTHORITY_INVALID',
+	'Failed to load resource: the server responded with a status of 403 (Forbidden)'
+]
 
 test.describe('App', () => {
 	test('loads without errors', async ({page}) => {

@@ -1,10 +1,12 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {useState} from 'react'
+import type {ExerciseLibraryTranslationKey} from '@/i18n/dictionaries'
+import type {Translator} from '@/i18n/dictionary'
 import type {Difficulty} from '@/types/exercises'
 import type {Language} from '@/types/settings'
 import {UI_LANGUAGES} from '@/types/settings'
 
-type Translate = (key: string) => string
+type LibraryTranslator = Translator<ExerciseLibraryTranslationKey>
 
 const LANGUAGE_DISPLAY = new Map<Language, string>(
 	UI_LANGUAGES.map(option => [option.code, `${option.flag} ${option.name}`])
@@ -20,7 +22,7 @@ interface ExerciseFiltersProps {
 	selectedTags: string[]
 	setSelectedTags: (tags: string[]) => void
 	tagOptions: string[]
-	t: Translate
+	t: LibraryTranslator
 }
 
 export function ExerciseFilters({
@@ -113,7 +115,7 @@ interface DifficultyFilterProps {
 	options: Difficulty[]
 	selectedDifficulties: Difficulty[]
 	setSelectedDifficulties: (difficulties: Difficulty[]) => void
-	t: Translate
+	t: LibraryTranslator
 }
 
 function DifficultyFilter({
@@ -173,7 +175,7 @@ interface LanguageFilterProps {
 	languageOptions: Language[]
 	selectedLanguages: Language[]
 	setSelectedLanguages: (languages: Language[]) => void
-	t: Translate
+	t: LibraryTranslator
 }
 
 function LanguageFilter({
@@ -237,7 +239,7 @@ interface TagsFilterProps {
 	allTags: string[]
 	selectedTags: string[]
 	setSelectedTags: (tags: string[]) => void
-	t: Translate
+	t: LibraryTranslator
 }
 
 function TagsFilter({
@@ -287,7 +289,7 @@ interface FilterSummaryInlineProps {
 	selectedDifficulties: Difficulty[]
 	selectedLanguages: Language[]
 	selectedTags: string[]
-	t: Translate
+	t: LibraryTranslator
 }
 
 function FilterSummaryInline({

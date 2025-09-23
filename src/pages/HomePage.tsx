@@ -3,19 +3,10 @@ import {Head} from '@/components/Head'
 import {MainNavigation} from '@/components/layout/MainNavigation'
 import {TranslatedText} from '@/components/ui/TranslatedText'
 import {useTranslations} from '@/hooks/useTranslations'
-import type {TranslationRequest} from '@/types/translations'
-
-const HOME_PAGE_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: 'app.title'
-	},
-	{
-		key: 'app.subtitle'
-	}
-]
+import {homePageTranslations} from '@/i18n/dictionaries'
 
 export function HomePage() {
-	const {t, isLoading} = useTranslations(HOME_PAGE_TRANSLATIONS)
+	const {t, isLoading} = useTranslations(homePageTranslations)
 
 	return (
 		<>

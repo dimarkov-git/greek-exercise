@@ -2,6 +2,11 @@ import {AnimatePresence, motion} from 'framer-motion'
 import type React from 'react'
 import {useEffect, useRef, useState} from 'react'
 import {useTranslations} from '@/hooks/useTranslations'
+import {
+	type ExerciseUiTranslationKey,
+	exerciseUiTranslations
+} from '@/i18n/dictionaries'
+import type {Translator} from '@/i18n/dictionary'
 import {useSettingsStore} from '@/stores/settings'
 import type {Language} from '@/types/settings'
 
@@ -19,6 +24,8 @@ interface HintSystemProps {
 }
 
 type PlacementType = 'top' | 'bottom' | 'left' | 'right'
+
+type ExerciseTranslator = Translator<ExerciseUiTranslationKey>
 
 function getTooltipClasses(placement: PlacementType): string {
 	const baseClasses =
@@ -103,7 +110,8 @@ function HintButton({
 	onToggle,
 	onMouseEnter,
 	onMouseLeave,
-	triggerRef
+	triggerRef,
+	translator
 }: {
 	icon?: React.ReactNode
 	hintText: string
@@ -113,11 +121,9 @@ function HintButton({
 	onMouseEnter: () => void
 	onMouseLeave: () => void
 	triggerRef: React.RefObject<HTMLButtonElement | null>
+	translator: ExerciseTranslator
 }) {
-	const {t} = useTranslations([
-		{key: 'exercise.hintIcon', fallback: 'Hint icon'}
-	])
-
+	const t = translator
 	const handleClick = () => {
 		if (isMobile && 'vibrate' in navigator && !isVisible) {
 			navigator.vibrate(50)
@@ -205,6 +211,7 @@ export function HintSystem({
 	const triggerRef = useRef<HTMLButtonElement>(null)
 	const {userLanguage} = useSettingsStore()
 	const isMobile = useMobileDetection()
+	const {t} = useTranslations(exerciseUiTranslations)
 
 	useClickOutside(isHintVisible, hintRef, triggerRef, () =>
 		setIsHintVisible(false)
@@ -246,6 +253,7 @@ export function HintSystem({
 					onMouseEnter={handleMouseEnter}
 					onMouseLeave={handleMouseLeave}
 					onToggle={handleToggle}
+					translator={t}
 					triggerRef={triggerRef}
 				/>
 			</div>

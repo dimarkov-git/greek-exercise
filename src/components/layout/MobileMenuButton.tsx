@@ -1,17 +1,6 @@
 import {motion} from 'framer-motion'
 import {useTranslations} from '@/hooks/useTranslations'
-import type {TranslationRequest} from '@/types/translations'
-
-const MOBILE_MENU_BUTTON_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: 'navigation.menu',
-		fallback: 'Menu'
-	},
-	{
-		key: 'navigation.close',
-		fallback: 'Close'
-	}
-]
+import {mobileMenuButtonTranslations} from '@/i18n/dictionaries'
 
 interface MobileMenuButtonProps {
 	isOpen: boolean
@@ -24,7 +13,7 @@ export function MobileMenuButton({
 	menuId,
 	onClick
 }: MobileMenuButtonProps) {
-	const {t} = useTranslations(MOBILE_MENU_BUTTON_TRANSLATIONS)
+	const {t} = useTranslations(mobileMenuButtonTranslations)
 
 	return (
 		<motion.button

@@ -1,42 +1,19 @@
 import {useCallback, useState} from 'react'
 import {useTranslations} from '@/hooks/useTranslations'
+import type {JsonViewTranslationKey} from '@/i18n/dictionaries'
+import {jsonViewTranslations} from '@/i18n/dictionaries'
+import type {Translator} from '@/i18n/dictionary'
 import type {WordFormExercise} from '@/types/exercises'
 import {exerciseToJSON} from '@/types/exercises'
-import type {TranslationRequest} from '@/types/translations'
 
-const JSON_VIEW_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: 'copyJson',
-		fallback: 'Copy JSON'
-	},
-	{
-		key: 'jsonCopied',
-		fallback: 'JSON copied to clipboard'
-	},
-	{
-		key: 'copyFailed',
-		fallback: 'Failed to copy'
-	},
-	{
-		key: 'success',
-		fallback: 'Success'
-	},
-	{
-		key: 'error',
-		fallback: 'Error'
-	},
-	{
-		key: 'copy',
-		fallback: 'Copy'
-	}
-]
+type JsonViewTranslator = Translator<JsonViewTranslationKey>
 
 interface JsonViewProps {
-	exercise: WordFormExercise
+	readonly exercise: WordFormExercise
 }
 
 function getButtonClasses(copyStatus: 'idle' | 'success' | 'error') {
-	// biome-ignore lint/nursery/noUnnecessaryConditions: switch statement is appropriate for type safety
+	// biome-ignore lint/nursery/noUnnecessaryConditions: Switch ensures exhaustive handling of copy statuses.
 	switch (copyStatus) {
 		case 'success':
 			return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
@@ -49,9 +26,9 @@ function getButtonClasses(copyStatus: 'idle' | 'success' | 'error') {
 
 function renderButtonContent(
 	copyStatus: 'idle' | 'success' | 'error',
-	t: (key: string) => string
+	t: JsonViewTranslator
 ) {
-	// biome-ignore lint/nursery/noUnnecessaryConditions: switch statement is appropriate for type safety
+	// biome-ignore lint/nursery/noUnnecessaryConditions: Switch ensures exhaustive handling of copy statuses.
 	switch (copyStatus) {
 		case 'success':
 			return (
@@ -96,12 +73,11 @@ function renderButtonContent(
 }
 
 export function JsonView({exercise}: JsonViewProps) {
-	const {t} = useTranslations(JSON_VIEW_TRANSLATIONS)
+	const {t} = useTranslations(jsonViewTranslations)
 	const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>(
 		'idle'
 	)
 
-	// Convert exercise to JSON format using the helper function
 	const exerciseJSON = exerciseToJSON(exercise)
 	const jsonString = JSON.stringify(exerciseJSON, null, 2)
 
@@ -118,7 +94,6 @@ export function JsonView({exercise}: JsonViewProps) {
 
 	return (
 		<div className='p-6'>
-			{/* Header with copy button */}
 			<div className='mb-4 flex items-center justify-between'>
 				<h3 className='font-semibold text-gray-900 text-lg dark:text-white'>
 					{exercise.title}
@@ -132,7 +107,6 @@ export function JsonView({exercise}: JsonViewProps) {
 				</button>
 			</div>
 
-			{/* JSON content with syntax highlighting */}
 			<div className='relative'>
 				<pre className='overflow-auto rounded-lg bg-gray-50 p-4 text-sm leading-relaxed dark:bg-gray-900'>
 					<code className='font-mono text-gray-800 dark:text-gray-200'>
@@ -141,11 +115,9 @@ export function JsonView({exercise}: JsonViewProps) {
 								className='min-h-[1.25rem]'
 								key={`${index}-${line.slice(0, 20)}`}
 							>
-								{/* Line numbers */}
 								<span className='mr-4 select-none text-gray-400 dark:text-gray-600'>
 									{String(index + 1).padStart(3, ' ')}
 								</span>
-								{/* Plain text without syntax highlighting for now */}
 								<span className='text-gray-800 dark:text-gray-200'>{line}</span>
 							</div>
 						))}

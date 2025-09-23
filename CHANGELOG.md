@@ -1,5 +1,11 @@
 # Changelog
 
+## 2025-02-14
+
+- Completed Phase 3 i18n/settings modernization: generated translation registry, typed dictionaries, and deterministic fallbacks.
+- Refactored `useTranslations` + component callers to surface status codes and typed translators; introduced `useSettingsSync` for SSR-safe DOM updates.
+- Added unit tests, documentation (overview, ADR, execution report), and updated roadmap/readme entries for the new workflow.
+
 ## 2025-09-22
 
 - Completed Phase 2 domain/data-layer refactor deliverables: Learn page decomposition, explicit exercise domain imports, and Playwright matrix expansion.

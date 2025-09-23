@@ -3,17 +3,10 @@ import {LanguageSelector} from '@/components/ui/LanguageSelector'
 import {ThemeToggle} from '@/components/ui/ThemeToggle'
 import {UserLanguageSelector} from '@/components/ui/UserLanguageSelector'
 import {useTranslations} from '@/hooks/useTranslations'
-import type {TranslationRequest} from '@/types/translations'
-
-const SETTINGS_PANEL_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: 'settings',
-		fallback: 'Settings'
-	}
-]
+import {settingsLabelTranslations} from '@/i18n/dictionaries'
 
 export function SettingsPanel() {
-	const {t} = useTranslations(SETTINGS_PANEL_TRANSLATIONS)
+	const {t} = useTranslations(settingsLabelTranslations)
 
 	return (
 		<motion.div

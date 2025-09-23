@@ -1,29 +1,10 @@
 import {motion} from 'framer-motion'
 import {NavigationCard} from '@/components/ui/NavigationCard'
 import {useTranslations} from '@/hooks/useTranslations'
-import type {TranslationRequest} from '@/types/translations'
-
-const MAIN_NAVIGATION_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: 'exerciseLibrary',
-		fallback: 'Exercise Library'
-	},
-	{
-		key: 'exerciseLibraryDesc',
-		fallback: 'Browse and execute available exercises'
-	},
-	{
-		key: 'exerciseBuilder',
-		fallback: 'Exercise Builder'
-	},
-	{
-		key: 'exerciseBuilderDesc',
-		fallback: 'Create your own exercises'
-	}
-]
+import {mainNavigationTranslations} from '@/i18n/dictionaries'
 
 export function MainNavigation() {
-	const {t} = useTranslations(MAIN_NAVIGATION_TRANSLATIONS)
+	const {t} = useTranslations(mainNavigationTranslations)
 
 	return (
 		<motion.div

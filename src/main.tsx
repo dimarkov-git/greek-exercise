@@ -24,13 +24,20 @@ async function startMockServiceWorker() {
 		return
 	}
 
+	const startPromise = worker.start({
+		serviceWorker: {
+			url: `${environment.baseUrl}mockServiceWorker.js`
+		},
+		onUnhandledRequest: environment.isDevelopment ? 'warn' : 'bypass'
+	})
+
+	if (environment.isAutomationEnvironment) {
+		await startPromise
+		return
+	}
+
 	await Promise.race([
-		worker.start({
-			serviceWorker: {
-				url: `${environment.baseUrl}mockServiceWorker.js`
-			},
-			onUnhandledRequest: environment.isDevelopment ? 'warn' : 'bypass'
-		}),
+		startPromise,
 		new Promise(resolve => {
 			setTimeout(resolve, 1500)
 		})

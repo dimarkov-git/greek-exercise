@@ -6,6 +6,7 @@
 
 - **📚 Exercise library** - Interactive language learning exercises
 - **🌍 Multilingual interface** - Greek, Russian, and English UI support
+- **🧾 Typed translations** - Generated registry with per-feature dictionaries and deterministic fallbacks
 - **🌓 Theme support** - Light and dark mode switching
 - **💾 Persistent settings** - User preferences saved locally
 - **🔄 Real-time language switching** - Instant interface language changes
@@ -54,7 +55,7 @@ pnpm dev
 
 Set optional environment variables in `.env.local` to customise the runtime:
 
-- `VITE_ENABLE_MSW` (default: `false`; set to `true` to start MSW) – toggle Mock Service Worker.
+- `VITE_ENABLE_MSW` (default: `false`; set to `true` to start MSW, Playwright automation enables it automatically) – toggle Mock Service Worker.
 - `VITE_ENABLE_QUERY_DEVTOOLS` (default: `true` in development) – load React Query Devtools lazily.
 - `VITE_ROUTER_MODE` (default: `browser`, `memory` for Vitest) – choose between browser/history/hash routers.
 

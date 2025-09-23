@@ -1,6 +1,7 @@
 import {motion} from 'framer-motion'
 import {ExerciseLayout} from '@/components/exercises/shared/ExerciseLayout'
 import {useTranslations} from '@/hooks/useTranslations'
+import {exerciseUiTranslations} from '@/i18n/dictionaries'
 
 interface CompletionScreenProps {
 	correctCount: number
@@ -21,21 +22,7 @@ export function CompletionScreen({
 	onRestart,
 	onExit
 }: CompletionScreenProps) {
-	const {t} = useTranslations([
-		{
-			key: 'exercise.congratulations',
-			fallback: 'Congratulations! You completed the exercise'
-		},
-		{key: 'exercise.correctAnswers', fallback: 'Correct answers'},
-		{key: 'exercise.incorrectAnswers', fallback: 'Incorrect answers'},
-		{key: 'exercise.accuracy', fallback: 'Accuracy'},
-		{key: 'exercise.time', fallback: 'Time'},
-		{key: 'exercise.restartExercise', fallback: 'Start again'},
-		{key: 'exercise.returnToLibrary', fallback: 'Return to library'},
-		{key: 'exercise.celebrationEmoji', fallback: '🎉'},
-		{key: 'exercise.percentSymbol', fallback: '%'},
-		{key: 'exercise.secondsSymbol', fallback: 's'}
-	])
+	const {t} = useTranslations(exerciseUiTranslations)
 
 	const accuracy = Math.round((correctCount / totalCases) * 100)
 

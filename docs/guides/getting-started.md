@@ -82,7 +82,7 @@ You can control runtime behaviour with optional environment variables (place the
 
 | Variable | Default | Description |
 | --- | --- | --- |
-| `VITE_ENABLE_MSW` | `true` (only outside production/test) | Start Mock Service Worker for local API mocks. Set to `false` to hit a real backend. |
+| `VITE_ENABLE_MSW` | `false` (auto-enabled for Playwright) | Start Mock Service Worker for local API mocks. Set to `false` to hit a real backend. |
 | `VITE_ENABLE_QUERY_DEVTOOLS` | `true` in development | Lazily load React Query Devtools. Set to `false` to skip the bundle. |
 | `VITE_ROUTER_MODE` | `browser` (`memory` during Vitest) | Choose routing strategy (`browser`, `hash`, or `memory`). |
 

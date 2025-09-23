@@ -1,81 +1,14 @@
 import {useTranslations} from '@/hooks/useTranslations'
+import {tableViewTranslations} from '@/i18n/dictionaries'
 import {useSettingsStore} from '@/stores/settings'
 import type {WordFormExercise} from '@/types/exercises'
-import type {TranslationRequest} from '@/types/translations'
-
-const TABLE_VIEW_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: 'exerciseStructure',
-		fallback: 'Exercise Structure'
-	},
-	{
-		key: 'block',
-		fallback: 'Block'
-	},
-	{
-		key: 'case',
-		fallback: 'Case'
-	},
-	{
-		key: 'prompt',
-		fallback: 'Prompt'
-	},
-	{
-		key: 'answer',
-		fallback: 'Answer'
-	},
-	{
-		key: 'hint',
-		fallback: 'Hint'
-	},
-	{
-		key: 'ui.hashSymbol',
-		fallback: '#'
-	},
-	{
-		key: 'ui.emptyHint',
-		fallback: '—'
-	},
-	{
-		key: 'exercise.difficulty',
-		fallback: 'Difficulty'
-	},
-	{
-		key: 'exercise.minutes',
-		fallback: 'min'
-	},
-	{
-		key: 'exercise.blocks',
-		fallback: 'blocks'
-	},
-	{
-		key: 'exercise.cases',
-		fallback: 'cases'
-	},
-	{
-		key: 'ui.clockIcon',
-		fallback: '⏱️'
-	},
-	{
-		key: 'ui.booksIcon',
-		fallback: '📚'
-	},
-	{
-		key: 'ui.notesIcon',
-		fallback: '📝'
-	},
-	{
-		key: 'ui.colon',
-		fallback: ': '
-	}
-]
 
 interface TableViewProps {
 	exercise: WordFormExercise
 }
 
 export function TableView({exercise}: TableViewProps) {
-	const {t} = useTranslations(TABLE_VIEW_TRANSLATIONS)
+	const {t} = useTranslations(tableViewTranslations)
 	const {userLanguage} = useSettingsStore()
 
 	return (

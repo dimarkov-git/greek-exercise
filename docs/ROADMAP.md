@@ -66,9 +66,9 @@ This document captures the refactor-first plan for aligning the Learn Greek appl
 
 ### Phase 3 – Internationalization and settings modernization
 
-1. Build a generated translation registry (union types or codegen) so components import typed dictionaries instead of enumerating key arrays.
-2. Refactor `useTranslations` to return deterministic fallbacks, expose status codes for missing keys, and remove random filler text in production.
-3. Move DOM side effects (theme attributes, language toggles) out of the Zustand store into React effects guarded by environment checks and add SSR-safe defaults.
+1. ✅ Build a generated translation registry (union types or codegen) so components import typed dictionaries instead of enumerating key arrays.
+2. ✅ Refactor `useTranslations` to return deterministic fallbacks, expose status codes for missing keys, and remove random filler text in production.
+3. ✅ Move DOM side effects (theme attributes, language toggles) out of the Zustand store into React effects guarded by environment checks and add SSR-safe defaults.
 
 ### Phase 4 – Testing and QA expansion
 
