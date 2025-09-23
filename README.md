@@ -77,6 +77,3 @@ Set optional environment variables in `.env.local` to customise the runtime:
 ## Documentation
 
 - [Project documentation index](docs/README.md)
-- [Phase 2 overview](docs/reports/phase-2/overview.md)
-- [Phase 2 execution report](docs/reports/phase-2/execution-report.md)
-- [Phase 2 ADRs](docs/reports/phase-2/adrs)
