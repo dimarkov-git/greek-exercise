@@ -12,7 +12,7 @@
 		"test:e2e:ci": "playwright test",
 		"lint:tsc": "tsc -b",
 		"lint:biome": "biome check --write --unsafe",
-		"lint": "pnpm run \"/lint:./\"",
+		"lint": "pnpm lint:tsc && pnpm lint:biome",
 		"format": "biome format --write",
 		"validate": "pnpm lint && pnpm test:ci && pnpm test:e2e:ci",
 		"build": "vite build",

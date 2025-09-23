@@ -1,4 +1,5 @@
 import {useTranslations} from '@/hooks/useTranslations'
+import {exerciseUiTranslations} from '@/i18n/dictionaries'
 import {useSettingsStore} from '@/stores/settings'
 import type {ExerciseEvent} from '@/types/exercises'
 import type {Language} from '@/types/settings'
@@ -131,13 +132,7 @@ export function ExerciseRenderer({
 	onExit
 }: ExerciseRendererProps) {
 	const {userLanguage} = useSettingsStore()
-	const {t} = useTranslations([
-		{key: 'error.title', fallback: 'Error'},
-		{
-			key: 'error.couldNotLoadExercise',
-			fallback: 'Error: Could not load exercise case'
-		}
-	])
+	const {t} = useTranslations(exerciseUiTranslations)
 
 	const exerciseTitle =
 		state.exercise.titleI18n?.[userLanguage as Language] || state.exercise.title

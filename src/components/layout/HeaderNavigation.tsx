@@ -2,29 +2,14 @@ import {motion} from 'framer-motion'
 import {Link, useLocation} from 'react-router'
 import {TranslatedText} from '@/components/ui/TranslatedText'
 import {useTranslations} from '@/hooks/useTranslations'
-import type {TranslationRequest} from '@/types/translations'
+import {headerNavigationTranslations} from '@/i18n/dictionaries'
 
 const homeKey = 'navigation.home'
 const libraryKey = 'navigation.library'
 const builderKey = 'navigation.builder'
 
-const NAVIGATION_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: homeKey,
-		fallback: 'Home'
-	},
-	{
-		key: libraryKey,
-		fallback: 'Library'
-	},
-	{
-		key: builderKey,
-		fallback: 'Builder'
-	}
-]
-
 export function HeaderNavigation() {
-	const {t, isLoading} = useTranslations(NAVIGATION_TRANSLATIONS)
+	const {t, isLoading} = useTranslations(headerNavigationTranslations)
 	const location = useLocation()
 
 	const isActive = (path: string) => {

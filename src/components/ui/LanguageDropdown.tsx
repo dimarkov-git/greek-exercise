@@ -1,25 +1,10 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {useState} from 'react'
 import {useTranslations} from '@/hooks/useTranslations'
+import {languageDropdownTranslations} from '@/i18n/dictionaries'
 import {useSettingsStore} from '@/stores/settings'
 import type {Language} from '@/types/settings'
 import {UI_LANGUAGES} from '@/types/settings'
-import type {TranslationRequest} from '@/types/translations'
-
-const LANGUAGE_DROPDOWN_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: 'header.selectLanguage',
-		fallback: 'Select language'
-	},
-	{
-		key: 'ui.dropdownArrow',
-		fallback: 'Dropdown arrow'
-	},
-	{
-		key: 'ui.selectedLanguage',
-		fallback: 'Selected language'
-	}
-]
 
 interface DropdownButtonProps {
 	currentLanguage: {flag: string; name: string} | undefined
@@ -145,7 +130,7 @@ function DropdownMenu({
 
 export function LanguageDropdown() {
 	const {uiLanguage, setUiLanguage} = useSettingsStore()
-	const {t} = useTranslations(LANGUAGE_DROPDOWN_TRANSLATIONS)
+	const {t} = useTranslations(languageDropdownTranslations)
 	const [isOpen, setIsOpen] = useState(false)
 
 	const currentLanguage = UI_LANGUAGES.find(lang => lang.code === uiLanguage)

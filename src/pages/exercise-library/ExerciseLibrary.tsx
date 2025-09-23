@@ -2,15 +2,15 @@ import {Head} from '@/components/Head'
 import {LoadingOrError} from '@/components/LoadingOrError'
 import {useExercises} from '@/hooks/useExercises'
 import {useTranslations} from '@/hooks/useTranslations'
+import {exerciseLibraryTranslations} from '@/i18n/dictionaries'
 import {ExerciseFilters} from './components/ExerciseFilters'
 import {ExerciseGrid} from './components/ExerciseGrid'
 import {LibraryHeader} from './components/LibraryHeader'
 import {UserSettings} from './components/UserSettings'
-import {EXERCISE_LIBRARY_TRANSLATIONS} from './constants'
 import {useExerciseFiltering} from './hooks/useExerciseFiltering'
 
 export function ExerciseLibrary() {
-	const {t} = useTranslations(EXERCISE_LIBRARY_TRANSLATIONS)
+	const {t} = useTranslations(exerciseLibraryTranslations)
 	const {data: exerciseLibrary, isLoading, error} = useExercises()
 
 	const {

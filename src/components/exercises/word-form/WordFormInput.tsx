@@ -1,7 +1,14 @@
 import {motion} from 'framer-motion'
 import {useEffect, useRef, useState} from 'react'
 import {useTranslations} from '@/hooks/useTranslations'
+import {
+	type ExerciseUiTranslationKey,
+	exerciseUiTranslations
+} from '@/i18n/dictionaries'
+import type {Translator} from '@/i18n/dictionary'
 import type {ExerciseStatus} from '@/types/exercises'
+
+type ExerciseTranslator = Translator<ExerciseUiTranslationKey>
 
 // Get input styling based on status
 function getInputStyles(status: ExerciseStatus, isFocused: boolean): string {
@@ -59,10 +66,7 @@ function getButtonStyles(
 }
 
 // Get button text based on status
-function getButtonText(
-	status: ExerciseStatus,
-	t: (key: string) => string
-): string {
+function getButtonText(status: ExerciseStatus, t: ExerciseTranslator): string {
 	switch (status) {
 		case 'CHECKING':
 			return t('exercise.checking')
@@ -83,12 +87,7 @@ function LoadingIndicator() {
 	)
 }
 
-function KeyboardHint() {
-	const {t} = useTranslations([
-		{key: 'exercise.enterKey', fallback: 'to submit'},
-		{key: 'exercise.enterKeyName', fallback: 'Enter'}
-	])
-
+function KeyboardHint({t}: {t: ExerciseTranslator}) {
 	return (
 		<div className='flex items-center text-gray-500 text-sm dark:text-gray-400'>
 			<kbd className='rounded bg-gray-100 px-2 py-1 font-mono text-xs dark:bg-gray-700'>
@@ -99,14 +98,7 @@ function KeyboardHint() {
 	)
 }
 
-function ContinueHelpText() {
-	const {t} = useTranslations([
-		{
-			key: 'exercise.pressEnterToContinue',
-			fallback: 'Press Enter to continue to next question'
-		}
-	])
-
+function ContinueHelpText({t}: {t: ExerciseTranslator}) {
 	return (
 		<div className='text-center'>
 			<div className='text-green-600 text-sm dark:text-green-400'>
@@ -116,14 +108,7 @@ function ContinueHelpText() {
 	)
 }
 
-function CorrectionHelpText() {
-	const {t} = useTranslations([
-		{
-			key: 'exercise.enterCorrectAnswerToContinue',
-			fallback: 'Please enter the correct answer to continue.'
-		}
-	])
-
+function CorrectionHelpText({t}: {t: ExerciseTranslator}) {
 	return (
 		<motion.div
 			animate={{opacity: 1, height: 'auto'}}
@@ -283,7 +268,7 @@ function WordFormContent({
 	placeholder: string
 	allowSkip: boolean
 	onSkip?: (() => void) | undefined
-	t: (key: string) => string
+	t: ExerciseTranslator
 }) {
 	return (
 		<motion.form
@@ -329,11 +314,11 @@ function WordFormContent({
 						</button>
 					)}
 
-				{status === 'WAITING_INPUT' && !allowSkip && <KeyboardHint />}
+				{status === 'WAITING_INPUT' && !allowSkip && <KeyboardHint t={t} />}
 			</div>
 
-			{status === 'REQUIRE_CORRECTION' && <CorrectionHelpText />}
-			{status === 'REQUIRE_CONTINUE' && <ContinueHelpText />}
+			{status === 'REQUIRE_CORRECTION' && <CorrectionHelpText t={t} />}
+			{status === 'REQUIRE_CONTINUE' && <ContinueHelpText t={t} />}
 		</motion.form>
 	)
 }
@@ -362,13 +347,7 @@ export function WordFormInput({
 		autoFocus
 	})
 
-	const {t} = useTranslations([
-		{key: 'exercise.checking', fallback: 'Checking...'},
-		{key: 'exercise.submit', fallback: 'Submit'},
-		{key: 'exercise.enterCorrectAnswer', fallback: 'Enter correct answer'},
-		{key: 'exercise.continue', fallback: 'Continue'},
-		{key: 'exercise.skip', fallback: 'Skip'}
-	])
+	const {t} = useTranslations(exerciseUiTranslations)
 
 	const inputStyles = getInputStyles(status, hookData.isFocused)
 	const buttonStyles = getButtonStyles(status, disabled, value)

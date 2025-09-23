@@ -1,6 +1,11 @@
 import {motion} from 'framer-motion'
 import {Link} from 'react-router'
 import {useTranslations} from '@/hooks/useTranslations'
+import {
+	type ExerciseUiTranslationKey,
+	exerciseUiTranslations
+} from '@/i18n/dictionaries'
+import type {Translator} from '@/i18n/dictionary'
 
 interface ExerciseHeaderProps {
 	title: string
@@ -14,12 +19,9 @@ interface ExerciseHeaderProps {
 	showBackButton?: boolean
 }
 
-function BackButton() {
-	const {t} = useTranslations([
-		{key: 'exercise.backToLibrary', fallback: 'Back to library'},
-		{key: 'exercise.backArrow', fallback: 'Back arrow'}
-	])
+type ExerciseTranslator = Translator<ExerciseUiTranslationKey>
 
+function BackButton({t}: {t: ExerciseTranslator}) {
 	return (
 		<Link
 			className='flex items-center gap-2 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
@@ -46,26 +48,14 @@ function BackButton() {
 }
 
 function AutoAdvanceToggle({
+	t,
 	onToggleAutoAdvance,
 	autoAdvanceEnabled
 }: {
+	t: ExerciseTranslator
 	onToggleAutoAdvance: () => void
 	autoAdvanceEnabled: boolean
 }) {
-	const {t} = useTranslations([
-		{key: 'exercise.autoAdvance', fallback: 'Auto-advance'},
-		{
-			key: 'exercise.autoAdvanceEnabled',
-			fallback: 'Auto-advance enabled - click to disable'
-		},
-		{
-			key: 'exercise.autoAdvanceDisabled',
-			fallback: 'Auto-advance disabled - click to enable'
-		},
-		{key: 'exercise.autoAdvanceEnabledIcon', fallback: 'Auto-advance enabled'},
-		{key: 'exercise.autoAdvanceDisabledIcon', fallback: 'Auto-advance disabled'}
-	])
-
 	return (
 		<button
 			className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors ${
@@ -119,12 +109,13 @@ function AutoAdvanceToggle({
 	)
 }
 
-function ProgressBar({progress}: {progress: {current: number; total: number}}) {
-	const {t} = useTranslations([
-		{key: 'exercise.progress', fallback: 'Progress'},
-		{key: 'exercise.progressOf', fallback: 'of'}
-	])
-
+function ProgressBar({
+	progress,
+	t
+}: {
+	progress: {current: number; total: number}
+	t: ExerciseTranslator
+}) {
 	return (
 		<div className='w-full' data-testid='exercise-progress'>
 			<div className='mb-2 flex items-center justify-between'>
@@ -164,6 +155,8 @@ export function ExerciseHeader({
 	autoAdvanceEnabled = true,
 	showBackButton = true
 }: ExerciseHeaderProps) {
+	const {t} = useTranslations(exerciseUiTranslations)
+
 	return (
 		<motion.div
 			animate={{opacity: 1, y: 0}}
@@ -172,12 +165,13 @@ export function ExerciseHeader({
 		>
 			{/* Верхняя строка с кнопкой назад и заголовком */}
 			<div className='mb-4 flex items-center justify-between'>
-				{showBackButton && <BackButton />}
+				{showBackButton && <BackButton t={t} />}
 
 				{onToggleAutoAdvance && (
 					<AutoAdvanceToggle
 						autoAdvanceEnabled={autoAdvanceEnabled}
 						onToggleAutoAdvance={onToggleAutoAdvance}
+						t={t}
 					/>
 				)}
 			</div>
@@ -195,7 +189,7 @@ export function ExerciseHeader({
 				)}
 			</div>
 
-			{progress && <ProgressBar progress={progress} />}
+			{progress && <ProgressBar progress={progress} t={t} />}
 		</motion.div>
 	)
 }

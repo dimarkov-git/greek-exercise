@@ -1,14 +1,16 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {Link} from 'react-router'
 import type {ExerciseSummary} from '@/domain/exercises/types'
+import type {ExerciseLibraryTranslationKey} from '@/i18n/dictionaries'
+import type {Translator} from '@/i18n/dictionary'
 import {useSettingsStore} from '@/stores/settings'
 
-type Translate = (key: string) => string
+type LibraryTranslator = Translator<ExerciseLibraryTranslationKey>
 
 interface ExerciseGridProps {
 	exercises: ExerciseSummary[]
 	onClearFilters: () => void
-	t: Translate
+	t: LibraryTranslator
 }
 
 export function ExerciseGrid({
@@ -58,7 +60,7 @@ export function ExerciseGrid({
 interface ExerciseCardProps {
 	exercise: ExerciseSummary
 	index: number
-	t: Translate
+	t: LibraryTranslator
 }
 
 function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
@@ -159,7 +161,7 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 
 interface EmptyStateProps {
 	onClearFilters: () => void
-	t: Translate
+	t: LibraryTranslator
 }
 
 function EmptyState({onClearFilters, t}: EmptyStateProps) {

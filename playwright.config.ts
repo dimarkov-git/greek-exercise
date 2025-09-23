@@ -28,7 +28,11 @@ export default defineConfig({
 	webServer: {
 		command: 'pnpm dev',
 		reuseExistingServer: !process.env.CI,
-		url: 'http://localhost:5173'
+		url: 'http://localhost:5173',
+		env: {
+			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
+			VITE_ENABLE_MSW: 'true'
+		}
 	},
 	workers: process.env.CI ? 1 : undefined
 })

@@ -1,7 +1,11 @@
 import {motion} from 'framer-motion'
+import type {ExerciseLibraryTranslationKey} from '@/i18n/dictionaries'
+import type {Translator} from '@/i18n/dictionary'
+
+type LibraryTranslator = Translator<ExerciseLibraryTranslationKey>
 
 interface LibraryHeaderProps {
-	t: (key: string) => string
+	t: LibraryTranslator
 }
 
 export function LibraryHeader({t}: LibraryHeaderProps) {

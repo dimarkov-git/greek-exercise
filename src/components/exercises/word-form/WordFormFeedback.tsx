@@ -1,6 +1,13 @@
 import {motion} from 'framer-motion'
 import {useTranslations} from '@/hooks/useTranslations'
+import {
+	type ExerciseUiTranslationKey,
+	exerciseUiTranslations
+} from '@/i18n/dictionaries'
+import type {Translator} from '@/i18n/dictionary'
 import type {ExerciseStatus} from '@/types/exercises'
+
+type ExerciseTranslator = Translator<ExerciseUiTranslationKey>
 
 interface WordFormFeedbackProps {
 	isCorrect: boolean | null
@@ -11,22 +18,18 @@ interface WordFormFeedbackProps {
 
 interface SuccessFeedbackProps {
 	userAnswer: string
+	translator: ExerciseTranslator
 }
 
 interface ErrorFeedbackProps {
 	userAnswer: string
 	correctAnswers: string[]
 	status: ExerciseStatus
+	translator: ExerciseTranslator
 }
 
-function SuccessFeedback({userAnswer}: SuccessFeedbackProps) {
-	const {t} = useTranslations([
-		{key: 'exercise.correctIcon', fallback: 'Correct answer'},
-		{key: 'exercise.correct', fallback: 'Correct'},
-		{key: 'exercise.correctAnswerIs', fallback: 'is correct.'},
-		{key: 'exercise.exclamationMark', fallback: '!'}
-	])
-
+function SuccessFeedback({userAnswer, translator}: SuccessFeedbackProps) {
+	const t = translator
 	return (
 		<div className='rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20'>
 			<div className='flex items-center justify-center space-x-2 text-green-700 dark:text-green-300'>
@@ -77,18 +80,10 @@ function CorrectAnswersList({correctAnswers}: {correctAnswers: string[]}) {
 function ErrorFeedback({
 	userAnswer,
 	correctAnswers,
-	status
+	status,
+	translator
 }: ErrorFeedbackProps) {
-	const {t} = useTranslations([
-		{key: 'exercise.incorrectIcon', fallback: 'Incorrect answer'},
-		{key: 'exercise.incorrect', fallback: 'Incorrect'},
-		{key: 'exercise.yourAnswerIs', fallback: 'Your answer:'},
-		{
-			key: 'exercise.enterCorrectToContinue',
-			fallback: 'Enter one of the correct answers to continue'
-		}
-	])
-
+	const t = translator
 	return (
 		<div className='rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20'>
 			<div className='flex items-center justify-center space-x-2 text-red-700 dark:text-red-300'>
@@ -135,6 +130,7 @@ export function WordFormFeedback({
 	userAnswer,
 	status
 }: WordFormFeedbackProps) {
+	const {t} = useTranslations(exerciseUiTranslations)
 	// Don't render if no feedback needed
 	if (
 		isCorrect === null ||
@@ -152,12 +148,13 @@ export function WordFormFeedback({
 			initial={{opacity: 0, y: 20, scale: 0.95}}
 			transition={{duration: 0.3, ease: 'easeOut'}}
 		>
-			{isCorrect && <SuccessFeedback userAnswer={userAnswer} />}
+			{isCorrect && <SuccessFeedback translator={t} userAnswer={userAnswer} />}
 
 			{!isCorrect && (
 				<ErrorFeedback
 					correctAnswers={correctAnswers}
 					status={status}
+					translator={t}
 					userAnswer={userAnswer}
 				/>
 			)}

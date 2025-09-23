@@ -8,85 +8,21 @@ import {ViewToggle} from '@/components/learn/ViewToggle'
 import {useExercise} from '@/hooks/useExercises'
 import {useLayout} from '@/hooks/useLayout'
 import {useTranslations} from '@/hooks/useTranslations'
+import type {LearnPageTranslationKey} from '@/i18n/dictionaries'
+import {learnPageTranslations} from '@/i18n/dictionaries'
+import type {Translator} from '@/i18n/dictionary'
 import type {WordFormExercise} from '@/types/exercises'
-import type {TranslationRequest} from '@/types/translations'
-
-const LEARN_PAGE_TRANSLATIONS: TranslationRequest[] = [
-	{
-		key: 'learnExercise',
-		fallback: 'Learn Exercise'
-	},
-	{
-		key: 'jsonView',
-		fallback: 'JSON View'
-	},
-	{
-		key: 'tableView',
-		fallback: 'Table View'
-	},
-	{
-		key: 'exerciseStructure',
-		fallback: 'Exercise Structure'
-	},
-	{
-		key: 'startExercise',
-		fallback: 'Start Exercise'
-	},
-	{
-		key: 'exercise.backToLibrary',
-		fallback: 'Back to Library'
-	},
-	{
-		key: 'exercise.unsupportedType',
-		fallback: 'Unsupported Exercise Type'
-	},
-	{
-		key: 'exercise.notImplemented',
-		fallback: 'Exercise type "{type}" is not yet implemented.'
-	},
-	{
-		key: 'exercise.difficulty',
-		fallback: 'Difficulty'
-	},
-	{
-		key: 'exercise.minutes',
-		fallback: 'min'
-	},
-	{
-		key: 'exercise.blocks',
-		fallback: 'blocks'
-	},
-	{
-		key: 'exercise.cases',
-		fallback: 'cases'
-	},
-	{
-		key: 'ui.leftArrow',
-		fallback: '←'
-	},
-	{
-		key: 'ui.playIcon',
-		fallback: '▶'
-	},
-	{
-		key: 'ui.hashSymbol',
-		fallback: '#'
-	}
-]
 
 type ViewMode = 'json' | 'table'
 
-type TranslateFn = (key: string) => string
+type LearnPageTranslator = Translator<LearnPageTranslationKey>
 
-/**
- * Learn page for studying exercise structure before attempting
- */
 export function LearnPage() {
 	const {exerciseId} = useParams()
 	const navigate = useNavigate()
 	const {setHeaderEnabled} = useLayout()
 	const {data: exercise, isLoading, error} = useExercise(exerciseId)
-	const {t} = useTranslations(LEARN_PAGE_TRANSLATIONS)
+	const {t} = useTranslations(learnPageTranslations)
 	const [viewMode, setViewMode] = useState<ViewMode>('table')
 
 	useEffect(() => {
@@ -95,16 +31,16 @@ export function LearnPage() {
 	}, [setHeaderEnabled])
 
 	const handleBack = useCallback(() => {
-		// biome-ignore lint/nursery/noFloatingPromises: navigate is synchronous
+		// biome-ignore lint/nursery/noFloatingPromises: navigate resolves synchronously in this context.
 		navigate('/exercises', {replace: true})
 	}, [navigate])
 
 	const handleStartExercise = useCallback(() => {
 		if (exerciseId) {
-			// biome-ignore lint/nursery/noFloatingPromises: navigate is synchronous
+			// biome-ignore lint/nursery/noFloatingPromises: navigate resolves synchronously in this context.
 			navigate(`/exercise/${exerciseId}`)
 		}
-	}, [navigate, exerciseId])
+	}, [exerciseId, navigate])
 
 	if (isLoading) {
 		return <LoadingOrError />
@@ -138,9 +74,9 @@ export function LearnPage() {
 }
 
 interface UnsupportedExerciseNoticeProps {
-	exerciseType: string
-	onBack: () => void
-	t: TranslateFn
+	readonly exerciseType: string
+	readonly onBack: () => void
+	readonly t: LearnPageTranslator
 }
 
 function UnsupportedExerciseNotice({
@@ -171,12 +107,12 @@ function UnsupportedExerciseNotice({
 }
 
 interface LearnPageContentProps {
-	exercise: WordFormExercise
-	onBack: () => void
-	onStart: () => void
-	onViewModeChange: (mode: ViewMode) => void
-	t: TranslateFn
-	viewMode: ViewMode
+	readonly exercise: WordFormExercise
+	readonly onBack: () => void
+	readonly onStart: () => void
+	readonly onViewModeChange: (mode: ViewMode) => void
+	readonly t: LearnPageTranslator
+	readonly viewMode: ViewMode
 }
 
 function LearnPageContent({
@@ -212,9 +148,9 @@ function LearnPageContent({
 }
 
 interface LearnPageHeroProps {
-	exercise: WordFormExercise
-	onBack: () => void
-	t: TranslateFn
+	readonly exercise: WordFormExercise
+	readonly onBack: () => void
+	readonly t: LearnPageTranslator
 }
 
 function LearnPageHero({exercise, onBack, t}: LearnPageHeroProps) {
@@ -243,8 +179,8 @@ function LearnPageHero({exercise, onBack, t}: LearnPageHeroProps) {
 }
 
 interface ExerciseStatsProps {
-	exercise: WordFormExercise
-	t: TranslateFn
+	readonly exercise: WordFormExercise
+	readonly t: LearnPageTranslator
 }
 
 function ExerciseStats({exercise, t}: ExerciseStatsProps) {
@@ -273,8 +209,8 @@ function ExerciseStats({exercise, t}: ExerciseStatsProps) {
 }
 
 interface StatCardProps {
-	label: string
-	value: string
+	readonly label: string
+	readonly value: string
 }
 
 function StatCard({label, value}: StatCardProps) {
@@ -289,10 +225,10 @@ function StatCard({label, value}: StatCardProps) {
 }
 
 interface LearnPageActionsProps {
-	onStart: () => void
-	onViewModeChange: (mode: ViewMode) => void
-	t: TranslateFn
-	viewMode: ViewMode
+	readonly onStart: () => void
+	readonly onViewModeChange: (mode: ViewMode) => void
+	readonly t: LearnPageTranslator
+	readonly viewMode: ViewMode
 }
 
 function LearnPageActions({
@@ -317,8 +253,8 @@ function LearnPageActions({
 }
 
 interface ExerciseTagsProps {
-	tags: string[]
-	t: TranslateFn
+	readonly tags: string[]
+	readonly t: LearnPageTranslator
 }
 
 function ExerciseTags({tags, t}: ExerciseTagsProps) {

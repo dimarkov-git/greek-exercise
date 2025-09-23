@@ -1,4 +1,6 @@
 import {toWordFormExerciseWithDefaults} from '@/domain/exercises/adapters'
+import type {TranslationRegistryKey} from '@/i18n/generated/translation-registry'
+import {translationRegistry} from '@/i18n/generated/translation-registry'
 import translationsData from '@/mocks/data/translations.json' with {
 	type: 'json'
 }
@@ -29,26 +31,35 @@ for (const moduleExport of Object.values(exerciseModules)) {
 	exerciseRegistry.set(normalized.id, normalized)
 }
 
+function normalizeTranslationKeys(
+	keys: readonly string[]
+): TranslationRegistryKey[] {
+	return keys
+		.map(key => key.trim())
+		.filter((key): key is TranslationRegistryKey => key in translationRegistry)
+}
+
 function resolveTranslations(
 	language: SupportedLanguage,
-	keys: string[]
-): Record<string, string> {
-	const languageTranslations = translations[language]
-
-	if (!languageTranslations) {
-		return {}
-	}
-
-	const filtered: Record<string, string> = {}
+	keys: readonly TranslationRegistryKey[]
+): Partial<Record<TranslationRegistryKey, string>> {
+	const languageTranslations = translations[language] ?? {}
+	const filtered: Partial<Record<TranslationRegistryKey, string>> = {}
 
 	for (const key of keys) {
-		if (languageTranslations[key]) {
-			filtered[key] = languageTranslations[key]
+		const value = languageTranslations[key]
+
+		if (typeof value === 'string') {
+			filtered[key] = value
 			continue
 		}
 
-		if (language !== 'en' && translations.en[key]) {
-			filtered[key] = translations.en[key]
+		if (language !== 'en') {
+			const fallback = translations.en?.[key]
+
+			if (typeof fallback === 'string') {
+				filtered[key] = fallback
+			}
 		}
 	}
 
@@ -94,7 +105,7 @@ function resolveTranslationsRequest(
 			return {type: 'success', data: {translations: {}}}
 		}
 
-		const keys = keysParam.split(',')
+		const keys = normalizeTranslationKeys(keysParam.split(','))
 		return {
 			type: 'success',
 			data: {translations: resolveTranslations(lang, keys)}
@@ -111,9 +122,11 @@ function resolveTranslationsRequest(
 			return {type: 'success', data: {translations: {}}}
 		}
 
+		const normalizedKeys = normalizeTranslationKeys(keys)
+
 		return {
 			type: 'success',
-			data: {translations: resolveTranslations(language, keys)}
+			data: {translations: resolveTranslations(language, normalizedKeys)}
 		}
 	}
 
