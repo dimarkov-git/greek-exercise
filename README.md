@@ -31,7 +31,7 @@
 
 ## Getting started
 
-**Prerequisites:** Node 24.x LTS, PNPM 10
+**Prerequisites:** Node.js 20.19.4 (Active LTS, tested) or newer, PNPM 10
 
 Clone the repository and install dependencies:
 
@@ -54,7 +54,7 @@ pnpm dev
 
 Set optional environment variables in `.env.local` to customise the runtime:
 
-- `VITE_ENABLE_MSW` (default: `true` in non-production environments) – toggle Mock Service Worker.
+- `VITE_ENABLE_MSW` (default: `false`; set to `true` to start MSW) – toggle Mock Service Worker.
 - `VITE_ENABLE_QUERY_DEVTOOLS` (default: `true` in development) – load React Query Devtools lazily.
 - `VITE_ROUTER_MODE` (default: `browser`, `memory` for Vitest) – choose between browser/history/hash routers.
 
@@ -62,6 +62,7 @@ Set optional environment variables in `.env.local` to customise the runtime:
 
 - `pnpm dev` - start a development server with hot reload.
 - `pnpm build` - build for production. The generated files will be on the `dist` folder.
+- `pnpm build:analyze` - generate bundle analysis artefacts (HTML + JSON) under `docs/reports/phase-2/assets`.
 - `pnpm preview` - locally preview the production build.
 - `pnpm test` - run unit and integration tests related to changed files based on git.
 - `pnpm test:ci` - run all unit and integration tests in CI mode.
@@ -70,7 +71,12 @@ Set optional environment variables in `.env.local` to customise the runtime:
 - `pnpm format` - format all files with Biome Formatter.
 - `pnpm lint` - runs TypeScript and Biome.
 - `pnpm validate` - runs `lint`, `test:ci` and `test:e2e:ci`.
+- `pnpm depcheck` - detect unused or missing dependencies.
+- `pnpm audit` - run a production dependency security audit.
 
 ## Documentation
 
 - [Project documentation index](docs/README.md)
+- [Phase 2 overview](docs/reports/phase-2/overview.md)
+- [Phase 2 execution report](docs/reports/phase-2/execution-report.md)
+- [Phase 2 ADRs](docs/reports/phase-2/adrs)

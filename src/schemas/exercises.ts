@@ -81,15 +81,26 @@ export const ExerciseMetadataSchema = v.object({
 // Exercise list schema
 export const ExercisesListSchema = v.array(ExerciseMetadataSchema)
 
+export type ExerciseSettingsDto = v.InferOutput<typeof ExerciseSettingsSchema>
+export type WordFormCaseDto = v.InferOutput<typeof WordFormCaseSchema>
+export type WordFormBlockDto = v.InferOutput<typeof WordFormBlockSchema>
+export type WordFormExerciseDto = v.InferOutput<typeof WordFormExerciseSchema>
+export type ExerciseMetadataDto = v.InferOutput<typeof ExerciseMetadataSchema>
+export type ExercisesListDto = v.InferOutput<typeof ExercisesListSchema>
+
 // Validation utility functions
-export function validateWordFormExercise(data: unknown) {
+export function validateWordFormExercise(data: unknown): WordFormExerciseDto {
 	return v.parse(WordFormExerciseSchema, data)
 }
 
-export function validateExercisesList(data: unknown) {
+export function validateExercisesList(data: unknown): ExercisesListDto {
 	return v.parse(ExercisesListSchema, data)
 }
 
-export function validateWordFormBlock(data: unknown) {
+export function validateWordFormBlock(data: unknown): WordFormBlockDto {
 	return v.parse(WordFormBlockSchema, data)
+}
+
+export function validateExerciseMetadata(data: unknown): ExerciseMetadataDto {
+	return v.parse(ExerciseMetadataSchema, data)
 }

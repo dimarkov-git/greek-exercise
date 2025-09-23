@@ -57,8 +57,13 @@ export function ExercisePage() {
 	}, [navigate])
 
 	// Handle loading and error states
-	if (isLoading || error || !exercise) {
-		return <LoadingOrError {...(error && {error})} />
+	if (isLoading) {
+		return <LoadingOrError />
+	}
+
+	if (error || !exercise) {
+		const errorProps = error instanceof Error ? {error} : undefined
+		return <LoadingOrError {...errorProps} />
 	}
 
 	// Render exercise based on type

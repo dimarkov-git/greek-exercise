@@ -9,17 +9,32 @@ import {environment} from './config/environment'
 
 async function startMockServiceWorker() {
 	if (!environment.enableMockServiceWorker) {
+		if (navigator?.serviceWorker) {
+			const registrations = await navigator.serviceWorker.getRegistrations()
+			await Promise.all(
+				registrations.map(registration => registration.unregister())
+			)
+		}
 		return
 	}
 
 	const {worker} = await import('./mocks/browser')
 
-	await worker.start({
-		serviceWorker: {
-			url: `${environment.baseUrl}mockServiceWorker.js`
-		},
-		onUnhandledRequest: environment.isDevelopment ? 'warn' : 'bypass'
-	})
+	if (navigator?.serviceWorker?.controller) {
+		return
+	}
+
+	await Promise.race([
+		worker.start({
+			serviceWorker: {
+				url: `${environment.baseUrl}mockServiceWorker.js`
+			},
+			onUnhandledRequest: environment.isDevelopment ? 'warn' : 'bypass'
+		}),
+		new Promise(resolve => {
+			setTimeout(resolve, 1500)
+		})
+	])
 }
 
 function renderApplication() {

@@ -1,5 +1,5 @@
 import {motion} from 'framer-motion'
-import {useState} from 'react'
+import {useId, useState} from 'react'
 import {useLayout} from '@/hooks/useLayout'
 import {HeaderLogo} from './HeaderLogo'
 import {HeaderNavigation} from './HeaderNavigation'
@@ -14,6 +14,7 @@ interface HeaderProps {
 export function Header({className}: HeaderProps) {
 	const {headerEnabled} = useLayout()
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+	const mobileMenuId = useId()
 
 	return (
 		<motion.header
@@ -33,10 +34,12 @@ export function Header({className}: HeaderProps) {
 					<HeaderSettings />
 					<MobileMenuButton
 						isOpen={isMobileMenuOpen}
+						menuId={mobileMenuId}
 						onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
 					/>
 				</div>
 				<MobileMenu
+					id={mobileMenuId}
 					isOpen={isMobileMenuOpen}
 					onClose={() => setIsMobileMenuOpen(false)}
 				/>

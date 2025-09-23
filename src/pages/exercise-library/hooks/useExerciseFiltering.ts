@@ -1,52 +1,68 @@
 import {useCallback, useMemo, useState} from 'react'
-import type {ExerciseMetadata} from '@/types/exercises'
+import {
+	selectDifficultyOptions,
+	selectFilteredExercises,
+	selectLanguageOptions,
+	selectTagOptions
+} from '@/domain/exercises/selectors'
+import type {ExerciseLibraryViewModel} from '@/domain/exercises/types'
+import type {Difficulty} from '@/types/exercises'
+import type {Language} from '@/types/settings'
 
 export function useExerciseFiltering(
-	exercises: ExerciseMetadata[] | undefined
+	viewModel: ExerciseLibraryViewModel | undefined
 ) {
 	const [selectedTags, setSelectedTags] = useState<string[]>([])
-	const [selectedDifficulties, setSelectedDifficulties] = useState<string[]>([])
+	const [selectedDifficulties, setSelectedDifficulties] = useState<
+		Difficulty[]
+	>([])
+	const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([])
 
 	const filteredExercises = useMemo(() => {
-		if (!exercises) return []
+		if (!viewModel) {
+			return []
+		}
 
-		return exercises.filter(exercise => {
-			if (selectedTags.length > 0) {
-				const hasSelectedTag = selectedTags.some(tag =>
-					exercise.tags.includes(tag)
-				)
-				if (!hasSelectedTag) return false
-			}
-
-			if (
-				selectedDifficulties.length > 0 &&
-				!selectedDifficulties.includes(exercise.difficulty)
-			) {
-				return false
-			}
-
-			return true
+		return selectFilteredExercises(viewModel.exercises, {
+			tags: selectedTags,
+			difficulties: selectedDifficulties,
+			languages: selectedLanguages
 		})
-	}, [exercises, selectedDifficulties, selectedTags])
+	}, [selectedDifficulties, selectedLanguages, selectedTags, viewModel])
 
-	const allTags = useMemo(() => {
-		if (!exercises) return []
+	const {tagOptions, difficultyOptions, languageOptions} = useMemo(() => {
+		if (!viewModel) {
+			return {
+				tagOptions: [],
+				difficultyOptions: [] as Difficulty[],
+				languageOptions: [] as Language[]
+			}
+		}
 
-		return [...new Set(exercises.flatMap(exercise => exercise.tags))].sort()
-	}, [exercises])
+		return {
+			tagOptions: selectTagOptions(viewModel),
+			difficultyOptions: selectDifficultyOptions(viewModel),
+			languageOptions: selectLanguageOptions(viewModel)
+		}
+	}, [viewModel])
 
 	const clearFilters = useCallback(() => {
 		setSelectedTags([])
 		setSelectedDifficulties([])
+		setSelectedLanguages([])
 	}, [])
 
 	return {
+		filteredExercises,
 		selectedTags,
 		setSelectedTags,
 		selectedDifficulties,
 		setSelectedDifficulties,
-		filteredExercises,
-		allTags,
+		selectedLanguages,
+		setSelectedLanguages,
+		tagOptions,
+		difficultyOptions,
+		languageOptions,
 		clearFilters
 	}
 }

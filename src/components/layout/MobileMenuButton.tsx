@@ -15,15 +15,23 @@ const MOBILE_MENU_BUTTON_TRANSLATIONS: TranslationRequest[] = [
 
 interface MobileMenuButtonProps {
 	isOpen: boolean
+	menuId: string
 	onClick: () => void
 }
 
-export function MobileMenuButton({isOpen, onClick}: MobileMenuButtonProps) {
+export function MobileMenuButton({
+	isOpen,
+	menuId,
+	onClick
+}: MobileMenuButtonProps) {
 	const {t} = useTranslations(MOBILE_MENU_BUTTON_TRANSLATIONS)
 
 	return (
 		<motion.button
 			animate={{opacity: 1, scale: 1}}
+			aria-controls={menuId}
+			aria-expanded={isOpen}
+			aria-label={isOpen ? t('navigation.close') : t('navigation.menu')}
 			className='flex items-center justify-center rounded-lg border border-gray-300 bg-white p-2 md:hidden dark:border-gray-600 dark:bg-gray-800'
 			initial={{opacity: 0, scale: 0.9}}
 			onClick={onClick}

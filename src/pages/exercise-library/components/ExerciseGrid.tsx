@@ -1,12 +1,12 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {Link} from 'react-router'
+import type {ExerciseSummary} from '@/domain/exercises/types'
 import {useSettingsStore} from '@/stores/settings'
-import type {ExerciseMetadata} from '@/types/exercises'
 
 type Translate = (key: string) => string
 
 interface ExerciseGridProps {
-	exercises: ExerciseMetadata[]
+	exercises: ExerciseSummary[]
 	onClearFilters: () => void
 	t: Translate
 }
@@ -56,7 +56,7 @@ export function ExerciseGrid({
 }
 
 interface ExerciseCardProps {
-	exercise: ExerciseMetadata
+	exercise: ExerciseSummary
 	index: number
 	t: Translate
 }

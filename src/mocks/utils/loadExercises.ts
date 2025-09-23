@@ -1,3 +1,4 @@
+import {toWordFormExerciseWithDefaults} from '@/domain/exercises/adapters'
 import {validateWordFormExercise} from '@/schemas/exercises'
 import type {WordFormExercise} from '@/types/exercises'
 
@@ -13,11 +14,10 @@ export function loadExercises(): Map<string, WordFormExercise> {
 	// Process each exercise file
 	for (const [_path, exerciseData] of Object.entries(exerciseModules)) {
 		try {
-			const validatedExercise = validateWordFormExercise(exerciseData)
-			exerciseRegistry.set(
-				validatedExercise.id,
-				validatedExercise as WordFormExercise
+			const validatedExercise = toWordFormExerciseWithDefaults(
+				validateWordFormExercise(exerciseData)
 			)
+			exerciseRegistry.set(validatedExercise.id, validatedExercise)
 		} catch (error) {
 			// biome-ignore lint/suspicious/noConsole: This is intentional debug logging for exercise loading
 			console.error(`Failed to load exercise from ${_path}:`, error)

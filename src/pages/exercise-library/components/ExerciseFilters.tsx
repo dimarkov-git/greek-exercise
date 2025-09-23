@@ -1,27 +1,38 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {useState} from 'react'
+import type {Difficulty} from '@/types/exercises'
+import type {Language} from '@/types/settings'
+import {UI_LANGUAGES} from '@/types/settings'
 
 type Translate = (key: string) => string
 
-type Difficulty = string
-
-type Tag = string
+const LANGUAGE_DISPLAY = new Map<Language, string>(
+	UI_LANGUAGES.map(option => [option.code, `${option.flag} ${option.name}`])
+)
 
 interface ExerciseFiltersProps {
+	difficultyOptions: Difficulty[]
+	languageOptions: Language[]
 	selectedDifficulties: Difficulty[]
 	setSelectedDifficulties: (difficulties: Difficulty[]) => void
-	selectedTags: Tag[]
-	setSelectedTags: (tags: Tag[]) => void
-	allTags: Tag[]
+	selectedLanguages: Language[]
+	setSelectedLanguages: (languages: Language[]) => void
+	selectedTags: string[]
+	setSelectedTags: (tags: string[]) => void
+	tagOptions: string[]
 	t: Translate
 }
 
 export function ExerciseFilters({
+	difficultyOptions,
+	languageOptions,
 	selectedDifficulties,
 	setSelectedDifficulties,
+	selectedLanguages,
+	setSelectedLanguages,
 	selectedTags,
 	setSelectedTags,
-	allTags,
+	tagOptions,
 	t
 }: ExerciseFiltersProps) {
 	const [isCollapsed, setIsCollapsed] = useState(false)
@@ -45,6 +56,7 @@ export function ExerciseFilters({
 					{isCollapsed && (
 						<FilterSummaryInline
 							selectedDifficulties={selectedDifficulties}
+							selectedLanguages={selectedLanguages}
 							selectedTags={selectedTags}
 							t={t}
 						/>
@@ -72,12 +84,19 @@ export function ExerciseFilters({
 					>
 						<div className='px-6 pb-6'>
 							<DifficultyFilter
+								options={difficultyOptions}
 								selectedDifficulties={selectedDifficulties}
 								setSelectedDifficulties={setSelectedDifficulties}
 								t={t}
 							/>
+							<LanguageFilter
+								languageOptions={languageOptions}
+								selectedLanguages={selectedLanguages}
+								setSelectedLanguages={setSelectedLanguages}
+								t={t}
+							/>
 							<TagsFilter
-								allTags={allTags}
+								allTags={tagOptions}
 								selectedTags={selectedTags}
 								setSelectedTags={setSelectedTags}
 								t={t}
@@ -91,12 +110,14 @@ export function ExerciseFilters({
 }
 
 interface DifficultyFilterProps {
+	options: Difficulty[]
 	selectedDifficulties: Difficulty[]
 	setSelectedDifficulties: (difficulties: Difficulty[]) => void
 	t: Translate
 }
 
 function DifficultyFilter({
+	options,
 	selectedDifficulties,
 	setSelectedDifficulties,
 	t
@@ -129,7 +150,7 @@ function DifficultyFilter({
 				>
 					{t('all')}
 				</button>
-				{['a0', 'a1', 'a2', 'b1', 'b2', 'c1', 'c2'].map(difficulty => (
+				{options.map(difficulty => (
 					<button
 						className={`cursor-pointer rounded-full px-3 py-1 font-medium text-sm transition-colors ${
 							selectedDifficulties.includes(difficulty)
@@ -148,10 +169,74 @@ function DifficultyFilter({
 	)
 }
 
+interface LanguageFilterProps {
+	languageOptions: Language[]
+	selectedLanguages: Language[]
+	setSelectedLanguages: (languages: Language[]) => void
+	t: Translate
+}
+
+function LanguageFilter({
+	languageOptions,
+	selectedLanguages,
+	setSelectedLanguages,
+	t
+}: LanguageFilterProps) {
+	if (languageOptions.length === 0) {
+		return null
+	}
+
+	const toggleLanguage = (language: Language) => {
+		if (selectedLanguages.includes(language)) {
+			setSelectedLanguages(
+				selectedLanguages.filter(existing => existing !== language)
+			)
+			return
+		}
+
+		setSelectedLanguages([...selectedLanguages, language])
+	}
+
+	return (
+		<div className='mb-4'>
+			<div className='mb-2 block font-medium text-gray-700 text-sm dark:text-gray-300'>
+				{t('language')}
+			</div>
+			<div className='flex flex-wrap gap-2'>
+				<button
+					className={`cursor-pointer rounded-full px-3 py-1 font-medium text-sm transition-colors ${
+						selectedLanguages.length === 0
+							? 'bg-blue-600 text-white'
+							: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
+					}`}
+					onClick={() => setSelectedLanguages([])}
+					type='button'
+				>
+					{t('all')}
+				</button>
+				{languageOptions.map(language => (
+					<button
+						className={`cursor-pointer rounded-full px-3 py-1 font-medium text-sm transition-colors ${
+							selectedLanguages.includes(language)
+								? 'bg-blue-600 text-white'
+								: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
+						}`}
+						key={language}
+						onClick={() => toggleLanguage(language)}
+						type='button'
+					>
+						{LANGUAGE_DISPLAY.get(language) ?? language.toUpperCase()}
+					</button>
+				))}
+			</div>
+		</div>
+	)
+}
+
 interface TagsFilterProps {
-	allTags: Tag[]
-	selectedTags: Tag[]
-	setSelectedTags: (tags: Tag[]) => void
+	allTags: string[]
+	selectedTags: string[]
+	setSelectedTags: (tags: string[]) => void
 	t: Translate
 }
 
@@ -163,7 +248,7 @@ function TagsFilter({
 }: TagsFilterProps) {
 	if (allTags.length === 0) return null
 
-	const toggleTag = (tag: Tag) => {
+	const toggleTag = (tag: string) => {
 		if (selectedTags.includes(tag)) {
 			setSelectedTags(selectedTags.filter(existing => existing !== tag))
 			return
@@ -200,12 +285,14 @@ function TagsFilter({
 
 interface FilterSummaryInlineProps {
 	selectedDifficulties: Difficulty[]
-	selectedTags: Tag[]
+	selectedLanguages: Language[]
+	selectedTags: string[]
 	t: Translate
 }
 
 function FilterSummaryInline({
 	selectedDifficulties,
+	selectedLanguages,
 	selectedTags,
 	t
 }: FilterSummaryInlineProps) {
@@ -228,6 +315,28 @@ function FilterSummaryInline({
 								key={difficulty}
 							>
 								{t(`difficulty.${difficulty}`)}
+							</span>
+						))
+					)}
+				</div>
+			</div>
+			<div className='flex items-center gap-1'>
+				<span className='text-gray-600 dark:text-gray-400'>
+					{t('language')}
+					{t('ui.colon')}
+				</span>
+				<div className='flex gap-1'>
+					{selectedLanguages.length === 0 ? (
+						<span className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'>
+							{t('all')}
+						</span>
+					) : (
+						selectedLanguages.map(language => (
+							<span
+								className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'
+								key={language}
+							>
+								{LANGUAGE_DISPLAY.get(language) ?? language.toUpperCase()}
 							</span>
 						))
 					)}

@@ -52,7 +52,7 @@ const routerMode = normalizeRouterMode(routerModeEnv, derivedRouterMode)
 
 const enableMockServiceWorker = env.VITE_ENABLE_MSW
 	? env.VITE_ENABLE_MSW === 'true'
-	: !(env.PROD || isTest)
+	: false
 
 const enableQueryDevtools = env.VITE_ENABLE_QUERY_DEVTOOLS
 	? env.VITE_ENABLE_QUERY_DEVTOOLS === 'true'
