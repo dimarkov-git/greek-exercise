@@ -59,6 +59,10 @@ export const EXERCISE_LIBRARY_TRANSLATIONS: TranslationRequest[] = [
 		fallback: 'Tags'
 	},
 	{
+		key: 'language',
+		fallback: 'Language'
+	},
+	{
 		key: 'all',
 		fallback: 'All'
 	},

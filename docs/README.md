@@ -35,3 +35,9 @@ API documentation and data models:
 
 - [**TECHNICAL_SPEC.md**](TECHNICAL_SPEC.md) – Technical specification and project requirements.
 - [**ROADMAP.md**](ROADMAP.md) – Refactor roadmap and future technical priorities.
+
+### Phase 2 artefacts
+
+- [Overview](reports/phase-2/overview.md) – Architecture snapshot, goals, scope, dependencies, and risks.
+- [Execution report](reports/phase-2/execution-report.md) – Command outcomes, coverage, bundle metrics, and audit logs.
+- [ADRs](reports/phase-2/adrs) – Accepted decisions for the Learn page refactor and related tooling.

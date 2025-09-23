@@ -1,3 +1,5 @@
+import {resolveFallbackResponse} from './fallbacks'
+
 const RETRYABLE_STATUS_CODES = new Set([408, 425, 429, 500, 502, 503, 504])
 const DEFAULT_RETRY_COUNT = 2
 const DEFAULT_RETRY_DELAY_MS = 250
@@ -273,5 +275,38 @@ export async function requestJson<
 		}
 	}
 
-	return await attemptRequest(0)
+	try {
+		return await attemptRequest(0)
+	} catch (error) {
+		try {
+			const url = new URL(input, window.location.origin)
+			const fallback = resolveFallbackResponse({
+				url,
+				method,
+				body
+			})
+
+			if (fallback === undefined) {
+				throw error
+			}
+
+			if (fallback.type === 'error') {
+				throw new HttpError(fallback.message, {
+					status: fallback.status,
+					statusText: fallback.message,
+					url: url.toString(),
+					method,
+					body
+				})
+			}
+
+			return fallback.data as TResponse
+		} catch (fallbackError) {
+			if (fallbackError instanceof Error) {
+				throw fallbackError
+			}
+
+			throw error
+		}
+	}
 }

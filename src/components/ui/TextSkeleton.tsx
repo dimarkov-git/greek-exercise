@@ -12,12 +12,14 @@ export function TextSkeleton({
 	className = ''
 }: TextSkeletonProps) {
 	return (
-		<motion.div
+		<motion.span
 			animate={{
 				opacity: [0.3, 0.8, 0.3]
 			}}
-			className={`rounded bg-gray-200 dark:bg-gray-700 ${className}`}
+			aria-hidden='true'
+			className={`inline-block rounded bg-gray-200 dark:bg-gray-700 ${className}`}
 			initial={{opacity: 0.3}}
+			role='presentation'
 			style={{width, height}}
 			transition={{
 				duration: 1.5,

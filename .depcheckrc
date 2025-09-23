@@ -1,0 +1,7 @@
+{
+  "ignores": [
+    "@vitest/coverage-v8",
+    "cross-env",
+    "tailwindcss"
+  ]
+}

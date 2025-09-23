@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 @theme {
-	--font-sans: "Noto Sans", sans-serif;
+	--font-sans: "Noto Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 
 /* Dark theme support */

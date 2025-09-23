@@ -11,17 +11,23 @@ import {useExerciseFiltering} from './hooks/useExerciseFiltering'
 
 export function ExerciseLibrary() {
 	const {t} = useTranslations(EXERCISE_LIBRARY_TRANSLATIONS)
-	const {data: exercises, isLoading, error} = useExercises()
+	const {data: exerciseLibrary, isLoading, error} = useExercises()
 
 	const {
+		filteredExercises,
 		selectedTags,
 		setSelectedTags,
 		selectedDifficulties,
 		setSelectedDifficulties,
-		filteredExercises,
-		allTags,
+		selectedLanguages,
+		setSelectedLanguages,
+		tagOptions,
+		difficultyOptions,
+		languageOptions,
 		clearFilters
-	} = useExerciseFiltering(exercises)
+	} = useExerciseFiltering(exerciseLibrary)
+
+	const errorProps = error instanceof Error ? {error} : undefined
 
 	return (
 		<>
@@ -30,19 +36,23 @@ export function ExerciseLibrary() {
 				<div className='mx-auto max-w-6xl px-4 py-8'>
 					<LibraryHeader t={t} />
 
-					{(isLoading || error) && <LoadingOrError {...(error && {error})} />}
+					{(isLoading || error) && <LoadingOrError {...errorProps} />}
 
-					{exercises && (
+					{exerciseLibrary && (
 						<>
 							<UserSettings t={t} />
 
 							<ExerciseFilters
-								allTags={allTags}
+								difficultyOptions={difficultyOptions}
+								languageOptions={languageOptions}
 								selectedDifficulties={selectedDifficulties}
+								selectedLanguages={selectedLanguages}
 								selectedTags={selectedTags}
 								setSelectedDifficulties={setSelectedDifficulties}
+								setSelectedLanguages={setSelectedLanguages}
 								setSelectedTags={setSelectedTags}
 								t={t}
+								tagOptions={tagOptions}
 							/>
 
 							<ExerciseGrid

@@ -9,7 +9,7 @@ interface HintSystemProps {
 	/** Основной текст (на греческом) */
 	primaryText: string
 	/** Подсказки на разных языках */
-	hints: Record<Language, string>
+	hints: Partial<Record<Language, string>>
 	/** Дополнительный класс для стилизации */
 	className?: string
 	/** Иконка для кнопки подсказки */
@@ -210,7 +210,7 @@ export function HintSystem({
 		setIsHintVisible(false)
 	)
 
-	const hintText = hints[userLanguage] || hints.en || ''
+	const hintText = hints[userLanguage] ?? hints.en ?? hints.ru ?? hints.el ?? ''
 	const hasHint = hintText.length > 0
 
 	const handleToggle = () => {
@@ -274,7 +274,7 @@ interface SimpleHintProps {
 
 export function SimpleHint({children, hint, className = ''}: SimpleHintProps) {
 	// Create Record<Language, string> for compatibility with HintSystem
-	const hints: Record<Language, string> = {
+	const hints: Partial<Record<Language, string>> = {
 		el: hint,
 		ru: hint,
 		en: hint

@@ -1,5 +1,7 @@
 import type {Language} from './settings'
 
+type I18nText = Partial<Record<Language, string>>
+
 // Base exercise types
 export type ExerciseType =
 	| 'word-form'
@@ -28,7 +30,7 @@ export const DEFAULT_EXERCISE_SETTINGS: ExerciseSettings = {
 export interface WordFormBlock {
 	id: string // unique block identifier
 	name: string // block name in Greek (main study language)
-	nameHintI18n?: Record<Language, string> // hints in user's language (optional)
+	nameHintI18n?: I18nText // hints in user's language (optional)
 	cases: WordFormCase[]
 }
 
@@ -36,10 +38,10 @@ export interface WordFormBlock {
 export interface WordFormCase {
 	id: string // unique case identifier
 	prompt: string // question in Greek (main study language)
-	promptHintI18n?: Record<Language, string> // hints in user's language (optional)
+	promptHintI18n?: I18nText // hints in user's language (optional)
 	correct: string[] // correct answers in Greek (multiple answers supported)
 	hint?: string // additional hint in Greek (optional)
-	hintI18n?: Record<Language, string> // additional hint in user's language (optional)
+	hintI18n?: I18nText // additional hint in user's language (optional)
 }
 
 // Complete exercise structure
@@ -48,9 +50,9 @@ export interface WordFormExercise {
 	id: string
 	type: 'word-form'
 	title: string // title in Greek
-	titleI18n?: Record<Language, string> // title in interface languages (optional)
+	titleI18n?: I18nText // title in interface languages (optional)
 	description: string // description in Greek
-	descriptionI18n?: Record<Language, string> // description in interface languages (optional)
+	descriptionI18n?: I18nText // description in interface languages (optional)
 	tags?: string[] // filtering tags (optional, defaults to empty array)
 	difficulty: Difficulty
 	estimatedTimeMinutes: number // estimated completion time
@@ -80,9 +82,9 @@ export interface ExerciseMetadata {
 	id: string
 	type: ExerciseType
 	title: string
-	titleI18n?: Record<Language, string>
+	titleI18n?: I18nText
 	description: string
-	descriptionI18n?: Record<Language, string>
+	descriptionI18n?: I18nText
 	tags: string[]
 	difficulty: Difficulty
 	estimatedTimeMinutes: number
@@ -136,9 +138,9 @@ export interface WordFormExerciseJSON {
 	id: string
 	type: 'word-form'
 	title: string
-	titleI18n?: Record<Language, string>
+	titleI18n?: I18nText
 	description: string
-	descriptionI18n?: Record<Language, string>
+	descriptionI18n?: I18nText
 	tags: string[]
 	difficulty: Difficulty
 	estimatedTimeMinutes: number

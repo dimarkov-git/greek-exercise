@@ -47,11 +47,12 @@ const createNavigationItems = (t: (key: string) => string) => [
 ]
 
 interface MobileMenuProps {
+	id: string
 	isOpen: boolean
 	onClose: () => void
 }
 
-export function MobileMenu({isOpen, onClose}: MobileMenuProps) {
+export function MobileMenu({id, isOpen, onClose}: MobileMenuProps) {
 	const {t} = useTranslations(MOBILE_MENU_TRANSLATIONS)
 	const location = useLocation()
 
@@ -70,6 +71,7 @@ export function MobileMenu({isOpen, onClose}: MobileMenuProps) {
 					className='border-gray-200 border-t md:hidden dark:border-gray-700'
 					data-testid='mobile-menu'
 					exit={{opacity: 0, height: 0}}
+					id={id}
 					initial={{opacity: 0, height: 0}}
 					transition={{duration: 0.2}}
 				>
