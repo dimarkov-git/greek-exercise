@@ -1,3 +1,4 @@
+import {environment} from '@/config/environment'
 import {resolveFallbackResponse} from './fallbacks'
 
 const RETRYABLE_STATUS_CODES = new Set([408, 425, 429, 500, 502, 503, 504])
@@ -278,6 +279,11 @@ export async function requestJson<
 	try {
 		return await attemptRequest(0)
 	} catch (error) {
+		if (environment.isDevelopment) {
+			// biome-ignore lint/suspicious/noConsole: development diagnostics
+			console.warn('Attempt request failed, use fallback', error)
+		}
+
 		try {
 			const url = new URL(input, window.location.origin)
 			const fallback = resolveFallbackResponse({

@@ -27,7 +27,7 @@ export function QueryDevtools() {
 			})
 			.catch(error => {
 				if (environment.isDevelopment) {
-					// biome-ignore lint/suspicious/noConsole: development debugging aid
+					// biome-ignore lint/suspicious/noConsole: development diagnostics
 					console.warn('Failed to load React Query Devtools', error)
 				}
 			})
