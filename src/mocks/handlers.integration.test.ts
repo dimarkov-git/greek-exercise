@@ -48,16 +48,12 @@ describe('MSW handlers', () => {
 
 		const response = await httpClient.requestJson<{
 			translations: Record<string, string>
-		}>(
-			'/api/translations?lang=ru&keys=footer.copyright%2Cfooter.madeWith%2Cfooter.github',
-			{
-				retry: 0
-			}
-		)
+		}>('/api/translations?lang=ru&keys=footer.copyright%2Cfooter.github', {
+			retry: 0
+		})
 
 		expect(response.translations).toMatchObject({
 			'footer.copyright': '© 2025 Учим греческий. Все права защищены.',
-			'footer.madeWith': 'Сделано Денисом с любовью',
 			'footer.github': 'GitHub'
 		})
 		expect(fallbackSpy).not.toHaveBeenCalled()
