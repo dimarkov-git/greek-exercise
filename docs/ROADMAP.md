@@ -76,26 +76,17 @@ This document captures the refactor-first plan for aligning the Learn Greek appl
 2. ✅ Add unit tests for the settings store, translation hook, exercise state machine, and filtering selectors; use fake timers where required.
 3. ✅ Extend Playwright scenarios to cover full exercise completion (correct/incorrect answers, hints, navigation, settings persistence) following page object patterns.
 
-### Phase 5 – Performance, DX, and governance
-
-1. Measure bundle sizes, apply route-based code splitting, and lazy-load heavy exercise assets to stay within budgets.
-2. Enhance CI with parallel lint/test/e2e jobs, coverage reports, and flake tracking (<1%) while keeping runtimes manageable.
-3. Update contributor docs, add accessibility/performance checklists, and ensure the changelog reflects refactor milestones.
-
-## 5. Testing coverage strategy
+### Phase 5 – Testing coverage strategy
 
 - **Unit/integration**: settings persistence, translation registry, exercise reducers/selectors, API adapters, layout components.
 - **E2E**: navigation smoke, exercise workflow (success/failure/hints), settings persistence across reloads, translation switching, responsive layout checks.
 - **Tooling**: configure coverage gates (≥90% baseline, rising toward 100% for core modules), capture Playwright traces on failure, and monitor flake statistics in CI.
 
-## 6. Documentation deliverables
+## Phase 6 – Performance, DX, and governance, Documentation deliverables
 
+- Measure bundle sizes, apply route-based code splitting, and lazy-load heavy exercise assets to stay within budgets.
+- Enhance CI with parallel lint/test/e2e jobs, coverage reports, and flake tracking (<1%) while keeping runtimes manageable.
+- Update contributor docs, add accessibility/performance checklists, and ensure the changelog reflects refactor milestones.
 - Publish this refactor roadmap under `docs/ROADMAP.md` and link it from `docs/README.md` and the root `README.md` for discoverability.
 - Provide companion guides: environment bootstrapping, translation workflow, exercise module conventions, and testing strategy updates.
 - Keep all documentation in English with sentence-case headings, mirroring the rest of the docs set.
-
-## 7. Immediate next steps
-
-1. Update documentation indexes to point to the refreshed roadmap.
-2. Schedule working sessions to execute each phase sequentially and monitor metrics against the guardrails.
-3. Track progress through GitHub issues or project boards to keep the refactor transparent.
