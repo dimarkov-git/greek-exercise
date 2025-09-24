@@ -1,6 +1,6 @@
 import {expect, type Locator, type Page} from '@playwright/test'
 import {TestHelpers} from '../fixtures/helpers'
-import {ROUTES, SELECTORS} from '../fixtures/selectors'
+import {DATA_ATTRIBUTES, ROUTES, SELECTORS} from '../fixtures/selectors'
 
 export class HomePage {
 	private readonly page: Page
@@ -67,8 +67,10 @@ export class HomePage {
 	}
 
 	async expectTheme(expectedTheme: string) {
-		const currentTheme = await this.helpers.getCurrentTheme()
-		expect(currentTheme).toBe(expectedTheme)
+		await expect(this.page.locator('html')).toHaveAttribute(
+			DATA_ATTRIBUTES.theme,
+			expectedTheme
+		)
 	}
 
 	async expectUILanguage(expectedLanguage: string) {

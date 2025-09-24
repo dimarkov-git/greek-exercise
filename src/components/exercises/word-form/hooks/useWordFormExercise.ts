@@ -7,6 +7,7 @@ import {
 	useReducer,
 	useRef
 } from 'react'
+import {environment} from '@/config/environment'
 import {usePulseEffect} from '@/hooks/usePulseEffect'
 import type {
 	ExerciseEvent,
@@ -41,6 +42,24 @@ interface UseWordFormExerciseProps {
 				accuracy?: number
 		  }) => void)
 		| undefined
+}
+
+interface WordFormTestControls {
+	complete: () => void
+}
+
+export const WORD_FORM_TEST_CONTROL_KEY = '__wordFormTest__' as const
+
+type AutomationTestWindow = typeof window & {
+	[WORD_FORM_TEST_CONTROL_KEY]?: WordFormTestControls
+}
+
+interface AutomationStateSnapshot {
+	exerciseId: string
+	totalCases: number
+	startedAt: number
+	correctAnswers: number
+	incorrectAnswers: number
 }
 
 export interface WordFormViewState {
@@ -269,12 +288,18 @@ function useStatusEffects({
 	useEffect(() => {
 		const {exercise, status, autoAdvanceEnabled} = state
 		const settings = getExerciseSettings(exercise)
+		const isAutomation = environment.isAutomationEnvironment
+		const autoAdvanceDelay = isAutomation
+			? Math.min(settings.autoAdvanceDelayMs, 50)
+			: settings.autoAdvanceDelayMs
+		const requireContinueDelay = isAutomation ? 50 : 1000
+		const requireCorrectionDelay = isAutomation ? 50 : 2000
 
 		if (status === 'CORRECT_ANSWER') {
 			if (autoAdvanceEnabled) {
 				const timeout = setTimeout(() => {
 					handleContinue()
-				}, settings.autoAdvanceDelayMs)
+				}, autoAdvanceDelay)
 
 				return () => {
 					clearTimeout(timeout)
@@ -283,7 +308,7 @@ function useStatusEffects({
 
 			const timeout = setTimeout(() => {
 				dispatch({type: 'REQUIRE_CONTINUE'})
-			}, 1000)
+			}, requireContinueDelay)
 
 			return () => {
 				clearTimeout(timeout)
@@ -293,7 +318,7 @@ function useStatusEffects({
 		if (status === 'WRONG_ANSWER') {
 			const timeout = setTimeout(() => {
 				dispatch({type: 'REQUIRE_CORRECTION'})
-			}, 2000)
+			}, requireCorrectionDelay)
 
 			return () => {
 				clearTimeout(timeout)
@@ -432,6 +457,56 @@ function useWordFormHandlers({
 	}
 }
 
+function useAutomationTestControls({
+	snapshot,
+	dispatch,
+	onComplete
+}: {
+	snapshot: AutomationStateSnapshot
+	dispatch: Dispatch<WordFormMachineAction>
+	onComplete: UseWordFormExerciseProps['onComplete']
+}) {
+	useEffect(() => {
+		if (!environment.isAutomationEnvironment || typeof window === 'undefined') {
+			return
+		}
+
+		const automationWindow = window as AutomationTestWindow
+
+		const complete = () => {
+			const timeSpentMs = Date.now() - snapshot.startedAt
+			const accuracy =
+				snapshot.totalCases > 0
+					? Math.round((snapshot.correctAnswers / snapshot.totalCases) * 100)
+					: undefined
+
+			dispatch({type: 'COMPLETE'})
+			onComplete?.({
+				exerciseId: snapshot.exerciseId,
+				totalCases: snapshot.totalCases,
+				correctAnswers: snapshot.correctAnswers,
+				incorrectAnswers: snapshot.incorrectAnswers,
+				timeSpentMs,
+				...(accuracy !== undefined ? {accuracy} : {})
+			})
+		}
+
+		automationWindow[WORD_FORM_TEST_CONTROL_KEY] = {complete}
+
+		return () => {
+			delete automationWindow[WORD_FORM_TEST_CONTROL_KEY]
+		}
+	}, [
+		dispatch,
+		onComplete,
+		snapshot.correctAnswers,
+		snapshot.exerciseId,
+		snapshot.incorrectAnswers,
+		snapshot.startedAt,
+		snapshot.totalCases
+	])
+}
+
 interface UseWordFormViewModelArgs {
 	state: WordFormMachineState
 	currentBlock: ReturnType<typeof selectCurrentBlock>
@@ -520,6 +595,18 @@ export function useWordFormExercise({
 		progress,
 		stats,
 		hints
+	})
+
+	useAutomationTestControls({
+		snapshot: {
+			exerciseId: state.exercise.id,
+			totalCases: state.totalCases,
+			startedAt: state.startedAt,
+			correctAnswers: state.stats.correct,
+			incorrectAnswers: state.stats.incorrect
+		},
+		dispatch,
+		onComplete
 	})
 
 	return {

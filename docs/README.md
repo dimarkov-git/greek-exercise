@@ -47,3 +47,8 @@ API documentation and data models:
 - [Overview](reports/phase-3/overview.md) – Translation registry architecture, scope, dependencies, and risk log.
 - [Execution report](reports/phase-3/execution-report.md) – Lint/test/e2e outcomes, coverage, and change summary.
 - [ADRs](reports/phase-3/adrs) – Decisions covering generated dictionaries and settings synchronisation.
+
+### Phase 4 artefacts
+
+- [Overview](reports/phase-4/overview.md) – Testing/QA expansion scope, goals, dependencies, and risk mitigation.
+- [ADRs](reports/phase-4/adrs) – Decisions for HTTP fallback governance and MSW decoupling.

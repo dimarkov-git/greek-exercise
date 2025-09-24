@@ -1,5 +1,11 @@
 # Changelog
 
+## 2025-09-23
+
+- Completed Phase 4 testing/QA expansion: converted legacy specs, added HTTP fallback controls, and expanded exercise/responsive Playwright flows.
+- Added deterministic Vitest coverage for the HTTP client, settings store, word-form state machine, utilities, and Valibot schemas.
+- Published Phase 4 overview + ADR, refreshed testing guide, and marked roadmap progress; MSW/fallback matrix now verified in CI.
+
 ## 2025-02-14
 
 - Completed Phase 3 i18n/settings modernization: generated translation registry, typed dictionaries, and deterministic fallbacks.

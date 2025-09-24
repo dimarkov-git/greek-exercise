@@ -1,6 +1,9 @@
 import type {Page} from '@playwright/test'
 import {DATA_ATTRIBUTES, ROUTES, SELECTORS} from './selectors'
-import {TIMEOUTS, VIEWPORT_SIZES} from './test-data'
+import {EXERCISE_STATUS, TIMEOUTS, VIEWPORT_SIZES} from './test-data'
+
+type ExerciseStatusValue =
+	(typeof EXERCISE_STATUS)[keyof typeof EXERCISE_STATUS]
 
 // Regex constants for performance
 const START_EXERCISE_REGEX = /start exercise/i
@@ -72,9 +75,11 @@ export class TestHelpers {
 	 * Get exercise input status
 	 */
 	async getInputStatus(): Promise<string | null> {
-		return await this.page
-			.locator(SELECTORS.exerciseInput)
-			.getAttribute(DATA_ATTRIBUTES.inputStatus)
+		const input = this.page.locator(SELECTORS.exerciseInput)
+		if ((await input.count()) === 0) {
+			return null
+		}
+		return await input.getAttribute(DATA_ATTRIBUTES.inputStatus)
 	}
 
 	/**
@@ -151,14 +156,60 @@ export class TestHelpers {
 	 * Wait for auto advance to complete
 	 */
 	async waitForAutoAdvance() {
-		await this.wait(TIMEOUTS.autoAdvance, 'auto advance')
+		const progressLocator = this.page.locator(SELECTORS.progressText)
+		const initialProgress = await progressLocator.textContent()
+
+		try {
+			await this.page.waitForFunction(
+				({selector, initial}) => {
+					const element = document.querySelector<HTMLElement>(selector)
+					if (!element) {
+						return true // Progress removed (exercise completed)
+					}
+
+					const current = element.textContent?.trim() ?? ''
+					const previous = initial?.trim() ?? ''
+					return current !== previous
+				},
+				{selector: SELECTORS.progressText, initial: initialProgress},
+				{timeout: TIMEOUTS.autoAdvance}
+			)
+		} catch {
+			await this.wait(TIMEOUTS.fast, 'auto advance fallback')
+		}
 	}
 
 	/**
 	 * Wait for answer processing
 	 */
-	async waitForAnswerProcessing() {
-		await this.wait(TIMEOUTS.normal, 'answer processing')
+	async waitForAnswerProcessing({
+		statuses
+	}: {
+		statuses?: readonly ExerciseStatusValue[]
+	} = {}) {
+		const defaultStatuses: ExerciseStatusValue[] = [
+			EXERCISE_STATUS.correctAnswer,
+			EXERCISE_STATUS.requireCorrection,
+			EXERCISE_STATUS.requireContinue,
+			EXERCISE_STATUS.waitingInput,
+			EXERCISE_STATUS.completed
+		]
+
+		const targetStatuses = [...(statuses ?? defaultStatuses)]
+
+		await this.page.waitForFunction(
+			({selector, statuses: expected}) => {
+				const element = document.querySelector<HTMLElement>(selector)
+				if (!element) {
+					return true
+				}
+
+				const status = element.getAttribute('data-status') ?? ''
+				return expected.includes(status)
+			},
+			{selector: SELECTORS.exerciseInput, statuses: targetStatuses},
+			{timeout: TIMEOUTS.slow}
+		)
 	}
 
 	/**

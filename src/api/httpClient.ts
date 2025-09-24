@@ -229,12 +229,67 @@ async function handleFailure<TResponse>(
 	throw new Error(`Request to ${context.input} failed with an unknown error`)
 }
 
+function attemptFallback<TResponse, TBody extends JsonValue | undefined>({
+	error,
+	fallbackEnabled,
+	input,
+	method,
+	body
+}: {
+	error: unknown
+	fallbackEnabled: boolean
+	input: string
+	method: string
+	body: TBody | undefined
+}): TResponse {
+	if (!fallbackEnabled) {
+		throw error
+	}
+
+	if (environment.isDevelopment) {
+		// biome-ignore lint/suspicious/noConsole: development diagnostics
+		console.warn('Attempt request failed, use fallback', error)
+	}
+
+	try {
+		const url = new URL(input, window.location.origin)
+		const fallbackResult = resolveFallbackResponse({
+			url,
+			method,
+			body
+		})
+
+		if (fallbackResult === undefined) {
+			throw error
+		}
+
+		if (fallbackResult.type === 'error') {
+			throw new HttpError(fallbackResult.message, {
+				status: fallbackResult.status,
+				statusText: fallbackResult.message,
+				url: url.toString(),
+				method,
+				body
+			})
+		}
+
+		return fallbackResult.data as TResponse
+	} catch (fallbackError) {
+		if (fallbackError instanceof Error) {
+			throw fallbackError
+		}
+
+		throw error
+	}
+}
+
 export interface JsonRequestInit<
 	TBody extends JsonValue | undefined = JsonValue
 > extends Omit<RequestInit, 'body'> {
 	body?: TBody
 	retry?: number
 	retryDelayMs?: number
+	fallback?: boolean
 }
 
 export async function requestJson<
@@ -248,6 +303,7 @@ export async function requestJson<
 		retryDelayMs = DEFAULT_RETRY_DELAY_MS,
 		headers,
 		method = 'GET',
+		fallback: fallbackOverride,
 		...init
 	}: JsonRequestInit<TBody> = {}
 ): Promise<TResponse> {
@@ -267,6 +323,8 @@ export async function requestJson<
 		retryDelayMs
 	}
 
+	const fallbackEnabled = fallbackOverride ?? environment.enableHttpFallback
+
 	const attemptRequest = async (attempt: number): Promise<TResponse> => {
 		try {
 			const response = await fetch(input, requestInitFactory())
@@ -279,40 +337,12 @@ export async function requestJson<
 	try {
 		return await attemptRequest(0)
 	} catch (error) {
-		if (environment.isDevelopment) {
-			// biome-ignore lint/suspicious/noConsole: development diagnostics
-			console.warn('Attempt request failed, use fallback', error)
-		}
-
-		try {
-			const url = new URL(input, window.location.origin)
-			const fallback = resolveFallbackResponse({
-				url,
-				method,
-				body
-			})
-
-			if (fallback === undefined) {
-				throw error
-			}
-
-			if (fallback.type === 'error') {
-				throw new HttpError(fallback.message, {
-					status: fallback.status,
-					statusText: fallback.message,
-					url: url.toString(),
-					method,
-					body
-				})
-			}
-
-			return fallback.data as TResponse
-		} catch (fallbackError) {
-			if (fallbackError instanceof Error) {
-				throw fallbackError
-			}
-
-			throw error
-		}
+		return attemptFallback<TResponse, TBody>({
+			error,
+			fallbackEnabled,
+			input,
+			method,
+			body
+		})
 	}
 }
