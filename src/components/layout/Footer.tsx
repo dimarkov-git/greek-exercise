@@ -3,7 +3,8 @@ import {useTranslations} from '@/hooks/useTranslations'
 import {footerTranslations} from '@/i18n/dictionaries'
 
 const copyrightKey = 'footer.copyright'
-const madeWithKey = 'footer.madeWith'
+const madeWithKey = 'footer.madeWith' // madeWith always in Greek
+const repoURL = 'https://github.com/dimarkov-git/greek-exercise'
 
 export function Footer() {
 	const {t, isLoading} = useTranslations(footerTranslations)
@@ -29,7 +30,7 @@ export function Footer() {
 						<a
 							aria-label={t('footer.github')}
 							className='text-gray-400 transition-colors hover:text-gray-300'
-							href='https://github.com/dimarkov-git/greek-exercise'
+							href={repoURL}
 							rel='noopener noreferrer'
 							target='_blank'
 						>
