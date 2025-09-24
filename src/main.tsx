@@ -20,10 +20,6 @@ async function startMockServiceWorker() {
 
 	const {worker} = await import('./mocks/browser')
 
-	if (navigator?.serviceWorker?.controller) {
-		return
-	}
-
 	const startPromise = worker.start({
 		serviceWorker: {
 			url: `${environment.baseUrl}mockServiceWorker.js`
