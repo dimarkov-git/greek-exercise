@@ -24,7 +24,7 @@ describe('useSettingsSync', () => {
 		const {unmount} = renderHook(() => useSettingsSync())
 
 		expect(document.documentElement.getAttribute('data-theme')).toBe('light')
-		expect(document.documentElement.lang).toBe('el')
+		expect(document.documentElement.lang).toBe('en')
 
 		unmount()
 	})

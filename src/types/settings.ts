@@ -26,7 +26,7 @@ export const UI_LANGUAGES: LanguageOption[] = [
 ]
 
 export const DEFAULT_SETTINGS: AppSettings = {
-	uiLanguage: 'el',
+	uiLanguage: 'en',
 	userLanguage: 'en',
 	theme: 'light'
 }
