@@ -8,6 +8,71 @@ type ExerciseStatusValue =
 // Regex constants for performance
 const START_EXERCISE_REGEX = /start exercise/i
 
+export interface ProgressSnapshot {
+	readonly progressCurrent: string | null
+	readonly progressText: string
+	readonly inputStatus: string | null
+}
+
+interface AutoAdvanceWaitArgs {
+	readonly selector: string
+	readonly attributeName: string
+	readonly baselineAttribute: string | null
+	readonly baselineText: string
+	readonly inputSelector: string
+	readonly statusAttribute: string
+	readonly baselineStatus: string | null
+	readonly targetStatuses: readonly string[]
+}
+
+function autoAdvanceCompleted({
+	selector,
+	attributeName,
+	baselineAttribute,
+	baselineText,
+	inputSelector,
+	statusAttribute,
+	baselineStatus,
+	targetStatuses
+}: AutoAdvanceWaitArgs): boolean {
+	const progressElement = document.querySelector<HTMLElement>(selector)
+	if (!progressElement) {
+		return true
+	}
+
+	const attributeValue = progressElement.getAttribute(attributeName)
+	const attributeChanged =
+		attributeValue !== null &&
+		(baselineAttribute === null || attributeValue !== baselineAttribute)
+
+	if (attributeChanged) {
+		return true
+	}
+
+	const currentText = progressElement.textContent?.trim() ?? ''
+	if (currentText !== baselineText) {
+		return true
+	}
+
+	const inputElement = document.querySelector<HTMLElement>(inputSelector)
+	if (!inputElement) {
+		return true
+	}
+
+	const currentStatus = inputElement.getAttribute(statusAttribute)
+	if (currentStatus === null) {
+		return false
+	}
+
+	if (baselineStatus === null) {
+		return targetStatuses.includes(currentStatus)
+	}
+
+	return (
+		currentStatus !== baselineStatus && targetStatuses.includes(currentStatus)
+	)
+}
+
 /**
  * Common test helper functions for DRY test code
  */
@@ -152,31 +217,63 @@ export class TestHelpers {
 		await this.page.locator(SELECTORS.exerciseInput).waitFor()
 	}
 
+	async getProgressSnapshot(): Promise<ProgressSnapshot | null> {
+		const progressLocator = this.page.locator(SELECTORS.progressText)
+
+		if ((await progressLocator.count()) === 0) {
+			return null
+		}
+
+		const [progressCurrent, progressTextContent] = await Promise.all([
+			progressLocator.getAttribute(DATA_ATTRIBUTES.progressCurrent),
+			progressLocator.textContent()
+		])
+
+		const inputLocator = this.page.locator(SELECTORS.exerciseInput)
+		const inputStatus = (await inputLocator.count())
+			? await inputLocator.getAttribute(DATA_ATTRIBUTES.inputStatus)
+			: null
+
+		return {
+			progressCurrent,
+			progressText: progressTextContent?.trim() ?? '',
+			inputStatus
+		}
+	}
+
 	/**
 	 * Wait for auto advance to complete
 	 */
-	async waitForAutoAdvance() {
+	async waitForAutoAdvance(baseline?: ProgressSnapshot | null) {
 		const progressLocator = this.page.locator(SELECTORS.progressText)
-		const initialProgress = await progressLocator.textContent()
 
-		try {
-			await this.page.waitForFunction(
-				({selector, initial}) => {
-					const element = document.querySelector<HTMLElement>(selector)
-					if (!element) {
-						return true // Progress removed (exercise completed)
-					}
-
-					const current = element.textContent?.trim() ?? ''
-					const previous = initial?.trim() ?? ''
-					return current !== previous
-				},
-				{selector: SELECTORS.progressText, initial: initialProgress},
-				{timeout: TIMEOUTS.autoAdvance}
-			)
-		} catch {
-			await this.wait(TIMEOUTS.fast, 'auto advance fallback')
+		if ((await progressLocator.count()) === 0) {
+			return
 		}
+
+		const snapshot = baseline ?? (await this.getProgressSnapshot())
+		if (!snapshot) {
+			return
+		}
+
+		await this.page.waitForFunction(
+			autoAdvanceCompleted,
+			{
+				selector: SELECTORS.progressText,
+				attributeName: DATA_ATTRIBUTES.progressCurrent,
+				baselineAttribute: snapshot.progressCurrent,
+				baselineText: snapshot.progressText,
+				inputSelector: SELECTORS.exerciseInput,
+				statusAttribute: DATA_ATTRIBUTES.inputStatus,
+				baselineStatus: snapshot.inputStatus,
+				targetStatuses: [
+					EXERCISE_STATUS.waitingInput,
+					EXERCISE_STATUS.completed,
+					EXERCISE_STATUS.requireContinue
+				]
+			},
+			{timeout: TIMEOUTS.autoAdvance}
+		)
 	}
 
 	/**

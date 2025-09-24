@@ -1,5 +1,5 @@
 import {expect, type Locator, type Page} from '@playwright/test'
-import {TestHelpers} from '../fixtures/helpers'
+import {type ProgressSnapshot, TestHelpers} from '../fixtures/helpers'
 import {SELECTORS} from '../fixtures/selectors'
 import {EXERCISE_STATUS, TIMEOUTS} from '../fixtures/test-data'
 
@@ -14,6 +14,7 @@ const COMPLETION_MESSAGE_REGEX =
 export class ExercisePage {
 	private readonly page: Page
 	private readonly helpers: TestHelpers
+	private progressBaseline: ProgressSnapshot | null = null
 
 	constructor(page: Page) {
 		this.page = page
@@ -62,10 +63,12 @@ export class ExercisePage {
 
 	async submitAnswer(answer: string) {
 		await this.fillInput(answer)
+		this.progressBaseline = await this.helpers.getProgressSnapshot()
 		await this.input.press('Enter')
 	}
 
 	async clickSubmitButton() {
+		this.progressBaseline = await this.helpers.getProgressSnapshot()
 		await this.submitButton.click()
 	}
 
@@ -82,7 +85,8 @@ export class ExercisePage {
 	}
 
 	async waitForAutoAdvance() {
-		await this.helpers.waitForAutoAdvance()
+		await this.helpers.waitForAutoAdvance(this.progressBaseline)
+		this.progressBaseline = null
 	}
 
 	async waitForAnswerProcessing(statuses?: readonly ExerciseStatusValue[]) {

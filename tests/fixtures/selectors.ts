@@ -68,7 +68,9 @@ export const DATA_ATTRIBUTES = {
 	inputStatus: 'data-status',
 	autoAdvanceEnabled: 'data-enabled',
 	userLangSelected: 'data-selected',
-	dropdownOpen: 'data-is-open'
+	dropdownOpen: 'data-is-open',
+	progressCurrent: 'data-progress-current',
+	progressTotal: 'data-progress-total'
 } as const
 
 /**
