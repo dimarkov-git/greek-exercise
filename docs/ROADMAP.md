@@ -79,7 +79,7 @@ This document captures the refactor-first plan for aligning the Learn Greek appl
 ### Phase 5 – Testing coverage strategy
 
 - **Unit/integration**: settings persistence, translation registry, exercise reducers/selectors, API adapters, layout components.
-- **E2E**: navigation smoke, exercise workflow (success/failure/hints), settings persistence across reloads, translation switching, responsive layout checks.
+- **E2E**: (tests folder) - skip for now
 - **Tooling**: configure coverage gates (≥90% baseline, rising toward 100% for core modules), capture Playwright traces on failure, and monitor flake statistics in CI.
 
 ## Phase 6 – Performance, DX, and governance, Documentation deliverables
