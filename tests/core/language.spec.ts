@@ -10,12 +10,12 @@ test.beforeEach(async ({context}) => {
 })
 
 test.describe('UI Language - Default behavior', () => {
-	test('should start with default Greek UI language', async ({page}) => {
+	test('should start with default English UI language', async ({page}) => {
 		const homePage = new HomePage(page)
 
 		await homePage.goto()
-		await homePage.expectUILanguage(LANGUAGES.ui.greek)
-		await homePage.expectHeadingText(UI_TEXT.headings.greek)
+		await homePage.expectUILanguage(LANGUAGES.ui.english)
+		await homePage.expectHeadingText(UI_TEXT.headings.english)
 	})
 })
 
@@ -26,8 +26,6 @@ test.describe('UI Language - Desktop switching', () => {
 		await page.setViewportSize(VIEWPORT_SIZES.desktop)
 		await homePage.goto()
 
-		// Start by switching to English (since Greek is default)
-		await homePage.selectUILanguage(LANGUAGES.ui.english)
 		await homePage.expectUILanguage(LANGUAGES.ui.english)
 		await homePage.expectHeadingText(UI_TEXT.headings.english)
 
@@ -35,10 +33,13 @@ test.describe('UI Language - Desktop switching', () => {
 		await homePage.expectUILanguage(LANGUAGES.ui.russian)
 		await homePage.expectHeadingText(UI_TEXT.headings.russian)
 
-		// Switch back to Greek
 		await homePage.selectUILanguage(LANGUAGES.ui.greek)
 		await homePage.expectUILanguage(LANGUAGES.ui.greek)
 		await homePage.expectHeadingText(UI_TEXT.headings.greek)
+
+		await homePage.selectUILanguage(LANGUAGES.ui.english)
+		await homePage.expectUILanguage(LANGUAGES.ui.english)
+		await homePage.expectHeadingText(UI_TEXT.headings.english)
 	})
 })
 
@@ -67,15 +68,15 @@ test.describe('UI Language - Mobile switching', () => {
 		// Open language dropdown
 		await mobileLanguageDropdown.click()
 
-		// Select English option
-		const englishOption = page.locator(
-			SELECTORS.uiLanguageOption(LANGUAGES.ui.english)
+		// Select Greek option
+		const greekOption = page.locator(
+			SELECTORS.uiLanguageOption(LANGUAGES.ui.greek)
 		)
-		await englishOption.click()
+		await greekOption.click()
 
 		// Verify language change
-		await homePage.expectUILanguage(LANGUAGES.ui.english)
-		await homePage.expectHeadingText(UI_TEXT.headings.english)
+		await homePage.expectUILanguage(LANGUAGES.ui.greek)
+		await homePage.expectHeadingText(UI_TEXT.headings.greek)
 	})
 })
 
@@ -88,13 +89,13 @@ test.describe('UI Language - Persistence', () => {
 		// Use desktop viewport for persistence test
 		await page.setViewportSize(VIEWPORT_SIZES.desktop)
 		await homePage.goto()
-		await homePage.selectUILanguage(LANGUAGES.ui.english)
-		await homePage.expectUILanguage(LANGUAGES.ui.english)
+		await homePage.selectUILanguage(LANGUAGES.ui.russian)
+		await homePage.expectUILanguage(LANGUAGES.ui.russian)
 
 		await page.reload()
 		await homePage.expectPageLoaded()
 
-		await homePage.expectUILanguage(LANGUAGES.ui.english)
-		await homePage.expectHeadingText(UI_TEXT.headings.english)
+		await homePage.expectUILanguage(LANGUAGES.ui.russian)
+		await homePage.expectHeadingText(UI_TEXT.headings.russian)
 	})
 })

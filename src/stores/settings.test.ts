@@ -1,5 +1,5 @@
-import {afterEach, beforeEach, expect, it} from 'vitest'
-import {useSettingsStore} from '@/stores/settings'
+import {afterEach, beforeEach, expect, it, vi} from 'vitest'
+import {resolveInitialSettings, useSettingsStore} from '@/stores/settings'
 import {DEFAULT_SETTINGS, type Language, type Theme} from '@/types/settings'
 
 const STORAGE_KEY = 'greek-exercise-settings'
@@ -64,4 +64,83 @@ it('updates theme and user language together then resets to defaults', () => {
 
 	expect(parsed.state?.theme).toBe(DEFAULT_SETTINGS.theme)
 	expect(parsed.state?.userLanguage).toBe(DEFAULT_SETTINGS.userLanguage)
+})
+
+it('resolves initial settings from browser preferences when available', () => {
+	const originalNavigator = window.navigator
+	const originalMatchMedia = window.matchMedia
+
+	const mockNavigator = {
+		...originalNavigator,
+		languages: ['ru-RU', 'en-US'],
+		language: 'ru-RU'
+	}
+
+	const mockMatchMedia = vi
+		.fn<(query: string) => MediaQueryList>()
+		.mockImplementation(query => ({
+			matches: query === '(prefers-color-scheme: dark)',
+			media: query,
+			onchange: null,
+			addListener: vi.fn(),
+			removeListener: vi.fn(),
+			addEventListener: vi.fn(),
+			removeEventListener: vi.fn(),
+			dispatchEvent: vi.fn(() => true)
+		}))
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: mockNavigator
+	})
+
+	Object.defineProperty(window, 'matchMedia', {
+		configurable: true,
+		value: mockMatchMedia
+	})
+
+	const settings = resolveInitialSettings()
+
+	expect(settings.theme).toBe('dark')
+	expect(settings.uiLanguage).toBe('ru')
+	expect(settings.userLanguage).toBe('ru')
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: originalNavigator
+	})
+
+	if (originalMatchMedia) {
+		Object.defineProperty(window, 'matchMedia', {
+			configurable: true,
+			value: originalMatchMedia
+		})
+	} else {
+		Reflect.deleteProperty(window, 'matchMedia')
+	}
+})
+
+it('falls back to English when browser languages are unsupported', () => {
+	const originalNavigator = window.navigator
+
+	const mockNavigator = {
+		...originalNavigator,
+		languages: ['de-DE', 'fr-FR'],
+		language: 'de-DE'
+	}
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: mockNavigator
+	})
+
+	const settings = resolveInitialSettings()
+
+	expect(settings.uiLanguage).toBe('en')
+	expect(settings.userLanguage).toBe('en')
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: originalNavigator
+	})
 })
