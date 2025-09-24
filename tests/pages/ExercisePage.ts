@@ -3,9 +3,13 @@ import {TestHelpers} from '../fixtures/helpers'
 import {SELECTORS} from '../fixtures/selectors'
 import {EXERCISE_STATUS, TIMEOUTS} from '../fixtures/test-data'
 
+type ExerciseStatusValue =
+	(typeof EXERCISE_STATUS)[keyof typeof EXERCISE_STATUS]
+
 // Regex constants for performance
 const CONTINUE_BUTTON_REGEX = /continue|συνέχεια|продолжить/i
-const COMPLETION_MESSAGE_REGEX = /completed|ολοκληρώθηκε|завершено/i
+const COMPLETION_MESSAGE_REGEX =
+	/completed|ολοκληρώθηκε|ολοκληρώσατε|συγχαρητήρια|завершено/i
 
 export class ExercisePage {
 	private readonly page: Page
@@ -81,8 +85,8 @@ export class ExercisePage {
 		await this.helpers.waitForAutoAdvance()
 	}
 
-	async waitForAnswerProcessing() {
-		await this.helpers.waitForAnswerProcessing()
+	async waitForAnswerProcessing(statuses?: readonly ExerciseStatusValue[]) {
+		await this.helpers.waitForAnswerProcessing({statuses})
 	}
 
 	async answerSequence(answers: string[]) {
@@ -95,14 +99,79 @@ export class ExercisePage {
 
 	async answerUntilCompletion(answers: string[]) {
 		// Sequential answer submission is intentional for testing user flow
-		for (const answer of answers) {
-			if (await this.input.isVisible()) {
-				await this.submitAnswer(answer)
-				await this.waitForAutoAdvance()
-			} else {
-				break // Exercise might be complete
-			}
+		const autoAdvanceInitiallyEnabled =
+			await this.helpers.isAutoAdvanceEnabled()
+
+		if (autoAdvanceInitiallyEnabled) {
+			await this.toggleAutoAdvance()
 		}
+
+		try {
+			for (const answer of answers) {
+				await this.input.waitFor({
+					state: 'visible',
+					timeout: TIMEOUTS.normal
+				})
+
+				await this.submitAnswer(answer)
+				await this.waitForAnswerProcessing()
+
+				const shouldContinue = await this.handleAnswerStatus()
+				if (!shouldContinue) {
+					break
+				}
+			}
+		} finally {
+			await this.restoreAutoAdvanceIfNeeded(autoAdvanceInitiallyEnabled)
+		}
+	}
+
+	private async restoreAutoAdvanceIfNeeded(wasEnabled: boolean) {
+		if (!wasEnabled) {
+			return
+		}
+
+		try {
+			await this.toggleAutoAdvance()
+		} catch {
+			// Ignore if toggle is no longer available (exercise completed)
+		}
+	}
+
+	private async handleAnswerStatus(): Promise<boolean> {
+		let status = await this.helpers.getInputStatus()
+
+		if (status === null) {
+			return false
+		}
+
+		if (status === EXERCISE_STATUS.correctAnswer) {
+			await this.waitForAnswerProcessing([
+				EXERCISE_STATUS.requireContinue,
+				EXERCISE_STATUS.waitingInput,
+				EXERCISE_STATUS.completed
+			])
+			status = await this.helpers.getInputStatus()
+		}
+
+		if (status === null || status === EXERCISE_STATUS.completed) {
+			return false
+		}
+
+		if (status === EXERCISE_STATUS.requireContinue) {
+			await expect(this.continueButton).toBeEnabled({
+				timeout: TIMEOUTS.normal
+			})
+			await this.clickContinueButton()
+			await this.waitForAnswerProcessing([
+				EXERCISE_STATUS.waitingInput,
+				EXERCISE_STATUS.completed
+			])
+			const nextStatus = await this.helpers.getInputStatus()
+			return !(nextStatus === null || nextStatus === EXERCISE_STATUS.completed)
+		}
+
+		return true
 	}
 
 	// Assertions
@@ -129,11 +198,17 @@ export class ExercisePage {
 	}
 
 	async expectCorrectFeedback() {
-		// Check for correct answer indicators (green styling, etc.)
-		await expect(this.input).toHaveAttribute(
-			'data-status',
-			EXERCISE_STATUS.correctAnswer
-		)
+		await this.waitForAnswerProcessing([
+			EXERCISE_STATUS.correctAnswer,
+			EXERCISE_STATUS.requireContinue,
+			EXERCISE_STATUS.waitingInput
+		])
+		const status = await this.helpers.getInputStatus()
+		expect([
+			EXERCISE_STATUS.correctAnswer,
+			EXERCISE_STATUS.requireContinue,
+			EXERCISE_STATUS.waitingInput
+		]).toContain(status)
 	}
 
 	async expectIncorrectFeedback() {

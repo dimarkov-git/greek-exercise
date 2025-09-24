@@ -4,6 +4,7 @@ interface LearnGreekImportMetaEnv extends ImportMetaEnv {
 	readonly VITE_ROUTER_MODE?: RouterMode
 	readonly VITE_ENABLE_MSW?: string
 	readonly VITE_ENABLE_QUERY_DEVTOOLS?: string
+	readonly VITE_ENABLE_HTTP_FALLBACK?: string
 }
 
 const env = import.meta.env as LearnGreekImportMetaEnv
@@ -58,6 +59,10 @@ const enableQueryDevtools = env.VITE_ENABLE_QUERY_DEVTOOLS
 	? env.VITE_ENABLE_QUERY_DEVTOOLS === 'true'
 	: env.DEV && !isTest
 
+const enableHttpFallback = env.VITE_ENABLE_HTTP_FALLBACK
+	? env.VITE_ENABLE_HTTP_FALLBACK === 'true'
+	: enableMockServiceWorker
+
 export const environment = {
 	mode,
 	isDevelopment: env.DEV,
@@ -67,7 +72,8 @@ export const environment = {
 	baseUrl: env.BASE_URL || './',
 	routerMode,
 	enableMockServiceWorker,
-	enableQueryDevtools
+	enableQueryDevtools,
+	enableHttpFallback
 } as const
 
 export type Environment = typeof environment

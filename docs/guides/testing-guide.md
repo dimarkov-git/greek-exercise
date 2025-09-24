@@ -203,6 +203,12 @@ npx playwright install
 > generated URLs aligned with the `/#/` patterns that the E2E suite asserts
 > against while leaving production builds on the standard history API router.
 
+### API fallback modes
+
+- Toggle `VITE_ENABLE_HTTP_FALLBACK=false` to assert real network errors when MSW is disabled.
+- Leave it `true` (default when MSW is on) to reuse the JSON fixtures as a safety net during offline development.
+- The HTTP client exposes a `fallback` option for per-request overrides; Vitest coverage locks the four MSW/fallback permutations.
+
 ### Page Object Model (POM)
 
 ```typescript

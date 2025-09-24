@@ -57,6 +57,7 @@ Set optional environment variables in `.env.local` to customise the runtime:
 
 - `VITE_ENABLE_MSW` (default: `false`; set to `true` to start MSW, Playwright automation enables it automatically) – toggle Mock Service Worker.
 - `VITE_ENABLE_QUERY_DEVTOOLS` (default: `true` in development) – load React Query Devtools lazily.
+- `VITE_ENABLE_HTTP_FALLBACK` (default: mirrors MSW flag) – control whether the HTTP client resolves local fallback responses when network requests fail.
 - `VITE_ROUTER_MODE` (default: `browser`, `memory` for Vitest) – choose between browser/history/hash routers.
 
 ## Scripts

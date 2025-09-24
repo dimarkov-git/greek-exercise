@@ -72,9 +72,9 @@ This document captures the refactor-first plan for aligning the Learn Greek appl
 
 ### Phase 4 – Testing and QA expansion
 
-1. Convert `.old` specs into current Vitest/Playwright coverage or retire them after documenting extracted learnings.
-2. Add unit tests for the settings store, translation hook, exercise state machine, and filtering selectors; use fake timers where required.
-3. Extend Playwright scenarios to cover full exercise completion (correct/incorrect answers, hints, navigation, settings persistence) following page object patterns.
+1. ✅ Convert `.old` specs into current Vitest/Playwright coverage or retire them after documenting extracted learnings.
+2. ✅ Add unit tests for the settings store, translation hook, exercise state machine, and filtering selectors; use fake timers where required.
+3. ✅ Extend Playwright scenarios to cover full exercise completion (correct/incorrect answers, hints, navigation, settings persistence) following page object patterns.
 
 ### Phase 5 – Performance, DX, and governance
 
