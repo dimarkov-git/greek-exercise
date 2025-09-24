@@ -124,6 +124,8 @@ function ProgressBar({
 				</span>
 				<span
 					className='font-medium text-gray-900 text-sm dark:text-white'
+					data-progress-current={progress.current}
+					data-progress-total={progress.total}
 					data-testid='progress-text'
 				>
 					{progress.current} {t('exercise.progressOf')} {progress.total}
