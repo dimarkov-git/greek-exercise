@@ -56,7 +56,7 @@ describe('QueryDevtools', () => {
 		expect(container.firstChild).toBeNull()
 	})
 
-	it('loads devtools when environment.enableQueryDevtools is true', async () => {
+	it('loads devtools when environment.enableQueryDevtools is true', () => {
 		mockEnvironment.environment.enableQueryDevtools = true
 
 		const {container} = render(<QueryDevtools />)

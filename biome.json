@@ -108,15 +108,25 @@
 			}
 		},
 		{
-			"includes": ["src/**/*.test.tsx", "tests/**/*.ts"],
+			"includes": ["src/**/*.test.ts", "src/**/*.test.tsx", "tests/**/*.ts"],
 			"linter": {
 				"rules": {
+					"a11y": "off",
 					"complexity": {
 						"noExcessiveLinesPerFunction": "off"
+					},
+					"nursery": {
+						"noJsxLiterals": "off"
 					},
 					"performance": {
 						"useTopLevelRegex": "off",
 						"noAwaitInLoops": "off"
+					},
+					"suspicious": {
+						"noEmptyBlockStatements": "off"
+					},
+					"style": {
+						"useNamingConvention": "off"
 					}
 				}
 			}

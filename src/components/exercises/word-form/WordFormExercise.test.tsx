@@ -1,11 +1,18 @@
 import {describe, expect, it, vi} from 'vitest'
 import {render, screen} from '@/test-utils'
-import type {WordFormExercise as WordFormExerciseType} from '@/types/exercises'
+import {
+	DEFAULT_EXERCISE_SETTINGS,
+	type WordFormExercise as WordFormExerciseType
+} from '@/types/exercises'
 import {WordFormExercise} from './WordFormExercise'
+
+type WordFormExerciseWrapperProps = Parameters<
+	typeof import('./WordFormExerciseWrapper')['WordFormExerciseWrapper']
+>[0]
 
 // Mock the WordFormExerciseWrapper
 vi.mock('./WordFormExerciseWrapper', () => ({
-	WordFormExerciseWrapper: (props: any) => (
+	WordFormExerciseWrapper: (props: WordFormExerciseWrapperProps) => (
 		<div data-testid='word-form-exercise-wrapper'>
 			<div data-testid='exercise-title'>{props.exercise.title}</div>
 			<div data-testid='exercise-id'>{props.exercise.id}</div>
@@ -13,7 +20,7 @@ vi.mock('./WordFormExerciseWrapper', () => ({
 				<button
 					data-testid='complete-button'
 					onClick={() =>
-						props.onComplete({
+						props.onComplete?.({
 							exerciseId: props.exercise.id,
 							totalCases: 5,
 							correctAnswers: 4,
@@ -37,6 +44,7 @@ vi.mock('./WordFormExerciseWrapper', () => ({
 
 // Test data
 const mockExercise: WordFormExerciseType = {
+	enabled: true,
 	id: 'test-exercise-1',
 	type: 'word-form',
 	title: 'Test Exercise',
@@ -46,18 +54,18 @@ const mockExercise: WordFormExerciseType = {
 	blocks: [
 		{
 			id: 'block-1',
-			title: 'Block 1',
+			name: 'Block 1',
 			cases: [
 				{
 					id: 'case-1',
 					prompt: 'Test prompt',
-					correct: ['test answer'],
-					hints: []
+					correct: ['test answer']
 				}
 			]
 		}
 	],
-	tags: ['test']
+	tags: ['test'],
+	settings: DEFAULT_EXERCISE_SETTINGS
 }
 
 describe('WordFormExercise', () => {
@@ -135,6 +143,7 @@ describe('WordFormExercise', () => {
 
 	it('handles different exercise data correctly', () => {
 		const differentExercise: WordFormExerciseType = {
+			enabled: true,
 			id: 'different-exercise',
 			type: 'word-form',
 			title: 'Different Exercise',
@@ -144,18 +153,18 @@ describe('WordFormExercise', () => {
 			blocks: [
 				{
 					id: 'block-2',
-					title: 'Block 2',
+					name: 'Block 2',
 					cases: [
 						{
 							id: 'case-2',
 							prompt: 'Different prompt',
-							correct: ['different answer'],
-							hints: []
+							correct: ['different answer']
 						}
 					]
 				}
 			],
-			tags: ['different']
+			tags: ['different'],
+			settings: DEFAULT_EXERCISE_SETTINGS
 		}
 
 		render(<WordFormExercise exercise={differentExercise} />)
