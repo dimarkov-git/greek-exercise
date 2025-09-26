@@ -81,7 +81,7 @@ const mockWordFormExercise: WordFormExercise = {
 	type: 'word-form',
 	title: 'Test Word Form Exercise',
 	description: 'A test exercise',
-	difficulty: 'beginner',
+	difficulty: 'a0',
 	estimatedTimeMinutes: 10,
 	blocks: [
 		{
@@ -91,8 +91,7 @@ const mockWordFormExercise: WordFormExercise = {
 				{
 					id: 'case-1',
 					prompt: 'Test prompt',
-					expectedAnswer: 'test answer',
-					hints: []
+					correct: ['test answer']
 				}
 			]
 		}

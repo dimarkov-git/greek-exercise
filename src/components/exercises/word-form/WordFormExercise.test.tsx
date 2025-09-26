@@ -41,7 +41,7 @@ const mockExercise: WordFormExerciseType = {
 	type: 'word-form',
 	title: 'Test Exercise',
 	description: 'A test word form exercise',
-	difficulty: 'beginner',
+	difficulty: 'a0',
 	estimatedTimeMinutes: 10,
 	blocks: [
 		{
@@ -51,7 +51,7 @@ const mockExercise: WordFormExerciseType = {
 				{
 					id: 'case-1',
 					prompt: 'Test prompt',
-					expectedAnswer: 'test answer',
+					correct: ['test answer'],
 					hints: []
 				}
 			]
@@ -139,7 +139,7 @@ describe('WordFormExercise', () => {
 			type: 'word-form',
 			title: 'Different Exercise',
 			description: 'Another test exercise',
-			difficulty: 'intermediate',
+			difficulty: 'a1',
 			estimatedTimeMinutes: 15,
 			blocks: [
 				{
@@ -149,7 +149,7 @@ describe('WordFormExercise', () => {
 						{
 							id: 'case-2',
 							prompt: 'Different prompt',
-							expectedAnswer: 'different answer',
+							correct: ['different answer'],
 							hints: []
 						}
 					]

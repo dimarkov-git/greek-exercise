@@ -1,4 +1,3 @@
-import type {QueryClient} from '@tanstack/react-query'
 import {describe, expect, it, vi} from 'vitest'
 import {render, screen} from '@/test-utils'
 import {AppProviders} from './AppProviders'
@@ -50,8 +49,6 @@ describe('AppProviders', () => {
 	})
 
 	it('provides query client context to children', () => {
-		let _capturedQueryClient: QueryClient | undefined
-
 		function TestComponent() {
 			// This would fail if QueryClient context is not available
 			return <div data-testid='context-consumer'>Has QueryClient context</div>

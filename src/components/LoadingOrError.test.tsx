@@ -51,7 +51,7 @@ describe('LoadingOrError', () => {
 	})
 
 	it('handles undefined error property correctly', () => {
-		render(<LoadingOrError error={undefined} />)
+		render(<LoadingOrError />)
 
 		expect(screen.getByText('Loading...')).toBeInTheDocument()
 	})

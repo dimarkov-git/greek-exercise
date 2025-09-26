@@ -29,7 +29,7 @@ describe('AppErrorBoundary', () => {
 			.spyOn(console, 'error')
 			.mockImplementation(() => {})
 
-		function ThrowError() {
+		function ThrowError(): React.JSX.Element {
 			throw new Error('Test error message')
 		}
 
@@ -50,7 +50,7 @@ describe('AppErrorBoundary', () => {
 			.spyOn(console, 'error')
 			.mockImplementation(() => {})
 
-		function ThrowTypeError() {
+		function ThrowTypeError(): React.JSX.Element {
 			throw new TypeError('Type error occurred')
 		}
 
@@ -75,7 +75,7 @@ describe('AppErrorBoundary', () => {
 			return <div data-testid='working-component'>I work fine</div>
 		}
 
-		function BrokenComponent() {
+		function BrokenComponent(): React.JSX.Element {
 			throw new Error('I am broken')
 		}
 
