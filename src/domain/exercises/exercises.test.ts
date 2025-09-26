@@ -1,10 +1,19 @@
-import {describe, expect, it} from 'vitest'
+import {describe, expect, it, vi} from 'vitest'
 import {
 	createExerciseLibraryViewModel,
 	toExerciseSummary,
 	toWordFormExerciseWithDefaults
 } from '@/domain/exercises/adapters'
-import {selectFilteredExercises} from '@/domain/exercises/selectors'
+import {
+	createMemoizedSelector,
+	selectDifficultyOptions,
+	selectExerciseLibraryViewModel,
+	selectFilteredExercises,
+	selectFilterOptions,
+	selectHasEnabledExercises,
+	selectLanguageOptions,
+	selectTagOptions
+} from '@/domain/exercises/selectors'
 import type {ExerciseSummary} from '@/domain/exercises/types'
 import type {
 	ExerciseMetadataDto,
@@ -92,20 +101,91 @@ describe('exercise domain adapters', () => {
 	})
 })
 
-describe('exercise domain selectors', () => {
-	const summaries: ExerciseSummary[] = [
-		toExerciseSummary(baseMetadata),
-		toExerciseSummary({
-			...baseMetadata,
-			id: 'verbs-advanced',
-			difficulty: 'c1',
-			tags: ['verbs'],
-			titleI18n: {en: 'Advanced Verbs'},
-			descriptionI18n: {en: 'Advanced description'}
+const advancedMetadata: ExerciseMetadataDto = {
+	...baseMetadata,
+	id: 'verbs-advanced',
+	difficulty: 'c1',
+	tags: ['verbs'],
+	titleI18n: {en: 'Advanced Verbs'},
+	descriptionI18n: {en: 'Advanced description'}
+}
+
+const baseSummary = toExerciseSummary(baseMetadata)
+const advancedSummary = toExerciseSummary(advancedMetadata)
+
+function createSummaries(): ExerciseSummary[] {
+	return [baseSummary, advancedSummary]
+}
+
+describe('exercise library memoization', () => {
+	it('memoizes the exercise library view model for identical metadata references', () => {
+		const metadataList: ExerciseMetadataDto[] = [
+			{...baseMetadata},
+			{...baseMetadata, id: 'secondary', enabled: false}
+		]
+
+		const first = selectExerciseLibraryViewModel(metadataList)
+		const second = selectExerciseLibraryViewModel(metadataList)
+
+		expect(second).toBe(first)
+	})
+
+	it('invalidates the memoized library view model when metadata identity changes', () => {
+		const metadataList: ExerciseMetadataDto[] = [
+			{...baseMetadata},
+			{...baseMetadata, id: 'secondary', enabled: false}
+		]
+
+		const first = selectExerciseLibraryViewModel(metadataList)
+		const second = selectExerciseLibraryViewModel([...metadataList])
+
+		expect(second).not.toBe(first)
+	})
+})
+
+describe('exercise library selectors', () => {
+	it('exposes filter, difficulty, tag, and language options', () => {
+		const viewModel = createExerciseLibraryViewModel([
+			{...baseMetadata},
+			{...baseMetadata, id: 'disabled', enabled: false, tags: ['nouns']}
+		])
+
+		expect(selectFilterOptions(viewModel)).toBe(viewModel.filterOptions)
+		expect(selectDifficultyOptions(viewModel)).toEqual(['a1'])
+		expect(selectTagOptions(viewModel)).toEqual(['nouns', 'present', 'verbs'])
+		expect(selectLanguageOptions(viewModel)).toEqual(['el', 'en', 'ru'])
+	})
+
+	it('indicates whether any exercises remain enabled', () => {
+		const enabledModel = createExerciseLibraryViewModel([
+			{...baseMetadata},
+			{...baseMetadata, id: 'disabled', enabled: false}
+		])
+
+		expect(selectHasEnabledExercises(enabledModel)).toBe(true)
+
+		const disabledModel = createExerciseLibraryViewModel([
+			{...baseMetadata, id: 'all-disabled', enabled: false}
+		])
+
+		expect(selectHasEnabledExercises(disabledModel)).toBe(false)
+	})
+})
+
+describe('selectFilteredExercises', () => {
+	it('returns the original list when no filters are applied', () => {
+		const summaries = createSummaries()
+		const filtered = selectFilteredExercises(summaries, {
+			tags: [],
+			difficulties: [],
+			languages: []
 		})
-	]
+
+		expect(filtered).toBe(summaries)
+	})
 
 	it('filters exercises by tags, difficulty, and language', () => {
+		const summaries = createSummaries()
 		const filtered = selectFilteredExercises(summaries, {
 			tags: ['verbs'],
 			difficulties: ['c1'],
@@ -116,6 +196,7 @@ describe('exercise domain selectors', () => {
 	})
 
 	it('omits exercises that do not support selected languages', () => {
+		const summaries = createSummaries()
 		const filtered = selectFilteredExercises(summaries, {
 			tags: [],
 			difficulties: [],
@@ -126,12 +207,6 @@ describe('exercise domain selectors', () => {
 			'verbs-present-tense'
 		])
 
-		const [, advancedSummary] = summaries
-
-		if (!advancedSummary) {
-			throw new Error('Expected advanced summary for selector tests')
-		}
-
 		const noRussianSupport = selectFilteredExercises([advancedSummary], {
 			tags: [],
 			difficulties: [],
@@ -139,5 +214,42 @@ describe('exercise domain selectors', () => {
 		})
 
 		expect(noRussianSupport).toHaveLength(0)
+	})
+})
+
+describe('createMemoizedSelector', () => {
+	it('returns cached results when arguments remain identical', () => {
+		const compute = vi.fn((value: number) => ({value}))
+		const memoized = createMemoizedSelector((value: number) => compute(value))
+
+		const first = memoized(1)
+		const second = memoized(1)
+
+		expect(second).toBe(first)
+		expect(compute).toHaveBeenCalledTimes(1)
+	})
+
+	it('recomputes when argument identity changes', () => {
+		const compute = vi.fn((value: number) => ({value}))
+		const memoized = createMemoizedSelector((value: number) => compute(value))
+
+		memoized(1)
+		memoized(2)
+
+		expect(compute).toHaveBeenCalledTimes(2)
+	})
+
+	it('recomputes when argument length differs', () => {
+		const compute = vi.fn((...values: number[]) =>
+			values.reduce((total, value) => total + value, 0)
+		)
+		const memoized = createMemoizedSelector((...values: number[]) =>
+			compute(...values)
+		)
+
+		memoized(1, 2)
+		memoized(1)
+
+		expect(compute).toHaveBeenCalledTimes(2)
 	})
 })

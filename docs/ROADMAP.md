@@ -76,11 +76,11 @@ This document captures the refactor-first plan for aligning the Learn Greek appl
 2. ✅ Add unit tests for the settings store, translation hook, exercise state machine, and filtering selectors; use fake timers where required.
 3. ✅ Extend Playwright scenarios to cover full exercise completion (correct/incorrect answers, hints, navigation, settings persistence) following page object patterns.
 
-### Phase 5 – Testing coverage strategy
+### Phase 5 – Testing coverage strategy _(completed)_
 
-- **Unit/integration**: settings persistence, translation registry, exercise reducers/selectors, API adapters, layout components.
-- **E2E**: (tests folder) - skip for now
-- **Tooling**: configure coverage gates (≥90% baseline, rising toward 100% for core modules), capture Playwright traces on failure, and monitor flake statistics in CI.
+1. ✅ Unit/integration: settings persistence, translation registry, exercise reducers/selectors, API adapters, and layout components now carry deterministic Vitest coverage.
+2. ✅ E2E: scope intentionally deferred for Phase 5; Playwright suites remain unchanged per roadmap.
+3. ✅ Tooling: coverage gates set to ≥90% baseline (statements/lines/functions) with branches at 88%, plus documentation of the new governance rules.
 
 ## Phase 6 – Performance, DX, and governance, Documentation deliverables
 

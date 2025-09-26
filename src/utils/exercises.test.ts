@@ -1,15 +1,28 @@
-import {describe, expect, it} from 'vitest'
-import type {WordFormExercise} from '@/types/exercises'
+import {describe, expect, it, vi} from 'vitest'
+import type {
+	ExerciseMetadata,
+	ExerciseSettings,
+	WordFormExercise
+} from '@/types/exercises'
 import {
 	calculateAccuracy,
 	checkAnswer,
+	extractExerciseMetadata,
+	filterExercisesByDifficulty,
+	filterExercisesByTags,
+	formatDuration,
+	generateId,
+	getAllTags,
 	getCaseByIndices,
 	getCompletedCasesCount,
 	getNextIndices,
 	getTotalCases,
 	normalizeGreekText,
-	normalizeGreekTextWithoutTones
+	normalizeGreekTextWithoutTones,
+	shuffleExerciseCases
 } from './exercises'
+
+const CASE_IDENTIFIER_PATTERN = /^case-\d+-[a-z0-9]{0,7}$/
 
 const sampleExercise: WordFormExercise = {
 	enabled: true,
@@ -79,5 +92,116 @@ describe('Exercise statistics helpers', () => {
 	it('calculates accuracy safely', () => {
 		expect(calculateAccuracy(7, 10)).toBe(70)
 		expect(calculateAccuracy(0, 0)).toBe(0)
+	})
+})
+
+describe('extractExerciseMetadata', () => {
+	it('preserves optional translations while deriving totals', () => {
+		const exerciseWithTranslations: WordFormExercise = {
+			...sampleExercise,
+			titleI18n: {en: 'Be'},
+			descriptionI18n: {en: 'To be'},
+			settings: {...sampleExercise.settings} as ExerciseSettings
+		}
+
+		const metadata = extractExerciseMetadata(exerciseWithTranslations)
+
+		expect(metadata).toMatchObject({
+			id: 'verbs-be',
+			totalBlocks: 2,
+			totalCases: 3,
+			titleI18n: {en: 'Be'},
+			descriptionI18n: {en: 'To be'}
+		})
+	})
+})
+
+describe('shuffleExerciseCases', () => {
+	it('avoids mutating source exercise when shuffling is disabled', () => {
+		const shuffled = shuffleExerciseCases(sampleExercise)
+
+		const originalFirstBlock = sampleExercise.blocks[0]
+		const shuffledFirstBlock = shuffled.blocks[0]
+
+		if (!(originalFirstBlock && shuffledFirstBlock)) {
+			throw new Error('Expected exercise blocks to be defined')
+		}
+
+		expect(shuffled).toBe(sampleExercise)
+		expect(shuffledFirstBlock.cases).toBe(originalFirstBlock.cases)
+	})
+
+	it('shuffles cases when shuffle setting is enabled', () => {
+		const exerciseWithShuffle: WordFormExercise = {
+			...sampleExercise,
+			blocks: sampleExercise.blocks.map(block => ({
+				...block,
+				cases: block.cases.map(caseItem => ({...caseItem}))
+			})),
+			settings: {
+				...sampleExercise.settings,
+				shuffleCases: true
+			} as ExerciseSettings
+		}
+
+		const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(1)
+
+		const shuffled = shuffleExerciseCases(exerciseWithShuffle)
+		const shuffledFirstBlock = shuffled.blocks[0]
+		const originalFirstBlock = exerciseWithShuffle.blocks[0]
+
+		if (!(shuffledFirstBlock && originalFirstBlock)) {
+			throw new Error('Expected shuffled blocks to be defined')
+		}
+
+		expect(shuffled).not.toBe(exerciseWithShuffle)
+		expect(shuffledFirstBlock.cases).not.toBe(originalFirstBlock.cases)
+
+		randomSpy.mockRestore()
+	})
+})
+
+describe('Exercise filtering utilities', () => {
+	const baseMetadata = extractExerciseMetadata(sampleExercise)
+	const secondMetadata: ExerciseMetadata = {
+		...baseMetadata,
+		id: 'verbs-past',
+		tags: ['verbs', 'past'],
+		difficulty: 'b1'
+	}
+
+	const exercisesMetadata: ExerciseMetadata[] = [baseMetadata, secondMetadata]
+
+	it('filters by tags when tags are provided', () => {
+		const filtered = filterExercisesByTags(exercisesMetadata, ['past'])
+		expect(filtered).toHaveLength(1)
+		expect(filtered[0]?.id).toBe('verbs-past')
+	})
+
+	it('returns all exercises when tag filter is empty', () => {
+		expect(filterExercisesByTags(exercisesMetadata, [])).toBe(exercisesMetadata)
+	})
+
+	it('filters by difficulty and respects null filter', () => {
+		expect(filterExercisesByDifficulty(exercisesMetadata, 'b1')).toHaveLength(1)
+		expect(filterExercisesByDifficulty(exercisesMetadata, null)).toBe(
+			exercisesMetadata
+		)
+	})
+
+	it('collects all unique tags in sorted order', () => {
+		expect(getAllTags(exercisesMetadata)).toEqual(['a1', 'past', 'verbs'])
+	})
+})
+
+describe('Exercise formatting helpers', () => {
+	it('formats durations with second and minute granularity', () => {
+		expect(formatDuration(30_000)).toBe('30s')
+		expect(formatDuration(90_000)).toBe('1m 30s')
+	})
+
+	it('generates unique ids with the expected structure', () => {
+		const id = generateId('case')
+		expect(id).toMatch(CASE_IDENTIFIER_PATTERN)
 	})
 })

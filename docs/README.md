@@ -52,3 +52,8 @@ API documentation and data models:
 
 - [Overview](reports/phase-4/overview.md) – Testing/QA expansion scope, goals, dependencies, and risk mitigation.
 - [ADRs](reports/phase-4/adrs) – Decisions for HTTP fallback governance and MSW decoupling.
+
+### Phase 5 artefacts
+
+- [Overview](reports/phase-5/overview.md) – Coverage governance snapshot, goals, scope, dependencies, and risk register.
+- [ADRs](reports/phase-5/adrs) – Decisions documenting the new Vitest coverage thresholds and module scope.
