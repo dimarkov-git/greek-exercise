@@ -10,22 +10,33 @@ import {ExerciseRenderer} from './ExerciseRenderer'
 import type {WordFormViewState} from './hooks/useWordFormExercise'
 
 vi.mock('@/components/Head', () => ({
+	// biome-ignore lint/style/useNamingConvention: Mock must match exported component name
 	Head: ({children}: {children?: React.ReactNode}) => <>{children}</>
 }))
 
-const completionScreenMock = vi.fn()
+type CompletionScreenProps = React.ComponentProps<
+	typeof import('./CompletionScreen')['CompletionScreen']
+>
+
+const completionScreenMock = vi.fn<(props: CompletionScreenProps) => void>()
+
 vi.mock('./CompletionScreen', () => ({
-	CompletionScreen: (props: Record<string, unknown>) => {
+	// biome-ignore lint/style/useNamingConvention: Mock must match exported component name
+	CompletionScreen: (props: CompletionScreenProps) => {
 		completionScreenMock(props)
-		return (
-			<div data-testid='completion-screen'>{props.exerciseTitle as string}</div>
-		)
+		return <div data-testid='completion-screen'>{props.exerciseTitle}</div>
 	}
 }))
 
-const exerciseContentMock = vi.fn()
+type ExerciseContentProps = React.ComponentProps<
+	typeof import('./ExerciseContent')['ExerciseContent']
+>
+
+const exerciseContentMock = vi.fn<(props: ExerciseContentProps) => void>()
+
 vi.mock('./ExerciseContent', () => ({
-	ExerciseContent: (props: Record<string, unknown>) => {
+	// biome-ignore lint/style/useNamingConvention: Mock must match exported component name
+	ExerciseContent: (props: ExerciseContentProps) => {
 		exerciseContentMock(props)
 		return <div data-testid='exercise-content' />
 	}
@@ -95,140 +106,145 @@ const baseState: WordFormViewState = {
 
 const pulseState: PulseState = 'correct'
 
-describe('ExerciseRenderer', () => {
-	beforeEach(() => {
+function resetTestEnvironment() {
+	// biome-ignore lint/nursery/noFloatingPromises: React act is synchronous in this usage
+	act(() => {
+		useSettingsStore.setState(() => ({...DEFAULT_SETTINGS}))
+	})
+	completionScreenMock.mockReset()
+	exerciseContentMock.mockReset()
+}
+
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Grouping closely related scenarios improves readability
+describe('ExerciseRenderer completion screen', () => {
+	beforeEach(resetTestEnvironment)
+
+	it('renders completion screen when exercise is completed', () => {
+		const handleEvent = vi.fn()
+		const state: WordFormViewState = {
+			...baseState,
+			status: 'COMPLETED',
+			stats: {correct: 3, incorrect: 1},
+			progress: {completed: 1, current: 1, total: 1}
+		}
+
+		render(
+			<ExerciseRenderer
+				clearPulse={vi.fn()}
+				handleAnswerChange={vi.fn()}
+				handleAutoAdvanceToggle={vi.fn()}
+				handleEvent={handleEvent}
+				handleSubmit={vi.fn()}
+				onExit={vi.fn()}
+				pulseState={pulseState}
+				state={state}
+			/>
+		)
+
+		expect(screen.getByTestId('completion-screen')).toHaveTextContent('To be')
+		const props = completionScreenMock.mock.calls.at(-1)?.[0]
+		if (!props) {
+			throw new Error('CompletionScreen was not called')
+		}
+		expect(props.correctCount).toBe(3)
+		expect(props.incorrectCount).toBe(1)
+		expect(props.totalCases).toBe(1)
+
+		props.onRestart()
+		expect(handleEvent).toHaveBeenCalledWith({type: 'RESTART'})
+	})
+
+	it('prefers translated exercise title based on user language', () => {
+		// biome-ignore lint/nursery/noFloatingPromises: React act is synchronous in this usage
 		act(() => {
-			useSettingsStore.setState(() => ({...DEFAULT_SETTINGS}))
+			useSettingsStore.getState().setUserLanguage('ru')
 		})
-		completionScreenMock.mockReset()
-		exerciseContentMock.mockReset()
+
+		const state: WordFormViewState = {
+			...baseState,
+			status: 'COMPLETED'
+		}
+
+		render(
+			<ExerciseRenderer
+				clearPulse={vi.fn()}
+				handleAnswerChange={vi.fn()}
+				handleAutoAdvanceToggle={vi.fn()}
+				handleEvent={vi.fn()}
+				handleSubmit={vi.fn()}
+				pulseState={pulseState}
+				state={state}
+			/>
+		)
+
+		expect(screen.getByTestId('completion-screen')).toHaveTextContent('Быть')
 	})
+})
 
-	describe('completion screen rendering', () => {
-		it('renders completion screen when exercise is completed', () => {
-			const handleEvent = vi.fn()
-			const state: WordFormViewState = {
-				...baseState,
-				status: 'COMPLETED',
-				stats: {correct: 3, incorrect: 1},
-				progress: {completed: 1, current: 1, total: 1}
-			}
+describe('ExerciseRenderer error handling', () => {
+	beforeEach(resetTestEnvironment)
 
-			render(
-				<ExerciseRenderer
-					clearPulse={vi.fn()}
-					handleAnswerChange={vi.fn()}
-					handleAutoAdvanceToggle={vi.fn()}
-					handleEvent={handleEvent}
-					handleSubmit={vi.fn()}
-					onExit={vi.fn()}
-					pulseState={pulseState}
-					state={state}
-				/>
-			)
+	it('shows fallback content when current case is missing', () => {
+		const state: WordFormViewState = {
+			...baseState,
+			currentBlock: undefined,
+			currentCase: undefined
+		}
 
-			expect(screen.getByTestId('completion-screen')).toHaveTextContent('To be')
-			const props = completionScreenMock.mock.calls.at(-1)?.[0] as {
-				onRestart: () => void
-				correctCount: number
-				incorrectCount: number
-				totalCases: number
-			}
-			expect(props.correctCount).toBe(3)
-			expect(props.incorrectCount).toBe(1)
-			expect(props.totalCases).toBe(1)
+		render(
+			<ExerciseRenderer
+				clearPulse={vi.fn()}
+				handleAnswerChange={vi.fn()}
+				handleAutoAdvanceToggle={vi.fn()}
+				handleEvent={vi.fn()}
+				handleSubmit={vi.fn()}
+				pulseState={null}
+				state={state}
+			/>
+		)
 
-			props.onRestart()
-			expect(handleEvent).toHaveBeenCalledWith({type: 'RESTART'})
-		})
-
-		it('prefers translated exercise title based on user language', () => {
-			act(() => {
-				useSettingsStore.getState().setUserLanguage('ru')
-			})
-
-			const state: WordFormViewState = {
-				...baseState,
-				status: 'COMPLETED'
-			}
-
-			render(
-				<ExerciseRenderer
-					clearPulse={vi.fn()}
-					handleAnswerChange={vi.fn()}
-					handleAutoAdvanceToggle={vi.fn()}
-					handleEvent={vi.fn()}
-					handleSubmit={vi.fn()}
-					pulseState={pulseState}
-					state={state}
-				/>
-			)
-
-			expect(screen.getByTestId('completion-screen')).toHaveTextContent('Быть')
-		})
+		expect(screen.getByText('error.couldNotLoadExercise')).toBeInTheDocument()
+		expect(exerciseContentMock).not.toHaveBeenCalled()
 	})
+})
 
-	describe('error handling', () => {
-		it('shows fallback content when current case is missing', () => {
-			const state: WordFormViewState = {
-				...baseState,
-				currentBlock: undefined,
-				currentCase: undefined
-			}
+describe('ExerciseRenderer content rendering', () => {
+	beforeEach(resetTestEnvironment)
 
-			render(
-				<ExerciseRenderer
-					clearPulse={vi.fn()}
-					handleAnswerChange={vi.fn()}
-					handleAutoAdvanceToggle={vi.fn()}
-					handleEvent={vi.fn()}
-					handleSubmit={vi.fn()}
-					pulseState={null}
-					state={state}
-				/>
-			)
+	it('renders exercise content with interaction handlers', () => {
+		const handleSubmit = vi.fn()
+		const handleEvent = vi.fn<(event: ExerciseEvent) => void>()
+		const handleToggle = vi.fn()
+		const handleAnswerChange = vi.fn()
+		const clearPulse = vi.fn()
 
-			expect(screen.getByText('error.couldNotLoadExercise')).toBeInTheDocument()
-			expect(exerciseContentMock).not.toHaveBeenCalled()
-		})
-	})
+		render(
+			<ExerciseRenderer
+				clearPulse={clearPulse}
+				handleAnswerChange={handleAnswerChange}
+				handleAutoAdvanceToggle={handleToggle}
+				handleEvent={handleEvent}
+				handleSubmit={handleSubmit}
+				pulseState={pulseState}
+				state={baseState}
+			/>
+		)
 
-	describe('exercise content rendering', () => {
-		it('renders exercise content with interaction handlers', () => {
-			const handleSubmit = vi.fn()
-			const handleEvent = vi.fn<(event: ExerciseEvent) => void>()
-			const handleToggle = vi.fn()
-			const handleAnswerChange = vi.fn()
-			const clearPulse = vi.fn()
+		expect(screen.getByTestId('exercise-content')).toBeInTheDocument()
+		const props = exerciseContentMock.mock.calls.at(-1)?.[0]
+		if (!props) {
+			throw new Error('ExerciseContent was not called')
+		}
 
-			render(
-				<ExerciseRenderer
-					clearPulse={clearPulse}
-					handleAnswerChange={handleAnswerChange}
-					handleAutoAdvanceToggle={handleToggle}
-					handleEvent={handleEvent}
-					handleSubmit={handleSubmit}
-					pulseState={pulseState}
-					state={baseState}
-				/>
-			)
+		expect(props.onSubmit).toBe(handleSubmit)
+		expect(props.onToggleAutoAdvance).toBe(handleToggle)
+		expect(props.onAnswerChange).toBe(handleAnswerChange)
+		expect(props.onPulseComplete).toBe(clearPulse)
+		expect(props.exercise).toBe(baseState.exercise)
 
-			expect(screen.getByTestId('exercise-content')).toBeInTheDocument()
-			const props = exerciseContentMock.mock.calls.at(-1)?.[0] as Record<
-				string,
-				unknown
-			>
-
-			expect(props?.onSubmit).toBe(handleSubmit)
-			expect(props?.onToggleAutoAdvance).toBe(handleToggle)
-			expect(props?.onAnswerChange).toBe(handleAnswerChange)
-			expect(props?.onPulseComplete).toBe(clearPulse)
-			expect(props?.exercise).toBe(baseState.exercise)
-
-			const onSkip = props?.onSkip as (() => void) | undefined
-			expect(onSkip).toBeTypeOf('function')
-			onSkip?.()
-			expect(handleEvent).toHaveBeenCalledWith({type: 'SKIP'})
-		})
+		const onSkip = props.onSkip
+		expect(onSkip).toBeTypeOf('function')
+		onSkip()
+		expect(handleEvent).toHaveBeenCalledWith({type: 'SKIP'})
 	})
 })
