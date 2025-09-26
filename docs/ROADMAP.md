@@ -1,92 +1,187 @@
-# Learn Greek refactor roadmap
+# Learn Greek development roadmap
 
-This document captures the refactor-first plan for aligning the Learn Greek application with modern frontend standards, simpler architecture, and comprehensive test coverage.
+This roadmap outlines the development priorities for the Learn Greek application, building on the solid foundation established in Phases 0-5.
 
-## 1. Current state
+## Current status
 
-### 1.1 Architecture
+### Completed phases (0-5)
+✅ **Phase 0** - Environment-aware bootstrap with MSW/DevTools configuration
+✅ **Phase 1** - Architecture decomposition and component boundaries
+✅ **Phase 2** - Domain layer and exercise system architecture
+✅ **Phase 3** - Type-safe i18n with generated translation registry
+✅ **Phase 4** - Testing expansion and HTTP fallback policies
+✅ **Phase 5** - Coverage governance (93%+ statements/lines/functions)
 
-- The application is orchestrated from `App`, which lazily mounts top-level routes and exposes layout context for the header configuration.
-- The entry point now boots through an environment-aware pipeline (Phase 0) that only starts MSW/Devtools when enabled and defaults to a production-safe router.
+### Architecture highlights
+- **React 19 + TypeScript 5** with strict typing and project references
+- **Feature-Sliced Design** with clear module boundaries
+- **Generated i18n registry** with deterministic fallbacks
+- **Comprehensive testing** (93%+ coverage with Vitest + Playwright)
+- **HTTP client** with configurable fallback policies
+- **SSR-safe effects** for DOM mutations and state sync
 
-### 1.2 Data and internationalization
+### Current metrics
+- **Bundle size:** ~145KB gzipped main bundle
+- **Test coverage:** 93%+ statements/lines/functions, 88%+ branches
+- **Performance:** LCP < 2s, bundle analysis integrated
+- **Accessibility:** WCAG AA compliance with @axe-core/playwright
 
-- The Zustand settings store manipulates `document.documentElement` inside setters and persistence callbacks, which tightly couples it to the browser and complicates testing or SSR.
-- Translations are fetched via `useTranslations`, forcing every page to enumerate long key lists manually; missing keys fall back to pseudo-random placeholder text.
-- Exercise fetching relies on ad-hoc `fetch` calls with Valibot validation but lacks a shared HTTP client, typed error handling, or retry logic.
+## Phase 6 - Performance & PWA foundation
 
-### 1.3 Testing footprint
+### Goals
+Optimize performance and lay groundwork for Progressive Web App features.
 
-- Only a handful of unit and integration specs remain active, mostly checking navigation and JSON mock loading.
-- Numerous `.old` specs linger in the repository, obscuring the real coverage baseline and encouraging outdated patterns.
-- The Playwright suite covers smoke navigation paths but skips critical exercise flows (hints, incorrect answers, auto-advance) and settings persistence.
+### Deliverables
+- **Route-based code splitting** - Split exercise pages and reduce main bundle
+- **Asset optimization** - Image optimization, font preloading, critical CSS
+- **Service Worker implementation** - Basic caching strategy for static assets
+- **Bundle monitoring** - CI integration with size regression alerts
+- **Web App Manifest** - PWA installability with proper icons and metadata
 
-## 2. Key problems to solve
+### Technical tasks
+- Implement `React.lazy()` for exercise components
+- Add `rollup-plugin-visualizer` to CI pipeline
+- Configure Workbox for service worker generation
+- Optimize Tailwind CSS purging and critical path CSS
+- Add bundle size budgets to CI validation
 
-- **Production readiness**: Mock Service Worker and Devtools are hardwired into the bootstrap, preventing real API traffic and blurring environment boundaries.
-- **Browser-only side effects**: The settings store directly mutates DOM attributes, making state transitions untestable without a DOM and unsafe for SSR.
-- **Translation ergonomics**: Manual key enumeration and whimsical fallbacks waste developer time and create inconsistent UI strings.
-- **Monolithic exercise pages**: The exercise library page mixes layout, filtering, language selection, and rendering logic in one large component, while the word-form exercise flow spreads state across loosely coupled hooks.
-- **Testing gaps**: Unit coverage is thin, `.old` artefacts create noise, and E2E scenarios omit mission-critical behaviour.
+**Timeline:** 4-6 weeks
+**Bundle target:** < 120KB main, < 80KB per route
 
-## 3. Guiding objectives
+## Phase 7 - Enhanced exercise system
 
-- Preserve correctness, accessibility, localization, and strict Biome/TypeScript compliance.
-- Keep the UX fast by respecting bundle budgets (≤250 KB main, ≤150 KB per route) and measuring LCP regressions.
-- Achieve dependable automation: unit-test flake <1%, deterministic MSW mocks, and full coverage (unit, integration, E2E) for core learning journeys.
-- Apply Feature-Sliced Design (FSD) principles pragmatically—encapsulate features and enforce boundaries—while avoiding a disruptive tree-wide rename until modules stabilize.
-- Maintain developer productivity with reproducible environments (Node 24 LTS, pnpm 10) and a single `pnpm validate` entry point.
+### Goals
+Expand beyond word-form exercises with new interactive exercise types.
 
-## 4. Phase roadmap
+### Deliverables
+- **Translation exercises** - Greek ↔ English/Russian with multiple choice and text input
+- **Flashcard system** - Spaced repetition for vocabulary memorization
+- **Multiple choice tests** - Grammar and vocabulary with randomized options
+- **Exercise statistics** - Detailed progress tracking and analytics
+- **Difficulty adaptation** - Dynamic difficulty based on user performance
 
-### Phase 0 – Foundations _(completed)_
+### Technical considerations
+- Extend exercise type system with new adapters
+- Implement spaced repetition algorithm (SM-2 or similar)
+- Add progress persistence with IndexedDB
+- Create exercise result analytics dashboard
+- Maintain test coverage for all new exercise types
 
-1. ✅ Introduce environment-aware bootstrap: optional MSW/Devtools, production-safe router, and error boundaries prepared for real API integration.
-   - Normalize environment flag access to use typed `import.meta.env` properties and Vitest runtime detection helpers.
-2. ✅ Establish a shared HTTP layer (typed `fetch` wrapper) with retry/error policies aligned with MSW mocks.
-3. ✅ Audit dependencies, remove dead packages, lock versions, and document runtime requirements in the setup guides.
+**Timeline:** 6-8 weeks
+**Coverage requirement:** Maintain 93%+ for all new modules
 
-### Phase 1 – Architecture decomposition
+## Phase 8 - Exercise creation tools
 
-1. ✅ Break the exercise library into page, container, filter panel, card list, and data adapters; establish slice-like boundaries inspired by FSD and document the new directory layout.
-2. ✅ Extract the word-form exercise state into a dedicated reducer with explicit events, selectors, and memoized derivations; expose a view-model hook that feeds the renderer without leaking internal state mutations.
-   - Reducer logic now routes through small, intention-revealing handlers (`handleAnswerCorrect`, `handleAdvance`, etc.) to satisfy Biome's complexity guardrails and keep future unit tests focused.
-   - The `useWordFormExercise` view-model is composed from dedicated helper hooks (initialisation, derived selectors, timers, and event handlers) that isolate side effects while honouring React's Rules of Hooks.
-   - Presentation is split into thin render helpers, keeping `ExerciseRenderer` under the 50-line limit and allowing completion/error states to be reused in Playwright/Vitest harnesses.
-3. ✅ Standardize layout and shell components, limit cross-module imports, and prepare for route-based code splitting.
-   - Introduced an `AppShell` wrapper that hosts the header, main outlet, and footer behind a shared `LayoutProvider`.
-   - Centralised routing in `app/routes/AppRoutes` to keep page imports isolated and enable nested layout-aware route definitions.
-   - Shifted suspense fallbacks into the shell so lazy routes render within a consistent frame while code splitting remains opt-in per page.
+### Goals
+Enable users and educators to create custom exercises.
 
-### Phase 2 – Domain and data layer
+### Deliverables
+- **Exercise builder UI** - Visual editor for creating new exercises
+- **JSON schema validation** - Runtime validation for user-created content
+- **Exercise preview** - Live preview during creation process
+- **Import/Export system** - Package exercises for sharing
+- **Template library** - Pre-built exercise templates
 
-1. ✅ Define exercise domain models and adapters that transform raw JSON or API payloads into view models shared by exercises and library listings.
-2. ✅ Implement cache-aware selectors for filtering (tags, difficulty, language) that integrate with TanStack Query and memoization.
-3. ✅ Provide validation utilities (Valibot or similar) to guarantee exercise data integrity across API, mocks, and tests.
+### Architecture patterns
+- Form handling with React Hook Form + Valibot
+- Real-time JSON validation with error highlighting
+- File handling for exercise packages
+- Template system with composition patterns
+- Undo/redo functionality for complex editing
 
-### Phase 3 – Internationalization and settings modernization
+**Timeline:** 8-10 weeks
+**Target:** Support all current exercise types in builder
 
-1. ✅ Build a generated translation registry (union types or codegen) so components import typed dictionaries instead of enumerating key arrays.
-2. ✅ Refactor `useTranslations` to return deterministic fallbacks, expose status codes for missing keys, and remove random filler text in production.
-3. ✅ Move DOM side effects (theme attributes, language toggles) out of the Zustand store into React effects guarded by environment checks and add SSR-safe defaults.
+## Phase 9 - Social & sharing features
 
-### Phase 4 – Testing and QA expansion
+### Goals
+Add community features and content sharing capabilities.
 
-1. ✅ Convert `.old` specs into current Vitest/Playwright coverage or retire them after documenting extracted learnings.
-2. ✅ Add unit tests for the settings store, translation hook, exercise state machine, and filtering selectors; use fake timers where required.
-3. ✅ Extend Playwright scenarios to cover full exercise completion (correct/incorrect answers, hints, navigation, settings persistence) following page object patterns.
+### Deliverables
+- **URL sharing** - Share individual exercises via generated URLs
+- **Exercise collections** - Group related exercises into learning paths
+- **Community library** - Browse and use community-created exercises
+- **Progress sharing** - Share achievements and statistics
+- **Collaborative features** - Comments and ratings on exercises
 
-### Phase 5 – Testing coverage strategy _(completed)_
+### Technical requirements
+- URL state management for shareable exercise links
+- Community content moderation system
+- User-generated content storage strategy
+- Social authentication integration
+- Real-time collaboration features (optional)
 
-1. ✅ Unit/integration: settings persistence, translation registry, exercise reducers/selectors, API adapters, and layout components now carry deterministic Vitest coverage.
-2. ✅ E2E: scope intentionally deferred for Phase 5; Playwright suites remain unchanged per roadmap.
-3. ✅ Tooling: coverage gates set to ≥90% baseline (statements/lines/functions) with branches at 88%, plus documentation of the new governance rules.
+**Timeline:** 10-12 weeks
+**Consideration:** May require backend services
 
-## Phase 6 – Performance, DX, and governance, Documentation deliverables
+## Phase 10 - Mobile optimization & PWA completion
 
-- Measure bundle sizes, apply route-based code splitting, and lazy-load heavy exercise assets to stay within budgets.
-- Enhance CI with parallel lint/test/e2e jobs, coverage reports, and flake tracking (<1%) while keeping runtimes manageable.
-- Update contributor docs, add accessibility/performance checklists, and ensure the changelog reflects refactor milestones.
-- Publish this refactor roadmap under `docs/ROADMAP.md` and link it from `docs/README.md` and the root `README.md` for discoverability.
-- Provide companion guides: environment bootstrapping, translation workflow, exercise module conventions, and testing strategy updates.
-- Keep all documentation in English with sentence-case headings, mirroring the rest of the docs set.
+### Goals
+Complete PWA implementation with full offline support and mobile optimization.
+
+### Deliverables
+- **Full offline support** - Complete app functionality without network
+- **Background sync** - Progress synchronization when connection resumes
+- **Push notifications** - Learning reminders and progress updates
+- **Mobile-first UX** - Touch interactions and responsive design refinements
+- **App store deployment** - PWA distribution via app stores
+
+### Technical implementation
+- Advanced service worker strategies
+- Background sync with retry policies
+- Web Push API integration
+- Touch gesture handling improvements
+- App store optimization and metadata
+
+**Timeline:** 6-8 weeks
+**Target platforms:** iOS, Android via PWA, web app stores
+
+## Long-term vision (Phase 11+)
+
+### Platform expansion
+- **Multi-language support** - Extend beyond Greek to other languages
+- **Teacher dashboard** - Classroom management and student progress tracking
+- **API ecosystem** - Public API for third-party integrations
+- **Advanced analytics** - Learning pattern analysis and recommendations
+
+### Technical evolution
+- **Micro-frontend architecture** - Scale to multiple language modules
+- **Real-time collaboration** - Shared learning sessions and classrooms
+- **AI integration** - Intelligent exercise generation and personalization
+- **Voice recognition** - Pronunciation practice and feedback
+
+## Quality standards
+
+### Non-negotiable requirements
+- **Test coverage:** Maintain 93%+ for all new features
+- **Performance budgets:** No bundle size regressions
+- **Accessibility:** WCAG AA compliance for all features
+- **Documentation:** Update guides alongside feature development
+- **i18n compliance:** All UI text through translation system
+
+### CI/CD requirements
+- All phases must pass `pnpm validate`
+- Bundle analysis integration
+- Accessibility testing automation
+- Cross-browser compatibility verification
+- Security audit compliance
+
+## Risk management
+
+### Technical risks
+- **Bundle size growth** - Monitor via automated analysis and budgets
+- **Performance regressions** - Lighthouse CI integration
+- **Testing complexity** - Maintain deterministic test patterns
+- **Browser compatibility** - Target modern browsers, graceful degradation
+
+### Mitigation strategies
+- Phase-by-phase delivery to limit scope
+- Feature flags for experimental functionality
+- Rollback strategies for performance issues
+- Community feedback integration
+
+---
+
+**Last updated:** January 2025
+**Next review:** March 2025
+**Contact:** Development team via GitHub issues

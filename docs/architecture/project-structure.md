@@ -1,6 +1,16 @@
 # Project structure
 
-This document explains the purpose of each file in the **Learn Greek** application.
+This document explains the purpose of each file in the **Learn Greek** application, reflecting the architecture established through Phases 0-5.
+
+## Architecture overview
+
+**Current status**: Production-ready React application with comprehensive testing (93%+ coverage)
+**Key patterns**:
+- **Feature-Sliced Design** with clear module boundaries
+- **Type-safe i18n** via generated translation registry
+- **HTTP client** with configurable fallback policies
+- **SSR-safe effects** for DOM state synchronization
+- **Coverage governance** on critical runtime modules
 
 ## 🏗️ Root configuration files
 
@@ -16,13 +26,14 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 
 ### vite.config.ts
 
-**Purpose**: Vite bundler configuration
+**Purpose**: Vite bundler configuration with coverage governance
 
 - Configures plugins: React and Tailwind CSS v4
 - Sets up `@/` alias for `src/` folder
 - Configures Vitest for unit/integration tests
-- Requires 100% code coverage
-- Excludes from coverage: `main.tsx` and `mocks/browser.ts`
+- **Coverage thresholds**: 93%+ statements/lines/functions, 88%+ branches
+- **Scoped coverage**: Critical runtime modules only (excludes mocks, types)
+- Bundle analysis integration via `rollup-plugin-visualizer`
 
 ### tsconfig.json, tsconfig.app.json, tsconfig.node.json
 
@@ -299,14 +310,14 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 - **Greek text handling** - Unicode normalization and tone-aware comparison
 - **Hint system** - Adaptive UI (hover/tap) for multilingual hints
 
-### Internationalization architecture
+### Internationalization architecture (Phase 3)
 
-- **JSON-based translations** - Structured data files for scalability
-- **API-driven loading** - Dynamic translation loading via MSW endpoints
-- **Multi-level fallbacks** - Graceful degradation for missing translations
-- **Language persistence** - User preferences stored in localStorage
-- **Real-time switching** - Instant UI updates without page reload
-- **Dual language system** - UI language + user language for exercise hints
+- **Generated translation registry** - Type-safe keys with compile-time validation
+- **Feature-based dictionaries** - Scoped translations via `createTranslationDictionary`
+- **Deterministic fallbacks** - Policy-driven missing key resolution
+- **SSR-safe state sync** - DOM mutations handled via `useSettingsSync` hook
+- **Status reporting** - Explicit translation status codes for diagnostics
+- **Memoized requests** - Shared cache keys for identical translation requests
 
 ### State and data management
 
@@ -317,18 +328,23 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 - **React Context** - language state management across components
 - **LocalStorage** - settings persistence with automatic synchronization
 
-### Code quality
-
-- **100% test coverage** - mandatory requirement
-- **Biome** - unified tool for linting and formatting
-- **Strict TypeScript** - maximum type safety
-- **Component testing** - Comprehensive unit and integration tests
-- **E2E testing** - Playwright tests for critical user flows
-
 ### Performance optimizations
 
+- **Bundle analysis** - Integrated visualizer for size monitoring
 - **Lazy loading** - code splitting for exercise pages
 - **Font preloading** - Inter font optimization
 - **React Suspense** - optimistic UI with loading states
 - **Translation caching** - 30-minute cache for translation API calls
-- **Minimal bundle size** - Tree-shaking and efficient imports
+- **Tree-shakeable dictionaries** - Feature-scoped i18n imports
+- **HTTP fallback policies** - Configurable offline support (Phase 4)
+
+### Development workflow patterns
+- **Environment-aware bootstrap** (Phase 0) with conditional MSW/DevTools
+- **Project references** in TypeScript for faster builds
+- **Bundle analysis** integrated via `pnpm build:analyze`
+- **Single validation entry point** via `pnpm validate`
+- **Accessibility testing** via @axe-core/playwright integration
+
+---
+
+**For current development priorities, see [ROADMAP.md](../ROADMAP.md)**

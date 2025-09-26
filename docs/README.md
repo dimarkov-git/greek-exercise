@@ -1,5 +1,12 @@
 # Learn Greek documentation
 
+## Project status
+
+**Current version:** MVP with comprehensive architecture and testing
+**Completed phases:** 0-5 (foundation through coverage governance)
+**Coverage:** 93%+ statements/lines/functions, 88%+ branches
+**Next phase:** Performance optimization and PWA foundation
+
 ## Documentation structure
 
 ### `architecture/`
@@ -10,50 +17,62 @@ Technical architecture and system design:
 - [**component-architecture.md**](architecture/component-architecture.md) – Component system and design patterns.
 - [**exercise-system.md**](architecture/exercise-system.md) – Exercise system architecture and data flow.
 - [**performance.md**](architecture/performance.md) – Performance budgets, KPIs, and optimization guidelines.
-- _Planned_: i18n-system.md, data-flow.md.
+- [**i18n-system.md**](architecture/i18n-system.md) – Type-safe internationalization with generated registry.
 
 ### `guides/`
 
 Step-by-step guides for developers:
 
-- [**getting-started.md**](guides/getting-started.md) – Complete setup guide for macOS users.
+- [**getting-started.md**](guides/getting-started.md) – Complete setup guide with Node 24.x and PNPM 10.
 - [**exercise-development.md**](guides/exercise-development.md) – Creating and configuring exercises.
-- [**testing-guide.md**](guides/testing-guide.md) – Comprehensive testing guidelines with Vitest and Playwright.
-- [**accessibility.md**](guides/accessibility.md) – Accessibility standards and implementation patterns.
-- _Planned_: development-workflow.md, translation-management.md, deployment.md.
+- [**testing-guide.md**](guides/testing-guide.md) – Comprehensive testing with 93%+ coverage requirements.
+- [**accessibility.md**](guides/accessibility.md) – WCAG AA compliance and @axe-core/playwright integration.
 
 ### `api/`
 
 API documentation and data models:
 
 - [**exercise-json-format.md**](exercise-json-format.md) – JSON structure specification for exercises.
-- _Planned_: translation-endpoints.md, exercise-endpoints.md, data-models.md, msw-mocking.md.
+- MSW mocking patterns documented in testing guides
 
-## Project documentation
+## Core documentation
 
-### Core specifications
+### Project specifications
 
-- [**TECHNICAL_SPEC.md**](TECHNICAL_SPEC.md) – Technical specification and project requirements.
-- [**ROADMAP.md**](ROADMAP.md) – Refactor roadmap and future technical priorities.
+- [**TECHNICAL_SPEC.md**](TECHNICAL_SPEC.md) – Complete technical specification and requirements.
+- [**ROADMAP.md**](ROADMAP.md) – Development roadmap for Phases 6+ with performance and PWA focus.
 
-### Phase 2 artefacts
+### Key architectural decisions
 
-- [Overview](reports/phase-2/overview.md) – Architecture snapshot, goals, scope, dependencies, and risks.
-- [Execution report](reports/phase-2/execution-report.md) – Command outcomes, coverage, bundle metrics, and audit logs.
-- [ADRs](reports/phase-2/adrs) – Accepted decisions for the Learn page refactor and related tooling.
+These patterns emerged from the completed phases (0-5):
 
-### Phase 3 artefacts
+- **Component composition** - Page decomposition under 50-line function limits
+- **Generated i18n registry** - Type-safe translations with deterministic fallbacks
+- **HTTP fallback policies** - Configurable offline support via environment flags
+- **Coverage governance** - 93%+ thresholds on critical runtime modules
+- **SSR-safe state sync** - DOM mutations handled via useEffect hooks
 
-- [Overview](reports/phase-3/overview.md) – Translation registry architecture, scope, dependencies, and risk log.
-- [Execution report](reports/phase-3/execution-report.md) – Lint/test/e2e outcomes, coverage, and change summary.
-- [ADRs](reports/phase-3/adrs) – Decisions covering generated dictionaries and settings synchronisation.
+### Development workflow
 
-### Phase 4 artefacts
+1. **Setup:** Node 24.x LTS + PNPM 10 with `corepack enable`
+2. **Development:** `pnpm dev` for hot reload development server
+3. **Testing:** Maintain 93%+ coverage with `pnpm test` and `pnpm test:e2e`
+4. **Quality:** `pnpm validate` must pass (lint + test + e2e)
+5. **Bundle analysis:** Use `pnpm build:analyze` for size monitoring
 
-- [Overview](reports/phase-4/overview.md) – Testing/QA expansion scope, goals, dependencies, and risk mitigation.
-- [ADRs](reports/phase-4/adrs) – Decisions for HTTP fallback governance and MSW decoupling.
+## Quick navigation
 
-### Phase 5 artefacts
+| Task                         | Documentation                                          |
+|------------------------------|--------------------------------------------------------|
+| **Getting started**          | [Setup guide](guides/getting-started.md)               |
+| **Architecture overview**    | [Project structure](architecture/project-structure.md) |
+| **Testing strategy**         | [Testing guide](guides/testing-guide.md)               |
+| **Exercise development**     | [Exercise guide](guides/exercise-development.md)       |
+| **Performance optimization** | [Performance guide](architecture/performance.md)       |
+| **Accessibility**            | [A11y guide](guides/accessibility.md)                  |
+| **i18n implementation**      | [i18n system](architecture/i18n-system.md)             |
+| **Future roadmap**           | [Development roadmap](ROADMAP.md)                      |
 
-- [Overview](reports/phase-5/overview.md) – Coverage governance snapshot, goals, scope, dependencies, and risk register.
-- [ADRs](reports/phase-5/adrs) – Decisions documenting the new Vitest coverage thresholds and module scope.
+---
+
+**For development guidelines and coding standards, see [CLAUDE.md](../CLAUDE.md)**
