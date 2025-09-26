@@ -144,3 +144,28 @@ it('falls back to English when browser languages are unsupported', () => {
 		value: originalNavigator
 	})
 })
+
+it('prefers navigator.language when languages array is empty', () => {
+	const originalNavigator = window.navigator
+
+	const mockNavigator = {
+		...originalNavigator,
+		languages: [],
+		language: 'el-GR'
+	}
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: mockNavigator
+	})
+
+	const settings = resolveInitialSettings()
+
+	expect(settings.uiLanguage).toBe('el')
+	expect(settings.userLanguage).toBe('en')
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: originalNavigator
+	})
+})

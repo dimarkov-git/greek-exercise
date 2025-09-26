@@ -1,5 +1,11 @@
 # Changelog
 
+## 2025-10-01
+
+- Completed Phase 5 testing coverage strategy: enforced ≥90% Vitest thresholds (88% branches) for HTTP, translations, layout, settings, and exercise utilities.
+- Added comprehensive unit suites for the HTTP client, translation dictionaries/hooks, layout shell, settings navigator fallbacks, and exercise selectors/utilities.
+- Published Phase 5 overview + ADR, refreshed roadmap/README entries, and documented coverage governance in the changelog.
+
 ## 2025-09-23
 
 - Completed Phase 4 testing/QA expansion: converted legacy specs, added HTTP fallback controls, and expanded exercise/responsive Playwright flows.

@@ -16,6 +16,7 @@
 - **📊 TanStack query** - Efficient data fetching and caching
 - **🛠️ Development tools** - [Biome V2](https://next.biomejs.dev) for linting and formatting
 - **🧪 Comprehensive testing** - [Vitest 3](https://vitest.dev/) + [Testing Library 16](https://testing-library.com/) + [Playwright](https://playwright.dev)
+- **✅ Coverage governance** - Vitest thresholds enforce ≥90% statements/lines/functions (88% branches) across core runtime modules.
 
 ## Tech stack
 

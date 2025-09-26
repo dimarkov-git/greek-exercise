@@ -55,6 +55,7 @@ async function loadHttpClient({
 	const module = await import('./httpClient')
 
 	return {
+		httpErrorConstructor: module.HttpError,
 		requestJson: module.requestJson,
 		resolveFallbackResponse
 	}
@@ -153,4 +154,139 @@ it('prefers network response when both MSW and fallback are enabled', async () =
 
 	await expect(requestJson('/api/exercises')).resolves.toEqual(payload)
 	expect(resolveFallbackResponse).not.toHaveBeenCalled()
+})
+
+it('retries retryable status codes before succeeding', async () => {
+	vi.useFakeTimers()
+
+	const retryResponse = new Response(JSON.stringify({error: 'retry'}), {
+		status: 503,
+		headers: {'Content-Type': 'application/json'}
+	})
+
+	const successPayload = {status: 'ok'}
+	const successResponse = new Response(JSON.stringify(successPayload), {
+		status: 200,
+		headers: {'Content-Type': 'application/json'}
+	})
+
+	const fetchMock = vi
+		.fn()
+		.mockResolvedValueOnce(retryResponse)
+		.mockResolvedValueOnce(successResponse)
+
+	globalThis.fetch = fetchMock as typeof globalThis.fetch
+
+	const {requestJson} = await loadHttpClient({
+		enableMockServiceWorker: true,
+		enableHttpFallback: false
+	})
+
+	const requestPromise = requestJson('/api/retry', {
+		retry: 2,
+		retryDelayMs: 10
+	})
+
+	await vi.advanceTimersByTimeAsync(10)
+	await expect(requestPromise).resolves.toEqual(successPayload)
+	expect(fetchMock).toHaveBeenCalledTimes(2)
+
+	vi.useRealTimers()
+})
+
+it('throws an HttpError when the server responds with non-JSON content', async () => {
+	const response = new Response('plain text', {
+		status: 200,
+		headers: {'Content-Type': 'text/plain'}
+	})
+
+	const fetchMock = vi.fn().mockResolvedValueOnce(response)
+	globalThis.fetch = fetchMock as typeof globalThis.fetch
+
+	const {requestJson, httpErrorConstructor} = await loadHttpClient({
+		enableMockServiceWorker: true,
+		enableHttpFallback: false
+	})
+
+	await expect(requestJson('/api/plain')).rejects.toBeInstanceOf(
+		httpErrorConstructor
+	)
+})
+
+it('returns undefined when the server responds with no content', async () => {
+	const response = new Response(null, {
+		status: 204,
+		headers: {'Content-Type': 'application/json'}
+	})
+
+	const fetchMock = vi.fn().mockResolvedValueOnce(response)
+	globalThis.fetch = fetchMock as typeof globalThis.fetch
+
+	const {requestJson} = await loadHttpClient({
+		enableMockServiceWorker: true,
+		enableHttpFallback: false
+	})
+
+	await expect(requestJson('/api/empty')).resolves.toBeUndefined()
+})
+
+it('serialises JSON bodies and sets headers when sending payloads', async () => {
+	const payload = {status: 'ok'}
+	const response = new Response(JSON.stringify(payload), {
+		status: 200,
+		headers: {'Content-Type': 'application/json'}
+	})
+
+	const fetchMock = vi.fn().mockResolvedValueOnce(response)
+	globalThis.fetch = fetchMock as typeof globalThis.fetch
+
+	const {requestJson} = await loadHttpClient({
+		enableMockServiceWorker: true,
+		enableHttpFallback: false
+	})
+
+	await requestJson('/api/exercises', {
+		method: 'POST',
+		body: {filter: 'all'}
+	})
+
+	const [, init] = fetchMock.mock.calls[0] ?? []
+	const headers = (init?.headers as Headers) ?? new Headers()
+
+	expect(headers.get('Content-Type')).toBe('application/json')
+	expect(init?.body).toBe(JSON.stringify({filter: 'all'}))
+})
+
+it('propagates fallback HttpError results when fallback handlers fail', async () => {
+	const fetchMock = vi.fn().mockRejectedValue(new Error('Network unavailable'))
+	globalThis.fetch = fetchMock as typeof globalThis.fetch
+
+	const {requestJson, httpErrorConstructor} = await loadHttpClient({
+		enableMockServiceWorker: false,
+		enableHttpFallback: true,
+		fallbackImplementation: () => ({
+			type: 'error',
+			status: 503,
+			message: 'Service unavailable'
+		})
+	})
+
+	await expect(
+		requestJson('/api/fallback-error', {retry: 0})
+	).rejects.toBeInstanceOf(httpErrorConstructor)
+})
+
+it('wraps unknown thrown values when retries are exhausted', async () => {
+	const fetchMock = vi.fn().mockRejectedValue('catastrophic failure')
+
+	globalThis.fetch = fetchMock as typeof globalThis.fetch
+
+	const {requestJson} = await loadHttpClient({
+		enableMockServiceWorker: false,
+		enableHttpFallback: false
+	})
+
+	await expect(requestJson('/api/unknown', {retry: 1})).rejects.toThrow(
+		'Request to /api/unknown failed with an unknown error'
+	)
 })

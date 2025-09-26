@@ -1,5 +1,5 @@
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
-import {renderHook, waitFor} from '@testing-library/react'
+import {act, renderHook, waitFor} from '@testing-library/react'
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 import {requestJson} from '@/api/httpClient'
 import {useTranslations} from '@/hooks/useTranslations'
@@ -145,6 +145,48 @@ describe('useTranslations respects missing policies', () => {
 
 		expect(result.current.t('app.title')).toBe('app.title')
 		expect(result.current.t('app.subtitle')).toBe('app.subtitle')
+
+		unmount()
+		queryClient.clear()
+	})
+})
+
+describe('useTranslations transitions', () => {
+	it('flags language transitions as loading until the delay elapses', async () => {
+		mockedRequestJson.mockResolvedValue({
+			translations: {
+				'app.title': 'Learn Greek',
+				'app.subtitle': 'Interactive exercises'
+			}
+		})
+
+		const {queryClient, wrapper} = createWrapper()
+		const {result, unmount} = renderHook(() => useTranslations(dictionary), {
+			wrapper
+		})
+
+		await waitFor(() => {
+			expect(result.current.status).toBe('complete')
+		})
+
+		vi.useFakeTimers()
+		const timeoutSpy = vi.spyOn(globalThis, 'setTimeout')
+
+		act(() => {
+			useSettingsStore.getState().setUiLanguage('el')
+		})
+
+		expect(result.current.isLoading).toBe(true)
+		expect(timeoutSpy).toHaveBeenCalledWith(expect.any(Function), 300)
+
+		await act(async () => {
+			await vi.runAllTimersAsync()
+		})
+
+		expect(result.current.isLoading).toBe(false)
+
+		vi.useRealTimers()
+		timeoutSpy.mockRestore()
 
 		unmount()
 		queryClient.clear()
