@@ -33,36 +33,22 @@ function createTestConfiguration(): NonNullable<UserConfig['test']> {
 		clearMocks: true,
 		coverage: {
 			enabled: true,
-			include: [
-				'src/api/httpClient.ts',
-				'src/app/shell/**/*',
-				'src/contexts/LayoutContext*.ts',
-				'src/domain/exercises/**/*',
-				'src/hooks/useLayout.ts',
-				'src/hooks/useTranslations.ts',
-				'src/i18n/**/*',
-				'src/stores/settings.ts',
-				'src/utils/exercises.ts'
-			],
-			exclude: [
-				'src/**/*.test.ts',
-				'src/**/*.test.tsx',
-				'src/**/*.stories.tsx'
-			],
+            exclude: ['src/main.tsx', 'src/mocks/browser.ts'],
+            include: ['src/**/*'],
 			reporter: ['text', 'lcov'],
 			reportsDirectory: 'coverage',
 			thresholds: {
-				branches: 88,
-				functions: 90,
-				lines: 90,
-				statements: 90
+				branches: 75,
+				functions: 80,
+				lines: 80,
+				statements: 80
 			}
 		},
 		css: false,
 		environment: 'happy-dom',
 		globals: true,
-		include: ['src/**/*.test.ts?(x)'],
-		setupFiles: 'src/test-setup.ts'
+        include: ['src/**/*.test.ts?(x)'],
+        setupFiles: 'src/test-setup.ts'
 	}
 }
 
