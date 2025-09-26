@@ -154,9 +154,15 @@ export interface WordFormExerciseJSON {
 export function getExerciseSettings(
 	exercise: WordFormExercise
 ): ExerciseSettings {
+	const settings = exercise.settings
 	return {
-		...DEFAULT_EXERCISE_SETTINGS,
-		...exercise.settings
+		autoAdvance: settings?.autoAdvance ?? DEFAULT_EXERCISE_SETTINGS.autoAdvance,
+		autoAdvanceDelayMs:
+			settings?.autoAdvanceDelayMs ??
+			DEFAULT_EXERCISE_SETTINGS.autoAdvanceDelayMs,
+		allowSkip: settings?.allowSkip ?? DEFAULT_EXERCISE_SETTINGS.allowSkip,
+		shuffleCases:
+			settings?.shuffleCases ?? DEFAULT_EXERCISE_SETTINGS.shuffleCases
 	}
 }
 

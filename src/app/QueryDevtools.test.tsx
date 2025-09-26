@@ -12,18 +12,6 @@ const mockEnvironment = vi.hoisted(() => ({
 
 vi.mock('@/config/environment', () => mockEnvironment)
 
-// Mock the dynamic import
-const mockDevtoolsModule = {
-	ReactQueryDevtools: vi.fn(({initialIsOpen}: {initialIsOpen: boolean}) => (
-		<div data-initial-open={initialIsOpen} data-testid='react-query-devtools'>
-			React Query Devtools
-		</div>
-	))
-}
-
-// Mock dynamic import
-vi.mock('@tanstack/react-query-devtools', () => mockDevtoolsModule)
-
 // Mock console.warn
 const mockConsoleWarn = vi.fn()
 
@@ -37,6 +25,7 @@ describe('QueryDevtools', () => {
 
 	afterEach(() => {
 		vi.restoreAllMocks()
+		vi.clearAllTimers()
 	})
 
 	it('returns null when enableQueryDevtools is false', () => {

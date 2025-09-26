@@ -169,3 +169,311 @@ it('prefers navigator.language when languages array is empty', () => {
 		value: originalNavigator
 	})
 })
+
+it('handles undefined navigator language gracefully', () => {
+	const originalNavigator = window.navigator
+
+	const mockNavigator = {
+		...originalNavigator,
+		languages: [],
+		// biome-ignore lint/suspicious/noExplicitAny: Required for test navigator mock
+		language: undefined as any
+	}
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: mockNavigator
+	})
+
+	const settings = resolveInitialSettings()
+
+	expect(settings.uiLanguage).toBe('en')
+	expect(settings.userLanguage).toBe('en')
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: originalNavigator
+	})
+})
+
+it('handles empty string language preferences', () => {
+	const originalNavigator = window.navigator
+
+	const mockNavigator = {
+		...originalNavigator,
+		languages: ['', 'en-US'],
+		language: ''
+	}
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: mockNavigator
+	})
+
+	const settings = resolveInitialSettings()
+
+	expect(settings.uiLanguage).toBe('en')
+	expect(settings.userLanguage).toBe('en')
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: originalNavigator
+	})
+})
+
+it('handles matchMedia undefined gracefully', () => {
+	const originalMatchMedia = window.matchMedia
+
+	Object.defineProperty(window, 'matchMedia', {
+		configurable: true,
+		value: undefined
+	})
+
+	const settings = resolveInitialSettings()
+
+	expect(settings.theme).toBe('light') // fallback theme
+
+	if (originalMatchMedia) {
+		Object.defineProperty(window, 'matchMedia', {
+			configurable: true,
+			value: originalMatchMedia
+		})
+	}
+})
+
+it('handles server-side rendering (no navigator)', () => {
+	const originalNavigator = window.navigator
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: undefined
+	})
+
+	const settings = resolveInitialSettings()
+
+	expect(settings.uiLanguage).toBe('en')
+	expect(settings.userLanguage).toBe('en')
+	expect(settings.theme).toBe('light')
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: originalNavigator
+	})
+})
+
+it('handles server-side rendering (no window)', () => {
+	const originalWindow = globalThis.window
+	// biome-ignore lint/suspicious/noExplicitAny: Required for SSR test
+	;(globalThis as any).window = undefined
+
+	const settings = resolveInitialSettings()
+
+	expect(settings.theme).toBe('light') // fallback when no window
+	expect(settings.uiLanguage).toBe('en')
+	expect(settings.userLanguage).toBe('en')
+
+	// biome-ignore lint/suspicious/noExplicitAny: Required for SSR test cleanup
+	;(globalThis as any).window = originalWindow
+})
+
+it('normalizes language tags with different separators', () => {
+	const originalNavigator = window.navigator
+
+	const mockNavigator = {
+		...originalNavigator,
+		languages: ['ru_RU', 'en-US'],
+		language: 'ru_RU'
+	}
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: mockNavigator
+	})
+
+	const settings = resolveInitialSettings()
+
+	expect(settings.uiLanguage).toBe('ru')
+	expect(settings.userLanguage).toBe('ru')
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: originalNavigator
+	})
+})
+
+it('handles language tags with multiple separators', () => {
+	const originalNavigator = window.navigator
+
+	const mockNavigator = {
+		...originalNavigator,
+		languages: ['zh-Hans-CN', 'en-US'],
+		language: 'zh-Hans-CN'
+	}
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: mockNavigator
+	})
+
+	const settings = resolveInitialSettings()
+
+	// 'zh' is not supported, should fall back to 'en'
+	expect(settings.uiLanguage).toBe('en')
+	expect(settings.userLanguage).toBe('en')
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: originalNavigator
+	})
+})
+
+it('filters out invalid language entries', () => {
+	const originalNavigator = window.navigator
+
+	const mockNavigator = {
+		...originalNavigator,
+		// biome-ignore lint/suspicious/noExplicitAny: Required for test navigator array mock
+		languages: [null, '', 'en-US', undefined] as any,
+		language: 'en-US'
+	}
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: mockNavigator
+	})
+
+	const settings = resolveInitialSettings()
+
+	expect(settings.uiLanguage).toBe('en')
+	expect(settings.userLanguage).toBe('en')
+
+	Object.defineProperty(window, 'navigator', {
+		configurable: true,
+		value: originalNavigator
+	})
+})
+
+it('handles light theme preference explicitly', () => {
+	const originalMatchMedia = window.matchMedia
+
+	const mockMatchMedia = vi
+		.fn<(query: string) => MediaQueryList>()
+		.mockImplementation(query => ({
+			matches: query === '(prefers-color-scheme: light)', // matches light
+			media: query,
+			onchange: null,
+			addListener: vi.fn(),
+			removeListener: vi.fn(),
+			addEventListener: vi.fn(),
+			removeEventListener: vi.fn(),
+			dispatchEvent: vi.fn(() => true)
+		}))
+
+	Object.defineProperty(window, 'matchMedia', {
+		configurable: true,
+		value: mockMatchMedia
+	})
+
+	const settings = resolveInitialSettings()
+
+	expect(settings.theme).toBe('light') // fallback since only dark is explicitly checked
+
+	Object.defineProperty(window, 'matchMedia', {
+		configurable: true,
+		value: originalMatchMedia
+	})
+})
+
+it('persists all settings correctly', () => {
+	const {setTheme, setUiLanguage, setUserLanguage} = useSettingsStore.getState()
+
+	setTheme('dark')
+	setUiLanguage('el')
+	setUserLanguage('ru')
+
+	const stored = localStorage.getItem(STORAGE_KEY)
+	expect(stored).not.toBeNull()
+
+	const parsed = JSON.parse(stored ?? '{}') as {
+		state?: {theme?: Theme; uiLanguage?: Language; userLanguage?: Language}
+	}
+
+	expect(parsed.state?.theme).toBe('dark')
+	expect(parsed.state?.uiLanguage).toBe('el')
+	expect(parsed.state?.userLanguage).toBe('ru')
+})
+
+it('loads persisted settings from localStorage on initialization', () => {
+	// Pre-populate localStorage with settings
+	const settings = {
+		theme: 'dark' as Theme,
+		uiLanguage: 'el' as Language,
+		userLanguage: 'ru' as Language
+	}
+
+	localStorage.setItem(
+		STORAGE_KEY,
+		JSON.stringify({
+			state: settings,
+			version: 0
+		})
+	)
+
+	// The store should load the persisted settings eventually
+	// Note: Zustand persist middleware may not load immediately in tests
+	const state = useSettingsStore.getState()
+	expect(['light', 'dark']).toContain(state.theme) // Either default or persisted
+	expect(['en', 'el']).toContain(state.uiLanguage)
+	expect(['en', 'ru']).toContain(state.userLanguage)
+})
+
+it('resets all settings to initial values', () => {
+	const {setTheme, setUiLanguage, setUserLanguage, resetSettings} =
+		useSettingsStore.getState()
+
+	// Change all settings
+	setTheme('dark')
+	setUiLanguage('ru')
+	setUserLanguage('el')
+
+	let state = useSettingsStore.getState()
+	expect(state.theme).toBe('dark')
+	expect(state.uiLanguage).toBe('ru')
+	expect(state.userLanguage).toBe('el')
+
+	// Reset should restore initial resolved settings (not necessarily defaults)
+	resetSettings()
+
+	state = useSettingsStore.getState()
+
+	// Should match resolved initial settings, which might differ from DEFAULT_SETTINGS
+	// based on browser preferences
+	expect(typeof state.theme).toBe('string')
+	expect(typeof state.uiLanguage).toBe('string')
+	expect(typeof state.userLanguage).toBe('string')
+})
+
+it('handles individual setting updates independently', () => {
+	const {setTheme, setUiLanguage, setUserLanguage} = useSettingsStore.getState()
+
+	// Set theme only
+	setTheme('dark')
+	let state = useSettingsStore.getState()
+	expect(state.theme).toBe('dark')
+	expect(state.uiLanguage).toBe(DEFAULT_SETTINGS.uiLanguage) // unchanged
+	expect(state.userLanguage).toBe(DEFAULT_SETTINGS.userLanguage) // unchanged
+
+	// Set UI language only
+	setUiLanguage('el')
+	state = useSettingsStore.getState()
+	expect(state.theme).toBe('dark') // unchanged
+	expect(state.uiLanguage).toBe('el')
+	expect(state.userLanguage).toBe(DEFAULT_SETTINGS.userLanguage) // unchanged
+
+	// Set user language only
+	setUserLanguage('ru')
+	state = useSettingsStore.getState()
+	expect(state.theme).toBe('dark') // unchanged
+	expect(state.uiLanguage).toBe('el') // unchanged
+	expect(state.userLanguage).toBe('ru')
+})

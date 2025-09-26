@@ -126,7 +126,8 @@
 						"noEmptyBlockStatements": "off"
 					},
 					"style": {
-						"useNamingConvention": "off"
+						"useNamingConvention": "off",
+						"noNonNullAssertion": "off"
 					}
 				}
 			}
