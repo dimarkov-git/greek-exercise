@@ -35,7 +35,6 @@ const baseMetadata: ExerciseMetadataDto = {
 	enabled: true
 }
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: grouped adapter tests
 describe('exercise domain adapters', () => {
 	it('normalizes exercise metadata into summaries', () => {
 		const summary = toExerciseSummary(baseMetadata)

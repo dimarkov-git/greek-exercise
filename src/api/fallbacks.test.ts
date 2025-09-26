@@ -12,7 +12,6 @@ function loadFallbacks() {
 	return import('./fallbacks') as Promise<FallbackModule>
 }
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Integration-style test exercises multiple scenarios in one suite
 describe('resolveFallbackResponse', () => {
 	describe('translations API', () => {
 		it('returns trimmed translations for GET requests', async () => {
@@ -62,7 +61,6 @@ describe('resolveFallbackResponse', () => {
 		})
 	})
 
-	// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Comprehensive exercises coverage is easier to maintain grouped
 	describe('exercises API', () => {
 		it('lists enabled exercises ordered alphabetically', async () => {
 			const {resolveFallbackResponse} = await loadFallbacks()

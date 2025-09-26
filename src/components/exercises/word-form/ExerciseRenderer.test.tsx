@@ -115,7 +115,6 @@ function resetTestEnvironment() {
 	exerciseContentMock.mockReset()
 }
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Grouping closely related scenarios improves readability
 describe('ExerciseRenderer completion screen', () => {
 	beforeEach(resetTestEnvironment)
 

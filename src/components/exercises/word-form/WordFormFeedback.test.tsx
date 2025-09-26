@@ -16,7 +16,6 @@ const baseProps = {
 	userAnswer: 'είμαι'
 }
 
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Test suite intentionally groups related scenarios
 describe('WordFormFeedback', () => {
 	it('does not render when feedback is not required', () => {
 		const {container} = render(
