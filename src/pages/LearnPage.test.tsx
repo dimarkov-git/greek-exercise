@@ -32,58 +32,63 @@ vi.mock('@/components/Head', () => ({
 vi.mock('@/components/LoadingOrError', () => ({
 	LoadingOrError: vi.fn(({error}: {error?: Error}) =>
 		error ? (
-			<div data-testid="loading-error">Error: {error.message}</div>
+			<div data-testid='loading-error'>Error: {error.message}</div>
 		) : (
-			<div data-testid="loading-error">Loading...</div>
+			<div data-testid='loading-error'>Loading...</div>
 		)
 	)
 }))
 
 vi.mock('@/components/learn/JsonView', () => ({
 	JsonView: vi.fn(({exercise}: {exercise: WordFormExercise}) => (
-		<div data-testid="json-view">JsonView: {exercise.title}</div>
+		<div data-testid='json-view'>JsonView: {exercise.title}</div>
 	))
 }))
 
 vi.mock('@/components/learn/TableView', () => ({
 	TableView: vi.fn(({exercise}: {exercise: WordFormExercise}) => (
-		<div data-testid="table-view">TableView: {exercise.title}</div>
+		<div data-testid='table-view'>TableView: {exercise.title}</div>
 	))
 }))
 
 vi.mock('@/components/learn/ViewToggle', () => ({
-	ViewToggle: vi.fn(({viewMode, onViewModeChange}: {
-		viewMode: string
-		onViewModeChange: (mode: string) => void
-	}) => (
-		<div data-testid="view-toggle">
-			<button
-				onClick={() => onViewModeChange('table')}
-				data-testid="table-mode-btn"
-			>
-				Table ({viewMode})
-			</button>
-			<button
-				onClick={() => onViewModeChange('json')}
-				data-testid="json-mode-btn"
-			>
-				JSON ({viewMode})
-			</button>
-		</div>
-	))
+	ViewToggle: vi.fn(
+		({
+			viewMode,
+			onViewModeChange
+		}: {
+			viewMode: string
+			onViewModeChange: (mode: string) => void
+		}) => (
+			<div data-testid='view-toggle'>
+				<button
+					data-testid='table-mode-btn'
+					onClick={() => onViewModeChange('table')}
+				>
+					Table ({viewMode})
+				</button>
+				<button
+					data-testid='json-mode-btn'
+					onClick={() => onViewModeChange('json')}
+				>
+					JSON ({viewMode})
+				</button>
+			</div>
+		)
+	)
 }))
 
 // Create mock implementations
 const mockNavigate = vi.fn()
 const mockSetHeaderEnabled = vi.fn()
-const mockUseExercise = vi.fn()
+const _mockUseExercise = vi.fn()
 const mockTranslator = vi.fn((key: string) => {
 	const translations: Record<string, string> = {
-		'learnExercise': 'Learn Exercise',
-		'jsonView': 'JSON View',
-		'tableView': 'Table View',
-		'exerciseStructure': 'Exercise Structure',
-		'startExercise': 'Start Exercise',
+		learnExercise: 'Learn Exercise',
+		jsonView: 'JSON View',
+		tableView: 'Table View',
+		exerciseStructure: 'Exercise Structure',
+		startExercise: 'Start Exercise',
 		'exercise.backToLibrary': 'Back to Library',
 		'exercise.unsupportedType': 'Unsupported Exercise Type',
 		'exercise.notImplemented': 'Exercise type "{type}" is not implemented yet.',
@@ -99,7 +104,7 @@ const mockTranslator = vi.fn((key: string) => {
 })
 
 // Import mocked modules to set up implementations
-import {useParams, useNavigate} from 'react-router'
+import {useNavigate, useParams} from 'react-router'
 import {useExercise} from '@/hooks/useExercises'
 import {useLayout} from '@/hooks/useLayout'
 import {useTranslations} from '@/hooks/useTranslations'
@@ -110,7 +115,8 @@ const mockWordFormExercise: WordFormExercise = {
 	enabled: true,
 	type: 'word-form',
 	title: 'Present Tense of εἰμί',
-	description: 'Learn the present tense forms of the verb "to be" in Ancient Greek',
+	description:
+		'Learn the present tense forms of the verb "to be" in Ancient Greek',
 	tags: ['verbs', 'present-tense', 'essential'],
 	difficulty: 'a1',
 	estimatedTimeMinutes: 15,
@@ -219,7 +225,9 @@ describe('LearnPage', () => {
 			render(<LearnPage />)
 
 			expect(screen.getByTestId('loading-error')).toBeInTheDocument()
-			expect(screen.getByText('Error: Failed to load exercise')).toBeInTheDocument()
+			expect(
+				screen.getByText('Error: Failed to load exercise')
+			).toBeInTheDocument()
 		})
 
 		it('shows LoadingOrError when no exercise is found', () => {
@@ -247,8 +255,12 @@ describe('LearnPage', () => {
 			render(<LearnPage />)
 
 			expect(screen.getByText('Unsupported Exercise Type')).toBeInTheDocument()
-			expect(screen.getByText('Exercise type "flashcard" is not implemented yet.')).toBeInTheDocument()
-			expect(screen.getByRole('button', {name: 'Back to Library'})).toBeInTheDocument()
+			expect(
+				screen.getByText('Exercise type "flashcard" is not implemented yet.')
+			).toBeInTheDocument()
+			expect(
+				screen.getByRole('button', {name: 'Back to Library'})
+			).toBeInTheDocument()
 		})
 
 		it('calls onBack when back button is clicked in UnsupportedExerciseNotice', async () => {
@@ -276,7 +288,9 @@ describe('LearnPage', () => {
 			render(<LearnPage />)
 
 			// The Head component is mocked to render a title element
-			expect(document.querySelector('title')).toHaveTextContent('Learn Exercise')
+			expect(document.querySelector('title')).toHaveTextContent(
+				'Learn Exercise'
+			)
 		})
 	})
 
@@ -294,14 +308,20 @@ describe('LearnPage', () => {
 
 			// Check that the main content is rendered
 			expect(screen.getByText('Present Tense of εἰμί')).toBeInTheDocument()
-			expect(screen.getByText('Learn the present tense forms of the verb "to be" in Ancient Greek')).toBeInTheDocument()
+			expect(
+				screen.getByText(
+					'Learn the present tense forms of the verb "to be" in Ancient Greek'
+				)
+			).toBeInTheDocument()
 		})
 
 		it('sets correct page title', () => {
 			render(<LearnPage />)
 
 			// The Head component is mocked to render a title element
-			expect(document.querySelector('title')).toHaveTextContent('Present Tense of εἰμί | Learn Exercise')
+			expect(document.querySelector('title')).toHaveTextContent(
+				'Present Tense of εἰμί | Learn Exercise'
+			)
 		})
 
 		it('displays exercise stats correctly', () => {
@@ -338,7 +358,9 @@ describe('LearnPage', () => {
 			render(<LearnPage />)
 
 			expect(screen.getByTestId('table-view')).toBeInTheDocument()
-			expect(screen.getByText('TableView: Present Tense of εἰμί')).toBeInTheDocument()
+			expect(
+				screen.getByText('TableView: Present Tense of εἰμί')
+			).toBeInTheDocument()
 			expect(screen.queryByTestId('json-view')).not.toBeInTheDocument()
 		})
 
@@ -351,7 +373,9 @@ describe('LearnPage', () => {
 			await user.click(jsonButton)
 
 			expect(screen.getByTestId('json-view')).toBeInTheDocument()
-			expect(screen.getByText('JsonView: Present Tense of εἰμί')).toBeInTheDocument()
+			expect(
+				screen.getByText('JsonView: Present Tense of εἰμί')
+			).toBeInTheDocument()
 			expect(screen.queryByTestId('table-view')).not.toBeInTheDocument()
 		})
 	})
@@ -410,7 +434,11 @@ describe('LearnPage', () => {
 
 				expect(screen.getByRole('heading', {level: 1})).toBeInTheDocument()
 				expect(screen.getByText('Present Tense of εἰμί')).toBeInTheDocument()
-				expect(screen.getByText('Learn the present tense forms of the verb "to be" in Ancient Greek')).toBeInTheDocument()
+				expect(
+					screen.getByText(
+						'Learn the present tense forms of the verb "to be" in Ancient Greek'
+					)
+				).toBeInTheDocument()
 			})
 
 			it('displays learn exercise label', () => {
@@ -539,7 +567,10 @@ describe('LearnPage', () => {
 		})
 
 		it('handles exercise with undefined tags correctly', () => {
-			const exerciseWithUndefinedTags = {...mockWordFormExercise, tags: undefined}
+			const exerciseWithUndefinedTags = {
+				...mockWordFormExercise,
+				tags: undefined
+			}
 			vi.mocked(useExercise).mockReturnValue({
 				data: exerciseWithUndefinedTags,
 				isLoading: false,
@@ -568,9 +599,7 @@ describe('LearnPage', () => {
 		it('handles exercise blocks with no cases', () => {
 			const exerciseWithEmptyBlocks = {
 				...mockWordFormExercise,
-				blocks: [
-					{id: 'empty-block', name: 'Empty Block', cases: []}
-				]
+				blocks: [{id: 'empty-block', name: 'Empty Block', cases: []}]
 			}
 			vi.mocked(useExercise).mockReturnValue({
 				data: exerciseWithEmptyBlocks,

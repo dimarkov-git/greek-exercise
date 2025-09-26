@@ -1,11 +1,11 @@
 import {describe, expect, it, vi} from 'vitest'
 import {render, screen} from '@/test-utils'
-import {PulseEffect, QuickPulse, type PulseState} from './PulseEffect'
+import {PulseEffect, type PulseState, QuickPulse} from './PulseEffect'
 
 // Mock framer-motion
 vi.mock('framer-motion', () => ({
 	AnimatePresence: ({children}: {children: React.ReactNode}) => (
-		<div data-testid="animate-presence">{children}</div>
+		<div data-testid='animate-presence'>{children}</div>
 	),
 	motion: {
 		div: ({
@@ -18,10 +18,10 @@ vi.mock('framer-motion', () => ({
 			[key: string]: any
 		}) => (
 			<div
-				data-testid="motion-div"
 				data-animate={JSON.stringify(props.animate)}
-				data-initial={JSON.stringify(props.initial)}
 				data-exit={JSON.stringify(props.exit)}
+				data-initial={JSON.stringify(props.initial)}
+				data-testid='motion-div'
 				onClick={() => onAnimationComplete?.()}
 				{...props}
 			>
@@ -36,7 +36,7 @@ describe('PulseEffect', () => {
 		it('renders children when pulseState is null', () => {
 			render(
 				<PulseEffect pulseState={null}>
-					<div data-testid="child-content">Test Content</div>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
@@ -46,25 +46,27 @@ describe('PulseEffect', () => {
 
 		it('applies custom className to container', () => {
 			render(
-				<PulseEffect pulseState={null} className="custom-class">
-					<div data-testid="child-content">Test Content</div>
+				<PulseEffect className='custom-class' pulseState={null}>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
 			// Get the outermost container (not the child wrapper with z-10)
-			const outerContainer = screen.getByTestId('child-content').parentElement?.parentElement
+			const outerContainer =
+				screen.getByTestId('child-content').parentElement?.parentElement
 			expect(outerContainer).toHaveClass('relative', 'custom-class')
 		})
 
 		it('applies default empty className when not provided', () => {
 			render(
 				<PulseEffect pulseState={null}>
-					<div data-testid="child-content">Test Content</div>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
 			// Get the outermost container (not the child wrapper with z-10)
-			const outerContainer = screen.getByTestId('child-content').parentElement?.parentElement
+			const outerContainer =
+				screen.getByTestId('child-content').parentElement?.parentElement
 			expect(outerContainer).toHaveClass('relative')
 		})
 	})
@@ -72,8 +74,8 @@ describe('PulseEffect', () => {
 	describe('Animation states', () => {
 		it('renders motion div when pulseState is correct', () => {
 			render(
-				<PulseEffect pulseState="correct">
-					<div data-testid="child-content">Test Content</div>
+				<PulseEffect pulseState='correct'>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
@@ -83,8 +85,8 @@ describe('PulseEffect', () => {
 
 		it('renders motion div when pulseState is incorrect', () => {
 			render(
-				<PulseEffect pulseState="incorrect">
-					<div data-testid="child-content">Test Content</div>
+				<PulseEffect pulseState='incorrect'>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
@@ -93,8 +95,8 @@ describe('PulseEffect', () => {
 
 		it('renders motion div when pulseState is skip', () => {
 			render(
-				<PulseEffect pulseState="skip">
-					<div data-testid="child-content">Test Content</div>
+				<PulseEffect pulseState='skip'>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
@@ -104,7 +106,7 @@ describe('PulseEffect', () => {
 		it('does not render motion div when pulseState is null', () => {
 			render(
 				<PulseEffect pulseState={null}>
-					<div data-testid="child-content">Test Content</div>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
@@ -115,8 +117,8 @@ describe('PulseEffect', () => {
 	describe('Animation properties', () => {
 		it('applies correct animation properties for correct state', () => {
 			render(
-				<PulseEffect pulseState="correct">
-					<div data-testid="child-content">Test Content</div>
+				<PulseEffect pulseState='correct'>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
@@ -134,8 +136,8 @@ describe('PulseEffect', () => {
 
 		it('applies correct animation properties for incorrect state', () => {
 			render(
-				<PulseEffect pulseState="incorrect">
-					<div data-testid="child-content">Test Content</div>
+				<PulseEffect pulseState='incorrect'>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
@@ -151,8 +153,8 @@ describe('PulseEffect', () => {
 
 		it('applies correct animation properties for skip state', () => {
 			render(
-				<PulseEffect pulseState="skip">
-					<div data-testid="child-content">Test Content</div>
+				<PulseEffect pulseState='skip'>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
@@ -172,8 +174,8 @@ describe('PulseEffect', () => {
 			const mockCallback = vi.fn()
 
 			const {user} = render(
-				<PulseEffect pulseState="correct" onAnimationComplete={mockCallback}>
-					<div data-testid="child-content">Test Content</div>
+				<PulseEffect onAnimationComplete={mockCallback} pulseState='correct'>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
@@ -185,8 +187,8 @@ describe('PulseEffect', () => {
 
 		it('does not error when onAnimationComplete is not provided', async () => {
 			const {user} = render(
-				<PulseEffect pulseState="correct">
-					<div data-testid="child-content">Test Content</div>
+				<PulseEffect pulseState='correct'>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
@@ -200,8 +202,8 @@ describe('PulseEffect', () => {
 	describe('Motion div properties', () => {
 		it('applies correct CSS classes to motion div', () => {
 			render(
-				<PulseEffect pulseState="correct">
-					<div data-testid="child-content">Test Content</div>
+				<PulseEffect pulseState='correct'>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
@@ -216,8 +218,8 @@ describe('PulseEffect', () => {
 
 		it('applies correct border style', () => {
 			render(
-				<PulseEffect pulseState="correct">
-					<div data-testid="child-content">Test Content</div>
+				<PulseEffect pulseState='correct'>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
@@ -229,8 +231,8 @@ describe('PulseEffect', () => {
 	describe('Content layering', () => {
 		it('renders content in correct z-index layer', () => {
 			render(
-				<PulseEffect pulseState="correct">
-					<div data-testid="child-content">Test Content</div>
+				<PulseEffect pulseState='correct'>
+					<div data-testid='child-content'>Test Content</div>
 				</PulseEffect>
 			)
 
@@ -243,8 +245,8 @@ describe('PulseEffect', () => {
 describe('QuickPulse', () => {
 	it('renders PulseEffect with correct props', () => {
 		render(
-			<QuickPulse trigger="correct">
-				<div data-testid="quick-pulse-child">Quick Pulse Content</div>
+			<QuickPulse trigger='correct'>
+				<div data-testid='quick-pulse-child'>Quick Pulse Content</div>
 			</QuickPulse>
 		)
 
@@ -256,8 +258,8 @@ describe('QuickPulse', () => {
 		const mockOnComplete = vi.fn()
 
 		const {user} = render(
-			<QuickPulse trigger="correct" onComplete={mockOnComplete}>
-				<div data-testid="quick-pulse-child">Quick Pulse Content</div>
+			<QuickPulse onComplete={mockOnComplete} trigger='correct'>
+				<div data-testid='quick-pulse-child'>Quick Pulse Content</div>
 			</QuickPulse>
 		)
 
@@ -268,20 +270,21 @@ describe('QuickPulse', () => {
 
 	it('applies custom className', () => {
 		render(
-			<QuickPulse trigger="correct" className="quick-pulse-class">
-				<div data-testid="quick-pulse-child">Quick Pulse Content</div>
+			<QuickPulse className='quick-pulse-class' trigger='correct'>
+				<div data-testid='quick-pulse-child'>Quick Pulse Content</div>
 			</QuickPulse>
 		)
 
 		// Get the outermost container (not the child wrapper with z-10)
-		const outerContainer = screen.getByTestId('quick-pulse-child').parentElement?.parentElement
+		const outerContainer =
+			screen.getByTestId('quick-pulse-child').parentElement?.parentElement
 		expect(outerContainer).toHaveClass('relative', 'quick-pulse-class')
 	})
 
 	it('handles null trigger state', () => {
 		render(
 			<QuickPulse trigger={null}>
-				<div data-testid="quick-pulse-child">Quick Pulse Content</div>
+				<div data-testid='quick-pulse-child'>Quick Pulse Content</div>
 			</QuickPulse>
 		)
 
@@ -292,10 +295,10 @@ describe('QuickPulse', () => {
 	describe('All trigger states', () => {
 		const states: PulseState[] = ['correct', 'incorrect', 'skip', null]
 
-		it.each(states)('handles %s trigger state', (state) => {
+		it.each(states)('handles %s trigger state', state => {
 			render(
 				<QuickPulse trigger={state}>
-					<div data-testid="quick-pulse-child">Content</div>
+					<div data-testid='quick-pulse-child'>Content</div>
 				</QuickPulse>
 			)
 

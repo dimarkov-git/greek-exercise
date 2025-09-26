@@ -6,19 +6,19 @@ import {WordFormExercise} from './WordFormExercise'
 // Mock the WordFormExerciseWrapper
 vi.mock('./WordFormExerciseWrapper', () => ({
 	WordFormExerciseWrapper: (props: any) => (
-		<div data-testid="word-form-exercise-wrapper">
-			<div data-testid="exercise-title">{props.exercise.title}</div>
-			<div data-testid="exercise-id">{props.exercise.id}</div>
+		<div data-testid='word-form-exercise-wrapper'>
+			<div data-testid='exercise-title'>{props.exercise.title}</div>
+			<div data-testid='exercise-id'>{props.exercise.id}</div>
 			{props.onComplete && (
 				<button
-					data-testid="complete-button"
+					data-testid='complete-button'
 					onClick={() =>
 						props.onComplete({
 							exerciseId: props.exercise.id,
 							totalCases: 5,
 							correctAnswers: 4,
 							incorrectAnswers: 1,
-							timeSpentMs: 60000,
+							timeSpentMs: 60_000,
 							accuracy: 80
 						})
 					}
@@ -27,7 +27,7 @@ vi.mock('./WordFormExerciseWrapper', () => ({
 				</button>
 			)}
 			{props.onExit && (
-				<button data-testid="exit-button" onClick={props.onExit}>
+				<button data-testid='exit-button' onClick={props.onExit}>
 					Exit
 				</button>
 			)}
@@ -65,8 +65,12 @@ describe('WordFormExercise', () => {
 		render(<WordFormExercise exercise={mockExercise} />)
 
 		expect(screen.getByTestId('word-form-exercise-wrapper')).toBeInTheDocument()
-		expect(screen.getByTestId('exercise-title')).toHaveTextContent('Test Exercise')
-		expect(screen.getByTestId('exercise-id')).toHaveTextContent('test-exercise-1')
+		expect(screen.getByTestId('exercise-title')).toHaveTextContent(
+			'Test Exercise'
+		)
+		expect(screen.getByTestId('exercise-id')).toHaveTextContent(
+			'test-exercise-1'
+		)
 	})
 
 	it('passes onComplete callback to wrapper', async () => {
@@ -85,7 +89,7 @@ describe('WordFormExercise', () => {
 			totalCases: 5,
 			correctAnswers: 4,
 			incorrectAnswers: 1,
-			timeSpentMs: 60000,
+			timeSpentMs: 60_000,
 			accuracy: 80
 		})
 	})
@@ -156,7 +160,11 @@ describe('WordFormExercise', () => {
 
 		render(<WordFormExercise exercise={differentExercise} />)
 
-		expect(screen.getByTestId('exercise-title')).toHaveTextContent('Different Exercise')
-		expect(screen.getByTestId('exercise-id')).toHaveTextContent('different-exercise')
+		expect(screen.getByTestId('exercise-title')).toHaveTextContent(
+			'Different Exercise'
+		)
+		expect(screen.getByTestId('exercise-id')).toHaveTextContent(
+			'different-exercise'
+		)
 	})
 })

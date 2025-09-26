@@ -20,7 +20,7 @@ vi.mock('@/hooks/useTranslations', () => ({
 
 vi.mock('@/components/Head', () => ({
 	Head: ({title}: {title: string}) => (
-		<div data-testid="head" data-title={title} />
+		<div data-testid='head' data-title={title} />
 	)
 }))
 
@@ -38,8 +38,12 @@ describe('ExerciseBuilder', () => {
 	it('renders the page title and description', () => {
 		render(<ExerciseBuilder />)
 
-		expect(screen.getByRole('heading', {name: 'Exercise Builder'})).toBeInTheDocument()
-		expect(screen.getByText('Create custom Greek learning exercises')).toBeInTheDocument()
+		expect(
+			screen.getByRole('heading', {name: 'Exercise Builder'})
+		).toBeInTheDocument()
+		expect(
+			screen.getByText('Create custom Greek learning exercises')
+		).toBeInTheDocument()
 	})
 
 	it('sets the correct page title', () => {

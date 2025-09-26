@@ -1,4 +1,4 @@
-import {QueryClient} from '@tanstack/react-query'
+import type {QueryClient} from '@tanstack/react-query'
 import {describe, expect, it, vi} from 'vitest'
 import {render, screen} from '@/test-utils'
 import {AppProviders} from './AppProviders'
@@ -12,14 +12,14 @@ vi.mock('@/config/environment', () => ({
 
 // Mock QueryDevtools component
 vi.mock('./QueryDevtools', () => ({
-	QueryDevtools: () => <div data-testid="query-devtools">Query Devtools</div>
+	QueryDevtools: () => <div data-testid='query-devtools'>Query Devtools</div>
 }))
 
 describe('AppProviders', () => {
 	it('renders children wrapped in QueryClientProvider', () => {
 		render(
 			<AppProviders>
-				<div data-testid="test-child">Test Child</div>
+				<div data-testid='test-child'>Test Child</div>
 			</AppProviders>
 		)
 
@@ -29,7 +29,7 @@ describe('AppProviders', () => {
 	it('does not render QueryDevtools when environment.enableQueryDevtools is false', () => {
 		render(
 			<AppProviders>
-				<div data-testid="test-child">Test Child</div>
+				<div data-testid='test-child'>Test Child</div>
 			</AppProviders>
 		)
 
@@ -41,7 +41,7 @@ describe('AppProviders', () => {
 		// conditional logic without errors, regardless of environment setting
 		render(
 			<AppProviders>
-				<div data-testid="test-child">Test Child</div>
+				<div data-testid='test-child'>Test Child</div>
 			</AppProviders>
 		)
 
@@ -50,11 +50,11 @@ describe('AppProviders', () => {
 	})
 
 	it('provides query client context to children', () => {
-		let capturedQueryClient: QueryClient | undefined
+		let _capturedQueryClient: QueryClient | undefined
 
 		function TestComponent() {
 			// This would fail if QueryClient context is not available
-			return <div data-testid="context-consumer">Has QueryClient context</div>
+			return <div data-testid='context-consumer'>Has QueryClient context</div>
 		}
 
 		render(

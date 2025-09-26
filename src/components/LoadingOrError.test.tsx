@@ -35,7 +35,12 @@ describe('LoadingOrError', () => {
 		render(<LoadingOrError />)
 
 		const container = screen.getByText('Loading...').parentElement
-		expect(container).toHaveClass('flex', 'min-h-screen', 'items-center', 'justify-center')
+		expect(container).toHaveClass(
+			'flex',
+			'min-h-screen',
+			'items-center',
+			'justify-center'
+		)
 	})
 
 	it('applies correct CSS classes to heading', () => {

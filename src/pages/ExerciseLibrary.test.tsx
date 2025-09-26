@@ -5,7 +5,7 @@ import {ExerciseLibrary} from './ExerciseLibrary'
 // Mock the ExerciseLibraryView component
 vi.mock('./exercise-library/ExerciseLibrary', () => ({
 	ExerciseLibrary: () => (
-		<div data-testid="exercise-library-view">Exercise Library View</div>
+		<div data-testid='exercise-library-view'>Exercise Library View</div>
 	)
 }))
 

@@ -111,6 +111,9 @@
 			"includes": ["src/**/*.test.tsx", "tests/**/*.ts"],
 			"linter": {
 				"rules": {
+					"complexity": {
+						"noExcessiveLinesPerFunction": "off"
+					},
 					"performance": {
 						"useTopLevelRegex": "off",
 						"noAwaitInLoops": "off"

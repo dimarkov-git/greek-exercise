@@ -1,5 +1,5 @@
-import {describe, expect, it, vi, beforeEach, afterEach} from 'vitest'
-import {render, screen, waitFor} from '@/test-utils'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+import {render} from '@/test-utils'
 import {QueryDevtools} from './QueryDevtools'
 
 // Mock environment
@@ -15,7 +15,7 @@ vi.mock('@/config/environment', () => mockEnvironment)
 // Mock the dynamic import
 const mockDevtoolsModule = {
 	ReactQueryDevtools: vi.fn(({initialIsOpen}: {initialIsOpen: boolean}) => (
-		<div data-testid="react-query-devtools" data-initial-open={initialIsOpen}>
+		<div data-initial-open={initialIsOpen} data-testid='react-query-devtools'>
 			React Query Devtools
 		</div>
 	))

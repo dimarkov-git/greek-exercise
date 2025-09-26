@@ -1,5 +1,5 @@
-import {describe, expect, it, vi} from 'vitest'
 import {render, screen} from '@testing-library/react'
+import {describe, expect, it, vi} from 'vitest'
 import type {RouterMode} from '@/config/environment'
 import {AppRouter} from './AppRouter'
 
@@ -16,7 +16,7 @@ describe('AppRouter', () => {
 	it('renders children within router context', () => {
 		render(
 			<AppRouter>
-				<div data-testid="test-child">Test Content</div>
+				<div data-testid='test-child'>Test Content</div>
 			</AppRouter>
 		)
 
@@ -29,7 +29,7 @@ describe('AppRouter', () => {
 
 		render(
 			<AppRouter>
-				<div data-testid="memory-router-child">Memory Router Child</div>
+				<div data-testid='memory-router-child'>Memory Router Child</div>
 			</AppRouter>
 		)
 
@@ -41,7 +41,7 @@ describe('AppRouter', () => {
 
 		render(
 			<AppRouter>
-				<div data-testid="hash-router-child">Hash Router Child</div>
+				<div data-testid='hash-router-child'>Hash Router Child</div>
 			</AppRouter>
 		)
 
@@ -53,7 +53,7 @@ describe('AppRouter', () => {
 
 		render(
 			<AppRouter>
-				<div data-testid="browser-router-child">Browser Router Child</div>
+				<div data-testid='browser-router-child'>Browser Router Child</div>
 			</AppRouter>
 		)
 
@@ -66,7 +66,7 @@ describe('AppRouter', () => {
 		function TestNavigationComponent() {
 			return (
 				<div>
-					<div data-testid="nav-component">Navigation Component</div>
+					<div data-testid='nav-component'>Navigation Component</div>
 				</div>
 			)
 		}

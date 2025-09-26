@@ -1,4 +1,4 @@
-import {describe, expect, it, vi, beforeEach, afterEach} from 'vitest'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 import {render, screen, waitFor} from '@/test-utils'
 import type {WordFormExercise} from '@/types/exercises'
 import {ExercisePage} from './ExercisePage'
@@ -41,7 +41,7 @@ vi.mock('@/hooks/useTranslations', () => ({
 // Mock components
 vi.mock('@/components/LoadingOrError', () => ({
 	LoadingOrError: ({error}: {error?: Error}) => (
-		<div data-testid="loading-or-error">
+		<div data-testid='loading-or-error'>
 			{error ? `Error: ${error.message}` : 'Loading...'}
 		</div>
 	)
@@ -57,12 +57,12 @@ vi.mock('@/components/exercises/word-form/WordFormExercise', () => ({
 		onComplete: (result: any) => void
 		onExit: () => void
 	}) => (
-		<div data-testid="word-form-exercise">
+		<div data-testid='word-form-exercise'>
 			<h1>{exercise.title}</h1>
-			<button data-testid="complete-button" onClick={() => onComplete({})}>
+			<button data-testid='complete-button' onClick={() => onComplete({})}>
 				Complete
 			</button>
-			<button data-testid="exit-button" onClick={onExit}>
+			<button data-testid='exit-button' onClick={onExit}>
 				Exit
 			</button>
 		</div>
@@ -70,7 +70,7 @@ vi.mock('@/components/exercises/word-form/WordFormExercise', () => ({
 }))
 
 // Import mocked modules to set up implementations
-import {useParams, useNavigate} from 'react-router'
+import {useNavigate, useParams} from 'react-router'
 import {useExercise} from '@/hooks/useExercises'
 import {useLayout} from '@/hooks/useLayout'
 import {useTranslations} from '@/hooks/useTranslations'
@@ -183,7 +183,9 @@ describe('ExercisePage', () => {
 			render(<ExercisePage />)
 
 			expect(screen.getByTestId('loading-or-error')).toBeInTheDocument()
-			expect(screen.getByText('Error: Failed to fetch exercise')).toBeInTheDocument()
+			expect(
+				screen.getByText('Error: Failed to fetch exercise')
+			).toBeInTheDocument()
 		})
 
 		it('shows LoadingOrError when no exercise is found', () => {
@@ -251,9 +253,13 @@ describe('ExercisePage', () => {
 
 			expect(screen.getByText('Unsupported Exercise Type')).toBeInTheDocument()
 			expect(
-				screen.getByText('Exercise type "unsupported-type" is not implemented yet.')
+				screen.getByText(
+					'Exercise type "unsupported-type" is not implemented yet.'
+				)
 			).toBeInTheDocument()
-			expect(screen.getByRole('button', {name: 'Back to Library'})).toBeInTheDocument()
+			expect(
+				screen.getByRole('button', {name: 'Back to Library'})
+			).toBeInTheDocument()
 		})
 
 		it('handles exit navigation for unsupported types', async () => {
@@ -300,7 +306,9 @@ describe('ExercisePage', () => {
 			// Wait for the actual timeout to complete
 			await waitFor(
 				() => {
-					expect(mockNavigate).toHaveBeenCalledWith('/exercises', {replace: true})
+					expect(mockNavigate).toHaveBeenCalledWith('/exercises', {
+						replace: true
+					})
 				},
 				{timeout: 4000}
 			)
