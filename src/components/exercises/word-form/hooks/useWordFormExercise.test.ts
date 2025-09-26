@@ -98,6 +98,7 @@ function createExercise(
 	}
 }
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Extensive hook scenarios consolidated for readability
 describe('useWordFormExercise', () => {
 	beforeEach(() => {
 		vi.useFakeTimers()
@@ -162,6 +163,7 @@ describe('useWordFormExercise', () => {
 		})
 	})
 
+	// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Deeply exercises answer flow variations in a single suite
 	describe('answer handling', () => {
 		it('updates answer value via handleAnswerChange', () => {
 			const exercise = createExercise()
