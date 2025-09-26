@@ -10,7 +10,6 @@ import {ExerciseRenderer} from './ExerciseRenderer'
 import type {WordFormViewState} from './hooks/useWordFormExercise'
 
 vi.mock('@/components/Head', () => ({
-	// biome-ignore lint/style/useNamingConvention: Mock must match exported component name
 	Head: ({children}: {children?: React.ReactNode}) => <>{children}</>
 }))
 
@@ -21,7 +20,6 @@ type CompletionScreenProps = React.ComponentProps<
 const completionScreenMock = vi.fn<(props: CompletionScreenProps) => void>()
 
 vi.mock('./CompletionScreen', () => ({
-	// biome-ignore lint/style/useNamingConvention: Mock must match exported component name
 	CompletionScreen: (props: CompletionScreenProps) => {
 		completionScreenMock(props)
 		return <div data-testid='completion-screen'>{props.exerciseTitle}</div>
@@ -35,7 +33,6 @@ type ExerciseContentProps = React.ComponentProps<
 const exerciseContentMock = vi.fn<(props: ExerciseContentProps) => void>()
 
 vi.mock('./ExerciseContent', () => ({
-	// biome-ignore lint/style/useNamingConvention: Mock must match exported component name
 	ExerciseContent: (props: ExerciseContentProps) => {
 		exerciseContentMock(props)
 		return <div data-testid='exercise-content' />

@@ -21,6 +21,7 @@ describe('LoadingOrError', () => {
 	})
 
 	it('handles empty error message gracefully', () => {
+		// biome-ignore lint/suspicious/useErrorMessage: intentionally testing empty error messages
 		const emptyError = new Error('')
 
 		render(<LoadingOrError error={emptyError} />)

@@ -3,20 +3,20 @@ import {render, screen} from '@/test-utils'
 import {PulseEffect, type PulseState, QuickPulse} from './PulseEffect'
 
 // Mock framer-motion
+type MockMotionDivProps = {
+	children: React.ReactNode
+	onAnimationComplete?: () => void
+	animate?: unknown
+	exit?: unknown
+	initial?: unknown
+} & Record<string, unknown>
+
 vi.mock('framer-motion', () => ({
 	AnimatePresence: ({children}: {children: React.ReactNode}) => (
 		<div data-testid='animate-presence'>{children}</div>
 	),
 	motion: {
-		div: ({
-			children,
-			onAnimationComplete,
-			...props
-		}: {
-			children: React.ReactNode
-			onAnimationComplete?: () => void
-			[key: string]: any
-		}) => (
+		div: ({children, onAnimationComplete, ...props}: MockMotionDivProps) => (
 			<div
 				data-animate={JSON.stringify(props.animate)}
 				data-exit={JSON.stringify(props.exit)}

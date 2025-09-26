@@ -1,6 +1,7 @@
 import {describe, expect, it, vi} from 'vitest'
+import type {WordFormExerciseWithDefaults} from '@/domain/exercises/types'
 import {render, screen, waitFor} from '@/test-utils'
-import type {WordFormExercise} from '@/types/exercises'
+import {DEFAULT_EXERCISE_SETTINGS} from '@/types/exercises'
 import {LearnPage} from './LearnPage'
 
 // Mock all the dependencies
@@ -40,13 +41,13 @@ vi.mock('@/components/LoadingOrError', () => ({
 }))
 
 vi.mock('@/components/learn/JsonView', () => ({
-	JsonView: vi.fn(({exercise}: {exercise: WordFormExercise}) => (
+	JsonView: vi.fn(({exercise}: {exercise: WordFormExerciseWithDefaults}) => (
 		<div data-testid='json-view'>JsonView: {exercise.title}</div>
 	))
 }))
 
 vi.mock('@/components/learn/TableView', () => ({
-	TableView: vi.fn(({exercise}: {exercise: WordFormExercise}) => (
+	TableView: vi.fn(({exercise}: {exercise: WordFormExerciseWithDefaults}) => (
 		<div data-testid='table-view'>TableView: {exercise.title}</div>
 	))
 }))
@@ -81,7 +82,6 @@ vi.mock('@/components/learn/ViewToggle', () => ({
 // Create mock implementations
 const mockNavigate = vi.fn()
 const mockSetHeaderEnabled = vi.fn()
-const _mockUseExercise = vi.fn()
 const mockTranslator = vi.fn((key: string) => {
 	const translations: Record<string, string> = {
 		learnExercise: 'Learn Exercise',
@@ -110,7 +110,7 @@ import {useLayout} from '@/hooks/useLayout'
 import {useTranslations} from '@/hooks/useTranslations'
 
 // Test data
-const mockWordFormExercise: WordFormExercise = {
+const mockWordFormExercise: WordFormExerciseWithDefaults = {
 	id: 'test-exercise-1',
 	enabled: true,
 	type: 'word-form',
@@ -148,7 +148,8 @@ const mockWordFormExercise: WordFormExercise = {
 				}
 			]
 		}
-	]
+	],
+	settings: DEFAULT_EXERCISE_SETTINGS
 }
 
 const mockUnsupportedExercise = {
@@ -161,6 +162,16 @@ const mockUnsupportedExercise = {
 	difficulty: 'a1' as const,
 	estimatedTimeMinutes: 10,
 	blocks: []
+} as unknown as WordFormExerciseWithDefaults
+
+type UseExerciseReturn = ReturnType<typeof useExercise>
+
+function mockUseExerciseResult(
+	overrides: Partial<UseExerciseReturn>
+): UseExerciseReturn {
+	return {
+		...overrides
+	} as UseExerciseReturn
 }
 
 describe('LearnPage', () => {
@@ -176,17 +187,25 @@ describe('LearnPage', () => {
 			setHeaderEnabled: mockSetHeaderEnabled
 		})
 		vi.mocked(useTranslations).mockReturnValue({
-			t: mockTranslator
-		})
+			t: mockTranslator,
+			translations: {},
+			currentLanguage: 'en',
+			isLoading: false,
+			error: null,
+			missingKeys: [],
+			status: 'complete'
+		} as unknown as ReturnType<typeof useTranslations>)
 	})
 
 	describe('loading state', () => {
 		it('shows LoadingOrError component when exercise is loading', () => {
-			vi.mocked(useExercise).mockReturnValue({
-				data: undefined,
-				isLoading: true,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: undefined,
+					isLoading: true,
+					error: null
+				})
+			)
 
 			render(<LearnPage />)
 
@@ -195,11 +214,13 @@ describe('LearnPage', () => {
 		})
 
 		it('sets header to disabled when component mounts and re-enables on unmount', async () => {
-			vi.mocked(useExercise).mockReturnValue({
-				data: undefined,
-				isLoading: true,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: undefined,
+					isLoading: true,
+					error: null
+				})
+			)
 
 			const {unmount} = render(<LearnPage />)
 
@@ -216,11 +237,13 @@ describe('LearnPage', () => {
 	describe('error state', () => {
 		it('shows LoadingOrError with error when exercise fetch fails', () => {
 			const testError = new Error('Failed to load exercise')
-			vi.mocked(useExercise).mockReturnValue({
-				data: undefined,
-				isLoading: false,
-				error: testError
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: undefined,
+					isLoading: false,
+					error: testError
+				})
+			)
 
 			render(<LearnPage />)
 
@@ -231,11 +254,13 @@ describe('LearnPage', () => {
 		})
 
 		it('shows LoadingOrError when no exercise is found', () => {
-			vi.mocked(useExercise).mockReturnValue({
-				data: undefined,
-				isLoading: false,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: undefined,
+					isLoading: false,
+					error: null
+				})
+			)
 
 			render(<LearnPage />)
 
@@ -246,11 +271,13 @@ describe('LearnPage', () => {
 
 	describe('unsupported exercise type', () => {
 		it('shows UnsupportedExerciseNotice for non-word-form exercise', () => {
-			vi.mocked(useExercise).mockReturnValue({
-				data: mockUnsupportedExercise,
-				isLoading: false,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: mockUnsupportedExercise,
+					isLoading: false,
+					error: null
+				})
+			)
 
 			render(<LearnPage />)
 
@@ -264,11 +291,13 @@ describe('LearnPage', () => {
 		})
 
 		it('calls onBack when back button is clicked in UnsupportedExerciseNotice', async () => {
-			vi.mocked(useExercise).mockReturnValue({
-				data: mockUnsupportedExercise,
-				isLoading: false,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: mockUnsupportedExercise,
+					isLoading: false,
+					error: null
+				})
+			)
 
 			const {user} = render(<LearnPage />)
 			const backButton = screen.getByRole('button', {name: 'Back to Library'})
@@ -279,11 +308,13 @@ describe('LearnPage', () => {
 		})
 
 		it('sets correct page title for unsupported exercise', () => {
-			vi.mocked(useExercise).mockReturnValue({
-				data: mockUnsupportedExercise,
-				isLoading: false,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: mockUnsupportedExercise,
+					isLoading: false,
+					error: null
+				})
+			)
 
 			render(<LearnPage />)
 
@@ -296,11 +327,13 @@ describe('LearnPage', () => {
 
 	describe('successful word-form exercise rendering', () => {
 		beforeEach(() => {
-			vi.mocked(useExercise).mockReturnValue({
-				data: mockWordFormExercise,
-				isLoading: false,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: mockWordFormExercise,
+					isLoading: false,
+					error: null
+				})
+			)
 		})
 
 		it('renders LearnPageContent with correct props', () => {
@@ -343,11 +376,13 @@ describe('LearnPage', () => {
 
 		it('does not display tags section when tags are empty', () => {
 			const exerciseWithoutTags = {...mockWordFormExercise, tags: []}
-			vi.mocked(useExercise).mockReturnValue({
-				data: exerciseWithoutTags,
-				isLoading: false,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: exerciseWithoutTags,
+					isLoading: false,
+					error: null
+				})
+			)
 
 			render(<LearnPage />)
 
@@ -382,11 +417,13 @@ describe('LearnPage', () => {
 
 	describe('navigation functionality', () => {
 		beforeEach(() => {
-			vi.mocked(useExercise).mockReturnValue({
-				data: mockWordFormExercise,
-				isLoading: false,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: mockWordFormExercise,
+					isLoading: false,
+					error: null
+				})
+			)
 		})
 
 		it('calls navigate with correct path when back button is clicked', async () => {
@@ -421,11 +458,13 @@ describe('LearnPage', () => {
 
 	describe('sub-components', () => {
 		beforeEach(() => {
-			vi.mocked(useExercise).mockReturnValue({
-				data: mockWordFormExercise,
-				isLoading: false,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: mockWordFormExercise,
+					isLoading: false,
+					error: null
+				})
+			)
 		})
 
 		describe('LearnPageHero', () => {
@@ -538,12 +577,14 @@ describe('LearnPage', () => {
 			})
 
 			it('renders null when no tags are provided', () => {
-				const exerciseWithoutTags = {...mockWordFormExercise, tags: undefined}
-				vi.mocked(useExercise).mockReturnValue({
-					data: exerciseWithoutTags,
-					isLoading: false,
-					error: null
-				})
+				const exerciseWithoutTags = {...mockWordFormExercise, tags: []}
+				vi.mocked(useExercise).mockReturnValue(
+					mockUseExerciseResult({
+						data: exerciseWithoutTags,
+						isLoading: false,
+						error: null
+					})
+				)
 
 				render(<LearnPage />)
 
@@ -555,27 +596,31 @@ describe('LearnPage', () => {
 	describe('edge cases', () => {
 		it('handles missing exerciseId in params', () => {
 			vi.mocked(useParams).mockReturnValue({})
-			vi.mocked(useExercise).mockReturnValue({
-				data: undefined,
-				isLoading: true,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: undefined,
+					isLoading: true,
+					error: null
+				})
+			)
 
 			render(<LearnPage />)
 
 			expect(screen.getByTestId('loading-error')).toBeInTheDocument()
 		})
 
-		it('handles exercise with undefined tags correctly', () => {
-			const exerciseWithUndefinedTags = {
+		it('handles exercise with empty tags correctly', () => {
+			const exerciseWithNoTags = {
 				...mockWordFormExercise,
-				tags: undefined
+				tags: []
 			}
-			vi.mocked(useExercise).mockReturnValue({
-				data: exerciseWithUndefinedTags,
-				isLoading: false,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: exerciseWithNoTags,
+					isLoading: false,
+					error: null
+				})
+			)
 
 			render(<LearnPage />)
 
@@ -584,11 +629,13 @@ describe('LearnPage', () => {
 
 		it('handles exercise with empty blocks array', () => {
 			const exerciseWithNoBlocks = {...mockWordFormExercise, blocks: []}
-			vi.mocked(useExercise).mockReturnValue({
-				data: exerciseWithNoBlocks,
-				isLoading: false,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: exerciseWithNoBlocks,
+					isLoading: false,
+					error: null
+				})
+			)
 
 			render(<LearnPage />)
 
@@ -601,11 +648,13 @@ describe('LearnPage', () => {
 				...mockWordFormExercise,
 				blocks: [{id: 'empty-block', name: 'Empty Block', cases: []}]
 			}
-			vi.mocked(useExercise).mockReturnValue({
-				data: exerciseWithEmptyBlocks,
-				isLoading: false,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: exerciseWithEmptyBlocks,
+					isLoading: false,
+					error: null
+				})
+			)
 
 			render(<LearnPage />)
 
@@ -616,11 +665,13 @@ describe('LearnPage', () => {
 
 	describe('hook dependencies', () => {
 		it('calls useExercise with exerciseId from params', () => {
-			vi.mocked(useExercise).mockReturnValue({
-				data: mockWordFormExercise,
-				isLoading: false,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: mockWordFormExercise,
+					isLoading: false,
+					error: null
+				})
+			)
 
 			render(<LearnPage />)
 
@@ -628,11 +679,13 @@ describe('LearnPage', () => {
 		})
 
 		it('calls useTranslations with correct dictionary', () => {
-			vi.mocked(useExercise).mockReturnValue({
-				data: mockWordFormExercise,
-				isLoading: false,
-				error: null
-			})
+			vi.mocked(useExercise).mockReturnValue(
+				mockUseExerciseResult({
+					data: mockWordFormExercise,
+					isLoading: false,
+					error: null
+				})
+			)
 
 			render(<LearnPage />)
 

@@ -1,3 +1,4 @@
+import type React from 'react'
 import {describe, expect, it, vi} from 'vitest'
 import {render, screen} from '@/test-utils'
 import {ExerciseBuilder} from './ExerciseBuilder'
@@ -24,9 +25,14 @@ vi.mock('@/components/Head', () => ({
 	)
 }))
 
+type MockMotionDivProps = {
+	children: React.ReactNode
+	className?: string
+} & Record<string, unknown>
+
 vi.mock('framer-motion', () => ({
 	motion: {
-		div: ({children, className, ...props}: any) => (
+		div: ({children, className, ...props}: MockMotionDivProps) => (
 			<div className={className} {...props}>
 				{children}
 			</div>
