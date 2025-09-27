@@ -51,11 +51,14 @@ export type MainNavigationTranslationKey = DictionaryKeys<
 	typeof mainNavigationTranslations
 >
 
-export const footerTranslations = createTranslationDictionary([
-	'footer.copyright',
-	'footer.madeWith',
-	'footer.github'
-] as const)
+export const footerTranslations = createTranslationDictionary(
+	['footer.copyright', 'footer.madeWith', 'footer.github'] as const,
+	{
+		fixedLanguageKeys: {
+			'footer.madeWith': 'el'
+		}
+	}
+)
 
 export type FooterTranslationKey = DictionaryKeys<typeof footerTranslations>
 

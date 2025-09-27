@@ -106,7 +106,7 @@ export const translationRegistry = {
 	filters: {fallback: 'Filters'},
 	'footer.copyright': {fallback: '© 2025 Learn Greek. All rights reserved.'},
 	'footer.github': {fallback: 'GitHub'},
-	'footer.madeWith': {fallback: 'Από τον Ντένις με αγάπη'},
+	'footer.madeWith': {fallback: 'Made by Denis with love'},
 	'forms.invalid': {fallback: 'Invalid input'},
 	'forms.loading': {fallback: 'Loading...'},
 	'forms.required': {fallback: 'Required field'},

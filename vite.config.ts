@@ -51,7 +51,9 @@ function createTestConfiguration(): NonNullable<UserConfig['test']> {
 		setupFiles: 'src/test-setup.ts',
 		env: {
 			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
-			VITE_ROUTER_MODE: 'memory'
+			VITE_ROUTER_MODE: 'memory',
+			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
+			VITE_ENABLE_MSW: 'true'
 		}
 	}
 }

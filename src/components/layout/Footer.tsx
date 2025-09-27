@@ -3,7 +3,7 @@ import {useTranslations} from '@/hooks/useTranslations'
 import {footerTranslations} from '@/i18n/dictionaries'
 
 const copyrightKey = 'footer.copyright'
-const madeWithKey = 'footer.madeWith' // madeWith always in Greek
+const madeWithKey = 'footer.madeWith'
 const repoURL = 'https://github.com/dimarkov-git/greek-exercise'
 
 export function Footer() {

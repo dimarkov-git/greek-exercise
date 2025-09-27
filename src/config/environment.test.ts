@@ -8,7 +8,7 @@ describe('environment configuration', () => {
 		expect(environment.mode).toBe(AppModeEnum.test)
 		expect(environment.baseURL).toBe('/')
 		expect(environment.routerMode).toBe(RouterModeEnum.memory)
-		expect(environment.enableMockServiceWorker).toBe(false)
+		expect(environment.enableMockServiceWorker).toBe(true)
 		expect(environment.enableHTTPFallback).toBe(true)
 		expect(environment.enableQueryDevtools).toBe(false)
 	})

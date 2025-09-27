@@ -57,6 +57,63 @@ async function fetchTranslations(
 	return data.translations
 }
 
+interface LanguageGroup {
+	readonly language: SupportedLanguage
+	readonly keys: readonly TranslationRegistryKey[]
+}
+
+function groupKeysByLanguage(
+	dictionary: TranslationDictionary<TranslationRegistryKey>,
+	currentLanguage: SupportedLanguage
+): LanguageGroup[] {
+	const languageGroups = new Map<SupportedLanguage, TranslationRegistryKey[]>()
+
+	for (const key of dictionary.keys) {
+		const fixedLanguage = dictionary.getFixedLanguage(key)
+		const targetLanguage = fixedLanguage ?? currentLanguage
+
+		if (!languageGroups.has(targetLanguage)) {
+			languageGroups.set(targetLanguage, [])
+		}
+		languageGroups.get(targetLanguage)?.push(key)
+	}
+
+	return Array.from(languageGroups.entries()).map(([language, keys]) => ({
+		language,
+		keys: Object.freeze([...keys]) as readonly TranslationRegistryKey[]
+	}))
+}
+
+async function fetchMixedLanguageTranslations(
+	dictionary: TranslationDictionary<TranslationRegistryKey>,
+	currentLanguage: SupportedLanguage
+): Promise<TranslationResult> {
+	const languageGroups = groupKeysByLanguage(dictionary, currentLanguage)
+
+	if (languageGroups.length === 1) {
+		// Single language - use existing logic
+		const singleGroup = languageGroups[0]
+		if (!singleGroup) {
+			throw new Error('Expected at least one language group but found none')
+		}
+		return fetchTranslations(singleGroup.language, singleGroup.keys)
+	}
+
+	// Multiple languages - fetch in parallel and merge
+	const translationPromises = languageGroups.map(group =>
+		fetchTranslations(group.language, group.keys)
+	)
+
+	const translationResults = await Promise.all(translationPromises)
+
+	// Merge all results
+	const merged: TranslationResult = {}
+	for (const result of translationResults) {
+		Object.assign(merged, result)
+	}
+	return merged
+}
+
 function isTestEnvironment() {
 	return typeof globalThis !== 'undefined' && '__VITEST__' in globalThis
 }
@@ -135,9 +192,16 @@ function useTranslationQuery(
 ) {
 	const retryAttempts = isTestEnvironment() ? 0 : 2
 
+	// Create a cache key that includes fixed language keys for proper cache invalidation
+	const languageGroups = groupKeysByLanguage(dictionary, currentLanguage)
+	const cacheKeyParts = languageGroups.map(
+		group => `${group.language}:${group.keys.join(',')}`
+	)
+	const enhancedCacheKey = `${dictionary.cacheKey}|${cacheKeyParts.join('|')}`
+
 	return useQuery({
-		queryKey: ['translations', currentLanguage, dictionary.cacheKey],
-		queryFn: () => fetchTranslations(currentLanguage, dictionary.lookupKeys),
+		queryKey: ['translations', enhancedCacheKey],
+		queryFn: () => fetchMixedLanguageTranslations(dictionary, currentLanguage),
 		staleTime: Number.POSITIVE_INFINITY,
 		retry: retryAttempts
 	})
