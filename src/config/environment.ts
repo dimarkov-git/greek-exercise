@@ -1,63 +1,55 @@
-export const RouterMode = {
+export const RouterModeEnum = {
 	browser: 'browser',
 	hash: 'hash',
 	memory: 'memory'
 } as const
 
-export type RouterModeType = (typeof RouterMode)[keyof typeof RouterMode]
+export type RouterMode = (typeof RouterModeEnum)[keyof typeof RouterModeEnum]
 
-export const AppMode = {
+export const AppModeEnum = {
 	development: 'development',
 	production: 'production',
 	test: 'test'
 } as const
 
-export type AppModeType = (typeof AppMode)[keyof typeof AppMode]
+export type AppMode = (typeof AppModeEnum)[keyof typeof AppModeEnum]
 
-interface LearnGreekImportMetaEnv extends ImportMetaEnv {
-	readonly VITE_ROUTER_MODE?: RouterModeType
+interface AppImportMetaEnv extends ImportMetaEnv {
+	readonly VITE_ROUTER_MODE?: RouterMode
 	readonly VITE_ENABLE_MSW?: string
 	readonly VITE_ENABLE_QUERY_DEVTOOLS?: string
 	readonly VITE_ENABLE_HTTP_FALLBACK?: string
 }
 
-const env = import.meta.env as LearnGreekImportMetaEnv
-
-const routerMode = normalizeRouterMode(env.VITE_ROUTER_MODE)
-const enableMockServiceWorker = normalizeBoolean(env.VITE_ENABLE_MSW, false)
-const enableQueryDevtools = normalizeBoolean(
-	env.VITE_ENABLE_QUERY_DEVTOOLS,
-	false
-)
-const enableHttpFallback = normalizeBoolean(env.VITE_ENABLE_HTTP_FALLBACK, true)
-const isAutomationEnvironment = detectAutomationEnvironment()
+const env = import.meta.env as AppImportMetaEnv
 
 export interface Environment {
-	readonly mode: AppModeType
-	readonly isAutomationEnvironment: boolean
-	readonly baseUrl: string
-	readonly routerMode: RouterModeType
+	readonly mode: AppMode
+	readonly baseURL: string
+	readonly routerMode: RouterMode
 	readonly enableMockServiceWorker: boolean
 	readonly enableQueryDevtools: boolean
-	readonly enableHttpFallback: boolean
+	readonly enableHTTPFallback: boolean
 }
 
 export const environment: Environment = {
-	mode: env.MODE as AppModeType,
-	isAutomationEnvironment,
-	baseUrl: env.BASE_URL || './',
-	routerMode,
-	enableMockServiceWorker,
-	enableQueryDevtools,
-	enableHttpFallback
+	mode: env.MODE as AppMode,
+	baseURL: env.BASE_URL || './',
+	routerMode: normalizeRouterMode(env.VITE_ROUTER_MODE, RouterModeEnum.hash),
+	enableMockServiceWorker: normalizeBoolean(env.VITE_ENABLE_MSW, false),
+	enableQueryDevtools: normalizeBoolean(env.VITE_ENABLE_QUERY_DEVTOOLS, false),
+	enableHTTPFallback: normalizeBoolean(env.VITE_ENABLE_HTTP_FALLBACK, true)
 }
 
-function normalizeRouterMode(value: string | undefined): RouterModeType {
-	const validModes = Object.values(RouterMode)
-	if (validModes.includes(value as RouterModeType)) {
-		return value as RouterModeType
+function normalizeRouterMode(
+	value: string | undefined,
+	defaultValue: RouterMode
+): RouterMode {
+	const validModes = Object.values(RouterModeEnum)
+	if (validModes.includes(value as RouterMode)) {
+		return value as RouterMode
 	}
-	return RouterMode.hash
+	return defaultValue
 }
 
 function normalizeBoolean(
@@ -68,17 +60,4 @@ function normalizeBoolean(
 		return value === 'true'
 	}
 	return defaultValue
-}
-
-function detectAutomationEnvironment(): boolean {
-	if (typeof navigator === 'undefined') {
-		return false
-	}
-
-	if (navigator.webdriver) {
-		return true
-	}
-
-	const userAgent = navigator.userAgent ?? ''
-	return userAgent.toLowerCase().includes('playwright')
 }

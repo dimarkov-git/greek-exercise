@@ -5,7 +5,8 @@ import {App} from './App'
 import {AppErrorBoundary} from './app/AppErrorBoundary'
 import {AppProviders} from './app/AppProviders'
 import {AppRouter} from './app/AppRouter'
-import {AppMode, environment} from './config/environment'
+import {AppModeEnum, environment} from './config/environment'
+import {detectAutomationEnvironment} from './utils/test-utils'
 
 async function startMockServiceWorker() {
 	if (!environment.enableMockServiceWorker) {
@@ -22,13 +23,13 @@ async function startMockServiceWorker() {
 
 	const startPromise = worker.start({
 		serviceWorker: {
-			url: `${environment.baseUrl}mockServiceWorker.js`
+			url: `${environment.baseURL}mockServiceWorker.js`
 		},
 		onUnhandledRequest:
-			environment.mode === AppMode.development ? 'warn' : 'bypass'
+			environment.mode === AppModeEnum.development ? 'warn' : 'bypass'
 	})
 
-	if (environment.isAutomationEnvironment) {
+	if (detectAutomationEnvironment()) {
 		await startPromise
 		return
 	}
@@ -67,7 +68,7 @@ async function bootstrap() {
 	try {
 		await startMockServiceWorker()
 	} catch (error) {
-		if (environment.mode === AppMode.development) {
+		if (environment.mode === AppModeEnum.development) {
 			// biome-ignore lint/suspicious/noConsole: development diagnostics
 			console.warn('Failed to start Mock Service Worker', error)
 		}
@@ -77,7 +78,7 @@ async function bootstrap() {
 }
 
 bootstrap().catch(error => {
-	if (environment.mode === AppMode.development) {
+	if (environment.mode === AppModeEnum.development) {
 		// biome-ignore lint/suspicious/noConsole: development diagnostics
 		console.error('Application bootstrap failed', error)
 	}

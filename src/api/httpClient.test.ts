@@ -4,7 +4,7 @@ const originalFetch = globalThis.fetch
 
 interface LoadClientOptions {
 	enableMockServiceWorker: boolean
-	enableHttpFallback: boolean
+	enableHTTPFallback: boolean
 	fallbackImplementation?: (context: {
 		url: URL
 		method: string
@@ -21,7 +21,7 @@ type FallbackResult = ReturnType<
 
 async function loadHttpClient({
 	enableMockServiceWorker,
-	enableHttpFallback,
+	enableHTTPFallback,
 	fallbackImplementation
 }: LoadClientOptions) {
 	vi.resetModules()
@@ -41,12 +41,11 @@ async function loadHttpClient({
 		},
 		environment: {
 			mode: 'test',
-			isAutomationEnvironment: false,
-			baseUrl: '/',
+			baseURL: '/',
 			routerMode: 'memory' as const,
 			enableMockServiceWorker,
 			enableQueryDevtools: false,
-			enableHttpFallback
+			enableHTTPFallback
 		}
 	}))
 
@@ -76,7 +75,7 @@ it('throws when MSW and fallback are disabled', async () => {
 
 	const {requestJson, resolveFallbackResponse} = await loadHttpClient({
 		enableMockServiceWorker: false,
-		enableHttpFallback: false
+		enableHTTPFallback: false
 	})
 
 	await expect(requestJson('/api/translations', {retry: 0})).rejects.toThrow(
@@ -99,7 +98,7 @@ it('returns network response when MSW is enabled even if fallback is disabled', 
 
 	const {requestJson, resolveFallbackResponse} = await loadHttpClient({
 		enableMockServiceWorker: true,
-		enableHttpFallback: false
+		enableHTTPFallback: false
 	})
 
 	await expect(requestJson('/api/exercises')).resolves.toEqual(payload)
@@ -115,7 +114,7 @@ it('uses fallback data when network fails and fallback is enabled', async () => 
 
 	const {requestJson, resolveFallbackResponse} = await loadHttpClient({
 		enableMockServiceWorker: false,
-		enableHttpFallback: true,
+		enableHTTPFallback: true,
 		fallbackImplementation: () => ({
 			type: 'success',
 			data: fallbackPayload
@@ -147,7 +146,7 @@ it('prefers network response when both MSW and fallback are enabled', async () =
 
 	const {requestJson, resolveFallbackResponse} = await loadHttpClient({
 		enableMockServiceWorker: true,
-		enableHttpFallback: true,
+		enableHTTPFallback: true,
 		fallbackImplementation: () => ({
 			type: 'success',
 			data: {status: 'fallback'}
@@ -181,7 +180,7 @@ it('retries retryable status codes before succeeding', async () => {
 
 	const {requestJson} = await loadHttpClient({
 		enableMockServiceWorker: true,
-		enableHttpFallback: false
+		enableHTTPFallback: false
 	})
 
 	const requestPromise = requestJson('/api/retry', {
@@ -207,7 +206,7 @@ it('throws an HttpError when the server responds with non-JSON content', async (
 
 	const {requestJson, httpErrorConstructor} = await loadHttpClient({
 		enableMockServiceWorker: true,
-		enableHttpFallback: false
+		enableHTTPFallback: false
 	})
 
 	await expect(requestJson('/api/plain')).rejects.toBeInstanceOf(
@@ -226,7 +225,7 @@ it('returns undefined when the server responds with no content', async () => {
 
 	const {requestJson} = await loadHttpClient({
 		enableMockServiceWorker: true,
-		enableHttpFallback: false
+		enableHTTPFallback: false
 	})
 
 	await expect(requestJson('/api/empty')).resolves.toBeUndefined()
@@ -244,7 +243,7 @@ it('serialises JSON bodies and sets headers when sending payloads', async () => 
 
 	const {requestJson} = await loadHttpClient({
 		enableMockServiceWorker: true,
-		enableHttpFallback: false
+		enableHTTPFallback: false
 	})
 
 	await requestJson('/api/exercises', {
@@ -265,7 +264,7 @@ it('propagates fallback HttpError results when fallback handlers fail', async ()
 
 	const {requestJson, httpErrorConstructor} = await loadHttpClient({
 		enableMockServiceWorker: false,
-		enableHttpFallback: true,
+		enableHTTPFallback: true,
 		fallbackImplementation: () => ({
 			type: 'error',
 			status: 503,
@@ -285,7 +284,7 @@ it('wraps unknown thrown values when retries are exhausted', async () => {
 
 	const {requestJson} = await loadHttpClient({
 		enableMockServiceWorker: false,
-		enableHttpFallback: false
+		enableHTTPFallback: false
 	})
 
 	await expect(requestJson('/api/unknown', {retry: 1})).rejects.toThrow(

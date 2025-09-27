@@ -1,4 +1,4 @@
-import {AppMode, environment} from '@/config/environment'
+import {AppModeEnum, environment} from '@/config/environment'
 import {resolveFallbackResponse} from './fallbacks'
 
 const RETRYABLE_STATUS_CODES = new Set([408, 425, 429, 500, 502, 503, 504])
@@ -246,7 +246,7 @@ function attemptFallback<TResponse, TBody extends JsonValue | undefined>({
 		throw error
 	}
 
-	if (environment.mode === AppMode.development) {
+	if (environment.mode === AppModeEnum.development) {
 		// biome-ignore lint/suspicious/noConsole: development diagnostics
 		console.warn('Attempt request failed, use fallback', error)
 	}
@@ -323,7 +323,7 @@ export async function requestJson<
 		retryDelayMs
 	}
 
-	const fallbackEnabled = fallbackOverride ?? environment.enableHttpFallback
+	const fallbackEnabled = fallbackOverride ?? environment.enableHTTPFallback
 
 	const attemptRequest = async (attempt: number): Promise<TResponse> => {
 		try {

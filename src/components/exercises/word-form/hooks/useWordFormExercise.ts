@@ -7,7 +7,6 @@ import {
 	useReducer,
 	useRef
 } from 'react'
-import {environment} from '@/config/environment'
 import {usePulseEffect} from '@/hooks/usePulseEffect'
 import type {
 	ExerciseEvent,
@@ -15,6 +14,7 @@ import type {
 } from '@/types/exercises'
 import {type ExerciseStatus, getExerciseSettings} from '@/types/exercises'
 import {checkAnswer} from '@/utils/exercises'
+import {detectAutomationEnvironment} from '@/utils/test-utils'
 import {
 	initializeWordFormState,
 	selectCurrentBlock,
@@ -288,7 +288,7 @@ function useStatusEffects({
 	useEffect(() => {
 		const {exercise, status, autoAdvanceEnabled} = state
 		const settings = getExerciseSettings(exercise)
-		const isAutomation = environment.isAutomationEnvironment
+		const isAutomation = detectAutomationEnvironment()
 		const autoAdvanceDelay = isAutomation
 			? Math.min(settings.autoAdvanceDelayMs, 50)
 			: settings.autoAdvanceDelayMs
@@ -467,7 +467,7 @@ function useAutomationTestControls({
 	onComplete: UseWordFormExerciseProps['onComplete']
 }) {
 	useEffect(() => {
-		if (!environment.isAutomationEnvironment || typeof window === 'undefined') {
+		if (!detectAutomationEnvironment() || typeof window === 'undefined') {
 			return
 		}
 

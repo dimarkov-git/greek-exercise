@@ -27,12 +27,11 @@ async function loadHttpClient() {
 		},
 		environment: {
 			mode: 'test',
-			isAutomationEnvironment: false,
-			baseUrl: '/',
+			baseURL: '/',
 			routerMode: 'memory' as const,
 			enableMockServiceWorker: true,
 			enableQueryDevtools: false,
-			enableHttpFallback: false
+			enableHTTPFallback: false
 		}
 	}))
 

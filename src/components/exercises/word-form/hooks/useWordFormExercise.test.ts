@@ -5,31 +5,10 @@ import type {ExerciseSettings, WordFormExercise} from '@/types/exercises'
 const triggerPulseMock = vi.fn()
 const clearPulseMock = vi.fn()
 
-const environmentMock = vi.hoisted(() => ({
-	mode: 'test',
-	isAutomationEnvironment: false,
-	baseUrl: '/',
-	routerMode: 'memory',
-	enableMockServiceWorker: false,
-	enableQueryDevtools: false,
-	enableHttpFallback: false
-})) as {
-	mode: string
-	isAutomationEnvironment: boolean
-	baseUrl: string
-	routerMode: string
-	enableMockServiceWorker: boolean
-	enableQueryDevtools: boolean
-	enableHttpFallback: boolean
-}
+const mockDetectAutomationEnvironment = vi.hoisted(() => vi.fn(() => false))
 
-vi.mock('@/config/environment', () => ({
-	AppMode: {
-		development: 'development',
-		production: 'production',
-		test: 'test'
-	},
-	environment: environmentMock
+vi.mock('@/utils/test-utils', () => ({
+	detectAutomationEnvironment: mockDetectAutomationEnvironment
 }))
 
 vi.mock('@/hooks/usePulseEffect', () => ({
@@ -103,7 +82,7 @@ describe('useWordFormExercise', () => {
 		vi.setSystemTime(new Date('2024-01-01T00:00:00.000Z'))
 		triggerPulseMock.mockReset()
 		clearPulseMock.mockReset()
-		environmentMock.isAutomationEnvironment = false
+		mockDetectAutomationEnvironment.mockReturnValue(false)
 	})
 
 	afterEach(() => {
@@ -408,7 +387,7 @@ describe('useWordFormExercise', () => {
 		})
 
 		it('attaches automation helpers when running in automation environment', () => {
-			environmentMock.isAutomationEnvironment = true
+			mockDetectAutomationEnvironment.mockReturnValue(true)
 			const exercise = createExercise()
 			const onComplete = vi.fn()
 

@@ -203,7 +203,7 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 - **test-setup.ts** - global test environment setup
   - Initialize jest-dom matchers
   - MSW server setup for tests
-- **test-utils.tsx** - utilities for component rendering in tests
+- **test-utils.test.ts** - utilities for component rendering in tests
 
 ### TypeScript types and schemas
 
