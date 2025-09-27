@@ -1,4 +1,4 @@
-import {environment} from '@/config/environment'
+import {AppMode, environment} from '@/config/environment'
 import {resolveFallbackResponse} from './fallbacks'
 
 const RETRYABLE_STATUS_CODES = new Set([408, 425, 429, 500, 502, 503, 504])
@@ -246,7 +246,7 @@ function attemptFallback<TResponse, TBody extends JsonValue | undefined>({
 		throw error
 	}
 
-	if (environment.isDevelopment) {
+	if (environment.mode === AppMode.development) {
 		// biome-ignore lint/suspicious/noConsole: development diagnostics
 		console.warn('Attempt request failed, use fallback', error)
 	}

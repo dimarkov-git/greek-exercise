@@ -1,6 +1,6 @@
 import type {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {useEffect, useState} from 'react'
-import {environment} from '@/config/environment'
+import {AppMode, environment} from '@/config/environment'
 
 let DevtoolsComponent: typeof ReactQueryDevtools | null = null
 
@@ -26,7 +26,7 @@ export function QueryDevtools() {
 				setDevtools(() => DevtoolsComponent)
 			})
 			.catch(error => {
-				if (environment.isDevelopment) {
+				if (environment.mode === AppMode.development) {
 					// biome-ignore lint/suspicious/noConsole: development diagnostics
 					console.warn('Failed to load React Query Devtools', error)
 				}

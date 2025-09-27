@@ -4,9 +4,14 @@ import {QueryDevtools} from './QueryDevtools'
 
 // Mock environment
 const mockEnvironment = vi.hoisted(() => ({
+	AppMode: {
+		development: 'development',
+		production: 'production',
+		test: 'test'
+	},
 	environment: {
-		enableQueryDevtools: false,
-		isDevelopment: true
+		mode: 'development',
+		enableQueryDevtools: false
 	}
 }))
 
@@ -59,7 +64,7 @@ describe('QueryDevtools', () => {
 
 	it('handles dynamic import error in development', () => {
 		mockEnvironment.environment.enableQueryDevtools = true
-		mockEnvironment.environment.isDevelopment = true
+		mockEnvironment.environment.mode = mockEnvironment.AppMode.development
 
 		render(<QueryDevtools />)
 
@@ -69,7 +74,7 @@ describe('QueryDevtools', () => {
 
 	it('does not log errors in production when import fails', () => {
 		mockEnvironment.environment.enableQueryDevtools = true
-		mockEnvironment.environment.isDevelopment = false
+		mockEnvironment.environment.mode = mockEnvironment.AppMode.production
 
 		render(<QueryDevtools />)
 

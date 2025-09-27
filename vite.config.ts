@@ -48,7 +48,17 @@ function createTestConfiguration(): NonNullable<UserConfig['test']> {
 		environment: 'happy-dom',
 		globals: true,
 		include: ['src/**/*.test.ts?(x)'],
-		setupFiles: 'src/test-setup.ts'
+		setupFiles: 'src/test-setup.ts',
+		env: {
+			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
+			VITE_ROUTER_MODE: 'memory',
+			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
+			VITE_ENABLE_MSW: 'false',
+			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
+			VITE_ENABLE_HTTP_FALLBACK: 'true',
+			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
+			VITE_ENABLE_QUERY_DEVTOOLS: 'false'
+		}
 	}
 }
 

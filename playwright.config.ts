@@ -29,9 +29,16 @@ export default defineConfig({
 		command: 'pnpm dev',
 		reuseExistingServer: !process.env.CI,
 		url: 'http://localhost:5173',
+
 		env: {
 			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
-			VITE_ENABLE_MSW: 'true'
+			VITE_ROUTER_MODE: 'hash',
+			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
+			VITE_ENABLE_MSW: 'true',
+			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
+			VITE_ENABLE_HTTP_FALLBACK: 'true',
+			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
+			VITE_ENABLE_QUERY_DEVTOOLS: 'false'
 		}
 	},
 	workers: process.env.CI ? 1 : undefined

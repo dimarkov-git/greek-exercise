@@ -9,9 +9,6 @@ describe('environment configuration', () => {
 		const {environment} = await import('@/config/environment')
 
 		expect(environment).toHaveProperty('mode')
-		expect(environment).toHaveProperty('isDevelopment')
-		expect(environment).toHaveProperty('isProduction')
-		expect(environment).toHaveProperty('isTest')
 		expect(environment).toHaveProperty('isAutomationEnvironment')
 		expect(environment).toHaveProperty('baseUrl')
 		expect(environment).toHaveProperty('routerMode')
@@ -24,9 +21,6 @@ describe('environment configuration', () => {
 		const {environment} = await import('@/config/environment')
 
 		expect(typeof environment.mode).toBe('string')
-		expect(typeof environment.isDevelopment).toBe('boolean')
-		expect(typeof environment.isProduction).toBe('boolean')
-		expect(typeof environment.isTest).toBe('boolean')
 		expect(typeof environment.isAutomationEnvironment).toBe('boolean')
 		expect(typeof environment.baseUrl).toBe('string')
 		expect(typeof environment.routerMode).toBe('string')
@@ -36,10 +30,10 @@ describe('environment configuration', () => {
 	})
 
 	it('detects test environment correctly', async () => {
-		const {environment} = await import('@/config/environment')
+		const {AppMode, environment} = await import('@/config/environment')
 
-		// In vitest, isTest should be true
-		expect(environment.isTest).toBe(true)
+		// In vitest, should be test mode
+		expect(environment.mode).toBe(AppMode.test)
 		expect(environment.mode).toBe('test')
 	})
 
@@ -56,11 +50,11 @@ describe('environment configuration', () => {
 		expect(environment.routerMode).toBe('memory')
 	})
 
-	it('enables MSW in test automation environment', async () => {
+	it('uses default MSW value in test environment', async () => {
 		const {environment} = await import('@/config/environment')
 
-		// In this test environment, MSW is enabled because it's detected as automation
-		expect(environment.enableMockServiceWorker).toBe(true)
+		// In this test environment, MSW uses default false unless explicitly set
+		expect(environment.enableMockServiceWorker).toBe(false)
 		expect(environment.isAutomationEnvironment).toBe(true)
 	})
 
@@ -90,26 +84,23 @@ describe('environment configuration', () => {
 
 	// Test router mode validation logic by creating a test function
 	describe('router mode normalization', () => {
-		const normalizeRouterMode = (
-			value: string | undefined,
-			fallback: 'browser' | 'hash' | 'memory'
-		) => {
+		const normalizeRouterMode = (value: string | undefined) => {
 			if (value === 'hash' || value === 'browser' || value === 'memory') {
 				return value
 			}
-			return fallback
+			return 'hash'
 		}
 
 		it('returns valid router modes unchanged', () => {
-			expect(normalizeRouterMode('browser', 'hash')).toBe('browser')
-			expect(normalizeRouterMode('hash', 'browser')).toBe('hash')
-			expect(normalizeRouterMode('memory', 'browser')).toBe('memory')
+			expect(normalizeRouterMode('browser')).toBe('browser')
+			expect(normalizeRouterMode('hash')).toBe('hash')
+			expect(normalizeRouterMode('memory')).toBe('memory')
 		})
 
-		it('returns fallback for invalid values', () => {
-			expect(normalizeRouterMode('invalid', 'browser')).toBe('browser')
-			expect(normalizeRouterMode(undefined, 'hash')).toBe('hash')
-			expect(normalizeRouterMode('', 'memory')).toBe('memory')
+		it('returns hash fallback for invalid values', () => {
+			expect(normalizeRouterMode('invalid')).toBe('hash')
+			expect(normalizeRouterMode(undefined)).toBe('hash')
+			expect(normalizeRouterMode('')).toBe('hash')
 		})
 	})
 
@@ -180,82 +171,34 @@ describe('environment configuration', () => {
 	})
 
 	// Test environment flag logic
-	describe('environment flags', () => {
-		const createEnvironmentFlags = (
-			env: {
-				DEV?: boolean
-				PROD?: boolean
-				MODE?: string
-				VITE_ENABLE_MSW?: string
-				VITE_ENABLE_QUERY_DEVTOOLS?: string
-				VITE_ENABLE_HTTP_FALLBACK?: string
-			},
-			isTest = false,
-			isAutomation = false
-		) => {
-			const enableMockServiceWorker = env.VITE_ENABLE_MSW
-				? env.VITE_ENABLE_MSW === 'true'
-				: (env.DEV && !isTest) || isAutomation
-
-			const enableQueryDevtools = env.VITE_ENABLE_QUERY_DEVTOOLS
-				? env.VITE_ENABLE_QUERY_DEVTOOLS === 'true'
-				: env.DEV && !isTest
-
-			const enableHttpFallback = env.VITE_ENABLE_HTTP_FALLBACK
-				? env.VITE_ENABLE_HTTP_FALLBACK === 'true'
-				: enableMockServiceWorker
-
-			return {
-				enableMockServiceWorker,
-				enableQueryDevtools,
-				enableHttpFallback
+	describe('simplified environment behavior', () => {
+		it('uses direct defaults for all environment variables', () => {
+			const normalizeBoolean = (
+				value: string | undefined,
+				defaultValue: boolean
+			): boolean => {
+				if (value !== undefined) {
+					return value === 'true'
+				}
+				return defaultValue
 			}
-		}
 
-		it('enables MSW in development but not test', () => {
-			const devFlags = createEnvironmentFlags({DEV: true}, false, false)
-			const testFlags = createEnvironmentFlags({DEV: false}, true, false)
-
-			expect(devFlags.enableMockServiceWorker).toBe(true)
-			expect(testFlags.enableMockServiceWorker).toBe(false)
+			// Test the simplified normalization behavior
+			expect(normalizeBoolean('true', false)).toBe(true)
+			expect(normalizeBoolean('false', true)).toBe(false)
+			expect(normalizeBoolean(undefined, true)).toBe(true)
+			expect(normalizeBoolean(undefined, false)).toBe(false)
 		})
 
-		it('enables MSW in automation environment', () => {
-			const automationFlags = createEnvironmentFlags({DEV: false}, false, true)
-			expect(automationFlags.enableMockServiceWorker).toBe(true)
-		})
+		it('respects explicit environment variable overrides', async () => {
+			// This tests the actual environment behavior with explicit test config
+			const {environment} = await import('@/config/environment')
 
-		it('respects explicit MSW override', () => {
-			const explicitFalse = createEnvironmentFlags(
-				{
-					DEV: true,
-					VITE_ENABLE_MSW: 'false'
-				},
-				false,
-				false
-			)
-
-			expect(explicitFalse.enableMockServiceWorker).toBe(false)
-		})
-
-		it('enables devtools in development but not test', () => {
-			const devFlags = createEnvironmentFlags({DEV: true}, false, false)
-			const testFlags = createEnvironmentFlags({DEV: false}, true, false)
-
-			expect(devFlags.enableQueryDevtools).toBe(true)
-			expect(testFlags.enableQueryDevtools).toBe(false)
-		})
-
-		it('links HTTP fallback to MSW enablement', () => {
-			const mswEnabled = createEnvironmentFlags({DEV: true}, false, false)
-			const mswDisabled = createEnvironmentFlags({DEV: false}, true, false)
-
-			expect(mswEnabled.enableHttpFallback).toBe(
-				mswEnabled.enableMockServiceWorker
-			)
-			expect(mswDisabled.enableHttpFallback).toBe(
-				mswDisabled.enableMockServiceWorker
-			)
+			// Test config explicitly sets these values in vite.config.ts
+			expect(environment.enableMockServiceWorker).toBe(false) // explicitly set
+			expect(environment.enableQueryDevtools).toBe(false) // explicitly set
+			expect(environment.enableHttpFallback).toBe(true) // explicitly set
+			expect(environment.routerMode).toBe('memory') // explicitly set for tests
 		})
 	})
 

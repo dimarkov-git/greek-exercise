@@ -7,9 +7,6 @@ const clearPulseMock = vi.fn()
 
 const environmentMock = vi.hoisted(() => ({
 	mode: 'test',
-	isDevelopment: false,
-	isProduction: false,
-	isTest: true,
 	isAutomationEnvironment: false,
 	baseUrl: '/',
 	routerMode: 'memory',
@@ -18,9 +15,6 @@ const environmentMock = vi.hoisted(() => ({
 	enableHttpFallback: false
 })) as {
 	mode: string
-	isDevelopment: boolean
-	isProduction: boolean
-	isTest: boolean
 	isAutomationEnvironment: boolean
 	baseUrl: string
 	routerMode: string
@@ -30,6 +24,11 @@ const environmentMock = vi.hoisted(() => ({
 }
 
 vi.mock('@/config/environment', () => ({
+	AppMode: {
+		development: 'development',
+		production: 'production',
+		test: 'test'
+	},
 	environment: environmentMock
 }))
 

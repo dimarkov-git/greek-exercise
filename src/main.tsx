@@ -5,7 +5,7 @@ import {App} from './App'
 import {AppErrorBoundary} from './app/AppErrorBoundary'
 import {AppProviders} from './app/AppProviders'
 import {AppRouter} from './app/AppRouter'
-import {environment} from './config/environment'
+import {AppMode, environment} from './config/environment'
 
 async function startMockServiceWorker() {
 	if (!environment.enableMockServiceWorker) {
@@ -24,7 +24,8 @@ async function startMockServiceWorker() {
 		serviceWorker: {
 			url: `${environment.baseUrl}mockServiceWorker.js`
 		},
-		onUnhandledRequest: environment.isDevelopment ? 'warn' : 'bypass'
+		onUnhandledRequest:
+			environment.mode === AppMode.development ? 'warn' : 'bypass'
 	})
 
 	if (environment.isAutomationEnvironment) {
@@ -66,7 +67,7 @@ async function bootstrap() {
 	try {
 		await startMockServiceWorker()
 	} catch (error) {
-		if (environment.isDevelopment) {
+		if (environment.mode === AppMode.development) {
 			// biome-ignore lint/suspicious/noConsole: development diagnostics
 			console.warn('Failed to start Mock Service Worker', error)
 		}
@@ -76,7 +77,7 @@ async function bootstrap() {
 }
 
 bootstrap().catch(error => {
-	if (environment.isDevelopment) {
+	if (environment.mode === AppMode.development) {
 		// biome-ignore lint/suspicious/noConsole: development diagnostics
 		console.error('Application bootstrap failed', error)
 	}
