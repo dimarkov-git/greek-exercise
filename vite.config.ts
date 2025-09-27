@@ -13,14 +13,14 @@ function resolveAnalyzerPlugins(): PluginOption[] {
 	}
 
 	const treemapReport = visualizer({
-		filename: 'docs/reports/phase-2/assets/bundle-report.html',
+		filename: 'docs/reports/assets/bundle-report.html',
 		template: 'treemap',
 		gzipSize: true,
 		brotliSize: true
 	}) as PluginOption
 
 	const jsonReport = visualizer({
-		filename: 'docs/reports/phase-2/assets/bundle-report.json',
+		filename: 'docs/reports/assets/bundle-report.json',
 		json: true
 	}) as PluginOption
 
@@ -51,13 +51,7 @@ function createTestConfiguration(): NonNullable<UserConfig['test']> {
 		setupFiles: 'src/test-setup.ts',
 		env: {
 			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
-			VITE_ROUTER_MODE: 'memory',
-			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
-			VITE_ENABLE_MSW: 'false',
-			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
-			VITE_ENABLE_HTTP_FALLBACK: 'true',
-			// biome-ignore lint/style/useNamingConvention: environment variable naming follows Vite requirements.
-			VITE_ENABLE_QUERY_DEVTOOLS: 'false'
+			VITE_ROUTER_MODE: 'memory'
 		}
 	}
 }

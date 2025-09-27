@@ -597,17 +597,6 @@ dist/
 - **Gzip compression**: Recommended for performance
 - **SPA routing**: Fallback to index.html for client-side routes
 
-### Environment variables
-
-```typescript
-// Development
-VITE_DEV_MODE=true
-
-// Production
-VITE_API_URL=https://api.learngreeek.com
-VITE_ANALYTICS_ID=GA-XXXXXXXX
-```
-
 ## 🔮 Future considerations
 
 ### Scalability

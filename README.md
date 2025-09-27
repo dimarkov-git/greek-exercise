@@ -65,24 +65,6 @@ pnpm dev
 
 **Complete setup:** See [docs/guides/getting-started.md](docs/guides/getting-started.md)
 
-### Development configuration
-
-Optional environment variables (set in `.env.local`):
-
-```bash
-# Mock Service Worker (auto-enabled in Playwright)
-VITE_ENABLE_MSW=false
-
-# React Query DevTools (default: true in dev)
-VITE_ENABLE_QUERY_DEVTOOLS=true
-
-# HTTP fallback for offline development
-VITE_ENABLE_HTTP_FALLBACK=false
-
-# Router mode (browser/memory for tests)
-VITE_ROUTER_MODE=browser
-```
-
 ## Development commands
 
 ### Primary workflows

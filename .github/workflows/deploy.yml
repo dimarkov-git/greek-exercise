@@ -44,9 +44,6 @@ jobs:
         env:
           BASE_URL: /greek-exercise/
           VITE_ROUTER_MODE: hash
-          VITE_ENABLE_MSW: true
-          VITE_ENABLE_HTTP_FALLBACK: true
-          VITE_ENABLE_QUERY_DEVTOOLS: false
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4

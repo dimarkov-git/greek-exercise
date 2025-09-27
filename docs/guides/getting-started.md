@@ -80,11 +80,12 @@ The application will automatically open in your browser at `http://localhost:517
 
 You can control runtime behaviour with optional environment variables (place them in `.env.local` when developing):
 
-| Variable | Default | Description |
-| --- | --- | --- |
-| `VITE_ENABLE_MSW` | `false` (auto-enabled for Playwright) | Start Mock Service Worker for local API mocks. Set to `false` to hit a real backend. |
-| `VITE_ENABLE_QUERY_DEVTOOLS` | `true` in development | Lazily load React Query Devtools. Set to `false` to skip the bundle. |
-| `VITE_ROUTER_MODE` | `browser` (`memory` during Vitest) | Choose routing strategy (`browser`, `hash`, or `memory`). |
+| Variable                     | Default | Description                                                                          |
+|------------------------------|---------|--------------------------------------------------------------------------------------|
+| `VITE_ROUTER_MODE`           | `hash`  | Choose routing strategy (`browser`, `hash`, or `memory`).                            |
+| `VITE_ENABLE_MSW`            | `false` | Start Mock Service Worker for local API mocks. Set to `false` to hit a real backend. |
+| `VITE_ENABLE_HTTP_FALLBACK`  | `true`  | Enable HTTP client fallback                                                          |
+| `VITE_ENABLE_QUERY_DEVTOOLS` | `true`  | Lazily load React Query Devtools. Set to `false` to skip the bundle.                 |
 
 Changes require restarting `pnpm dev` to take effect.
 
