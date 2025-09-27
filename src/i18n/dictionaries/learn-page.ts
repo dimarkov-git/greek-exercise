@@ -14,6 +14,13 @@ export const learnPageTranslations = createTranslationDictionary([
 	'exercise.minutes',
 	'exercise.blocks',
 	'exercise.cases',
+	'exercise.currentSettings',
+	'exercise.settingsInfo',
+	'interfaceLanguage',
+	'userLanguage',
+	'theme',
+	'lightTheme',
+	'darkTheme',
 	'ui.leftArrow',
 	'ui.playIcon',
 	'ui.hashSymbol'

@@ -87,6 +87,7 @@ const exercise: WordFormExercise = {
 const baseState: WordFormViewState = {
 	answer: {
 		value: '',
+		originalValue: '',
 		isCorrect: null,
 		showAnswer: false,
 		incorrectAttempts: 0

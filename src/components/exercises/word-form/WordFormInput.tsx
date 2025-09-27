@@ -56,6 +56,7 @@ function getButtonStyles(
 	switch (status) {
 		case 'CHECKING':
 			return `${baseStyles} bg-yellow-500 text-white animate-pulse cursor-pointer`
+		case 'WRONG_ANSWER':
 		case 'REQUIRE_CORRECTION':
 			return `${baseStyles} bg-red-500 hover:bg-red-600 text-white focus:ring-red-300 cursor-pointer`
 		case 'REQUIRE_CONTINUE':
@@ -70,6 +71,7 @@ function getButtonText(status: ExerciseStatus, t: ExerciseTranslator): string {
 	switch (status) {
 		case 'CHECKING':
 			return t('exercise.checking')
+		case 'WRONG_ANSWER':
 		case 'REQUIRE_CORRECTION':
 			return t('exercise.enterCorrectAnswer')
 		case 'REQUIRE_CONTINUE':
@@ -153,7 +155,11 @@ function InputField({
 				className={inputStyles}
 				data-status={status}
 				data-testid='exercise-input'
-				disabled={disabled && status !== 'REQUIRE_CORRECTION'}
+				disabled={
+					disabled &&
+					status !== 'REQUIRE_CORRECTION' &&
+					status !== 'WRONG_ANSWER'
+				}
 				inputMode='text'
 				onBlur={onBlur}
 				onChange={onChange}
@@ -317,7 +323,9 @@ function WordFormContent({
 				{status === 'WAITING_INPUT' && !allowSkip && <KeyboardHint t={t} />}
 			</div>
 
-			{status === 'REQUIRE_CORRECTION' && <CorrectionHelpText t={t} />}
+			{(status === 'WRONG_ANSWER' || status === 'REQUIRE_CORRECTION') && (
+				<CorrectionHelpText t={t} />
+			)}
 			{status === 'REQUIRE_CONTINUE' && <ContinueHelpText t={t} />}
 		</motion.form>
 	)

@@ -65,6 +65,7 @@ interface AutomationStateSnapshot {
 export interface WordFormViewState {
 	answer: {
 		value: string
+		originalValue: string
 		isCorrect: boolean | null
 		showAnswer: boolean
 		incorrectAttempts: number
@@ -293,7 +294,6 @@ function useStatusEffects({
 			? Math.min(settings.autoAdvanceDelayMs, 50)
 			: settings.autoAdvanceDelayMs
 		const requireContinueDelay = isAutomation ? 50 : 1000
-		const requireCorrectionDelay = isAutomation ? 50 : 2000
 
 		if (status === 'CORRECT_ANSWER') {
 			if (autoAdvanceEnabled) {
@@ -316,13 +316,7 @@ function useStatusEffects({
 		}
 
 		if (status === 'WRONG_ANSWER') {
-			const timeout = setTimeout(() => {
-				dispatch({type: 'REQUIRE_CORRECTION'})
-			}, requireCorrectionDelay)
-
-			return () => {
-				clearTimeout(timeout)
-			}
+			dispatch({type: 'REQUIRE_CORRECTION'})
 		}
 		return
 	}, [
@@ -528,6 +522,7 @@ function useWordFormViewModel({
 		() => ({
 			answer: {
 				value: state.userAnswer,
+				originalValue: state.originalUserAnswer,
 				isCorrect: state.isCorrect,
 				showAnswer: state.showAnswer,
 				incorrectAttempts: state.incorrectAttempts
@@ -544,6 +539,7 @@ function useWordFormViewModel({
 		}),
 		[
 			state.userAnswer,
+			state.originalUserAnswer,
 			state.isCorrect,
 			state.showAnswer,
 			state.incorrectAttempts,

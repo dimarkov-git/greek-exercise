@@ -133,6 +133,7 @@ describe('useWordFormExercise', () => {
 			expect(result.current.state.stats).toEqual({correct: 0, incorrect: 0})
 			expect(result.current.state.answer).toEqual({
 				value: '',
+				originalValue: '',
 				isCorrect: null,
 				showAnswer: false,
 				incorrectAttempts: 0
@@ -207,12 +208,6 @@ describe('useWordFormExercise', () => {
 				incorrectAttempts: 1
 			})
 			expect(result.current.state.stats).toEqual({correct: 0, incorrect: 1})
-			expect(result.current.state.status).toBe('WRONG_ANSWER')
-
-			act(() => {
-				vi.advanceTimersByTime(2000)
-			})
-
 			expect(result.current.state.status).toBe('REQUIRE_CORRECTION')
 		})
 
@@ -379,6 +374,7 @@ describe('useWordFormExercise', () => {
 
 			expect(result.current.state.answer).toEqual({
 				value: '',
+				originalValue: '',
 				isCorrect: null,
 				showAnswer: false,
 				incorrectAttempts: 0

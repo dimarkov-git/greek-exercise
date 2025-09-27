@@ -15,7 +15,7 @@ export function ViewToggle({viewMode, onViewModeChange}: ViewToggleProps) {
 	return (
 		<div className='flex rounded-lg border border-gray-200 bg-white p-1 shadow-sm dark:border-gray-600 dark:bg-gray-800'>
 			<button
-				className={`relative flex-1 rounded-md px-4 py-2 font-medium text-sm transition-colors ${
+				className={`relative flex-1 cursor-pointer rounded-md px-4 py-2 font-medium text-sm transition-colors ${
 					viewMode === 'table'
 						? 'text-blue-600 dark:text-blue-400'
 						: 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
@@ -33,7 +33,7 @@ export function ViewToggle({viewMode, onViewModeChange}: ViewToggleProps) {
 				<span className='relative z-10'>{t('tableView')}</span>
 			</button>
 			<button
-				className={`relative flex-1 rounded-md px-4 py-2 font-medium text-sm transition-colors ${
+				className={`relative flex-1 cursor-pointer rounded-md px-4 py-2 font-medium text-sm transition-colors ${
 					viewMode === 'json'
 						? 'text-blue-600 dark:text-blue-400'
 						: 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'

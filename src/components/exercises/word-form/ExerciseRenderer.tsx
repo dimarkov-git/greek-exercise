@@ -110,6 +110,7 @@ function RendererContent({
 				onSkip={onSkip}
 				onSubmit={onSubmit}
 				onToggleAutoAdvance={onToggleAutoAdvance}
+				originalUserAnswer={state.answer.originalValue}
 				progress={state.progress}
 				pulseState={pulseState}
 				showAnswer={state.answer.showAnswer}

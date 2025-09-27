@@ -64,6 +64,7 @@ export const translationRegistry = {
 	'exercise.correctAnswerIs': {fallback: 'is correct.'},
 	'exercise.correctAnswers': {fallback: 'Correct answers'},
 	'exercise.correctIcon': {fallback: 'Correct answer'},
+	'exercise.currentSettings': {fallback: 'Current Settings'},
 	'exercise.difficulty': {fallback: 'Difficulty'},
 	'exercise.enterCorrectAnswer': {fallback: 'Enter correct answer'},
 	'exercise.enterCorrectAnswerToContinue': {
@@ -92,6 +93,7 @@ export const translationRegistry = {
 	'exercise.restartExercise': {fallback: 'Start again'},
 	'exercise.returnToLibrary': {fallback: 'Return to library'},
 	'exercise.secondsSymbol': {fallback: 's'},
+	'exercise.settingsInfo': {fallback: 'Settings information for this exercise'},
 	'exercise.skip': {fallback: 'Skip'},
 	'exercise.submit': {fallback: 'Submit'},
 	'exercise.time': {fallback: 'Time'},

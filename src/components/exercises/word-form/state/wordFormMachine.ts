@@ -30,6 +30,7 @@ export interface WordFormMachineState {
 	currentBlockIndex: number
 	currentCaseIndex: number
 	userAnswer: string
+	originalUserAnswer: string
 	isCorrect: boolean | null
 	showAnswer: boolean
 	incorrectAttempts: number
@@ -64,6 +65,7 @@ function createInitialState(exercise: WordFormExercise): WordFormMachineState {
 		currentBlockIndex: 0,
 		currentCaseIndex: 0,
 		userAnswer: '',
+		originalUserAnswer: '',
 		isCorrect: null,
 		showAnswer: false,
 		incorrectAttempts: 0,
@@ -111,6 +113,9 @@ function handleAnswerIncorrect(
 		...state,
 		status: 'WRONG_ANSWER',
 		userAnswer: action.answer,
+		originalUserAnswer: action.incrementIncorrect
+			? action.answer
+			: state.originalUserAnswer,
 		isCorrect: false,
 		showAnswer: action.incrementIncorrect ? true : state.showAnswer,
 		incorrectAttempts: state.incorrectAttempts + 1,
@@ -131,6 +136,7 @@ function handleAdvance(
 		currentBlockIndex: action.next.blockIndex,
 		currentCaseIndex: action.next.caseIndex,
 		userAnswer: '',
+		originalUserAnswer: '',
 		isCorrect: null,
 		showAnswer: false,
 		incorrectAttempts: 0

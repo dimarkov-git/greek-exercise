@@ -11,7 +11,9 @@ import {useTranslations} from '@/hooks/useTranslations'
 import type {LearnPageTranslationKey} from '@/i18n/dictionaries'
 import {learnPageTranslations} from '@/i18n/dictionaries'
 import type {Translator} from '@/i18n/dictionary'
+import {useSettingsStore} from '@/stores/settings'
 import type {WordFormExercise} from '@/types/exercises'
+import {UI_LANGUAGES, USER_LANGUAGES} from '@/types/settings'
 
 type ViewMode = 'json' | 'table'
 
@@ -135,6 +137,7 @@ function LearnPageContent({
 					viewMode={viewMode}
 				/>
 				<ExerciseTags t={t} tags={exercise.tags ?? []} />
+				<CurrentSettings t={t} />
 				<section className='mt-10 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-xl dark:border-gray-800 dark:bg-gray-900'>
 					{viewMode === 'table' ? (
 						<TableView exercise={exercise} />
@@ -157,7 +160,7 @@ function LearnPageHero({exercise, onBack, t}: LearnPageHeroProps) {
 	return (
 		<header className='rounded-3xl bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 p-8 text-white shadow-2xl'>
 			<button
-				className='inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 font-medium text-sm transition hover:bg-white/20'
+				className='inline-flex cursor-pointer items-center gap-2 rounded-full bg-white/10 px-4 py-2 font-medium text-sm transition hover:bg-white/20'
 				onClick={onBack}
 				type='button'
 			>
@@ -273,5 +276,64 @@ function ExerciseTags({tags, t}: ExerciseTagsProps) {
 				</li>
 			))}
 		</ul>
+	)
+}
+
+interface CurrentSettingsProps {
+	readonly t: LearnPageTranslator
+}
+
+function CurrentSettings({t}: CurrentSettingsProps) {
+	const {theme, uiLanguage, userLanguage} = useSettingsStore()
+
+	const getLanguageName = (
+		code: string,
+		languages: typeof UI_LANGUAGES | typeof USER_LANGUAGES
+	) => {
+		const lang = languages.find(l => l.code === code)
+		return lang ? `${lang.flag} ${lang.name}` : code
+	}
+
+	return (
+		<div className='mt-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800'>
+			<h3 className='mb-4 font-semibold text-gray-900 text-lg dark:text-white'>
+				{t('exercise.currentSettings')}
+			</h3>
+			<p className='mb-4 text-gray-600 text-sm dark:text-gray-400'>
+				{t('exercise.settingsInfo')}
+			</p>
+			<dl className='grid gap-4 sm:grid-cols-3'>
+				<SettingItem
+					label={t('interfaceLanguage')}
+					value={getLanguageName(uiLanguage, UI_LANGUAGES)}
+				/>
+				<SettingItem
+					label={t('userLanguage')}
+					value={getLanguageName(userLanguage, USER_LANGUAGES)}
+				/>
+				<SettingItem
+					label={t('theme')}
+					value={theme === 'dark' ? t('darkTheme') : t('lightTheme')}
+				/>
+			</dl>
+		</div>
+	)
+}
+
+interface SettingItemProps {
+	readonly label: string
+	readonly value: string
+}
+
+function SettingItem({label, value}: SettingItemProps) {
+	return (
+		<div className='rounded-xl bg-gray-50 p-4 dark:bg-gray-700'>
+			<dt className='font-medium text-gray-700 text-sm dark:text-gray-300'>
+				{label}
+			</dt>
+			<dd className='mt-1 font-semibold text-base text-gray-900 dark:text-white'>
+				{value}
+			</dd>
+		</div>
 	)
 }

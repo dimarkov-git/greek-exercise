@@ -60,6 +60,7 @@ interface ExerciseContentProps {
 	}
 	autoAdvanceEnabled: boolean
 	userAnswer: string
+	originalUserAnswer: string
 	showAnswer: boolean
 	isCorrect: boolean | null
 	userLanguage: Language
@@ -79,6 +80,7 @@ export function ExerciseContent({
 	progress,
 	autoAdvanceEnabled,
 	userAnswer,
+	originalUserAnswer,
 	showAnswer,
 	isCorrect,
 	userLanguage,
@@ -152,7 +154,7 @@ export function ExerciseContent({
 							correctAnswers={currentCase.correct}
 							isCorrect={isCorrect}
 							status={status}
-							userAnswer={userAnswer}
+							userAnswer={originalUserAnswer || userAnswer}
 						/>
 					)}
 				</AnimatePresence>

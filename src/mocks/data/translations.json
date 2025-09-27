@@ -108,7 +108,15 @@
 		"answer": "Απάντηση",
 		"hint": "Υπόδειξη",
 		"jsonCopied": "JSON αντιγράφηκε στο πρόχειρο",
-		"copyFailed": "Αποτυχία αντιγραφής"
+		"copyFailed": "Αποτυχία αντιγραφής",
+		"exercise.unsupportedType": "Μη υποστηριζόμενος τύπος άσκησης",
+		"exercise.notImplemented": "Ο τύπος άσκησης \"{type}\" δεν έχει υλοποιηθεί ακόμη.",
+		"exercise.currentSettings": "Τρέχουσες Ρυθμίσεις",
+		"exercise.settingsInfo": "Πληροφορίες ρυθμίσεων για αυτήν την άσκηση",
+		"exercise.difficulty": "Επίπεδο",
+		"exercise.minutes": "λεπτά",
+		"exercise.blocks": "μπλοκ",
+		"exercise.cases": "περιπτώσεις"
 	},
 	"en": {
 		"app.title": "Learn Greek",
@@ -219,7 +227,15 @@
 		"answer": "Answer",
 		"hint": "Hint",
 		"jsonCopied": "JSON copied to clipboard",
-		"copyFailed": "Failed to copy"
+		"copyFailed": "Failed to copy",
+		"exercise.unsupportedType": "Unsupported Exercise Type",
+		"exercise.notImplemented": "Exercise type \"{type}\" is not yet implemented.",
+		"exercise.currentSettings": "Current Settings",
+		"exercise.settingsInfo": "Settings information for this exercise",
+		"exercise.difficulty": "Difficulty",
+		"exercise.minutes": "min",
+		"exercise.blocks": "blocks",
+		"exercise.cases": "cases"
 	},
 	"ru": {
 		"app.title": "Учим греческий",
@@ -330,6 +346,14 @@
 		"answer": "Ответ",
 		"hint": "Подсказка",
 		"jsonCopied": "JSON скопирован в буфер обмена",
-		"copyFailed": "Не удалось скопировать"
+		"copyFailed": "Не удалось скопировать",
+		"exercise.unsupportedType": "Неподдерживаемый тип упражнения",
+		"exercise.notImplemented": "Тип упражнения \"{type}\" еще не реализован.",
+		"exercise.currentSettings": "Текущие Настройки",
+		"exercise.settingsInfo": "Информация о настройках для этого упражнения",
+		"exercise.difficulty": "Сложность",
+		"exercise.minutes": "мин",
+		"exercise.blocks": "блоки",
+		"exercise.cases": "случаи"
 	}
 }
