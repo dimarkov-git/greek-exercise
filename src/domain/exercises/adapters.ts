@@ -7,6 +7,7 @@ import type {
 } from '@/schemas/exercises'
 import type {
 	ExerciseMetadata,
+	ExerciseSettings,
 	WordFormBlock,
 	WordFormCase
 } from '@/types/exercises'
@@ -198,9 +199,16 @@ export function toWordFormExerciseWithDefaults(
 		? sortTags(exercise.tags)
 		: []
 
-	const settings = {
-		...DEFAULT_EXERCISE_SETTINGS,
-		...(exercise.settings ?? {})
+	const settings: ExerciseSettings = {
+		autoAdvance:
+			exercise.settings?.autoAdvance ?? DEFAULT_EXERCISE_SETTINGS.autoAdvance,
+		autoAdvanceDelayMs:
+			exercise.settings?.autoAdvanceDelayMs ??
+			DEFAULT_EXERCISE_SETTINGS.autoAdvanceDelayMs,
+		allowSkip:
+			exercise.settings?.allowSkip ?? DEFAULT_EXERCISE_SETTINGS.allowSkip,
+		shuffleCases:
+			exercise.settings?.shuffleCases ?? DEFAULT_EXERCISE_SETTINGS.shuffleCases
 	}
 
 	const titleI18n = normalizeI18nRecord(exercise.titleI18n)

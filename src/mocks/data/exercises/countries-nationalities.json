@@ -16,12 +16,6 @@
 	"tags": ["word-form", "countries", "nationalities"],
 	"difficulty": "a1",
 	"estimatedTimeMinutes": 15,
-	"settings": {
-		"autoAdvance": true,
-		"autoAdvanceDelayMs": 1500,
-		"allowSkip": true,
-		"shuffleCases": false
-	},
 	"blocks": [
 		{
 			"id": "america",

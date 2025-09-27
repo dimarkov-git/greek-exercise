@@ -15,12 +15,12 @@ const DifficultySchema = v.picklist([
 // Schema for multilingual strings (Record<Language, string>)
 const I18nStringSchema = v.record(LanguageSchema, v.string())
 
-// Exercise settings schema
+// Exercise settings schema (all fields optional for partial overrides)
 export const ExerciseSettingsSchema = v.object({
-	autoAdvance: v.boolean(),
-	autoAdvanceDelayMs: v.pipe(v.number(), v.minValue(0)),
-	allowSkip: v.boolean(),
-	shuffleCases: v.boolean()
+	autoAdvance: v.optional(v.boolean()),
+	autoAdvanceDelayMs: v.optional(v.pipe(v.number(), v.minValue(0))),
+	allowSkip: v.optional(v.boolean()),
+	shuffleCases: v.optional(v.boolean())
 })
 
 // Individual case schema

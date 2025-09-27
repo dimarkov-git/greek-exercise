@@ -100,6 +100,123 @@ describe('exercise domain adapters', () => {
 			shuffleCases: false
 		})
 	})
+
+	it('handles exercise settings overrides - full settings object', () => {
+		const exercise: WordFormExerciseDto = {
+			enabled: true,
+			id: 'word-form-with-full-settings',
+			type: 'word-form',
+			language: 'el',
+			title: 'Λέξεις με ρυθμίσεις',
+			description: 'Άσκηση με ρυθμίσεις',
+			tags: ['verbs'],
+			difficulty: 'a1',
+			estimatedTimeMinutes: 5,
+			settings: {
+				autoAdvance: true,
+				autoAdvanceDelayMs: 1500,
+				allowSkip: false,
+				shuffleCases: true
+			},
+			blocks: [
+				{
+					id: 'block-1',
+					name: 'είμαι',
+					cases: [
+						{
+							id: 'case-1',
+							prompt: 'εγώ ___',
+							correct: ['είμαι']
+						}
+					]
+				}
+			]
+		}
+
+		const normalized = toWordFormExerciseWithDefaults(exercise)
+
+		expect(normalized.settings).toEqual({
+			autoAdvance: true,
+			autoAdvanceDelayMs: 1500,
+			allowSkip: false,
+			shuffleCases: true
+		})
+	})
+
+	it('handles exercise settings overrides - partial settings object', () => {
+		const exercise: WordFormExerciseDto = {
+			enabled: true,
+			id: 'word-form-with-partial-settings',
+			type: 'word-form',
+			language: 'el',
+			title: 'Λέξεις με μερικές ρυθμίσεις',
+			description: 'Άσκηση με μερικές ρυθμίσεις',
+			tags: ['verbs'],
+			difficulty: 'a1',
+			estimatedTimeMinutes: 5,
+			settings: {
+				autoAdvance: true
+			},
+			blocks: [
+				{
+					id: 'block-1',
+					name: 'είμαι',
+					cases: [
+						{
+							id: 'case-1',
+							prompt: 'εγώ ___',
+							correct: ['είμαι']
+						}
+					]
+				}
+			]
+		}
+
+		const normalized = toWordFormExerciseWithDefaults(exercise)
+
+		expect(normalized.settings).toEqual({
+			autoAdvance: true, // overridden
+			autoAdvanceDelayMs: 1500, // default
+			allowSkip: false, // default
+			shuffleCases: false // default
+		})
+	})
+
+	it('handles exercise settings overrides - no settings object (uses all defaults)', () => {
+		const exercise: WordFormExerciseDto = {
+			enabled: true,
+			id: 'word-form-no-settings',
+			type: 'word-form',
+			language: 'el',
+			title: 'Λέξεις χωρίς ρυθμίσεις',
+			description: 'Άσκηση χωρίς ρυθμίσεις',
+			tags: ['verbs'],
+			difficulty: 'a1',
+			estimatedTimeMinutes: 5,
+			blocks: [
+				{
+					id: 'block-1',
+					name: 'είμαι',
+					cases: [
+						{
+							id: 'case-1',
+							prompt: 'εγώ ___',
+							correct: ['είμαι']
+						}
+					]
+				}
+			]
+		}
+
+		const normalized = toWordFormExerciseWithDefaults(exercise)
+
+		expect(normalized.settings).toEqual({
+			autoAdvance: true, // default
+			autoAdvanceDelayMs: 1500, // default
+			allowSkip: false, // default
+			shuffleCases: false // default
+		})
+	})
 })
 
 const advancedMetadata: ExerciseMetadataDto = {

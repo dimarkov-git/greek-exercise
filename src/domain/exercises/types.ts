@@ -34,5 +34,5 @@ export interface ExerciseFilterSelection {
 
 export type WordFormExerciseWithDefaults = WordFormExercise & {
 	tags: string[]
-	settings: NonNullable<WordFormExercise['settings']>
+	settings: import('@/types/exercises').ExerciseSettings
 }

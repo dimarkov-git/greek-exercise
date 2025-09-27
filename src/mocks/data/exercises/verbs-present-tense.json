@@ -17,9 +17,6 @@
 	"difficulty": "a1",
 	"estimatedTimeMinutes": 10,
 	"settings": {
-		"autoAdvance": true,
-		"autoAdvanceDelayMs": 1500,
-		"allowSkip": false,
 		"shuffleCases": true
 	},
 	"blocks": [

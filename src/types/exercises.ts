@@ -12,10 +12,18 @@ export type Difficulty = 'a0' | 'a1' | 'a2' | 'b1' | 'b2' | 'c1' | 'c2'
 
 // Exercise settings
 export interface ExerciseSettings {
-	autoAdvance: boolean // auto-advance to next question
+	autoAdvance: boolean // auto-advance to the next question
 	autoAdvanceDelayMs: number // delay before advancing (ms)
 	allowSkip: boolean // whether skipping questions is allowed
 	shuffleCases: boolean // whether to shuffle question order
+}
+
+// Partial exercise settings (for JSON overrides)
+export interface PartialExerciseSettings {
+	autoAdvance?: boolean // auto-advance to the next question
+	autoAdvanceDelayMs?: number // delay before advancing (ms)
+	allowSkip?: boolean // whether skipping questions is allowed
+	shuffleCases?: boolean // whether to shuffle question order
 }
 
 // Default exercise settings
@@ -57,7 +65,7 @@ export interface WordFormExercise {
 	tags?: string[] // filtering tags (optional, defaults to empty array)
 	difficulty: Difficulty
 	estimatedTimeMinutes: number // estimated completion time
-	settings?: ExerciseSettings // optional settings, defaults will be applied
+	settings?: PartialExerciseSettings // optional settings, defaults will be applied
 	blocks: WordFormBlock[]
 }
 
