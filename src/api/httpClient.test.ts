@@ -34,10 +34,15 @@ async function loadHttpClient({
 	)
 
 	vi.doMock('@/config/environment', () => ({
-		AppMode: {
+		AppModeEnum: {
 			development: 'development',
 			production: 'production',
 			test: 'test'
+		},
+		RouterModeEnum: {
+			browser: 'browser',
+			hash: 'hash',
+			memory: 'memory'
 		},
 		environment: {
 			mode: 'test',
