@@ -114,6 +114,7 @@ const mockWordFormExercise: WordFormExerciseWithDefaults = {
 	id: 'test-exercise-1',
 	enabled: true,
 	type: 'word-form',
+	language: 'el',
 	title: 'Present Tense of εἰμί',
 	description:
 		'Learn the present tense forms of the verb "to be" in Ancient Greek',

@@ -24,6 +24,7 @@ const baseExercise = {
 	enabled: true,
 	id: 'verbs-be',
 	type: 'word-form' as const,
+	language: 'el' as const,
 	title: 'Είμαι',
 	description: 'Κλίση του ρήματος',
 	tags: ['verbs'],
@@ -53,6 +54,7 @@ it('validates metadata lists for the exercise library', () => {
 	const metadata = {
 		id: 'verbs-be',
 		type: 'word-form',
+		language: 'el',
 		title: 'Είμαι',
 		description: 'Κλίση του ρήματος',
 		tags: ['verbs'],

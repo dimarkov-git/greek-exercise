@@ -23,6 +23,7 @@ import type {
 const baseMetadata: ExerciseMetadataDto = {
 	id: 'verbs-present-tense',
 	type: 'word-form',
+	language: 'el',
 	title: 'Συζυγία',
 	titleI18n: {en: 'Conjugation', ru: 'Спряжение'},
 	description: 'Περιγραφή',
@@ -62,7 +63,7 @@ describe('exercise domain adapters', () => {
 		expect(viewModel.totals).toEqual({total: 2, enabled: 1})
 		expect(viewModel.filterOptions.tags).toEqual(['nouns', 'present', 'verbs'])
 		expect(viewModel.filterOptions.difficulties).toEqual(['a1', 'b1'])
-		expect(viewModel.filterOptions.languages).toEqual(['el', 'en', 'ru'])
+		expect(viewModel.filterOptions.languages).toEqual(['el'])
 	})
 
 	it('applies defaults and sorting for word-form exercises', () => {
@@ -70,6 +71,7 @@ describe('exercise domain adapters', () => {
 			enabled: true,
 			id: 'word-form-basic',
 			type: 'word-form',
+			language: 'el',
 			title: 'Λέξεις',
 			description: 'Άσκηση',
 			tags: ['verbs', 'a1', 'verbs'],
@@ -103,6 +105,7 @@ describe('exercise domain adapters', () => {
 const advancedMetadata: ExerciseMetadataDto = {
 	...baseMetadata,
 	id: 'verbs-advanced',
+	language: 'en',
 	difficulty: 'c1',
 	tags: ['verbs'],
 	titleI18n: {en: 'Advanced Verbs'},
@@ -152,7 +155,7 @@ describe('exercise library selectors', () => {
 		expect(selectFilterOptions(viewModel)).toBe(viewModel.filterOptions)
 		expect(selectDifficultyOptions(viewModel)).toEqual(['a1'])
 		expect(selectTagOptions(viewModel)).toEqual(['nouns', 'present', 'verbs'])
-		expect(selectLanguageOptions(viewModel)).toEqual(['el', 'en', 'ru'])
+		expect(selectLanguageOptions(viewModel)).toEqual(['el'])
 	})
 
 	it('indicates whether any exercises remain enabled', () => {

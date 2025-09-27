@@ -100,6 +100,7 @@ describe('wordFormExerciseQueryOptions query function', () => {
 			description: 'Description',
 			enabled: true,
 			type: 'word-form',
+			language: 'el',
 			blocks: [],
 			tags: [],
 			difficulty: 'a1',

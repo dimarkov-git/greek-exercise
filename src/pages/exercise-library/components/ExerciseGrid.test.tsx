@@ -46,6 +46,7 @@ const createMockExercise = (
 ): ExerciseSummary => ({
 	id: 'exercise-1',
 	type: 'word-form',
+	language: 'el',
 	title: 'Basic Greek Verbs',
 	titleI18n: {
 		en: 'Basic Greek Verbs',

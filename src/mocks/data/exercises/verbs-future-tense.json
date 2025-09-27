@@ -31,18 +31,52 @@
 				"ru": "читать"
 			},
 			"cases": [
-				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["διαβάσω"] },
-				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["διαβάσεις"] },
+				{
+					"id": "i",
+					"prompt": "εγώ θα ___",
+					"promptHintI18n": { "en": "I will read", "ru": "я буду читать" },
+					"correct": ["διαβάσω"]
+				},
+				{
+					"id": "you-sg",
+					"prompt": "εσύ θα ___",
+					"promptHintI18n": {
+						"en": "you will read (sg.)",
+						"ru": "ты будешь читать"
+					},
+					"correct": ["διαβάσεις"]
+				},
 				{
 					"id": "he",
 					"prompt": "αυτός/αυτή/αυτό θα ___",
+					"promptHintI18n": {
+						"en": "he/she/it will read",
+						"ru": "он/она/оно будет читать"
+					},
 					"correct": ["διαβάσει"]
 				},
-				{ "id": "we", "prompt": "εμείς θα ___", "correct": ["διαβάσουμε"] },
-				{ "id": "you-pl", "prompt": "εσείς θα ___", "correct": ["διαβάσετε"] },
+				{
+					"id": "we",
+					"prompt": "εμείς θα ___",
+					"promptHintI18n": { "en": "we will read", "ru": "мы будем читать" },
+					"correct": ["διαβάσουμε"]
+				},
+				{
+					"id": "you-pl",
+					"prompt": "εσείς θα ___",
+					"promptHintI18n": {
+						"en": "you will read (pl.)",
+						"ru": "вы будете читать"
+					},
+					"correct": ["διαβάσετε"]
+				},
 				{
 					"id": "they",
 					"prompt": "αυτοί/αυτές/αυτά θα ___",
+					"promptHintI18n": {
+						"en": "they will read",
+						"ru": "они будут читать"
+					},
 					"correct": ["διαβάσουν", "διαβάσουνε"]
 				}
 			]
@@ -55,18 +89,55 @@
 				"ru": "говорить"
 			},
 			"cases": [
-				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["μιλήσω"] },
-				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["μιλήσεις"] },
+				{
+					"id": "i",
+					"prompt": "εγώ θα ___",
+					"promptHintI18n": { "en": "I will speak", "ru": "я буду говорить" },
+					"correct": ["μιλήσω"]
+				},
+				{
+					"id": "you-sg",
+					"prompt": "εσύ θα ___",
+					"promptHintI18n": {
+						"en": "you will speak (sg.)",
+						"ru": "ты будешь говорить"
+					},
+					"correct": ["μιλήσεις"]
+				},
 				{
 					"id": "he",
 					"prompt": "αυτός/αυτή/αυτό θα ___",
+					"promptHintI18n": {
+						"en": "he/she/it will speak",
+						"ru": "он/она/оно будет говорить"
+					},
 					"correct": ["μιλήσει"]
 				},
-				{ "id": "we", "prompt": "εμείς θα ___", "correct": ["μιλήσουμε"] },
-				{ "id": "you-pl", "prompt": "εσείς θα ___", "correct": ["μιλήσετε"] },
+				{
+					"id": "we",
+					"prompt": "εμείς θα ___",
+					"promptHintI18n": {
+						"en": "we will speak",
+						"ru": "мы будем говорить"
+					},
+					"correct": ["μιλήσουμε"]
+				},
+				{
+					"id": "you-pl",
+					"prompt": "εσείς θα ___",
+					"promptHintI18n": {
+						"en": "you will speak (pl.)",
+						"ru": "вы будете говорить"
+					},
+					"correct": ["μιλήσετε"]
+				},
 				{
 					"id": "they",
 					"prompt": "αυτοί/αυτές/αυτά θα ___",
+					"promptHintI18n": {
+						"en": "they will speak",
+						"ru": "они будут говорить"
+					},
 					"correct": ["μιλήσουν", "μιλήσουνε"]
 				}
 			]
@@ -79,18 +150,52 @@
 				"ru": "мочь, быть в состоянии"
 			},
 			"cases": [
-				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["μπορέσω"] },
-				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["μπορέσεις"] },
+				{
+					"id": "i",
+					"prompt": "εγώ θα ___",
+					"promptHintI18n": { "en": "I will be able to", "ru": "я смогу" },
+					"correct": ["μπορέσω"]
+				},
+				{
+					"id": "you-sg",
+					"prompt": "εσύ θα ___",
+					"promptHintI18n": {
+						"en": "you will be able to (sg.)",
+						"ru": "ты сможешь"
+					},
+					"correct": ["μπορέσεις"]
+				},
 				{
 					"id": "he",
 					"prompt": "αυτός/αυτή/αυτό θα ___",
+					"promptHintI18n": {
+						"en": "he/she/it will be able to",
+						"ru": "он/она/оно сможет"
+					},
 					"correct": ["μπορέσει"]
 				},
-				{ "id": "we", "prompt": "εμείς θα ___", "correct": ["μπορέσουμε"] },
-				{ "id": "you-pl", "prompt": "εσείς θα ___", "correct": ["μπορέσετε"] },
+				{
+					"id": "we",
+					"prompt": "εμείς θα ___",
+					"promptHintI18n": { "en": "we will be able to", "ru": "мы сможем" },
+					"correct": ["μπορέσουμε"]
+				},
+				{
+					"id": "you-pl",
+					"prompt": "εσείς θα ___",
+					"promptHintI18n": {
+						"en": "you will be able to (pl.)",
+						"ru": "вы сможете"
+					},
+					"correct": ["μπορέσετε"]
+				},
 				{
 					"id": "they",
 					"prompt": "αυτοί/αυτές/αυτά θα ___",
+					"promptHintI18n": {
+						"en": "they will be able to",
+						"ru": "они смогут"
+					},
 					"correct": ["μπορέσουν", "μπορέσουνε"]
 				}
 			]
@@ -103,18 +208,58 @@
 				"ru": "слышать, слушать"
 			},
 			"cases": [
-				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["ακούσω"] },
-				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["ακούσεις"] },
+				{
+					"id": "i",
+					"prompt": "εγώ θα ___",
+					"promptHintI18n": {
+						"en": "I will hear/listen",
+						"ru": "я буду слышать/слушать"
+					},
+					"correct": ["ακούσω"]
+				},
+				{
+					"id": "you-sg",
+					"prompt": "εσύ θα ___",
+					"promptHintI18n": {
+						"en": "you will hear/listen (sg.)",
+						"ru": "ты будешь слышать/слушать"
+					},
+					"correct": ["ακούσεις"]
+				},
 				{
 					"id": "he",
 					"prompt": "αυτός/αυτή/αυτό θα ___",
+					"promptHintI18n": {
+						"en": "he/she/it will hear/listen",
+						"ru": "он/она/оно будет слышать/слушать"
+					},
 					"correct": ["ακούσει"]
 				},
-				{ "id": "we", "prompt": "εμείς θα ___", "correct": ["ακούσουμε"] },
-				{ "id": "you-pl", "prompt": "εσείς θα ___", "correct": ["ακούσετε"] },
+				{
+					"id": "we",
+					"prompt": "εμείς θα ___",
+					"promptHintI18n": {
+						"en": "we will hear/listen",
+						"ru": "мы будем слышать/слушать"
+					},
+					"correct": ["ακούσουμε"]
+				},
+				{
+					"id": "you-pl",
+					"prompt": "εσείς θα ___",
+					"promptHintI18n": {
+						"en": "you will hear/listen (pl.)",
+						"ru": "вы будете слышать/слушать"
+					},
+					"correct": ["ακούσετε"]
+				},
 				{
 					"id": "they",
 					"prompt": "αυτοί/αυτές/αυτά θα ___",
+					"promptHintI18n": {
+						"en": "they will hear/listen",
+						"ru": "они будут слышать/слушать"
+					},
 					"correct": ["ακούσουν", "ακούσουνε"]
 				}
 			]
@@ -127,18 +272,55 @@
 				"ru": "одеваться"
 			},
 			"cases": [
-				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["ντυθώ"] },
-				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["ντυθείς"] },
+				{
+					"id": "i",
+					"prompt": "εγώ θα ___",
+					"promptHintI18n": { "en": "I will get dressed", "ru": "я оденусь" },
+					"correct": ["ντυθώ"]
+				},
+				{
+					"id": "you-sg",
+					"prompt": "εσύ θα ___",
+					"promptHintI18n": {
+						"en": "you will get dressed (sg.)",
+						"ru": "ты оденешься"
+					},
+					"correct": ["ντυθείς"]
+				},
 				{
 					"id": "he",
 					"prompt": "αυτός/αυτή/αυτό θα ___",
+					"promptHintI18n": {
+						"en": "he/she/it will get dressed",
+						"ru": "он/она/оно оденется"
+					},
 					"correct": ["ντυθεί"]
 				},
-				{ "id": "we", "prompt": "εμείς θα ___", "correct": ["ντυθούμε"] },
-				{ "id": "you-pl", "prompt": "εσείς θα ___", "correct": ["ντυθείτε"] },
+				{
+					"id": "we",
+					"prompt": "εμείς θα ___",
+					"promptHintI18n": {
+						"en": "we will get dressed",
+						"ru": "мы оденемся"
+					},
+					"correct": ["ντυθούμε"]
+				},
+				{
+					"id": "you-pl",
+					"prompt": "εσείς θα ___",
+					"promptHintI18n": {
+						"en": "you will get dressed (pl.)",
+						"ru": "вы оденетесь"
+					},
+					"correct": ["ντυθείτε"]
+				},
 				{
 					"id": "they",
 					"prompt": "αυτοί/αυτές/αυτά θα ___",
+					"promptHintI18n": {
+						"en": "they will get dressed",
+						"ru": "они оденутся"
+					},
 					"correct": ["ντυθούν", "ντυθούνε"]
 				}
 			]
@@ -151,18 +333,52 @@
 				"ru": "спать"
 			},
 			"cases": [
-				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["κοιμηθώ"] },
-				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["κοιμηθείς"] },
+				{
+					"id": "i",
+					"prompt": "εγώ θα ___",
+					"promptHintI18n": { "en": "I will sleep", "ru": "я буду спать" },
+					"correct": ["κοιμηθώ"]
+				},
+				{
+					"id": "you-sg",
+					"prompt": "εσύ θα ___",
+					"promptHintI18n": {
+						"en": "you will sleep (sg.)",
+						"ru": "ты будешь спать"
+					},
+					"correct": ["κοιμηθείς"]
+				},
 				{
 					"id": "he",
 					"prompt": "αυτός/αυτή/αυτό θα ___",
+					"promptHintI18n": {
+						"en": "he/she/it will sleep",
+						"ru": "он/она/оно будет спать"
+					},
 					"correct": ["κοιμηθεί"]
 				},
-				{ "id": "we", "prompt": "εμείς θα ___", "correct": ["κοιμηθούμε"] },
-				{ "id": "you-pl", "prompt": "εσείς θα ___", "correct": ["κοιμηθείτε"] },
+				{
+					"id": "we",
+					"prompt": "εμείς θα ___",
+					"promptHintI18n": { "en": "we will sleep", "ru": "мы будем спать" },
+					"correct": ["κοιμηθούμε"]
+				},
+				{
+					"id": "you-pl",
+					"prompt": "εσείς θα ___",
+					"promptHintI18n": {
+						"en": "you will sleep (pl.)",
+						"ru": "вы будете спать"
+					},
+					"correct": ["κοιμηθείτε"]
+				},
 				{
 					"id": "they",
 					"prompt": "αυτοί/αυτές/αυτά θα ___",
+					"promptHintI18n": {
+						"en": "they will sleep",
+						"ru": "они будут спать"
+					},
 					"correct": ["κοιμηθούν", "κοιμηθούνε"]
 				}
 			]

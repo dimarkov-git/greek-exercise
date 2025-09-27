@@ -34,31 +34,55 @@
 				{
 					"id": "am-1",
 					"prompt": "Ο Τζον είναι Αμερικανός. Είναι από την ___",
+					"promptHintI18n": {
+						"en": "John is American. He is from ___",
+						"ru": "Джон американец. Он из ___"
+					},
 					"correct": ["Αμερική"]
 				},
 				{
 					"id": "am-2",
 					"prompt": "Ο Τζον είναι από την Αμερική. Είναι ___",
+					"promptHintI18n": {
+						"en": "John is from America. He is ___",
+						"ru": "Джон из Америки. Он ___"
+					},
 					"correct": ["Αμερικανός"]
 				},
 				{
 					"id": "am-3",
 					"prompt": "Η Έμιλι είναι από την Αμερική. Είναι ___",
+					"promptHintI18n": {
+						"en": "Emily is from America. She is ___",
+						"ru": "Эмили из Америки. Она ___"
+					},
 					"correct": ["Αμερικανίδα"]
 				},
 				{
 					"id": "am-4",
 					"prompt": "Στην Αμερική ζουν πολλοί ___",
+					"promptHintI18n": {
+						"en": "In America live many ___ (men)",
+						"ru": "В Америке живут многие ___ (мужчины)"
+					},
 					"correct": ["Αμερικανοί"]
 				},
 				{
 					"id": "am-5",
 					"prompt": "Στην Αμερική ζουν πολλές ___",
+					"promptHintI18n": {
+						"en": "In America live many ___ (women)",
+						"ru": "В Америке живут многие ___ (женщины)"
+					},
 					"correct": ["Αμερικανίδες"]
 				},
 				{
 					"id": "am-6",
 					"prompt": "Ο Τζον και η Έμιλι είναι από την Αμερική. Είναι ___",
+					"promptHintI18n": {
+						"en": "John and Emily are from America. They are ___",
+						"ru": "Джон и Эмили из Америки. Они ___"
+					},
 					"correct": ["Αμερικανοί"]
 				}
 			]

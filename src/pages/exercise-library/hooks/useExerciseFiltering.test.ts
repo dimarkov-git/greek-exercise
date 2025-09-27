@@ -26,6 +26,7 @@ function createExerciseSummary(
 	return {
 		id: 'test-exercise',
 		type: 'word-form',
+		language: 'el',
 		title: 'Test Exercise',
 		description: 'Test Description',
 		tags: ['verbs'],

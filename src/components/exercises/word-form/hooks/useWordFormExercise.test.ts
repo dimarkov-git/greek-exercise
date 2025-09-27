@@ -32,6 +32,7 @@ function createExercise(
 		enabled: true,
 		id: 'exercise-1',
 		type: 'word-form',
+		language: 'el',
 		title: 'Conjugation Basics',
 		description: 'Practice present tense verb forms',
 		difficulty: 'a1',

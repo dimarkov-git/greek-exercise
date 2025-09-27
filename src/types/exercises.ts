@@ -49,6 +49,7 @@ export interface WordFormExercise {
 	enabled: boolean
 	id: string
 	type: 'word-form'
+	language: Language // primary language of the exercise
 	title: string // title in Greek
 	titleI18n?: I18nText // title in interface languages (optional)
 	description: string // description in Greek
@@ -81,6 +82,7 @@ export interface ExerciseState {
 export interface ExerciseMetadata {
 	id: string
 	type: ExerciseType
+	language: Language // primary language of the exercise
 	title: string
 	titleI18n?: I18nText
 	description: string
@@ -137,6 +139,7 @@ export interface WordFormExerciseJSON {
 	enabled: boolean
 	id: string
 	type: 'word-form'
+	language: Language // primary language of the exercise
 	title: string
 	titleI18n?: I18nText
 	description: string
@@ -174,6 +177,7 @@ export function exerciseToJSON(
 		enabled: exercise.enabled,
 		id: exercise.id,
 		type: exercise.type,
+		language: exercise.language,
 		title: exercise.title,
 		description: exercise.description,
 		tags: exercise.tags || [],

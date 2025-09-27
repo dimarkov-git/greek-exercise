@@ -166,6 +166,7 @@ import {useExerciseFiltering} from './hooks/useExerciseFiltering'
 const mockExerciseSummary1: ExerciseSummary = {
 	id: 'exercise-1',
 	type: 'word-form',
+	language: 'el',
 	title: 'Basic Nouns',
 	description: 'Learn basic Greek nouns',
 	difficulty: 'a1',
@@ -174,12 +175,13 @@ const mockExerciseSummary1: ExerciseSummary = {
 	tags: ['nouns', 'grammar'],
 	totalBlocks: 2,
 	totalCases: 10,
-	availableLanguages: ['en', 'el']
+	availableLanguages: ['el']
 }
 
 const mockExerciseSummary2: ExerciseSummary = {
 	id: 'exercise-2',
 	type: 'word-form',
+	language: 'el',
 	title: 'Verb Conjugation',
 	description: 'Practice verb conjugation',
 	difficulty: 'a2',
@@ -188,7 +190,7 @@ const mockExerciseSummary2: ExerciseSummary = {
 	tags: ['verbs', 'grammar'],
 	totalBlocks: 3,
 	totalCases: 15,
-	availableLanguages: ['en', 'el', 'ru']
+	availableLanguages: ['el']
 }
 
 const mockExerciseLibrary: ExerciseLibraryViewModel = {
@@ -196,7 +198,7 @@ const mockExerciseLibrary: ExerciseLibraryViewModel = {
 	filterOptions: {
 		tags: ['nouns', 'verbs', 'grammar'],
 		difficulties: ['a1', 'a2'],
-		languages: ['en', 'el', 'ru']
+		languages: ['el']
 	},
 	totals: {
 		total: 2,
@@ -446,7 +448,7 @@ describe('ExerciseLibrary', () => {
 				screen.getByText('Tags: nouns, verbs, grammar')
 			).toBeInTheDocument()
 			expect(screen.getByText('Difficulties: a1, a2')).toBeInTheDocument()
-			expect(screen.getByText('Languages: en, el, ru')).toBeInTheDocument()
+			expect(screen.getByText('Languages: el')).toBeInTheDocument()
 
 			// Check that selected filters are displayed
 			expect(screen.getByText('Selected Tags: grammar')).toBeInTheDocument()

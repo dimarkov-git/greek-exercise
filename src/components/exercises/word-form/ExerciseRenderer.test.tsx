@@ -51,6 +51,7 @@ const exercise: WordFormExercise = {
 	enabled: true,
 	id: 'exercise-1',
 	type: 'word-form',
+	language: 'el',
 	title: 'Είμαι',
 	titleI18n: {en: 'To be', ru: 'Быть'},
 	description: 'Description',

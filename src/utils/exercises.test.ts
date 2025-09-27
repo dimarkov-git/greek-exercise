@@ -28,6 +28,7 @@ const sampleExercise: WordFormExercise = {
 	enabled: true,
 	id: 'verbs-be',
 	type: 'word-form',
+	language: 'el',
 	title: 'Είμαι',
 	description: 'Ρήμα είμαι',
 	tags: ['verbs', 'a1'],

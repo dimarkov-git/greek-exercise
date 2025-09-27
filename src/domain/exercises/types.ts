@@ -3,8 +3,8 @@ import type {Language} from '@/types/settings'
 
 export interface ExerciseSummary extends ExerciseMetadata {
 	/**
-	 * Languages that have either title or description translations available.
-	 * Greek (`el`) is always included because source content is authored in Greek.
+	 * Languages available for this exercise. Currently always contains only the
+	 * exercise's primary language as defined in the `language` property.
 	 */
 	availableLanguages: Language[]
 }

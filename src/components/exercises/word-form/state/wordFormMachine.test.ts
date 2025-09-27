@@ -13,6 +13,7 @@ const baseExercise: WordFormExercise = {
 	enabled: true,
 	id: 'verbs-be',
 	type: 'word-form',
+	language: 'el',
 	title: 'Είμαι',
 	description: 'Κλίση του ρήματος είμαι',
 	tags: ['verbs', 'a1'],

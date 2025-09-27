@@ -82,6 +82,7 @@ export function extractExerciseMetadata(
 	const result: ExerciseMetadata = {
 		id: exercise.id,
 		type: exercise.type,
+		language: exercise.language,
 		title: exercise.title,
 		description: exercise.description,
 		tags: exercise.tags || [],

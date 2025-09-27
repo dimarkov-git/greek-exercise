@@ -58,32 +58,6 @@ function normalizeI18nRecord(
 	return normalized
 }
 
-function deriveAvailableLanguages(metadata: {
-	titleI18n?: Partial<Record<Language, string>>
-	descriptionI18n?: Partial<Record<Language, string>>
-}): Language[] {
-	const languages = new Set<Language>(['el'])
-
-	const appendLanguages = (
-		record: Partial<Record<Language, string>> | undefined
-	) => {
-		if (!record) {
-			return
-		}
-
-		for (const key of Object.keys(record)) {
-			if (isLanguage(key)) {
-				languages.add(key)
-			}
-		}
-	}
-
-	appendLanguages(metadata.titleI18n)
-	appendLanguages(metadata.descriptionI18n)
-
-	return LANGUAGE_ORDER.filter(language => languages.has(language))
-}
-
 export function toExerciseSummary(
 	metadata: ExerciseMetadataDto
 ): ExerciseSummary {
@@ -107,11 +81,33 @@ export function toExerciseSummary(
 		languageMetadata.descriptionI18n = descriptionI18n
 	}
 
+	// Collect all available languages: base language + translation languages
+	const translationLanguages = new Set<Language>()
+	translationLanguages.add(metadata.language)
+
+	if (titleI18n) {
+		for (const lang of Object.keys(titleI18n)) {
+			if (isLanguage(lang)) {
+				translationLanguages.add(lang)
+			}
+		}
+	}
+
+	if (descriptionI18n) {
+		for (const lang of Object.keys(descriptionI18n)) {
+			if (isLanguage(lang)) {
+				translationLanguages.add(lang)
+			}
+		}
+	}
+
 	const summary = {
 		...rest,
 		...languageMetadata,
 		tags: sortTags(metadata.tags),
-		availableLanguages: deriveAvailableLanguages(languageMetadata)
+		availableLanguages: Array.from(translationLanguages).sort(
+			(a, b) => LANGUAGE_ORDER.indexOf(a) - LANGUAGE_ORDER.indexOf(b)
+		)
 	}
 
 	return summary as ExerciseSummary
@@ -145,9 +141,7 @@ function collectUniqueLanguages(exercises: ExerciseSummary[]): Language[] {
 	const languages = new Set<Language>()
 
 	for (const exercise of exercises) {
-		for (const language of exercise.availableLanguages) {
-			languages.add(language)
-		}
+		languages.add(exercise.language)
 	}
 
 	return LANGUAGE_ORDER.filter(language => languages.has(language))
@@ -216,6 +210,7 @@ export function toWordFormExerciseWithDefaults(
 		enabled: exercise.enabled,
 		id: exercise.id,
 		type: exercise.type,
+		language: exercise.language,
 		title: exercise.title,
 		description: exercise.description,
 		tags: normalizedTags,

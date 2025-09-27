@@ -31,18 +31,43 @@
 				"ru": "читать"
 			},
 			"cases": [
-				{ "id": "i", "prompt": "εγώ ___", "correct": ["διαβάζω"] },
-				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["διαβάζεις"] },
+				{
+					"id": "i",
+					"prompt": "εγώ ___",
+					"promptHintI18n": { "en": "I read", "ru": "я читаю" },
+					"correct": ["διαβάζω"]
+				},
+				{
+					"id": "you-sg",
+					"prompt": "εσύ ___",
+					"promptHintI18n": { "en": "you read (sg.)", "ru": "ты читаешь" },
+					"correct": ["διαβάζεις"]
+				},
 				{
 					"id": "he",
 					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": {
+						"en": "he/she/it reads",
+						"ru": "он/она/оно читает"
+					},
 					"correct": ["διαβάζει"]
 				},
-				{ "id": "we", "prompt": "εμείς ___", "correct": ["διαβάζουμε"] },
-				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["διαβάζετε"] },
+				{
+					"id": "we",
+					"prompt": "εμείς ___",
+					"promptHintI18n": { "en": "we read", "ru": "мы читаем" },
+					"correct": ["διαβάζουμε"]
+				},
+				{
+					"id": "you-pl",
+					"prompt": "εσείς ___",
+					"promptHintI18n": { "en": "you read (pl.)", "ru": "вы читаете" },
+					"correct": ["διαβάζετε"]
+				},
 				{
 					"id": "they",
 					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": { "en": "they read", "ru": "они читают" },
 					"correct": ["διαβάζουν", "διαβάζουνε"]
 				}
 			]
@@ -55,18 +80,43 @@
 				"ru": "говорить"
 			},
 			"cases": [
-				{ "id": "i", "prompt": "εγώ ___", "correct": ["μιλάω", "μιλώ"] },
-				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["μιλάς"] },
+				{
+					"id": "i",
+					"prompt": "εγώ ___",
+					"promptHintI18n": { "en": "I speak", "ru": "я говорю" },
+					"correct": ["μιλάω", "μιλώ"]
+				},
+				{
+					"id": "you-sg",
+					"prompt": "εσύ ___",
+					"promptHintI18n": { "en": "you speak (sg.)", "ru": "ты говоришь" },
+					"correct": ["μιλάς"]
+				},
 				{
 					"id": "he",
 					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": {
+						"en": "he/she/it speaks",
+						"ru": "он/она/оно говорит"
+					},
 					"correct": ["μιλάει", "μιλά"]
 				},
-				{ "id": "we", "prompt": "εμείς ___", "correct": ["μιλάμε"] },
-				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["μιλάτε"] },
+				{
+					"id": "we",
+					"prompt": "εμείς ___",
+					"promptHintI18n": { "en": "we speak", "ru": "мы говорим" },
+					"correct": ["μιλάμε"]
+				},
+				{
+					"id": "you-pl",
+					"prompt": "εσείς ___",
+					"promptHintI18n": { "en": "you speak (pl.)", "ru": "вы говорите" },
+					"correct": ["μιλάτε"]
+				},
 				{
 					"id": "they",
 					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": { "en": "they speak", "ru": "они говорят" },
 					"correct": ["μιλάνε", "μιλούν", "μιλούνε"]
 				}
 			]
@@ -79,14 +129,40 @@
 				"ru": "мочь, быть в состоянии"
 			},
 			"cases": [
-				{ "id": "i", "prompt": "εγώ ___", "correct": ["μπορώ"] },
-				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["μπορείς"] },
-				{ "id": "he", "prompt": "αυτός/αυτή/αυτό ___", "correct": ["μπορεί"] },
-				{ "id": "we", "prompt": "εμείς ___", "correct": ["μπορούμε"] },
-				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["μπορείτε"] },
+				{
+					"id": "i",
+					"prompt": "εγώ ___",
+					"promptHintI18n": { "en": "I can", "ru": "я могу" },
+					"correct": ["μπορώ"]
+				},
+				{
+					"id": "you-sg",
+					"prompt": "εσύ ___",
+					"promptHintI18n": { "en": "you can (sg.)", "ru": "ты можешь" },
+					"correct": ["μπορείς"]
+				},
+				{
+					"id": "he",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": { "en": "he/she/it can", "ru": "он/она/оно может" },
+					"correct": ["μπορεί"]
+				},
+				{
+					"id": "we",
+					"prompt": "εμείς ___",
+					"promptHintI18n": { "en": "we can", "ru": "мы можем" },
+					"correct": ["μπορούμε"]
+				},
+				{
+					"id": "you-pl",
+					"prompt": "εσείς ___",
+					"promptHintI18n": { "en": "you can (pl.)", "ru": "вы можете" },
+					"correct": ["μπορείτε"]
+				},
 				{
 					"id": "they",
 					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": { "en": "they can", "ru": "они могут" },
 					"correct": ["μπορούν", "μπορούνε"]
 				}
 			]
@@ -99,14 +175,55 @@
 				"ru": "слышать, слушать"
 			},
 			"cases": [
-				{ "id": "i", "prompt": "εγώ ___", "correct": ["ακούω"] },
-				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["ακούς"] },
-				{ "id": "he", "prompt": "αυτός/αυτή/αυτό ___", "correct": ["ακούει"] },
-				{ "id": "we", "prompt": "εμείς ___", "correct": ["ακούμε"] },
-				{ "id": "you-pl", "prompt": "εσείς ___", "correct": ["ακούτε"] },
+				{
+					"id": "i",
+					"prompt": "εγώ ___",
+					"promptHintI18n": { "en": "I hear/listen", "ru": "я слышу/слушаю" },
+					"correct": ["ακούω"]
+				},
+				{
+					"id": "you-sg",
+					"prompt": "εσύ ___",
+					"promptHintI18n": {
+						"en": "you hear/listen (sg.)",
+						"ru": "ты слышишь/слушаешь"
+					},
+					"correct": ["ακούς"]
+				},
+				{
+					"id": "he",
+					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": {
+						"en": "he/she/it hears/listens",
+						"ru": "он/она/оно слышит/слушает"
+					},
+					"correct": ["ακούει"]
+				},
+				{
+					"id": "we",
+					"prompt": "εμείς ___",
+					"promptHintI18n": {
+						"en": "we hear/listen",
+						"ru": "мы слышим/слушаем"
+					},
+					"correct": ["ακούμε"]
+				},
+				{
+					"id": "you-pl",
+					"prompt": "εσείς ___",
+					"promptHintI18n": {
+						"en": "you hear/listen (pl.)",
+						"ru": "вы слышите/слушаете"
+					},
+					"correct": ["ακούτε"]
+				},
 				{
 					"id": "they",
 					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": {
+						"en": "they hear/listen",
+						"ru": "они слышат/слушают"
+					},
 					"correct": ["ακούν", "ακούνε"]
 				}
 			]
@@ -119,22 +236,49 @@
 				"ru": "одеваться"
 			},
 			"cases": [
-				{ "id": "i", "prompt": "εγώ ___", "correct": ["ντύνομαι"] },
-				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["ντύνεσαι"] },
+				{
+					"id": "i",
+					"prompt": "εγώ ___",
+					"promptHintI18n": { "en": "I get dressed", "ru": "я одеваюсь" },
+					"correct": ["ντύνομαι"]
+				},
+				{
+					"id": "you-sg",
+					"prompt": "εσύ ___",
+					"promptHintI18n": {
+						"en": "you get dressed (sg.)",
+						"ru": "ты одеваешься"
+					},
+					"correct": ["ντύνεσαι"]
+				},
 				{
 					"id": "he",
 					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": {
+						"en": "he/she/it gets dressed",
+						"ru": "он/она/оно одевается"
+					},
 					"correct": ["ντύνεται"]
 				},
-				{ "id": "we", "prompt": "εμείς ___", "correct": ["ντυνόμαστε"] },
+				{
+					"id": "we",
+					"prompt": "εμείς ___",
+					"promptHintI18n": { "en": "we get dressed", "ru": "мы одеваемся" },
+					"correct": ["ντυνόμαστε"]
+				},
 				{
 					"id": "you-pl",
 					"prompt": "εσείς ___",
+					"promptHintI18n": {
+						"en": "you get dressed (pl.)",
+						"ru": "вы одеваетесь"
+					},
 					"correct": ["ντύνεστε", "ντύνεσθε"]
 				},
 				{
 					"id": "they",
 					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": { "en": "they get dressed", "ru": "они одеваются" },
 					"correct": ["ντύνονται"]
 				}
 			]
@@ -147,22 +291,43 @@
 				"ru": "спать"
 			},
 			"cases": [
-				{ "id": "i", "prompt": "εγώ ___", "correct": ["κοιμάμαι"] },
-				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["κοιμάσαι"] },
+				{
+					"id": "i",
+					"prompt": "εγώ ___",
+					"promptHintI18n": { "en": "I sleep", "ru": "я сплю" },
+					"correct": ["κοιμάμαι"]
+				},
+				{
+					"id": "you-sg",
+					"prompt": "εσύ ___",
+					"promptHintI18n": { "en": "you sleep (sg.)", "ru": "ты спишь" },
+					"correct": ["κοιμάσαι"]
+				},
 				{
 					"id": "he",
 					"prompt": "αυτός/αυτή/αυτό ___",
+					"promptHintI18n": {
+						"en": "he/she/it sleeps",
+						"ru": "он/она/оно спит"
+					},
 					"correct": ["κοιμάται"]
 				},
-				{ "id": "we", "prompt": "εμείς ___", "correct": ["κοιμόμαστε"] },
+				{
+					"id": "we",
+					"prompt": "εμείς ___",
+					"promptHintI18n": { "en": "we sleep", "ru": "мы спим" },
+					"correct": ["κοιμόμαστε"]
+				},
 				{
 					"id": "you-pl",
 					"prompt": "εσείς ___",
+					"promptHintI18n": { "en": "you sleep (pl.)", "ru": "вы спите" },
 					"correct": ["κοιμάστε", "κοιμάσθε"]
 				},
 				{
 					"id": "they",
 					"prompt": "αυτοί/αυτές/αυτά ___",
+					"promptHintI18n": { "en": "they sleep", "ru": "они спят" },
 					"correct": ["κοιμούνται"]
 				}
 			]

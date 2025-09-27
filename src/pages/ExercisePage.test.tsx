@@ -91,6 +91,7 @@ const mockWordFormExercise: WordFormExerciseWithDefaults = {
 	enabled: true,
 	id: 'exercise-1',
 	type: 'word-form',
+	language: 'el',
 	title: 'Test Word Form Exercise',
 	description: 'A test exercise',
 	difficulty: 'a0',

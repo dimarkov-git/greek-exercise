@@ -46,6 +46,7 @@ export const WordFormExerciseSchema = v.object({
 	enabled: v.boolean(),
 	id: v.string(),
 	type: v.literal('word-form'),
+	language: LanguageSchema,
 	title: v.string(),
 	titleI18n: v.optional(I18nStringSchema),
 	description: v.string(),
@@ -66,6 +67,7 @@ export const ExerciseMetadataSchema = v.object({
 		'flashcard',
 		'multiple-choice'
 	]),
+	language: LanguageSchema,
 	title: v.string(),
 	titleI18n: v.optional(I18nStringSchema),
 	description: v.string(),
