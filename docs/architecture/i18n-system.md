@@ -54,7 +54,10 @@ export const navigationDictionary = createTranslationDictionary([
 
 // Usage in component
 const translator = navigationDictionary.useTranslator()
-return <span>{translator('navigation.home')}</span>
+return <span>{translator('navigation.home'
+)
+}
+</span>
 ```
 
 **Features**:

@@ -1,6 +1,7 @@
 # Accessibility guide
 
-Guidelines and best practices for ensuring the Learn Greek application is accessible to all users, including those using assistive technologies.
+Guidelines and best practices for ensuring the Learn Greek application is accessible to all users, including those using
+assistive technologies.
 
 ## Accessibility standards
 

@@ -2,6 +2,7 @@
 	"enabled": true,
 	"id": "verbs-present-tense",
 	"type": "word-form",
+	"language": "el",
 	"title": "Συζυγία ρημάτων στον Ενεστώτα",
 	"titleI18n": {
 		"en": "Verb Conjugation in Present Tense",
@@ -25,6 +26,10 @@
 		{
 			"id": "read",
 			"name": "διαβάζω",
+			"nameHintI18n": {
+				"en": "to read",
+				"ru": "читать"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ ___", "correct": ["διαβάζω"] },
 				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["διαβάζεις"] },
@@ -45,6 +50,10 @@
 		{
 			"id": "speak",
 			"name": "μιλάω / μιλώ",
+			"nameHintI18n": {
+				"en": "to speak",
+				"ru": "говорить"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ ___", "correct": ["μιλάω", "μιλώ"] },
 				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["μιλάς"] },
@@ -65,6 +74,10 @@
 		{
 			"id": "can",
 			"name": "μπορώ",
+			"nameHintI18n": {
+				"en": "can, to be able",
+				"ru": "мочь, быть в состоянии"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ ___", "correct": ["μπορώ"] },
 				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["μπορείς"] },
@@ -81,6 +94,10 @@
 		{
 			"id": "hear",
 			"name": "ακούω",
+			"nameHintI18n": {
+				"en": "to hear, to listen",
+				"ru": "слышать, слушать"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ ___", "correct": ["ακούω"] },
 				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["ακούς"] },
@@ -97,6 +114,10 @@
 		{
 			"id": "dress",
 			"name": "ντύνομαι",
+			"nameHintI18n": {
+				"en": "to get dressed",
+				"ru": "одеваться"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ ___", "correct": ["ντύνομαι"] },
 				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["ντύνεσαι"] },
@@ -121,6 +142,10 @@
 		{
 			"id": "sleep",
 			"name": "κοιμάμαι",
+			"nameHintI18n": {
+				"en": "to sleep",
+				"ru": "спать"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ ___", "correct": ["κοιμάμαι"] },
 				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["κοιμάσαι"] },

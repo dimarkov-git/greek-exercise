@@ -2,9 +2,18 @@
 	"enabled": true,
 	"id": "countries-nationalities",
 	"type": "word-form",
+	"language": "el",
 	"title": "Χώρες και Εθνικότητες",
+	"titleI18n": {
+		"en": "Countries and Nationalities",
+		"ru": "Страны и национальности"
+	},
 	"description": "Εξάσκηση με χώρες και τις εθνικότητες τους",
-	"tags": ["word-form"],
+	"descriptionI18n": {
+		"en": "Practice with countries and their nationalities",
+		"ru": "Упражнение со странами и национальностями"
+	},
+	"tags": ["word-form", "countries", "nationalities"],
 	"difficulty": "a1",
 	"estimatedTimeMinutes": 15,
 	"settings": {
@@ -17,6 +26,10 @@
 		{
 			"id": "america",
 			"name": "Αμερική",
+			"nameHintI18n": {
+				"en": "America (USA)",
+				"ru": "Америка (США)"
+			},
 			"cases": [
 				{
 					"id": "am-1",
@@ -53,6 +66,10 @@
 		{
 			"id": "greece",
 			"name": "Ελλάδα",
+			"nameHintI18n": {
+				"en": "Greece",
+				"ru": "Греция"
+			},
 			"cases": [
 				{
 					"id": "gr-1",
@@ -89,6 +106,10 @@
 		{
 			"id": "russia",
 			"name": "Ρωσία",
+			"nameHintI18n": {
+				"en": "Russia",
+				"ru": "Россия"
+			},
 			"cases": [
 				{
 					"id": "ru-1",
@@ -125,6 +146,10 @@
 		{
 			"id": "italy",
 			"name": "Ιταλία",
+			"nameHintI18n": {
+				"en": "Italy",
+				"ru": "Италия"
+			},
 			"cases": [
 				{
 					"id": "it-1",
@@ -161,6 +186,10 @@
 		{
 			"id": "france",
 			"name": "Γαλλία",
+			"nameHintI18n": {
+				"en": "France",
+				"ru": "Франция"
+			},
 			"cases": [
 				{
 					"id": "fr-1",
@@ -197,6 +226,10 @@
 		{
 			"id": "germany",
 			"name": "Γερμανία",
+			"nameHintI18n": {
+				"en": "Germany",
+				"ru": "Германия"
+			},
 			"cases": [
 				{
 					"id": "de-1",
@@ -233,6 +266,10 @@
 		{
 			"id": "spain",
 			"name": "Ισπανία",
+			"nameHintI18n": {
+				"en": "Spain",
+				"ru": "Испания"
+			},
 			"cases": [
 				{
 					"id": "es-1",
@@ -269,6 +306,10 @@
 		{
 			"id": "china",
 			"name": "Κίνα",
+			"nameHintI18n": {
+				"en": "China",
+				"ru": "Китай"
+			},
 			"cases": [
 				{
 					"id": "cn-1",
@@ -305,6 +346,10 @@
 		{
 			"id": "japan",
 			"name": "Ιαπωνία",
+			"nameHintI18n": {
+				"en": "Japan",
+				"ru": "Япония"
+			},
 			"cases": [
 				{
 					"id": "jp-1",
@@ -341,11 +386,15 @@
 		{
 			"id": "cyprus",
 			"name": "Κύπρος",
+			"nameHintI18n": {
+				"en": "Cyprus",
+				"ru": "Кипр"
+			},
 			"cases": [
 				{
 					"id": "cy-1",
 					"prompt": "Ο Ανδρέας είναι Κύπριος. Είναι από την ___",
-					"correct": ["Κύπρος"]
+					"correct": ["Κύπρο"]
 				},
 				{
 					"id": "cy-2",

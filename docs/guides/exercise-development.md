@@ -107,42 +107,42 @@ Based on the existing `verbs-be.json`:
 
 #### Exercise metadata
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `enabled` | boolean | ✅ | Whether exercise appears in library |
-| `id` | string | ✅ | Unique identifier (kebab-case) |
-| `type` | string | ✅ | Exercise type (`"word-form"`) |
-| `title` | string | ✅ | Greek title |
-| `titleI18n` | object | ✅ | Translated titles (`en`, `ru`) |
-| `description` | string | ✅ | Greek description |
-| `descriptionI18n` | object | ✅ | Translated descriptions |
-| `tags` | string[] | ✅ | Tags for filtering/grouping |
-| `difficulty` | string | ✅ | `"beginner"` \\| `"intermediate"` \\| `"advanced"` |
-| `estimatedTimeMinutes` | number | ✅ | Estimated completion time |
+| Field                  | Type     | Required | Description                                        |
+|------------------------|----------|----------|----------------------------------------------------|
+| `enabled`              | boolean  | ✅        | Whether exercise appears in library                |
+| `id`                   | string   | ✅        | Unique identifier (kebab-case)                     |
+| `type`                 | string   | ✅        | Exercise type (`"word-form"`)                      |
+| `title`                | string   | ✅        | Greek title                                        |
+| `titleI18n`            | object   | ✅        | Translated titles (`en`, `ru`)                     |
+| `description`          | string   | ✅        | Greek description                                  |
+| `descriptionI18n`      | object   | ✅        | Translated descriptions                            |
+| `tags`                 | string[] | ✅        | Tags for filtering/grouping                        |
+| `difficulty`           | string   | ✅        | `"beginner"` \\| `"intermediate"` \\| `"advanced"` |
+| `estimatedTimeMinutes` | number   | ✅        | Estimated completion time                          |
 
 #### Exercise settings
 
-| Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| `autoAdvance` | boolean | `true` | Auto-proceed after correct answer |
-| `autoAdvanceDelayMs` | number | `1000` | Delay before auto-advance (ms) |
-| `allowSkip` | boolean | `false` | Allow skipping questions |
-| `shuffleCases` | boolean | `false` | Randomize question order |
+| Field                | Type    | Default | Description                       |
+|----------------------|---------|---------|-----------------------------------|
+| `autoAdvance`        | boolean | `true`  | Auto-proceed after correct answer |
+| `autoAdvanceDelayMs` | number  | `1000`  | Delay before auto-advance (ms)    |
+| `allowSkip`          | boolean | `false` | Allow skipping questions          |
+| `shuffleCases`       | boolean | `false` | Randomize question order          |
 
 #### Blocks and cases
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `blocks[].id` | string | ✅ | Unique block identifier |
-| `blocks[].name` | string | ✅ | Greek block name |
-| `blocks[].nameHintI18n` | object | ❌ | Translated block name |
-| `blocks[].cases` | array | ✅ | Array of questions |
-| `cases[].id` | string | ✅ | Unique case identifier |
-| `cases[].prompt` | string | ✅ | Greek prompt/question |
-| `cases[].promptHintI18n` | object | ❌ | Translated prompt |
-| `cases[].correct` | string[] | ✅ | Array of correct answers |
-| `cases[].hint` | string | ❌ | Optional Greek hint |
-| `cases[].hintI18n` | object | ❌ | Optional translated hints |
+| Field                    | Type     | Required | Description               |
+|--------------------------|----------|----------|---------------------------|
+| `blocks[].id`            | string   | ✅        | Unique block identifier   |
+| `blocks[].name`          | string   | ✅        | Greek block name          |
+| `blocks[].nameHintI18n`  | object   | ❌        | Translated block name     |
+| `blocks[].cases`         | array    | ✅        | Array of questions        |
+| `cases[].id`             | string   | ✅        | Unique case identifier    |
+| `cases[].prompt`         | string   | ✅        | Greek prompt/question     |
+| `cases[].promptHintI18n` | object   | ❌        | Translated prompt         |
+| `cases[].correct`        | string[] | ✅        | Array of correct answers  |
+| `cases[].hint`           | string   | ❌        | Optional Greek hint       |
+| `cases[].hintI18n`       | object   | ❌        | Optional translated hints |
 
 ## 🔧 Development workflow
 
@@ -193,16 +193,19 @@ The app uses Valibot schemas to validate exercise data. Invalid exercises will s
 ### Content guidelines
 
 #### Greek text
+
 - Use proper Greek characters (not Latin look-alikes)
 - Include appropriate accents and breathing marks
 - Follow Modern Greek spelling conventions
 
 #### Translations
+
 - Provide accurate English and Russian translations
 - Keep translations concise and clear
 - Use consistent terminology across exercises
 
 #### Hints
+
 - Make hints helpful but not giving away answers
 - Use `hint` for Greek grammatical hints
 - Use `hintI18n` for translations/explanations
@@ -210,23 +213,28 @@ The app uses Valibot schemas to validate exercise data. Invalid exercises will s
 ### Technical guidelines
 
 #### IDs and naming
+
 - Use kebab-case for IDs: `verbs-be`, `pronouns-personal`
 - Make IDs descriptive and unique
 - Use consistent naming across similar exercises
 
 #### Tags
+
 Use relevant tags for filtering:
+
 - **Grammar**: `verbs`, `nouns`, `adjectives`, `pronouns`
 - **Skill level**: `basic`, `intermediate`, `advanced`
 - **Type**: `conjugation`, `declension`, `vocabulary`
 - **Regularity**: `regular`, `irregular`
 
 #### Difficulty levels
+
 - **Beginner**: Basic vocabulary, present tense, simple concepts
 - **Intermediate**: Past/future tenses, more complex grammar
 - **Advanced**: Complex sentences, rare vocabulary, nuanced grammar
 
 #### Multiple correct answers
+
 Support variations in acceptable answers:
 
 ```json
@@ -241,6 +249,7 @@ The system automatically normalizes Greek text for comparison.
 ## 🎨 Exercise design patterns
 
 ### Progressive difficulty
+
 Structure blocks from simple to complex:
 
 ```json
@@ -263,6 +272,7 @@ Structure blocks from simple to complex:
 ```
 
 ### Contextual prompts
+
 Make prompts clear and contextual:
 
 ```json
@@ -279,11 +289,13 @@ Make prompts clear and contextual:
 ### Hint system usage
 
 **When to use hints**:
+
 - Complex grammatical concepts
 - Irregular forms
 - Cultural context needed
 
 **When not to use hints**:
+
 - Simple vocabulary
 - Direct translations
 - Repetitive patterns
@@ -314,16 +326,19 @@ Make prompts clear and contextual:
 ### Common issues
 
 #### JSON validation errors
+
 - Missing required fields
 - Invalid language codes
 - Wrong data types
 
 #### Text input issues
+
 - Greek text encoding problems
 - Accent/tone mismatches
 - Case sensitivity issues
 
 #### Translation problems
+
 - Missing translations for some languages
 - Inconsistent terminology
 - Cultural context issues
@@ -340,7 +355,9 @@ Use browser developer tools:
 ## 📊 Exercise analytics
 
 ### Built-in metrics
+
 The system automatically tracks:
+
 - Questions answered correctly/incorrectly
 - Time spent per question
 - Hints accessed
@@ -348,6 +365,7 @@ The system automatically tracks:
 - Overall accuracy
 
 ### Custom metrics
+
 Add custom tracking by extending the exercise data:
 
 ```json
@@ -363,6 +381,7 @@ Add custom tracking by extending the exercise data:
 ## 🚀 Advanced features
 
 ### Dynamic content
+
 Create exercises with computed content:
 
 ```json
@@ -383,6 +402,7 @@ Create exercises with computed content:
 *Note: This feature is planned but not yet implemented.*
 
 ### Audio integration
+
 Prepare exercises for future audio support:
 
 ```json
@@ -398,6 +418,7 @@ Prepare exercises for future audio support:
 ```
 
 ### Image support
+
 Add visual context:
 
 ```json
@@ -415,18 +436,21 @@ Add visual context:
 ## 📋 Best practices
 
 ### Development
+
 1. **Start small**: Create simple exercises first
 2. **Test frequently**: Validate after each change
 3. **Use version control**: Commit working exercises
 4. **Document changes**: Update this guide when adding features
 
 ### Content creation
+
 1. **Be consistent**: Follow established patterns
 2. **Provide context**: Make questions clear
 3. **Include variety**: Mix question types within blocks
 4. **Think mobile**: Ensure content works on small screens
 
 ### Performance
+
 1. **Keep files reasonable**: < 50KB per exercise
 2. **Optimize images**: Use appropriate formats and sizes
 3. **Minimize nesting**: Avoid overly complex block structures
@@ -492,16 +516,19 @@ Add visual context:
 ## 📚 Resources
 
 ### Greek language resources
+
 - [Greek Grammar Reference](https://en.wikipedia.org/wiki/Modern_Greek_grammar)
 - [Greek Verb Conjugation](https://cooljugator.com/gr)
 - [Greek Unicode Characters](https://www.unicode.org/charts/PDF/U0370.pdf)
 
 ### Development tools
+
 - [JSON Validator](https://jsonlint.com/)
 - [Valibot Documentation](https://valibot.dev/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 
 ### Testing resources
+
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - [MSW Documentation](https://mswjs.io/)
 - [Playwright Testing](https://playwright.dev/)

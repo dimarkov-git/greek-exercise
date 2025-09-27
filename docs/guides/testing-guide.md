@@ -40,38 +40,38 @@ pnpm test:ci --coverage
 #### Component testing
 
 ```tsx
-import { render, screen } from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { expect, test } from 'vitest'
-import { MyComponent } from './MyComponent'
+import {expect, test} from 'vitest'
+import {MyComponent} from './MyComponent'
 
 test('renders and handles user interaction', async () => {
-  const user = userEvent.setup()
+    const user = userEvent.setup()
 
-  render(<MyComponent />)
+    render(<MyComponent/>)
 
-  // Use accessible queries (prefer role/label/text)
-  const button = screen.getByRole('button', { name: 'Submit' })
+    // Use accessible queries (prefer role/label/text)
+    const button = screen.getByRole('button', {name: 'Submit'})
 
-  await user.click(button)
+    await user.click(button)
 
-  expect(screen.getByText('Success!')).toBeInTheDocument()
+    expect(screen.getByText('Success!')).toBeInTheDocument()
 })
 ```
 
 #### Hook testing
 
 ```tsx
-import { renderHook, waitFor } from '@testing-library/react'
-import { expect, test } from 'vitest'
-import { useMyHook } from './useMyHook'
+import {renderHook, waitFor} from '@testing-library/react'
+import {expect, test} from 'vitest'
+import {useMyHook} from './useMyHook'
 
 test('returns expected data', async () => {
-  const { result } = renderHook(() => useMyHook())
+    const {result} = renderHook(() => useMyHook())
 
-  await waitFor(() => {
-    expect(result.current.data).toBeDefined()
-  })
+    await waitFor(() => {
+        expect(result.current.data).toBeDefined()
+    })
 })
 ```
 
@@ -106,7 +106,7 @@ fireEvent.click(button) // Less realistic
 ```tsx
 // ✅ Good: Use waitFor for async operations
 await waitFor(() => {
-  expect(screen.getByText('Loaded')).toBeInTheDocument()
+    expect(screen.getByText('Loaded')).toBeInTheDocument()
 })
 
 // ✅ Good: findBy queries are async by default
@@ -116,7 +116,7 @@ expect(await screen.findByText('Loaded')).toBeInTheDocument()
 #### Timers and delays
 
 ```tsx
-import { vi } from 'vitest'
+import {vi} from 'vitest'
 
 // Mock timers when testing time-dependent code
 vi.useFakeTimers()
@@ -132,14 +132,14 @@ vi.useRealTimers()
 
 ```tsx
 // Mock API calls with MSW (preferred)
-import { setupServer } from 'msw/node'
-import { handlers } from '../mocks/handlers'
+import {setupServer} from 'msw/node'
+import {handlers} from '../mocks/handlers'
 
 const server = setupServer(...handlers)
 
 // Mock modules when necessary
 vi.mock('../utils/analytics', () => ({
-  track: vi.fn()
+    track: vi.fn()
 }))
 ```
 
@@ -148,19 +148,19 @@ vi.mock('../utils/analytics', () => ({
 #### Testing with providers
 
 ```tsx
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render } from '@testing-library/react'
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import {render} from '@testing-library/react'
 
 function renderWithProviders(ui: React.ReactElement) {
-  const queryClient = new QueryClient({
-    defaultOptions: { queries: { retry: false } }
-  })
+    const queryClient = new QueryClient({
+        defaultOptions: {queries: {retry: false}}
+    })
 
-  return render(
-    <QueryClientProvider client={queryClient}>
-      {ui}
-    </QueryClientProvider>
-  )
+    return render(
+        <QueryClientProvider client={queryClient}>
+            {ui}
+        </QueryClientProvider>
+    )
 }
 ```
 
@@ -168,17 +168,17 @@ function renderWithProviders(ui: React.ReactElement) {
 
 ```tsx
 test('handles errors gracefully', () => {
-  const ThrowError = () => {
-    throw new Error('Test error')
-  }
+    const ThrowError = () => {
+        throw new Error('Test error')
+    }
 
-  render(
-    <ErrorBoundary>
-      <ThrowError />
-    </ErrorBoundary>
-  )
+    render(
+        <ErrorBoundary>
+            <ThrowError/>
+        </ErrorBoundary>
+    )
 
-  expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
+    expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
 })
 ```
 
@@ -207,28 +207,30 @@ npx playwright install
 
 - Toggle `VITE_ENABLE_HTTP_FALLBACK=false` to assert real network errors when MSW is disabled.
 - Leave it `true` (default when MSW is on) to reuse the JSON fixtures as a safety net during offline development.
-- The HTTP client exposes a `fallback` option for per-request overrides; Vitest coverage locks the four MSW/fallback permutations.
+- The HTTP client exposes a `fallback` option for per-request overrides; Vitest coverage locks the four MSW/fallback
+  permutations.
 
 ### Page Object Model (POM)
 
 ```typescript
 // tests/pages/HomePage.ts
-import { Page, expect } from '@playwright/test'
+import {Page, expect} from '@playwright/test'
 
 export class HomePage {
-  constructor(private page: Page) {}
+    constructor(private page: Page) {
+    }
 
-  async goto() {
-    await this.page.goto('/')
-  }
+    async goto() {
+        await this.page.goto('/')
+    }
 
-  async clickStartExercise() {
-    await this.page.getByRole('button', { name: 'Start Exercise' }).click()
-  }
+    async clickStartExercise() {
+        await this.page.getByRole('button', {name: 'Start Exercise'}).click()
+    }
 
-  async expectWelcomeMessage() {
-    await expect(this.page.getByRole('heading', { name: /welcome/i })).toBeVisible()
-  }
+    async expectWelcomeMessage() {
+        await expect(this.page.getByRole('heading', {name: /welcome/i})).toBeVisible()
+    }
 }
 ```
 
@@ -238,8 +240,8 @@ export class HomePage {
 
 ```typescript
 // ✅ Good: Use role-based selectors
-await page.getByRole('button', { name: 'Submit' }).click()
-await page.getByRole('textbox', { name: 'Email' }).fill('test@example.com')
+await page.getByRole('button', {name: 'Submit'}).click()
+await page.getByRole('textbox', {name: 'Email'}).fill('test@example.com')
 
 // ✅ Good: Use data-testid for complex cases
 await page.getByTestId('exercise-progress').click()
@@ -265,10 +267,10 @@ await page.waitForTimeout(5000) // Flaky and slow
 #### Test isolation
 
 ```typescript
-test.beforeEach(async ({ page }) => {
-  // Reset state before each test
-  await page.goto('/')
-  await page.evaluate(() => localStorage.clear())
+test.beforeEach(async ({page}) => {
+    // Reset state before each test
+    await page.goto('/')
+    await page.evaluate(() => localStorage.clear())
 })
 ```
 
@@ -277,10 +279,10 @@ test.beforeEach(async ({ page }) => {
 ```typescript
 // Mock API responses in E2E tests
 await page.route('/api/translations/*', async route => {
-  await route.fulfill({
-    status: 200,
-    body: JSON.stringify({ translations: mockData })
-  })
+    await route.fulfill({
+        status: 200,
+        body: JSON.stringify({translations: mockData})
+    })
 })
 ```
 
@@ -291,22 +293,22 @@ await page.route('/api/translations/*', async route => {
 ```typescript
 // vitest.config.ts
 export default defineConfig({
-  test: {
-    environment: 'jsdom',
-    setupFiles: ['./src/test-setup.ts'],
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'html', 'lcov'],
-      thresholds: {
-        global: {
-          branches: 90,
-          functions: 90,
-          lines: 90,
-          statements: 90
+    test: {
+        environment: 'jsdom',
+        setupFiles: ['./src/test-setup.ts'],
+        coverage: {
+            provider: 'v8',
+            reporter: ['text', 'html', 'lcov'],
+            thresholds: {
+                global: {
+                    branches: 90,
+                    functions: 90,
+                    lines: 90,
+                    statements: 90
+                }
+            }
         }
-      }
     }
-  }
 })
 ```
 
@@ -315,17 +317,17 @@ export default defineConfig({
 ```typescript
 // playwright.config.ts
 export default defineConfig({
-  testDir: './tests',
-  fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
-  use: {
-    baseURL: 'http://localhost:5173',
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure'
-  }
+    testDir: './tests',
+    fullyParallel: true,
+    forbidOnly: !!process.env.CI,
+    retries: process.env.CI ? 2 : 0,
+    workers: process.env.CI ? 1 : undefined,
+    reporter: 'html',
+    use: {
+        baseURL: 'http://localhost:5173',
+        trace: 'on-first-retry',
+        screenshot: 'only-on-failure'
+    }
 })
 ```
 
@@ -362,7 +364,7 @@ npx playwright show-trace test-results/trace.zip
 #### Screen debugging
 
 ```tsx
-import { screen } from '@testing-library/react'
+import {screen} from '@testing-library/react'
 
 // Log all rendered elements
 screen.debug()
@@ -378,7 +380,7 @@ screen.debug(screen.getByRole('button'))
 await page.pause()
 
 // Take screenshot
-await page.screenshot({ path: 'debug.png' })
+await page.screenshot({path: 'debug.png'})
 
 // Console logs
 page.on('console', msg => console.log(msg.text()))

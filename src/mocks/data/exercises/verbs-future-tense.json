@@ -2,6 +2,7 @@
 	"enabled": true,
 	"id": "verbs-future-tense",
 	"type": "word-form",
+	"language": "el",
 	"title": "Συζυγία ρημάτων στον Μέλλοντα",
 	"titleI18n": {
 		"en": "Verb Conjugation in Future Tense",
@@ -25,6 +26,10 @@
 		{
 			"id": "read",
 			"name": "διαβάζω",
+			"nameHintI18n": {
+				"en": "to read",
+				"ru": "читать"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["διαβάσω"] },
 				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["διαβάσεις"] },
@@ -45,6 +50,10 @@
 		{
 			"id": "speak",
 			"name": "μιλάω / μιλώ",
+			"nameHintI18n": {
+				"en": "to speak",
+				"ru": "говорить"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["μιλήσω"] },
 				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["μιλήσεις"] },
@@ -65,6 +74,10 @@
 		{
 			"id": "can",
 			"name": "μπορώ",
+			"nameHintI18n": {
+				"en": "can, to be able",
+				"ru": "мочь, быть в состоянии"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["μπορέσω"] },
 				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["μπορέσεις"] },
@@ -85,6 +98,10 @@
 		{
 			"id": "hear",
 			"name": "ακούω",
+			"nameHintI18n": {
+				"en": "to hear, to listen",
+				"ru": "слышать, слушать"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["ακούσω"] },
 				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["ακούσεις"] },
@@ -105,6 +122,10 @@
 		{
 			"id": "dress",
 			"name": "ντύνομαι",
+			"nameHintI18n": {
+				"en": "to get dressed",
+				"ru": "одеваться"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["ντυθώ"] },
 				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["ντυθείς"] },
@@ -125,6 +146,10 @@
 		{
 			"id": "sleep",
 			"name": "κοιμάμαι",
+			"nameHintI18n": {
+				"en": "to sleep",
+				"ru": "спать"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ θα ___", "correct": ["κοιμηθώ"] },
 				{ "id": "you-sg", "prompt": "εσύ θα ___", "correct": ["κοιμηθείς"] },

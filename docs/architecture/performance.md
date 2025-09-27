@@ -1,6 +1,7 @@
 # Performance guidelines
 
-This document outlines performance targets, measurement strategies, and optimization techniques for the Learn Greek application.
+This document outlines performance targets, measurement strategies, and optimization techniques for the Learn Greek
+application.
 
 ## Performance budgets
 

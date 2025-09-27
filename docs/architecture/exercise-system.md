@@ -4,11 +4,13 @@ This document describes the architecture and data flow of the exercise system in
 
 ## 🏗️ System overview
 
-The exercise system is designed to support multiple types of language learning exercises with a consistent API and user experience.
+The exercise system is designed to support multiple types of language learning exercises with a consistent API and user
+experience.
 
 ### Current implementation status
 
 ✅ **Implemented**:
+
 - Word-form exercises (Greek verb conjugation)
 - Exercise data management (JSON-based)
 - MSW API endpoints
@@ -16,6 +18,7 @@ The exercise system is designed to support multiple types of language learning e
 - Progress tracking and statistics
 
 🔄 **Planned**:
+
 - Translation exercises
 - Flashcard exercises
 - Multiple choice tests
@@ -27,23 +30,23 @@ The exercise system is designed to support multiple types of language learning e
 
 ```typescript
 interface WordFormExercise {
-  // Basic metadata
-  enabled: boolean
-  id: string
-  type: 'word-form'
-  title: string
-  titleI18n: Record<Language, string>
-  description: string
-  descriptionI18n: Record<Language, string>
+    // Basic metadata
+    enabled: boolean
+    id: string
+    type: 'word-form'
+    title: string
+    titleI18n: Record<Language, string>
+    description: string
+    descriptionI18n: Record<Language, string>
 
-  // Classification
-  tags: string[]
-  difficulty: 'beginner' | 'intermediate' | 'advanced'
-  estimatedTimeMinutes: number
+    // Classification
+    tags: string[]
+    difficulty: 'beginner' | 'intermediate' | 'advanced'
+    estimatedTimeMinutes: number
 
-  // Exercise configuration
-  settings: ExerciseSettings
-  blocks: WordFormBlock[]
+    // Exercise configuration
+    settings: ExerciseSettings
+    blocks: WordFormBlock[]
 }
 ```
 
@@ -51,10 +54,10 @@ interface WordFormExercise {
 
 ```typescript
 interface ExerciseSettings {
-  autoAdvance: boolean           // Auto-proceed after correct answer
-  autoAdvanceDelayMs: number     // Delay before auto-advance
-  allowSkip: boolean             // Allow skipping questions
-  shuffleCases: boolean          // Randomize question order
+    autoAdvance: boolean           // Auto-proceed after correct answer
+    autoAdvanceDelayMs: number     // Delay before auto-advance
+    allowSkip: boolean             // Allow skipping questions
+    shuffleCases: boolean          // Randomize question order
 }
 ```
 
@@ -62,19 +65,19 @@ interface ExerciseSettings {
 
 ```typescript
 interface WordFormBlock {
-  id: string                     // Unique block identifier
-  name: string                   // Greek name (e.g., "είμαι (Ενεστώτας)")
-  nameHintI18n: Record<Language, string>  // Translated hints
-  cases: WordFormCase[]
+    id: string                     // Unique block identifier
+    name: string                   // Greek name (e.g., "είμαι (Ενεστώτας)")
+    nameHintI18n: Record<Language, string>  // Translated hints
+    cases: WordFormCase[]
 }
 
 interface WordFormCase {
-  id: string                     // Unique case identifier
-  prompt: string                 // Greek prompt (e.g., "εγώ")
-  promptHintI18n: Record<Language, string>  // Translated prompts
-  correct: string[]              // Acceptable answers
-  hint?: string                  // Optional Greek hint
-  hintI18n?: Record<Language, string>  // Optional translated hints
+    id: string                     // Unique case identifier
+    prompt: string                 // Greek prompt (e.g., "εγώ")
+    promptHintI18n: Record<Language, string>  // Translated prompts
+    correct: string[]              // Acceptable answers
+    hint?: string                  // Optional Greek hint
+    hintI18n?: Record<Language, string>  // Optional translated hints
 }
 ```
 
@@ -125,49 +128,53 @@ The exercise system uses a state machine pattern for predictable behavior:
 
 ```typescript
 type ExerciseStatus =
-  | 'WAITING_INPUT'      // Waiting for user input
-  | 'CHECKING'           // Validating answer
-  | 'CORRECT_ANSWER'     // Correct answer feedback
-  | 'WRONG_ANSWER'       // Wrong answer feedback
-  | 'REQUIRE_CORRECTION' // Must enter correct answer
-  | 'COMPLETED'          // Exercise finished
+    | 'WAITING_INPUT'      // Waiting for user input
+    | 'CHECKING'           // Validating answer
+    | 'CORRECT_ANSWER'     // Correct answer feedback
+    | 'WRONG_ANSWER'       // Wrong answer feedback
+    | 'REQUIRE_CORRECTION' // Must enter correct answer
+    | 'COMPLETED'          // Exercise finished
 
 type ExerciseEvent =
-  | 'SUBMIT_ANSWER'      // User submits answer
-  | 'CONTINUE'           // Proceed to next question
-  | 'SKIP'               // Skip current question
-  | 'RESTART'            // Restart exercise
-  | 'TOGGLE_AUTO_ADVANCE' // Toggle auto-advance setting
+    | 'SUBMIT_ANSWER'      // User submits answer
+    | 'CONTINUE'           // Proceed to next question
+    | 'SKIP'               // Skip current question
+    | 'RESTART'            // Restart exercise
+    | 'TOGGLE_AUTO_ADVANCE' // Toggle auto-advance setting
 ```
 
 ### State transitions
 
 ```typescript
 const exerciseStateMachine = {
-  WAITING_INPUT: {
-    SUBMIT_ANSWER: 'CHECKING'
-  },
-  CHECKING: {
-    // Determined by answer validation
-  },
-  CORRECT_ANSWER: {
-    CONTINUE: nextQuestion ? 'WAITING_INPUT' : 'COMPLETED'
-  },
-  WRONG_ANSWER: {
-    CONTINUE: 'REQUIRE_CORRECTION'
-  },
-  REQUIRE_CORRECTION: {
-    SUBMIT_ANSWER: 'CHECKING' // Must be correct to proceed
-  }
+    WAITING_INPUT: {
+        SUBMIT_ANSWER: 'CHECKING'
+    },
+    CHECKING: {
+        // Determined by answer validation
+    },
+    CORRECT_ANSWER: {
+        CONTINUE: nextQuestion ? 'WAITING_INPUT' : 'COMPLETED'
+    },
+    WRONG_ANSWER: {
+        CONTINUE: 'REQUIRE_CORRECTION'
+    },
+    REQUIRE_CORRECTION: {
+        SUBMIT_ANSWER: 'CHECKING' // Must be correct to proceed
+    }
 }
 ```
 
 ### Implementation details
 
-- The reducer lives in `src/components/exercises/word-form/state/wordFormMachine.ts` and owns the authoritative exercise context (status, cursor indices, answer feedback flags, statistics, hints, etc.).
-- Selectors (`selectCurrentCase`, `selectProgress`, `selectStats`, ...) keep view components free from traversal logic and memoise expensive lookups over blocks/cases.
-- `useWordFormExercise` (in `hooks/useWordFormExercise.ts`) wires the reducer to React via `useReducer`, exposes the derived view model, and centralises side effects (auto-advance timers, skip delays, completion payloads).
-- Presentation components consume the view model only, meaning they cannot accidentally mutate reducer state—this keeps transitions predictable and ready for future unit tests around the machine itself.
+- The reducer lives in `src/components/exercises/word-form/state/wordFormMachine.ts` and owns the authoritative exercise
+  context (status, cursor indices, answer feedback flags, statistics, hints, etc.).
+- Selectors (`selectCurrentCase`, `selectProgress`, `selectStats`, ...) keep view components free from traversal logic
+  and memoise expensive lookups over blocks/cases.
+- `useWordFormExercise` (in `hooks/useWordFormExercise.ts`) wires the reducer to React via `useReducer`, exposes the
+  derived view model, and centralises side effects (auto-advance timers, skip delays, completion payloads).
+- Presentation components consume the view model only, meaning they cannot accidentally mutate reducer state—this keeps
+  transitions predictable and ready for future unit tests around the machine itself.
 
 ## 🗃️ Data persistence
 
@@ -175,23 +182,25 @@ const exerciseStateMachine = {
 
 ```typescript
 // Exercise endpoints
-GET /api/exercises           // List all exercises (metadata)
-GET /api/exercises/:id       // Get specific exercise data
+GET / api / exercises           // List all exercises (metadata)
+GET / api / exercises /
+:
+id       // Get specific exercise data
 
 // Response formats
 ExerciseMetadata[] = [{
-  id: string
-  title: string
-  titleI18n: Record<Language, string>
-  tags: string[]
-  difficulty: string
-  estimatedTimeMinutes: number
-  totalBlocks: number
-  totalCases: number
+    id: string
+    title: string
+    titleI18n: Record<Language, string>
+    tags: string[]
+    difficulty: string
+    estimatedTimeMinutes: number
+    totalBlocks: number
+    totalCases: number
 }]
 
 WordFormExercise = {
-  // Full exercise data structure
+    // Full exercise data structure
 }
 ```
 
@@ -200,16 +209,16 @@ WordFormExercise = {
 ```typescript
 // TanStack Query configuration
 const exercisesQuery = {
-  queryKey: ['exercises'],
-  queryFn: fetchExercises,
-  staleTime: 30 * 60 * 1000, // 30 minutes
-  cacheTime: 60 * 60 * 1000  // 1 hour
+    queryKey: ['exercises'],
+    queryFn: fetchExercises,
+    staleTime: 30 * 60 * 1000, // 30 minutes
+    cacheTime: 60 * 60 * 1000  // 1 hour
 }
 
 const exerciseQuery = {
-  queryKey: ['exercise', id],
-  queryFn: () => fetchExercise(id),
-  staleTime: 30 * 60 * 1000
+    queryKey: ['exercise', id],
+    queryFn: () => fetchExercise(id),
+    staleTime: 30 * 60 * 1000
 }
 ```
 
@@ -229,6 +238,7 @@ src/mocks/data/exercises/
 **Purpose**: Practice Greek word conjugation and declension
 
 **Features**:
+
 - Text input with validation
 - Multiple correct answers support
 - Greek text normalization
@@ -244,15 +254,15 @@ src/mocks/data/exercises/
 
 ```typescript
 interface TranslationExercise {
-  type: 'translation'
-  direction: 'greek-to-english' | 'english-to-greek'
-  content: TranslationCase[]
+    type: 'translation'
+    direction: 'greek-to-english' | 'english-to-greek'
+    content: TranslationCase[]
 }
 
 interface TranslationCase {
-  source: string
-  targets: string[]
-  context?: string
+    source: string
+    targets: string[]
+    context?: string
 }
 ```
 
@@ -260,16 +270,16 @@ interface TranslationCase {
 
 ```typescript
 interface FlashcardExercise {
-  type: 'flashcard'
-  cards: FlashCard[]
+    type: 'flashcard'
+    cards: FlashCard[]
 }
 
 interface FlashCard {
-  front: string
-  back: string
-  hint?: string
-  audioUrl?: string
-  imageUrl?: string
+    front: string
+    back: string
+    hint?: string
+    audioUrl?: string
+    imageUrl?: string
 }
 ```
 
@@ -277,15 +287,15 @@ interface FlashCard {
 
 ```typescript
 interface MultipleChoiceExercise {
-  type: 'multiple-choice'
-  questions: MCQuestion[]
+    type: 'multiple-choice'
+    questions: MCQuestion[]
 }
 
 interface MCQuestion {
-  question: string
-  options: string[]
-  correctIndex: number
-  explanation?: string
+    question: string
+    options: string[]
+    correctIndex: number
+    explanation?: string
 }
 ```
 
@@ -295,13 +305,13 @@ interface MCQuestion {
 
 ```typescript
 function normalizeGreekText(text: string): string {
-  return text
-    .trim()
-    .normalize('NFC')           // Unicode normalization
-    .toLowerCase()              // Case insensitive
-    // Optional: remove tones for comparison
-    .replace(/[άάὰᾶἀἁἄἅἂἃἆἇᾀᾁᾄᾅᾂᾃᾆᾇᾳ]/g, 'α')
-    .replace(/[έὲἐἑἔἕἒἓ]/g, 'ε')
+    return text
+        .trim()
+        .normalize('NFC')           // Unicode normalization
+        .toLowerCase()              // Case insensitive
+        // Optional: remove tones for comparison
+        .replace(/[άάὰᾶἀἁἄἅἂἃἆἇᾀᾁᾄᾅᾂᾃᾆᾇᾳ]/g, 'α')
+        .replace(/[έὲἐἑἔἕἒἓ]/g, 'ε')
     // ... more tone mappings
 }
 ```
@@ -310,10 +320,10 @@ function normalizeGreekText(text: string): string {
 
 ```typescript
 function validateAnswer(userAnswer: string, correctAnswers: string[]): boolean {
-  const normalizedUser = normalizeGreekText(userAnswer)
-  return correctAnswers.some(correct =>
-    normalizeGreekText(correct) === normalizedUser
-  )
+    const normalizedUser = normalizeGreekText(userAnswer)
+    return correctAnswers.some(correct =>
+        normalizeGreekText(correct) === normalizedUser
+    )
 }
 ```
 
@@ -338,11 +348,11 @@ The hint system provides contextual translations:
 
 ```typescript
 interface HintSystemProps {
-  content: string           // Main Greek content
-  hint?: string            // Optional Greek hint
-  hintI18n?: Record<Language, string>  // Translated hints
-  placement: 'top' | 'bottom' | 'left' | 'right'
-  trigger: 'hover' | 'click' // Desktop vs mobile
+    content: string           // Main Greek content
+    hint?: string            // Optional Greek hint
+    hintI18n?: Record<Language, string>  // Translated hints
+    placement: 'top' | 'bottom' | 'left' | 'right'
+    trigger: 'hover' | 'click' // Desktop vs mobile
 }
 ```
 
@@ -355,15 +365,15 @@ interface HintSystemProps {
 
 ```typescript
 interface ExerciseStats {
-  exerciseId: string
-  startTime: number
-  endTime?: number
-  totalQuestions: number
-  correctAnswers: number
-  incorrectAnswers: number
-  skippedQuestions: number
-  hints: number            // Hints accessed
-  accuracy: number         // Percentage correct
+    exerciseId: string
+    startTime: number
+    endTime?: number
+    totalQuestions: number
+    correctAnswers: number
+    incorrectAnswers: number
+    skippedQuestions: number
+    hints: number            // Hints accessed
+    accuracy: number         // Percentage correct
 }
 ```
 
@@ -375,13 +385,13 @@ interface ExerciseStats {
 ```typescript
 // Planned IndexedDB schema
 interface UserProgress {
-  userId: string
-  exerciseStats: ExerciseStats[]
-  globalStats: {
-    totalExercisesCompleted: number
-    totalTimeSpent: number
-    averageAccuracy: number
-  }
+    userId: string
+    exerciseStats: ExerciseStats[]
+    globalStats: {
+        totalExercisesCompleted: number
+        totalTimeSpent: number
+        averageAccuracy: number
+    }
 }
 ```
 
@@ -392,7 +402,7 @@ interface UserProgress {
 ```typescript
 // Lazy load exercise components
 const WordFormExercise = lazy(() =>
-  import('./components/exercises/word-form/WordFormExercise')
+    import('./components/exercises/word-form/WordFormExercise')
 )
 
 // Route-level code splitting
@@ -404,8 +414,8 @@ const ExercisePage = lazy(() => import('./pages/ExercisePage'))
 ```typescript
 // Memoize expensive calculations
 const normalizedAnswers = useMemo(() =>
-  correctAnswers.map(normalizeGreekText),
-  [correctAnswers]
+        correctAnswers.map(normalizeGreekText),
+    [correctAnswers]
 )
 
 // Prevent unnecessary re-renders
@@ -425,15 +435,15 @@ const MemoizedHintSystem = memo(HintSystem)
 
 ```typescript
 describe('normalizeGreekText', () => {
-  it('removes tones correctly', () => {
-    expect(normalizeGreekText('είμαι')).toBe('ειμαι')
-  })
+    it('removes tones correctly', () => {
+        expect(normalizeGreekText('είμαι')).toBe('ειμαι')
+    })
 })
 
 describe('validateAnswer', () => {
-  it('accepts multiple correct answers', () => {
-    expect(validateAnswer('είμαι', ['είμαι', 'ειμαι'])).toBe(true)
-  })
+    it('accepts multiple correct answers', () => {
+        expect(validateAnswer('είμαι', ['είμαι', 'ειμαι'])).toBe(true)
+    })
 })
 ```
 
@@ -441,28 +451,29 @@ describe('validateAnswer', () => {
 
 ```typescript
 describe('WordFormExercise', () => {
-  it('completes full exercise flow', async () => {
-    const exercise = createMockExercise()
-    render(<WordFormExercise exercise={exercise} />)
+    it('completes full exercise flow', async () => {
+        const exercise = createMockExercise()
+        render(<WordFormExercise exercise = {exercise}
+        />)
 
-    // Submit correct answer
-    await userEvent.type(screen.getByRole('textbox'), 'είμαι')
-    await userEvent.click(screen.getByText('Check'))
+        // Submit correct answer
+        await userEvent.type(screen.getByRole('textbox'), 'είμαι')
+        await userEvent.click(screen.getByText('Check'))
 
-    // Verify green pulse and progression
-    expect(screen.getByTestId('pulse-effect')).toHaveClass('success')
-  })
+        // Verify green pulse and progression
+        expect(screen.getByTestId('pulse-effect')).toHaveClass('success')
+    })
 })
 ```
 
 ### E2E tests
 
 ```typescript
-test('exercise completion flow', async ({ page }) => {
-  await page.goto('/exercise/verbs-be')
-  await page.fill('[role="textbox"]', 'είμαι')
-  await page.click('text=Check')
-  await expect(page.locator('.pulse-success')).toBeVisible()
+test('exercise completion flow', async ({page}) => {
+    await page.goto('/exercise/verbs-be')
+    await page.fill('[role="textbox"]', 'είμαι')
+    await page.click('text=Check')
+    await expect(page.locator('.pulse-success')).toBeVisible()
 })
 ```
 

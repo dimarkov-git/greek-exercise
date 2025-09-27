@@ -2,6 +2,7 @@
 	"enabled": true,
 	"id": "verbs-be",
 	"type": "word-form",
+	"language": "el",
 	"title": "Εξάσκηση ρήματος είμαι",
 	"titleI18n": {
 		"en": "Verb 'to be' practice",
@@ -186,13 +187,13 @@
 				{
 					"id": "be-perf-1s",
 					"prompt": "εγώ ___",
-					"promptHintI18n": { "en": "I have been", "ru": "я был/бывала" },
+					"promptHintI18n": { "en": "I have been", "ru": "я был(а)" },
 					"correct": ["έχω υπάρξει"]
 				},
 				{
 					"id": "be-perf-2s",
 					"prompt": "εσύ ___",
-					"promptHintI18n": { "en": "you have been", "ru": "ты был/бывала" },
+					"promptHintI18n": { "en": "you have been", "ru": "ты был(а)" },
 					"correct": ["έχεις υπάρξει"]
 				},
 				{
@@ -200,7 +201,7 @@
 					"prompt": "αυτός/αυτή/αυτό ___",
 					"promptHintI18n": {
 						"en": "he/she/it has been",
-						"ru": "он/она/оно был/была"
+						"ru": "он/она/оно был/была/было"
 					},
 					"correct": ["έχει υπάρξει"]
 				},

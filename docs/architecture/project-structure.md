@@ -1,11 +1,13 @@
 # Project structure
 
-This document explains the purpose of each file in the **Learn Greek** application, reflecting the architecture established through Phases 0-5.
+This document explains the purpose of each file in the **Learn Greek** application, reflecting the architecture
+established through Phases 0-5.
 
 ## Architecture overview
 
 **Current status**: Production-ready React application with comprehensive testing (93%+ coverage)
 **Key patterns**:
+
 - **Feature-Sliced Design** with clear module boundaries
 - **Type-safe i18n** via generated translation registry
 - **HTTP client** with configurable fallback policies
@@ -67,58 +69,60 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 ### Entry point
 
 - **main.tsx** – environment-aware bootstrap
-  - Conditionally starts MSW mocks outside production and test environments
-  - Wraps the SPA with shared providers, router selection, and the global error boundary
-  - Chooses router mode (`browser`, `hash`, `memory`) via `AppRouter`
+    - Conditionally starts MSW mocks outside production and test environments
+    - Wraps the SPA with shared providers, router selection, and the global error boundary
+    - Chooses router mode (`browser`, `hash`, `memory`) via `AppRouter`
 - **app/** – application shell utilities
-  - `AppProviders.tsx` – React Query provider + optional devtools loader
-  - `AppRouter.tsx` – environment-driven router selection with React Router 7 futures enabled
-  - `AppErrorBoundary.tsx` – top-level error boundary showing `LoadingOrError`
-  - `QueryDevtools.tsx` – lazy React Query Devtools loader (development only)
-  - `queryClient.ts` – shared query client factory with sensible defaults
-  - `routes/AppRoutes.tsx` – centralised route definitions with lazy page loading and nested shell layout
-  - `shell/AppShell.tsx` – shared header/main/footer wrapper that manages the layout context and suspense boundaries
+    - `AppProviders.tsx` – React Query provider + optional devtools loader
+    - `AppRouter.tsx` – environment-driven router selection with React Router 7 futures enabled
+    - `AppErrorBoundary.tsx` – top-level error boundary showing `LoadingOrError`
+    - `QueryDevtools.tsx` – lazy React Query Devtools loader (development only)
+    - `queryClient.ts` – shared query client factory with sensible defaults
+    - `routes/AppRoutes.tsx` – centralised route definitions with lazy page loading and nested shell layout
+    - `shell/AppShell.tsx` – shared header/main/footer wrapper that manages the layout context and suspense boundaries
 - **config/environment.ts** – runtime feature flags (router mode, MSW, devtools)
 
 ### Routing and components
 
 - **App.tsx** – delegates to `AppRoutes` for navigation
-  - Keeps the root component thin so the shell and routing concerns live in `app/`
+    - Keeps the root component thin so the shell and routing concerns live in `app/`
 
 ### Pages (pages/)
 
 - **HomePage.tsx** - main landing page with navigation
-  - User language selector (for exercise hints)
-  - Navigation cards to Exercise Library and Builder
-  - Multilingual content with real-time language switching
+    - User language selector (for exercise hints)
+    - Navigation cards to Exercise Library and Builder
+    - Multilingual content with real-time language switching
 - **exercise-library/** – modular exercise library slice following the Phase 1 roadmap refactor
-  - `ExerciseLibrary.tsx` – top-level page container that wires translations, data fetching, and feature slices
-  - `components/` – presentation units (`LibraryHeader`, `UserSettings`, `ExerciseFilters`, `ExerciseGrid`) with isolated styling/animation concerns
-  - `hooks/useExerciseFiltering.ts` – encapsulated filtering state with memoised selectors and reset helpers
-  - `constants.ts` – consolidated translation catalogue for the page
+    - `ExerciseLibrary.tsx` – top-level page container that wires translations, data fetching, and feature slices
+    - `components/` – presentation units (`LibraryHeader`, `UserSettings`, `ExerciseFilters`, `ExerciseGrid`) with
+      isolated styling/animation concerns
+    - `hooks/useExerciseFiltering.ts` – encapsulated filtering state with memoised selectors and reset helpers
+    - `constants.ts` – consolidated translation catalogue for the page
 - **ExerciseLibrary.tsx** – re-export for backwards compatibility with existing route loaders/tests
 - **ExerciseBuilder.tsx** – create custom exercises (placeholder)
 - **ExercisePage.tsx** – exercise execution page
-  - Dynamic exercise loading by ID
-  - Integration with word-form exercise system
-  - Progress tracking and completion handling
+    - Dynamic exercise loading by ID
+    - Integration with word-form exercise system
+    - Progress tracking and completion handling
 
 ### API layer (api/)
 
 - **httpClient.ts** – typed HTTP utilities (JSON wrapper with retry + error metadata)
 - **texts.ts** – translation API helpers
-  - Uses `httpClient` for consistent error handling
-  - Validates responses with Valibot
-  - Functions: `getTranslations(language, keys)`
+    - Uses `httpClient` for consistent error handling
+    - Validates responses with Valibot
+    - Functions: `getTranslations(language, keys)`
 
 ### Components (components/)
 
 #### Layout components (components/layout/)
+
 - **Footer.tsx** - application footer with copyright and GitHub link
 - **Header.tsx** - main application header with adaptive navigation
-  - Desktop: full navigation bar with settings
-  - Mobile: burger menu with dropdown navigation
-  - Conditional rendering (hidden on exercise pages)
+    - Desktop: full navigation bar with settings
+    - Mobile: burger menu with dropdown navigation
+    - Conditional rendering (hidden on exercise pages)
 - **HeaderLogo.tsx** - custom logo with Greek letters (ΕΛ)
 - **HeaderNavigation.tsx** - navigation menu for desktop and mobile
 - **HeaderSettings.tsx** - compact theme and language controls
@@ -126,6 +130,7 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 - **SettingsPanel.tsx** - settings panel with theme and language controls (legacy)
 
 #### UI components (components/ui/)
+
 - **CompactThemeToggle.tsx** - minimal theme switcher for header (icon only)
 - **LanguageDropdown.tsx** - dropdown language selector with flags
 - **LanguageSelector.tsx** - language selection buttons with flags (legacy)
@@ -136,12 +141,14 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 #### Exercise components (components/exercises/)
 
 ##### Shared exercise components (components/exercises/shared/)
+
 - **ExerciseLayout.tsx** - common layout for all exercise types
 - **ExerciseHeader.tsx** - exercise header with progress and controls
 - **HintSystem.tsx** - adaptive hint system (hover/tap for translations)
 - **PulseEffect.tsx** - animated feedback (green/red pulse effects)
 
 ##### Word-form exercise components (components/exercises/word-form/)
+
 - **WordFormExercise.tsx** - main word-form exercise controller
 - **WordFormExerciseWrapper.tsx** - wrapper for exercise page integration
 - **WordFormInput.tsx** - text input with validation and feedback
@@ -151,6 +158,7 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 - **ExerciseRenderer.tsx** - exercise state machine renderer
 
 #### Utility components
+
 - **Head.tsx** - page meta tags management
 - **LoadingOrError.tsx** - universal loading and error state component
 
@@ -159,62 +167,68 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 - **browser.ts** - MSW setup for browser
 - **server.ts** - MSW setup for Node.js (tests)
 - **handlers.ts** - mock API endpoint handlers
-  - `/api/texts/common` - translation keys endpoint
-  - `/api/translations/{lang}` - localized strings by language
-  - `/api/exercises` - exercise metadata endpoint
-  - `/api/exercises/{id}` - specific exercise data endpoint
+    - `/api/texts/common` - translation keys endpoint
+    - `/api/translations/{lang}` - localized strings by language
+    - `/api/exercises` - exercise metadata endpoint
+    - `/api/exercises/{id}` - specific exercise data endpoint
 - **data/texts/common.json** - translation key definitions
 - **data/translations/** - localized strings
-  - `el.json` - Greek translations
-  - `ru.json` - Russian translations
-  - `en.json` - English translations
+    - `el.json` - Greek translations
+    - `ru.json` - Russian translations
+    - `en.json` - English translations
 - **data/exercises/** - exercise data files
-  - `verbs-be.json` - Greek verb conjugation exercise (είμαι)
+    - `verbs-be.json` - Greek verb conjugation exercise (είμαι)
 
 ### State management and hooks
 
 #### Stores (stores/)
+
 - **settings.ts** - Zustand store for app settings
-  - Theme persistence (light/dark)
-  - UI language (el/ru/en)
-  - User language preferences
-  - Local storage integration
+    - Theme persistence (light/dark)
+    - UI language (el/ru/en)
+    - User language preferences
+    - Local storage integration
 
 #### Hooks (hooks/)
+
 - **useI18n.ts** - main internationalization hook
-  - Integration with TanStack Query for translation loading
-  - Fallback translations for critical UI elements
-  - Translation function `t(key)` with caching
+    - Integration with TanStack Query for translation loading
+    - Fallback translations for critical UI elements
+    - Translation function `t(key)` with caching
 - **useTranslation.ts** - alternative translation hook (unused)
 - **useExercises.ts** - exercise data management hooks
-  - `useExercises()` - fetch exercise metadata list
-  - `useExercise(id)` - fetch specific exercise data
-  - TanStack Query integration with caching
+    - `useExercises()` - fetch exercise metadata list
+    - `useExercise(id)` - fetch specific exercise data
+    - TanStack Query integration with caching
 - **usePulseEffect.ts** - pulse animation management hook
 - **useHintState.ts** - hint system state management hook
 
 #### Contexts (contexts/)
+
 - **LanguageContext.tsx** - React context for language management
-  - Language state provider
-  - Language switching utilities
+    - Language state provider
+    - Language switching utilities
 
 ### Testing setup
 
 - **test-setup.ts** - global test environment setup
-  - Initialize jest-dom matchers
-  - MSW server setup for tests
+    - Initialize jest-dom matchers
+    - MSW server setup for tests
 - **test-utils.test.ts** - utilities for component rendering in tests
 
 ### TypeScript types and schemas
 
 #### Types (types/)
+
 - **settings.ts** - app settings types (Language, Theme, AppSettings)
 - **exercises.ts** - exercise system types (WordFormExercise, ExerciseState, etc.)
 
 #### Schemas (schemas/)
+
 - **exercises.ts** - Valibot validation schemas for exercise JSON data
 
 #### Utils (utils/)
+
 - **exercises.ts** - exercise utilities (Greek text normalization, answer validation)
 
 ### Styles
@@ -242,9 +256,9 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 ### HTML and static files
 
 - **index.html** - main HTML template
-  - Inter font setup with preload
-  - PWA meta tags (manifest, icons)
-  - Dark mode support via CSS classes
+    - Inter font setup with preload
+    - PWA meta tags (manifest, icons)
+    - Dark mode support via CSS classes
 
 ### Public files
 
@@ -339,6 +353,7 @@ This document explains the purpose of each file in the **Learn Greek** applicati
 - **HTTP fallback policies** - Configurable offline support (Phase 4)
 
 ### Development workflow patterns
+
 - **Environment-aware bootstrap** (Phase 0) with conditional MSW/DevTools
 - **Project references** in TypeScript for faster builds
 - **Bundle analysis** integrated via `pnpm build:analyze`

@@ -2,6 +2,7 @@
 	"enabled": true,
 	"id": "template",
 	"type": "word-form",
+	"language": "el",
 	"title": "Μορφές της λέξης",
 	"titleI18n": {
 		"en": "Word form",

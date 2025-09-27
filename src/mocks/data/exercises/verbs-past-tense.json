@@ -1,7 +1,8 @@
 {
 	"enabled": true,
-	"id": "verbs-aorist-tense",
+	"id": "verbs-past-tense",
 	"type": "word-form",
+	"language": "el",
 	"title": "Συζυγία ρημάτων στον Αόριστο",
 	"titleI18n": {
 		"en": "Verb Conjugation in Aorist (Simple Past)",
@@ -25,6 +26,10 @@
 		{
 			"id": "read",
 			"name": "διαβάζω",
+			"nameHintI18n": {
+				"en": "to read",
+				"ru": "читать"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ ___", "correct": ["διάβασα"] },
 				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["διάβασες"] },
@@ -41,6 +46,10 @@
 		{
 			"id": "speak",
 			"name": "μιλάω / μιλώ",
+			"nameHintI18n": {
+				"en": "to speak",
+				"ru": "говорить"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ ___", "correct": ["μίλησα"] },
 				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["μίλησες"] },
@@ -57,12 +66,16 @@
 		{
 			"id": "can",
 			"name": "μπορώ",
+			"nameHintI18n": {
+				"en": "can, to be able",
+				"ru": "мочь, быть в состоянии"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ ___", "correct": ["μπόρεσα"] },
 				{
 					"id": "you-sg",
 					"prompt": "εσύ ___",
-					"correct": ["μππόρεσες", "μπόρεσες"]
+					"correct": ["μπόρεσες"]
 				},
 				{ "id": "he", "prompt": "αυτός/αυτή/αυτό ___", "correct": ["μπόρεσε"] },
 				{ "id": "we", "prompt": "εμείς ___", "correct": ["μπορέσαμε"] },
@@ -77,6 +90,10 @@
 		{
 			"id": "hear",
 			"name": "ακούω",
+			"nameHintI18n": {
+				"en": "to hear, to listen",
+				"ru": "слышать, слушать"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ ___", "correct": ["άκουσα"] },
 				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["άκουσες"] },
@@ -93,6 +110,10 @@
 		{
 			"id": "dress",
 			"name": "ντύνομαι",
+			"nameHintI18n": {
+				"en": "to get dressed",
+				"ru": "одеваться"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ ___", "correct": ["ντύθηκα"] },
 				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["ντύθηκες"] },
@@ -109,6 +130,10 @@
 		{
 			"id": "sleep",
 			"name": "κοιμάμαι",
+			"nameHintI18n": {
+				"en": "to sleep",
+				"ru": "спать"
+			},
 			"cases": [
 				{ "id": "i", "prompt": "εγώ ___", "correct": ["κοιμήθηκα"] },
 				{ "id": "you-sg", "prompt": "εσύ ___", "correct": ["κοιμήθηκες"] },

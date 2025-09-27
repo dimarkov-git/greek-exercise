@@ -1,6 +1,7 @@
 # Technical specification - Learn Greek
 
-**Learn Greek** is an interactive single-page application (SPA) for learning Greek language with multilingual interface support and customizable exercise system.
+**Learn Greek** is an interactive single-page application (SPA) for learning Greek language with multilingual interface
+support and customizable exercise system.
 
 ## 📋 Project overview
 
@@ -13,6 +14,7 @@
 ### Purpose
 
 Create a modern, interactive language learning platform focused on Greek language practice with:
+
 - Multiple exercise types for comprehensive learning
 - JSON-based exercise configuration system
 - Full internationalization support (Greek, Russian, English)
@@ -30,34 +32,41 @@ Create a modern, interactive language learning platform focused on Greek languag
 ### Technology stack
 
 #### Frontend framework
+
 - **React 19** - Latest stable version with concurrent features
 - **TypeScript 5** - Strict typing for better developer experience
 - **React Router 7** - Client-side routing with lazy loading
 
 #### Build tools
+
 - **Vite 7** - Fast build and hot module replacement
 - **Biome** - Unified linting and formatting tool
 
 #### Styling
+
 - **Tailwind CSS v4** - Utility-first styles with CSS-in-JS support
 - **Framer Motion 12** - Smooth animations and transitions
 
 #### State management
+
 - **TanStack Query 5** - Server state caching and synchronization
 - **Zustand** - Client state management with persistence
 - **React Context** - Language state management
 
 #### Data validation
+
 - **Valibot** - Lightweight data validation (Zod alternative)
 - **React Hook Form** - Form handling with validation
 
 #### Testing
+
 - **Vitest** - Unit and integration testing (100% coverage required)
 - **Testing Library** - React component testing
 - **Playwright** - End-to-end testing
 - **MSW** - API mocking for development and tests
 
 #### Development tools
+
 - **IndexedDB** (via Dexie.js) - Client-side data persistence
 - **pnpm** - Package manager
 - **GitHub Actions** - CI/CD pipeline (planned)
@@ -81,107 +90,112 @@ Create a modern, interactive language learning platform focused on Greek languag
 #### ✅ Implemented features
 
 1. **Homepage with settings**
-   - Theme switcher (light/dark mode)
-   - UI language selector (Greek/Russian/English)
-   - User language selector (for exercise hints)
-   - Navigation to main sections
+    - Theme switcher (light/dark mode)
+    - UI language selector (Greek/Russian/English)
+    - User language selector (for exercise hints)
+    - Navigation to main sections
 
 2. **Adaptive header navigation**
-   - Desktop: full horizontal navigation
-   - Mobile: burger menu with dropdown
-   - Conditional display (hidden on exercise pages)
-   - Compact settings controls
+    - Desktop: full horizontal navigation
+    - Mobile: burger menu with dropdown
+    - Conditional display (hidden on exercise pages)
+    - Compact settings controls
 
 3. **Exercise library**
-   - Browse available exercises with metadata
-   - Filter by tags, difficulty level
-   - Search functionality
-   - Exercise statistics display
+    - Browse available exercises with metadata
+    - Filter by tags, difficulty level
+    - Search functionality
+    - Exercise statistics display
 
 4. **Word-form exercises**
-   - Text input with real-time validation
-   - Multiple correct answers support
-   - Greek text normalization and comparison
-   - Visual feedback (green/red pulse effects)
-   - Adaptive hint system (hover/tap for translations)
-   - Progress tracking within exercises
-   - Auto-advance settings (configurable)
-   - Exercise completion statistics
+    - Text input with real-time validation
+    - Multiple correct answers support
+    - Greek text normalization and comparison
+    - Visual feedback (green/red pulse effects)
+    - Adaptive hint system (hover/tap for translations)
+    - Progress tracking within exercises
+    - Auto-advance settings (configurable)
+    - Exercise completion statistics
 
 5. **Internationalization system**
-   - Three-language support (Greek, Russian, English)
-   - API-driven translation loading
-   - Fallback translation system
-   - Real-time language switching
-   - Dual language support (UI + user language)
+    - Three-language support (Greek, Russian, English)
+    - API-driven translation loading
+    - Fallback translation system
+    - Real-time language switching
+    - Dual language support (UI + user language)
 
 6. **Data management**
-   - JSON-based exercise configuration
-   - MSW API mocking for development
-   - TanStack Query caching (30-minute stale time)
-   - Valibot schema validation
-   - Settings persistence in localStorage
+    - JSON-based exercise configuration
+    - MSW API mocking for development
+    - TanStack Query caching (30-minute stale time)
+    - Valibot schema validation
+    - Settings persistence in localStorage
 
 ### 🔄 Planned features (Roadmap)
 
 #### Phase 2 (Next)
+
 1. **Additional word-form exercises**
-   - Greek pronouns practice
-   - Verb έχω (to have) conjugation
-   - More irregular verbs
+    - Greek pronouns practice
+    - Verb έχω (to have) conjugation
+    - More irregular verbs
 
 2. **Enhanced progress tracking**
-   - Cross-session progress persistence
-   - User statistics and analytics
-   - Achievement system
+    - Cross-session progress persistence
+    - User statistics and analytics
+    - Achievement system
 
 3. **Exercise improvements**
-   - Audio pronunciation support
-   - Image context for vocabulary
-   - Customizable difficulty levels
+    - Audio pronunciation support
+    - Image context for vocabulary
+    - Customizable difficulty levels
 
 #### Phase 3 (Medium term)
+
 1. **New exercise types**
-   - **Translation exercises**: Greek ↔ English/Russian
-   - **Flashcards**: Vocabulary memorization
-   - **Multiple choice tests**: Grammar and vocabulary
+    - **Translation exercises**: Greek ↔ English/Russian
+    - **Flashcards**: Vocabulary memorization
+    - **Multiple choice tests**: Grammar and vocabulary
 
 2. **Exercise builder**
-   - Visual JSON editor for creating exercises
-   - Import/export exercise packages
-   - Exercise validation and preview
+    - Visual JSON editor for creating exercises
+    - Import/export exercise packages
+    - Exercise validation and preview
 
 3. **Social features**
-   - Exercise sharing via URL
-   - Community exercise library
-   - Progress comparison
+    - Exercise sharing via URL
+    - Community exercise library
+    - Progress comparison
 
 #### Phase 4 (Long term)
+
 1. **PWA features**
-   - Service Worker for offline usage
-   - Web App Manifest for installation
-   - Background sync for progress
+    - Service Worker for offline usage
+    - Web App Manifest for installation
+    - Background sync for progress
 
 2. **Advanced features**
-   - Spaced repetition algorithm
-   - Adaptive difficulty adjustment
-   - Voice recognition for pronunciation
+    - Spaced repetition algorithm
+    - Adaptive difficulty adjustment
+    - Voice recognition for pronunciation
 
 3. **Platform expansion**
-   - Multiple language support (beyond Greek)
-   - Teacher dashboard
-   - Learning path recommendations
+    - Multiple language support (beyond Greek)
+    - Teacher dashboard
+    - Learning path recommendations
 
 ## 📱 User experience design
 
 ### Interface languages
 
 **UI Languages** (interface elements):
+
 - Greek (primary)
 - Russian
 - English
 
 **User Languages** (exercise hints and translations):
+
 - Greek
 - Russian
 - English
@@ -189,16 +203,19 @@ Create a modern, interactive language learning platform focused on Greek languag
 ### Responsive design
 
 #### Breakpoints
+
 - **Mobile**: < 768px
 - **Tablet**: 768px - 1024px
 - **Desktop**: > 1024px
 
 #### Navigation patterns
+
 - **Desktop**: Horizontal header with full navigation
 - **Mobile**: Collapsible burger menu
 - **Exercise pages**: Minimal UI for focus
 
 #### Typography
+
 - **Font**: Inter (preloaded for performance)
 - **Sizes**: Responsive scaling (sm/base/lg/xl)
 - **Greek text**: Proper Unicode support with tone handling
@@ -219,46 +236,46 @@ Create a modern, interactive language learning platform focused on Greek languag
 
 ```typescript
 interface WordFormExercise {
-  // Metadata
-  enabled: boolean
-  id: string
-  type: 'word-form'
-  title: string
-  titleI18n: Record<Language, string>
-  description: string
-  descriptionI18n: Record<Language, string>
+    // Metadata
+    enabled: boolean
+    id: string
+    type: 'word-form'
+    title: string
+    titleI18n: Record<Language, string>
+    description: string
+    descriptionI18n: Record<Language, string>
 
-  // Classification
-  tags: string[]
-  difficulty: 'beginner' | 'intermediate' | 'advanced'
-  estimatedTimeMinutes: number
+    // Classification
+    tags: string[]
+    difficulty: 'beginner' | 'intermediate' | 'advanced'
+    estimatedTimeMinutes: number
 
-  // Configuration
-  settings: ExerciseSettings
-  blocks: WordFormBlock[]
+    // Configuration
+    settings: ExerciseSettings
+    blocks: WordFormBlock[]
 }
 
 interface ExerciseSettings {
-  autoAdvance: boolean
-  autoAdvanceDelayMs: number
-  allowSkip: boolean
-  shuffleCases: boolean
+    autoAdvance: boolean
+    autoAdvanceDelayMs: number
+    allowSkip: boolean
+    shuffleCases: boolean
 }
 
 interface WordFormBlock {
-  id: string
-  name: string                              // Greek name
-  nameHintI18n: Record<Language, string>    // Translated hints
-  cases: WordFormCase[]
+    id: string
+    name: string                              // Greek name
+    nameHintI18n: Record<Language, string>    // Translated hints
+    cases: WordFormCase[]
 }
 
 interface WordFormCase {
-  id: string
-  prompt: string                            // Greek prompt
-  promptHintI18n: Record<Language, string>  // Translated prompts
-  correct: string[]                         // Acceptable answers
-  hint?: string                             // Optional Greek hint
-  hintI18n?: Record<Language, string>       // Optional translated hints
+    id: string
+    prompt: string                            // Greek prompt
+    promptHintI18n: Record<Language, string>  // Translated prompts
+    correct: string[]                         // Acceptable answers
+    hint?: string                             // Optional Greek hint
+    hintI18n?: Record<Language, string>       // Optional translated hints
 }
 ```
 
@@ -268,12 +285,16 @@ interface WordFormCase {
 
 ```typescript
 // Exercise endpoints
-GET /api/exercises           // Exercise metadata list
-GET /api/exercises/:id       // Specific exercise data
+GET / api / exercises           // Exercise metadata list
+GET / api / exercises /
+:
+id       // Specific exercise data
 
 // Translation endpoints
-GET /api/texts/common        // Translation keys
-GET /api/translations/:lang  // Localized strings
+GET / api / texts / common        // Translation keys
+GET / api / translations /
+:
+lang  // Localized strings
 ```
 
 #### Response formats
@@ -281,19 +302,19 @@ GET /api/translations/:lang  // Localized strings
 ```typescript
 // Exercise metadata
 interface ExerciseMetadata {
-  id: string
-  title: string
-  titleI18n: Record<Language, string>
-  tags: string[]
-  difficulty: string
-  estimatedTimeMinutes: number
-  totalBlocks: number
-  totalCases: number
+    id: string
+    title: string
+    titleI18n: Record<Language, string>
+    tags: string[]
+    difficulty: string
+    estimatedTimeMinutes: number
+    totalBlocks: number
+    totalCases: number
 }
 
 // Translation data
 interface TranslationData {
-  [key: string]: string
+    [key: string]: string
 }
 ```
 
@@ -347,16 +368,19 @@ App (Root)
 ### Component categories
 
 #### Layout components
+
 - Application structure and navigation
 - Responsive design patterns
 - Conditional rendering based on routes
 
 #### UI components
+
 - Reusable interface elements
 - Consistent styling and behavior
 - Accessibility features
 
 #### Exercise components
+
 - Shared exercise infrastructure
 - Type-specific implementations
 - State management and data flow
@@ -375,16 +399,17 @@ App (Root)
 
 ```typescript
 interface SettingsState {
-  theme: 'light' | 'dark'
-  uiLanguage: 'el' | 'ru' | 'en'
-  userLanguage: 'el' | 'ru' | 'en'
-  setTheme: (theme: Theme) => void
-  setUiLanguage: (lang: Language) => void
-  setUserLanguage: (lang: Language) => void
+    theme: 'light' | 'dark'
+    uiLanguage: 'el' | 'ru' | 'en'
+    userLanguage: 'el' | 'ru' | 'en'
+    setTheme: (theme: Theme) => void
+    setUiLanguage: (lang: Language) => void
+    setUserLanguage: (lang: Language) => void
 }
 ```
 
 **Features**:
+
 - Automatic localStorage persistence
 - Type-safe actions
 - Reactive updates across components
@@ -392,11 +417,13 @@ interface SettingsState {
 ### Server state (TanStack Query)
 
 **Queries**:
+
 - `useExercises()` - Exercise metadata list
 - `useExercise(id)` - Specific exercise data
 - `useI18n()` - Translation data
 
 **Caching strategy**:
+
 - 30-minute stale time for exercises
 - 30-minute stale time for translations
 - Automatic background refetching
@@ -418,35 +445,38 @@ interface SettingsState {
 ### Testing levels
 
 #### Unit tests (Vitest + Testing Library)
+
 ```typescript
 // Component testing
 describe('WordFormExercise', () => {
-  it('validates Greek text input correctly', () => {
-    expect(normalizeGreekText('είμαι')).toBe('ειμαι')
-  })
+    it('validates Greek text input correctly', () => {
+        expect(normalizeGreekText('είμαι')).toBe('ειμαι')
+    })
 })
 
 // Hook testing
 describe('useExercise', () => {
-  it('loads exercise data correctly', async () => {
-    const { result } = renderHook(() => useExercise('verbs-be'))
-    expect(result.current.data).toBeDefined()
-  })
+    it('loads exercise data correctly', async () => {
+        const {result} = renderHook(() => useExercise('verbs-be'))
+        expect(result.current.data).toBeDefined()
+    })
 })
 ```
 
 #### Integration tests
+
 - Full component interaction flows
 - API integration with MSW
 - State management across components
 
 #### End-to-end tests (Playwright)
+
 ```typescript
-test('complete exercise flow', async ({ page }) => {
-  await page.goto('/exercise/verbs-be')
-  await page.fill('[role="textbox"]', 'είμαι')
-  await page.click('text=Check')
-  await expect(page.locator('.pulse-success')).toBeVisible()
+test('complete exercise flow', async ({page}) => {
+    await page.goto('/exercise/verbs-be')
+    await page.fill('[role="textbox"]', 'είμαι')
+    await page.click('text=Check')
+    await expect(page.locator('.pulse-success')).toBeVisible()
 })
 ```
 
@@ -473,22 +503,25 @@ test('complete exercise flow', async ({ page }) => {
 ### Optimization strategies
 
 #### Code splitting
+
 ```typescript
 // Route-level splitting
 const ExercisePage = lazy(() => import('./pages/ExercisePage'))
 
 // Component-level splitting
 const WordFormExercise = lazy(() =>
-  import('./components/exercises/word-form/WordFormExercise')
+    import('./components/exercises/word-form/WordFormExercise')
 )
 ```
 
 #### Caching
+
 - TanStack Query for API responses
 - Service Worker for static assets (planned)
 - localStorage for user settings
 
 #### Bundle optimization
+
 - Tree shaking for unused code
 - Image optimization with proper formats
 - Font preloading for critical text
@@ -518,6 +551,7 @@ const WordFormExercise = lazy(() =>
 ### Built-in analytics
 
 **Exercise metrics**:
+
 - Questions answered correctly/incorrectly
 - Time spent per question/exercise
 - Hints accessed per question
@@ -525,6 +559,7 @@ const WordFormExercise = lazy(() =>
 - User accuracy over time
 
 **User behavior**:
+
 - Language preference patterns
 - Exercise type preferences
 - Session duration and frequency

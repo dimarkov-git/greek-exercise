@@ -26,9 +26,9 @@ App (Root)
 **Purpose**: Application structure and navigation
 
 - **Header.tsx** - Main application header with adaptive design
-  - **HeaderLogo.tsx** - Custom logo with Greek letters (ΕΛ)
-  - **HeaderNavigation.tsx** - Responsive navigation menu
-  - **HeaderSettings.tsx** - Compact settings controls
+    - **HeaderLogo.tsx** - Custom logo with Greek letters (ΕΛ)
+    - **HeaderNavigation.tsx** - Responsive navigation menu
+    - **HeaderSettings.tsx** - Compact settings controls
 - **Footer.tsx** - Application footer with links and copyright
 - **MainNavigation.tsx** - Homepage navigation cards
 
@@ -84,21 +84,21 @@ The application uses composition patterns throughout:
 ```tsx
 // Layout composition
 <ExerciseLayout>
-  <ExerciseHeader>
-    <PulseEffect variant="success" />
-  </ExerciseHeader>
-  <WordFormInput />
-  <WordFormFeedback />
+    <ExerciseHeader>
+        <PulseEffect variant="success"/>
+    </ExerciseHeader>
+    <WordFormInput/>
+    <WordFormFeedback/>
 </ExerciseLayout>
 
 // Header composition
 <Header>
-  <HeaderLogo />
-  <HeaderNavigation />
-  <HeaderSettings>
-    <CompactThemeToggle />
-    <LanguageDropdown />
-  </HeaderSettings>
+    <HeaderLogo/>
+    <HeaderNavigation/>
+    <HeaderSettings>
+        <CompactThemeToggle/>
+        <LanguageDropdown/>
+    </HeaderSettings>
 </Header>
 ```
 
@@ -122,7 +122,7 @@ Used for cross-component settings:
 
 ```tsx
 // Settings store
-const { theme, uiLanguage, userLanguage } = useSettingsStore()
+const {theme, uiLanguage, userLanguage} = useSettingsStore()
 ```
 
 #### Server state (TanStack Query)
@@ -131,10 +131,10 @@ Used for API data management:
 
 ```tsx
 // Exercise data
-const { data: exercise, isLoading } = useExercise(exerciseId)
+const {data: exercise, isLoading} = useExercise(exerciseId)
 
 // Translation data
-const { t } = useI18n()
+const {t} = useI18n()
 ```
 
 ### Component communication patterns
@@ -143,8 +143,8 @@ const { t } = useI18n()
 
 ```tsx
 <WordFormExercise
-  exercise={exercise}
-  onComplete={handleComplete}
+    exercise={exercise}
+    onComplete={handleComplete}
 />
 ```
 
@@ -153,7 +153,7 @@ const { t } = useI18n()
 ```tsx
 // Language context
 <LanguageProvider>
-  <App />
+    <App/>
 </LanguageProvider>
 ```
 
@@ -165,7 +165,7 @@ const pulseState = usePulseEffect()
 const hintState = useHintState()
 
 // Data fetching hooks
-const { data: exercises } = useExercises()
+const {data: exercises} = useExercises()
 ```
 
 ## 📱 Responsive design patterns
@@ -177,16 +177,16 @@ The header component demonstrates adaptive design:
 ```tsx
 // Desktop layout
 <div className="hidden md:flex items-center space-x-4">
-  <HeaderNavigation />
-  <HeaderSettings />
+    <HeaderNavigation/>
+    <HeaderSettings/>
 </div>
 
 // Mobile layout
 <div className="md:hidden">
-  <button onClick={toggleMenu}>
-    {/* Burger menu */}
-  </button>
-  {isMenuOpen && <MobileMenu />}
+    <button onClick={toggleMenu}>
+        {/* Burger menu */}
+    </button>
+    {isMenuOpen && <MobileMenu/>}
 </div>
 ```
 
@@ -209,12 +209,12 @@ Consistent animation patterns across components:
 
 ```tsx
 <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  exit={{ opacity: 0, y: -20 }}
-  transition={{ duration: 0.3 }}
+    initial={{opacity: 0, y: 20}}
+    animate={{opacity: 1, y: 0}}
+    exit={{opacity: 0, y: -20}}
+    transition={{duration: 0.3}}
 >
-  {children}
+    {children}
 </motion.div>
 ```
 
@@ -222,11 +222,11 @@ Consistent animation patterns across components:
 
 ```tsx
 <motion.button
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.95 }}
-  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+    whileHover={{scale: 1.05}}
+    whileTap={{scale: 0.95}}
+    transition={{type: "spring", stiffness: 400, damping: 17}}
 >
-  Click me
+    Click me
 </motion.button>
 ```
 
@@ -234,12 +234,12 @@ Consistent animation patterns across components:
 
 ```tsx
 <motion.div
-  animate={pulseState.isActive ? {
-    boxShadow: [`0 0 0 0 ${color}40`, `0 0 0 20px ${color}00`]
-  } : {}}
-  transition={{ duration: 0.6 }}
+    animate={pulseState.isActive ? {
+        boxShadow: [`0 0 0 0 ${color}40`, `0 0 0 20px ${color}00`]
+    } : {}}
+    transition={{duration: 0.6}}
 >
-  {children}
+    {children}
 </motion.div>
 ```
 
@@ -261,14 +261,14 @@ The app supports dual language systems:
 #### UI Language (interface)
 
 ```tsx
-const { t } = useI18n() // Uses uiLanguage from settings
+const {t} = useI18n() // Uses uiLanguage from settings
 return <button>{t('exercise.start')}</button>
 ```
 
 #### User Language (exercise hints)
 
 ```tsx
-const { userLanguage } = useSettingsStore()
+const {userLanguage} = useSettingsStore()
 const hint = block.nameHintI18n[userLanguage]
 ```
 
@@ -279,14 +279,14 @@ Adaptive hint display based on device capabilities:
 ```tsx
 // Desktop: hover to show
 <div onMouseEnter={showHint} onMouseLeave={hideHint}>
-  {content}
-  {showHint && <Tooltip>{hint}</Tooltip>}
+    {content}
+    {showHint && <Tooltip>{hint}</Tooltip>}
 </div>
 
 // Mobile: tap to toggle
 <div onClick={toggleHint}>
-  {content}
-  {showHint && <HintBubble>{hint}</HintBubble>}
+    {content}
+    {showHint && <HintBubble>{hint}</HintBubble>}
 </div>
 ```
 
@@ -298,13 +298,13 @@ Adaptive hint display based on device capabilities:
 
 ```tsx
 interface ExerciseHeaderProps {
-  title: string
-  progress: {
-    current: number
-    total: number
-  }
-  onSkip?: () => void
-  onRestart: () => void
+    title: string
+    progress: {
+        current: number
+        total: number
+    }
+    onSkip?: () => void
+    onRestart: () => void
 }
 ```
 
@@ -312,10 +312,10 @@ interface ExerciseHeaderProps {
 
 ```tsx
 interface NavigationCardProps<T = string> {
-  title: string
-  description: string
-  href: T
-  icon: ReactNode
+    title: string
+    description: string
+    href: T
+    icon: ReactNode
 }
 ```
 
@@ -324,8 +324,8 @@ interface NavigationCardProps<T = string> {
 #### Component-level error boundaries
 
 ```tsx
-<ErrorBoundary fallback={<ExerciseErrorFallback />}>
-  <WordFormExercise exercise={exercise} />
+<ErrorBoundary fallback={<ExerciseErrorFallback/>}>
+    <WordFormExercise exercise={exercise}/>
 </ErrorBoundary>
 ```
 
@@ -342,16 +342,16 @@ const displayText = translations[key] ?? fallbackTexts[key] ?? key
 
 ```tsx
 describe('WordFormExercise', () => {
-  const mockExercise = createMockExercise()
+    const mockExercise = createMockExercise()
 
-  it('renders exercise content', () => {
-    render(<WordFormExercise exercise={mockExercise} />)
-    expect(screen.getByRole('textbox')).toBeInTheDocument()
-  })
+    it('renders exercise content', () => {
+        render(<WordFormExercise exercise={mockExercise}/>)
+        expect(screen.getByRole('textbox')).toBeInTheDocument()
+    })
 
-  it('handles answer submission', async () => {
-    // Test user interactions
-  })
+    it('handles answer submission', async () => {
+        // Test user interactions
+    })
 })
 ```
 
@@ -363,10 +363,14 @@ describe('WordFormExercise', () => {
 // Lazy loading for exercise pages
 const ExercisePage = lazy(() => import('../pages/ExercisePage'))
 
-// Usage with Suspense
-<Suspense fallback={<LoadingSpinner />}>
-  <ExercisePage />
-</Suspense>
+    // Usage with Suspense
+    < Suspense
+fallback = {
+<LoadingSpinner/>
+}>
+<
+ExercisePage / >
+< /Suspense>
 ```
 
 ### Memoization patterns
@@ -374,13 +378,13 @@ const ExercisePage = lazy(() => import('../pages/ExercisePage'))
 ```tsx
 // Expensive calculations
 const normalizedAnswers = useMemo(() =>
-  answers.map(normalizeGreekText),
-  [answers]
+        answers.map(normalizeGreekText),
+    [answers]
 )
 
 // Stable callbacks
 const handleSubmit = useCallback((answer: string) => {
-  validateAnswer(answer)
+    validateAnswer(answer)
 }, [validateAnswer])
 ```
 
@@ -389,7 +393,7 @@ const handleSubmit = useCallback((answer: string) => {
 ```tsx
 // Prevent unnecessary re-renders
 const MemoizedExerciseCard = memo(ExerciseCard, (prev, next) =>
-  prev.exercise.id === next.exercise.id
+    prev.exercise.id === next.exercise.id
 )
 ```
 
