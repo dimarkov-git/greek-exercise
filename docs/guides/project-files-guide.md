@@ -7,24 +7,16 @@ Complete documentation files in the project.
 ### `knip.ts`
 
 **Path:** `/knip.ts`
+
 **Purpose:** Dependency and export checker configuration file for `knip` tool
 
 **Description:**
 Configuration for the `knip` tool that identifies unused dependencies, exports, types, and files in
 JavaScript/TypeScript projects. This JSON file specifies which dependencies should be ignored during analysis.
 
-**Contents:**
-
-- `ignoreDependencies`: Array of packages to ignore during dependency checking
-    - `@vitest/coverage-v8`: Coverage reporting tool (used by test scripts)
-    - `cross-env`: Cross-platform environment variable setting (used in build scripts)
-    - `tailwindcss`: CSS framework (used via Vite plugin and Tailwind config)
-
 **Features:**
 
 - Detects unused dependencies, devDependencies, and exports
-- Built-in support for 100+ tools and frameworks including Vite, React, TypeScript
-- Faster analysis compared to depcheck with better TypeScript support
 
 **Documentation:** [Knip.dev](https://knip.dev)
 
@@ -33,6 +25,7 @@ JavaScript/TypeScript projects. This JSON file specifies which dependencies shou
 ### `.editorconfig`
 
 **Path:** `/.editorconfig`
+
 **Purpose:** Cross-editor code style configuration
 
 **Description:**
@@ -55,6 +48,7 @@ UTF-8 encoding, LF line endings, and tab indentation for TypeScript/JSON files.
 ### `.env.local`
 
 **Path:** `/.env.local`
+
 **Purpose:** Local environment variables (gitignored)
 
 **Description:**
@@ -72,6 +66,7 @@ prevent sharing local configuration.
 ### `.gitignore`
 
 **Path:** `/.gitignore`
+
 **Purpose:** Git ignore patterns for excluding files from version control
 
 **Description:**
@@ -93,6 +88,7 @@ Specifies which files and directories Git should ignore. Organized by categories
 ### `.steiger.config.js`
 
 **Path:** `/.steiger.config.js`
+
 **Purpose:** FSD (Feature-Sliced Design) architecture linter configuration
 
 **Description:**
@@ -123,6 +119,7 @@ projects. Ensures proper layer separation and import restrictions.
 ### `biome.json`
 
 **Path:** `/biome.json`
+
 **Purpose:** Biome code formatter and linter configuration
 
 **Description:**
@@ -151,6 +148,7 @@ code analysis. Replaces ESLint and Prettier with better performance.
 ### `dependency-cruiser.config.cjs`
 
 **Path:** `/dependency-cruiser.config.cjs`
+
 **Purpose:** Architecture dependency validation for FSD layers
 
 **Description:**
@@ -178,6 +176,7 @@ inappropriate layers.
 ### `index.html`
 
 **Path:** `/index.html`
+
 **Purpose:** Main HTML entry point for the application
 
 **Description:**
@@ -206,6 +205,7 @@ PWA support.
 ### `package.json`
 
 **Path:** `/package.json`
+
 **Purpose:** Project metadata, dependencies, and scripts
 
 **Description:**
@@ -252,6 +252,7 @@ manager with strict version enforcement.
 ### `playwright.config.ts`
 
 **Path:** `/playwright.config.ts`
+
 **Purpose:** End-to-end testing configuration
 
 **Description:**
@@ -285,6 +286,7 @@ environments.
 ### `pnpm-lock.yaml`
 
 **Path:** `/pnpm-lock.yaml`
+
 **Purpose:** Dependency lock file for reproducible installs
 
 **Description:**
@@ -311,6 +313,7 @@ dependency trees across environments.
 ### `README.md`
 
 **Path:** `/README.md`
+
 **Purpose:** Primary project documentation
 
 **Description:**
@@ -339,6 +342,7 @@ point for contributors and users.
 ### `rollup-plugin-visualizer.d.ts`
 
 **Path:** `/rollup-plugin-visualizer.d.ts`
+
 **Purpose:** TypeScript type definitions for bundle analyzer
 
 **Description:**
@@ -365,6 +369,7 @@ for build-time bundle visualization.
 ### `tsconfig.app.json`
 
 **Path:** `/tsconfig.app.json`
+
 **Purpose:** TypeScript configuration for application code
 
 **Description:**
@@ -392,6 +397,7 @@ TypeScript project configuration for the main application source code with stric
 ### `tsconfig.json`
 
 **Path:** `/tsconfig.json`
+
 **Purpose:** Root TypeScript configuration with project references
 
 **Description:**
@@ -417,6 +423,7 @@ Root TypeScript configuration using project references for better build performa
 ### `tsconfig.node.json`
 
 **Path:** `/tsconfig.node.json`
+
 **Purpose:** TypeScript configuration for Node.js tooling
 
 **Description:**
@@ -443,6 +450,7 @@ requirements.
 ### `vite.config.ts`
 
 **Path:** `/vite.config.ts`
+
 **Purpose:** Vite build tool configuration
 
 **Description:**

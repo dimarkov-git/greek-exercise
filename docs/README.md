@@ -36,6 +36,7 @@ Step-by-step development instructions:
 - [**Exercise Development**](guides/exercise-development.md) – Creating and configuring exercises
 - [**Testing Guide**](guides/testing-guide.md) – Unit, integration, and E2E testing strategies
 - [**Accessibility Guide**](guides/accessibility.md) – WCAG AA compliance patterns
+- [**Project Files Guide**](guides/project-files-guide.md) – Complete documentation of all configuration files
 
 ### 📋 **Project Documentation**
 
@@ -60,6 +61,7 @@ Core project information and planning:
 | **Optimize performance**     | [Performance Guidelines](architecture/performance.md)    |
 | **Ensure accessibility**     | [Accessibility Guide](guides/accessibility.md)           |
 | **Understand structure**     | [Project Structure](architecture/project-structure.md)   |
+| **Learn config files**       | [Project Files Guide](guides/project-files-guide.md)     |
 | **Plan future work**         | [Development Roadmap](ROADMAP.md)                        |
 
 
