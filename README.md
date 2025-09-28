@@ -90,7 +90,7 @@ pnpm test:e2e:ci  # E2E tests headless
 ```bash
 pnpm lint         # TypeScript + Biome checks
 pnpm format       # Auto-format with Biome
-pnpm depcheck     # Find unused dependencies
+pnpm knip         # Find unused dependencies and exports
 pnpm audit        # Security audit
 ```
 

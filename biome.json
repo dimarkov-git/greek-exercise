@@ -101,7 +101,8 @@
 				"vite.config.ts",
 				"playwright.config.ts",
 				".steiger.config.js",
-				"tailwind.config.js"
+				"tailwind.config.js",
+				"knip.ts"
 			],
 			"linter": {
 				"rules": {
