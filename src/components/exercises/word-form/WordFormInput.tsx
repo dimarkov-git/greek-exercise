@@ -207,12 +207,26 @@ function useWordFormInput({
 	const [isFocused, setIsFocused] = useState(false)
 
 	useEffect(() => {
+		if (!(autoFocus && inputRef.current)) {
+			return
+		}
+
 		if (
-			autoFocus &&
-			inputRef.current &&
-			(status === 'WAITING_INPUT' || status === 'REQUIRE_CORRECTION')
+			status === 'WAITING_INPUT' ||
+			status === 'REQUIRE_CORRECTION' ||
+			status === 'REQUIRE_CONTINUE'
 		) {
-			inputRef.current.focus()
+			const input = inputRef.current
+
+			if (document.activeElement === input) {
+				return
+			}
+
+			requestAnimationFrame(() => {
+				input.focus({preventScroll: true})
+				const valueLength = input.value.length
+				input.setSelectionRange(valueLength, valueLength)
+			})
 		}
 	}, [autoFocus, status])
 
