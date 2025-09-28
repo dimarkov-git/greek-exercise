@@ -74,7 +74,7 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 			transition={{delay: index * 0.1, duration: 0.4}}
 		>
 			<div className='p-6'>
-				<div className='mb-4 flex items-start justify-between'>
+				<div className='mb-4 flex items-start justify-between gap-4'>
 					<div className='flex-1'>
 						<h3 className='mb-2 font-semibold text-gray-900 text-lg dark:text-white'>
 							{exercise.titleI18n?.[uiLanguage] || exercise.title}
@@ -83,11 +83,20 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 							{exercise.descriptionI18n?.[uiLanguage] || exercise.description}
 						</p>
 					</div>
-					<span
-						className={`ml-3 rounded-full px-2 py-1 font-medium text-xs ${getDifficultyColor(exercise.difficulty)}`}
-					>
-						{getDifficultyLabel(exercise.difficulty, uiLanguage)}
-					</span>
+					<div className='flex flex-col items-end gap-2'>
+						{exercise.source === 'custom' && (
+							<span className='rounded-full border border-purple-400 border-dashed px-3 py-1 text-purple-600 text-xs uppercase tracking-wide dark:border-purple-500 dark:text-purple-300'>
+								{t('builder.customBadge')}
+							</span>
+						)}
+						<span
+							className={`ml-3 rounded-full px-2 py-1 font-medium text-xs ${getDifficultyColor(
+								exercise.difficulty
+							)}`}
+						>
+							{getDifficultyLabel(exercise.difficulty, uiLanguage)}
+						</span>
+					</div>
 				</div>
 
 				{exercise.tags.length > 0 && (

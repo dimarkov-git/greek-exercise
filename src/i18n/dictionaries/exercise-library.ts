@@ -36,7 +36,8 @@ export const exerciseLibraryTranslations = createTranslationDictionary([
 	'difficulty.b1',
 	'difficulty.b2',
 	'difficulty.c1',
-	'difficulty.c2'
+	'difficulty.c2',
+	'builder.customBadge'
 ] as const)
 
 export type ExerciseLibraryTranslationKey = DictionaryKeys<

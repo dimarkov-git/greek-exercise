@@ -1,12 +1,16 @@
 import type {ExerciseMetadata, WordFormExercise} from '@/types/exercises'
 import type {Language} from '@/types/settings'
 
+export type ExerciseSource = 'builtin' | 'custom'
+
 export interface ExerciseSummary extends ExerciseMetadata {
 	/**
 	 * Languages available for this exercise. Currently always contains only the
 	 * exercise's primary language as defined in the `language` property.
 	 */
 	availableLanguages: Language[]
+	/** Indicates whether the exercise comes from built-in content or user library */
+	source?: ExerciseSource
 }
 
 export interface ExerciseLibraryFilterOptions {

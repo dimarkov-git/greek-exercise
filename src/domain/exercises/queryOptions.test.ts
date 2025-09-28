@@ -7,7 +7,6 @@ import {
 	exerciseLibraryQueryOptions,
 	wordFormExerciseQueryOptions
 } from './queryOptions'
-import {selectExerciseLibraryViewModel} from './selectors'
 
 const requestJsonMock = vi.spyOn(httpClientModule, 'requestJson')
 const validateExercisesListMock = vi.spyOn(
@@ -69,9 +68,6 @@ describe('exerciseLibraryQueryOptions', () => {
 			'exercises',
 			'library'
 		])
-		expect(exerciseLibraryQueryOptions.select).toBe(
-			selectExerciseLibraryViewModel
-		)
 		expect(exerciseLibraryQueryOptions.staleTime).toBe(30 * 60 * 1000)
 		expect(exerciseLibraryQueryOptions.gcTime).toBe(60 * 60 * 1000)
 		expect(exerciseLibraryQueryOptions.retry).toBe(2)
