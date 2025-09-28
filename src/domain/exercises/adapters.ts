@@ -15,6 +15,7 @@ import {DEFAULT_EXERCISE_SETTINGS} from '@/types/exercises'
 import type {Language} from '@/types/settings'
 import type {
 	ExerciseLibraryViewModel,
+	ExerciseSource,
 	ExerciseSummary,
 	WordFormExerciseWithDefaults
 } from './types'
@@ -60,7 +61,8 @@ function normalizeI18nRecord(
 }
 
 export function toExerciseSummary(
-	metadata: ExerciseMetadataDto
+	metadata: ExerciseMetadataDto,
+	source: ExerciseSource = 'builtin'
 ): ExerciseSummary {
 	const {
 		titleI18n: rawTitleI18n,
@@ -108,7 +110,8 @@ export function toExerciseSummary(
 		tags: sortTags(metadata.tags),
 		availableLanguages: Array.from(translationLanguages).sort(
 			(a, b) => LANGUAGE_ORDER.indexOf(a) - LANGUAGE_ORDER.indexOf(b)
-		)
+		),
+		source
 	}
 
 	return summary as ExerciseSummary
@@ -151,7 +154,7 @@ function collectUniqueLanguages(exercises: ExerciseSummary[]): Language[] {
 export function createExerciseLibraryViewModel(
 	metadataList: ExercisesListDto
 ): ExerciseLibraryViewModel {
-	const exercises = metadataList.map(toExerciseSummary)
+	const exercises = metadataList.map(metadata => toExerciseSummary(metadata))
 	const enabled = exercises.filter(exercise => exercise.enabled).length
 
 	return {

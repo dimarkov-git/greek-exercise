@@ -27,6 +27,7 @@ const mockT = vi.fn((key: string) => {
 		clearFilters: 'Clear filters',
 		startExercise: 'Start Exercise',
 		learn: 'Learn',
+		'builder.customBadge': 'Custom',
 		'ui.searchEmoji': '🔍',
 		'ui.documentEmoji': '📄',
 		'ui.booksEmoji': '📚',
@@ -66,6 +67,7 @@ const createMockExercise = (
 	totalCases: 12,
 	enabled: true,
 	availableLanguages: ['en', 'el', 'ru'],
+	source: 'builtin',
 	...overrides
 })
 
@@ -156,6 +158,18 @@ describe('ExerciseGrid', () => {
 			expect(learnButtons[0]).toHaveAttribute('href', '/learn/ex-1')
 			expect(learnButtons[1]).toHaveAttribute('href', '/learn/ex-2')
 			expect(learnButtons[2]).toHaveAttribute('href', '/learn/ex-3')
+		})
+
+		it('renders custom badge for user-created exercises', () => {
+			const customExercise = createMockExercise({
+				id: 'custom-1',
+				title: 'Custom Exercise',
+				source: 'custom'
+			})
+
+			render(<ExerciseGrid {...defaultProps} exercises={[customExercise]} />)
+
+			expect(screen.getByText('Custom')).toBeInTheDocument()
 		})
 	})
 

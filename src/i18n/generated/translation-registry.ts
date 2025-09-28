@@ -101,6 +101,46 @@ export const translationRegistry = {
 	'exercise.yourAnswerIs': {fallback: 'Your answer:'},
 	exerciseBuilder: {fallback: 'Exercise Builder'},
 	exerciseBuilderDesc: {fallback: 'Create your own exercises'},
+	'builder.customBadge': {fallback: 'My exercise'},
+	'builder.deleteButton': {fallback: 'Delete'},
+	'builder.jsonEditorHelp': {
+		fallback:
+			'Edit the JSON structure below. All fields must match the documented schema.'
+	},
+	'builder.jsonEditorTitle': {fallback: 'Exercise JSON'},
+	'builder.lastUpdated': {fallback: 'Updated {date}'},
+	'builder.libraryInfo': {
+		fallback:
+			'Saved exercises stay in your browser and appear in the library alongside built-in content.'
+	},
+	'builder.loadButton': {fallback: 'Load'},
+	'builder.noSavedExercises': {fallback: 'No saved exercises yet'},
+	'builder.openLibrary': {fallback: 'Open library'},
+	'builder.parseError': {fallback: 'Parse error: {message}'},
+	'builder.formatJson': {fallback: 'Format JSON'},
+	'builder.resetTemplate': {fallback: 'Reset template'},
+	'builder.previewTitle': {fallback: 'Table preview'},
+	'builder.previewUnavailable': {fallback: 'Preview unavailable'},
+	'builder.previewUnavailableHint': {
+		fallback: 'Fix validation errors to see a structured preview.'
+	},
+	'builder.saveError': {fallback: 'Could not save exercise'},
+	'builder.saveSuccess': {fallback: 'Exercise saved'},
+	'builder.saveToLibrary': {fallback: 'Save to library'},
+	'builder.savedExercisesTitle': {fallback: 'My exercises'},
+	'builder.typeHelp': {
+		fallback: 'Choose the exercise type to load an editable template.'
+	},
+	'builder.typeSectionTitle': {fallback: 'Exercise setup'},
+	'builder.validationEmpty': {fallback: 'Provide exercise JSON to validate'},
+	'builder.validationError': {fallback: 'Errors'},
+	'builder.validationHint': {
+		fallback: 'Everything looks correct. You can save the exercise.'
+	},
+	'builder.validationUnknown': {fallback: 'Unknown validation error'},
+	'builder.validationSuccess': {fallback: 'Valid'},
+	'builder.validationTitle': {fallback: 'Validation'},
+	'builder.wordFormType': {fallback: 'Word form exercise'},
 	exerciseCount: {fallback: 'Available exercises: {filteredCount}'},
 	exerciseLibrary: {fallback: 'Exercise Library'},
 	exerciseLibraryDesc: {fallback: 'Browse and execute available exercises'},

@@ -158,6 +158,15 @@ Each case represents one question-answer pair:
 2. **Block progression**: Sequential by default, randomized if `shuffleCases: true`
 3. **Question display**: Shows current question with available hints
 4. **Answer validation**: Compares user input against all values in `correct` array
+
+## Exercise builder tooling
+
+The in-app Exercise Builder provides a guided experience for authoring exercises that match this specification:
+
+- **Dual-panel layout**: On large screens, the JSON editor and validation panels are displayed side by side for better use of horizontal space while maintaining a stacked layout on mobile.
+- **Live preview**: The table preview reuses the same component as the Learn page so authors can review the exercise structure without leaving the builder.
+- **Local library integration**: Saved exercises are persisted in the browser and automatically appear in the Exercise Library, Learn, and execution pages via the shared query hooks.
+- **Schema reference**: Refer back to this document for the full JSON contract when defining custom exercises.
 5. **Feedback display**:
     - Correct: Green pulse, auto-advance if enabled
     - Incorrect: Red pulse, show correct answer briefly

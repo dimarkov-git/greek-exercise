@@ -1,21 +1,57 @@
+import userEvent from '@testing-library/user-event'
 import type React from 'react'
-import {describe, expect, it, vi} from 'vitest'
-import {render, screen} from '@/test-utils'
+import {beforeEach, describe, expect, it, vi} from 'vitest'
+import {useCustomExercisesStore} from '@/stores/customExercises'
+import {act, render, screen, waitFor} from '@/test-utils'
 import {ExerciseBuilder} from './ExerciseBuilder'
 
-// Mock dependencies
+const translations: Record<string, string> = {
+	exerciseBuilder: 'Exercise Builder',
+	exerciseBuilderDesc: 'Create custom Greek learning exercises',
+	'ui.toolsEmoji': '🛠️',
+	'ui.backToHome': '← Back to Home',
+	'builder.libraryInfo':
+		'Saved exercises stay locally and appear in the library.',
+	'builder.openLibrary': 'Open library',
+	'builder.typeSectionTitle': 'Exercise setup',
+	'builder.typeHelp': 'Choose the exercise type to load a template.',
+	'builder.wordFormType': 'Word form exercise',
+	'builder.jsonEditorHelp': 'Edit the JSON structure below.',
+	'builder.jsonEditorTitle': 'Exercise JSON',
+	'builder.formatJson': 'Format JSON',
+	'builder.resetTemplate': 'Reset template',
+	'builder.saveToLibrary': 'Save to library',
+	'builder.saveSuccess': 'Exercise saved',
+	'builder.saveError': 'Could not save exercise',
+	'builder.validationTitle': 'Validation',
+	'builder.validationError': 'Errors',
+	'builder.validationSuccess': 'Valid',
+	'builder.validationHint': 'Everything looks correct.',
+	'builder.validationUnknown': 'Unknown validation error',
+	'builder.validationEmpty': 'Provide exercise JSON to validate',
+	'builder.parseError': 'Parse error: {message}',
+	'builder.previewTitle': 'Table preview',
+	'builder.previewUnavailable': 'Preview unavailable',
+	'builder.previewUnavailableHint': 'Fix errors to see the preview.',
+	'builder.savedExercisesTitle': 'My exercises',
+	'builder.noSavedExercises': 'You have no saved exercises yet',
+	'builder.loadButton': 'Load',
+	'builder.deleteButton': 'Delete',
+	'builder.lastUpdated': 'Updated {date}',
+	'ui.hashSymbol': '#'
+}
+
+const translate = (key: string) => translations[key] ?? key
+
 vi.mock('@/hooks/useTranslations', () => ({
 	useTranslations: vi.fn(() => ({
-		t: (key: string) => {
-			const translations: Record<string, string> = {
-				exerciseBuilder: 'Exercise Builder',
-				exerciseBuilderDesc: 'Create custom Greek learning exercises',
-				'ui.toolsEmoji': '🛠️',
-				'ui.comingSoon': 'Coming Soon',
-				comingSoonMessage: 'This feature is coming soon'
-			}
-			return translations[key] || key
-		}
+		t: translate,
+		translations: {},
+		currentLanguage: 'en',
+		isLoading: false,
+		error: null,
+		missingKeys: [],
+		status: 'complete'
 	}))
 }))
 
@@ -25,23 +61,44 @@ vi.mock('@/components/Head', () => ({
 	)
 }))
 
+vi.mock('@/components/learn/TableView', () => ({
+	TableView: ({exercise}: {exercise: {title: string}}) => (
+		<div data-testid='table-view'>Preview: {exercise.title}</div>
+	)
+}))
+
 type MockMotionDivProps = {
 	children: React.ReactNode
 	className?: string
 } & Record<string, unknown>
 
+function mockMotionComponent(props: MockMotionDivProps) {
+	const {children, className, ...rest} = props
+	return (
+		<div className={className} {...rest}>
+			{children}
+		</div>
+	)
+}
+
 vi.mock('framer-motion', () => ({
-	motion: {
-		div: ({children, className, ...props}: MockMotionDivProps) => (
-			<div className={className} {...props}>
-				{children}
-			</div>
-		)
-	}
+	motion: new Proxy(
+		{},
+		{
+			get: () => mockMotionComponent
+		}
+	)
 }))
 
 describe('ExerciseBuilder', () => {
-	it('renders the page title and description', () => {
+	beforeEach(() => {
+		localStorage.clear()
+		act(() => {
+			useCustomExercisesStore.setState({records: {}})
+		})
+	})
+
+	it('renders hero content with title and description', () => {
 		render(<ExerciseBuilder />)
 
 		expect(
@@ -50,45 +107,87 @@ describe('ExerciseBuilder', () => {
 		expect(
 			screen.getByText('Create custom Greek learning exercises')
 		).toBeInTheDocument()
-	})
-
-	it('sets the correct page title', () => {
-		render(<ExerciseBuilder />)
-
-		const head = screen.getByTestId('head')
-		expect(head).toHaveAttribute('data-title', 'Exercise Builder')
-	})
-
-	it('displays the tools emoji', () => {
-		render(<ExerciseBuilder />)
-
 		expect(screen.getByText('🛠️')).toBeInTheDocument()
 	})
 
-	it('shows coming soon message', () => {
+	it('sets the correct document title', () => {
 		render(<ExerciseBuilder />)
 
-		expect(screen.getByText('comingSoon')).toBeInTheDocument()
+		expect(screen.getByTestId('head')).toHaveAttribute(
+			'data-title',
+			'Exercise Builder'
+		)
 	})
 
-	it('has a link back to home', () => {
+	it('shows the JSON editor prefilled with the template', () => {
 		render(<ExerciseBuilder />)
 
-		const homeLink = screen.getByRole('link')
-		expect(homeLink).toBeInTheDocument()
-		expect(homeLink).toHaveAttribute('href', '/')
-		expect(homeLink).toHaveTextContent('ui.backToHome')
+		const editor = screen.getByLabelText('Exercise JSON') as HTMLTextAreaElement
+		expect(editor.value).toContain('"id": "custom-verb-eimai"')
 	})
 
-	it('applies correct styling classes', () => {
+	it('shows validation error when JSON is cleared', async () => {
+		const user = userEvent.setup()
 		render(<ExerciseBuilder />)
 
-		// Check main container has correct classes
-		const mainContainer = screen.getByRole('heading').closest('div')
-		expect(mainContainer).toHaveClass('text-center')
+		const editor = screen.getByLabelText('Exercise JSON')
+		await user.clear(editor)
+
+		await waitFor(() => {
+			expect(
+				screen.getByText('Provide exercise JSON to validate')
+			).toBeInTheDocument()
+		})
 	})
 
-	it('renders without errors', () => {
-		expect(() => render(<ExerciseBuilder />)).not.toThrow()
+	it('saves exercise to custom store and displays success message', async () => {
+		const user = userEvent.setup()
+		render(<ExerciseBuilder />)
+
+		const saveButton = screen.getByRole('button', {name: 'Save to library'})
+		expect(saveButton).not.toBeDisabled()
+
+		await user.click(saveButton)
+
+		await waitFor(() => {
+			expect(screen.getByText('Exercise saved')).toBeInTheDocument()
+		})
+
+		const state = useCustomExercisesStore.getState()
+		expect(Object.keys(state.records)).toHaveLength(1)
+	})
+
+	it('lists saved exercises and allows loading them back into the editor', async () => {
+		const user = userEvent.setup()
+		render(<ExerciseBuilder />)
+
+		await user.click(screen.getByRole('button', {name: 'Save to library'}))
+
+		await waitFor(() => {
+			expect(screen.getByText('My exercises')).toBeInTheDocument()
+			expect(screen.getByText('Ρήμα είμαι — ενεστώτας')).toBeInTheDocument()
+		})
+
+		const loadButton = await screen.findByRole('button', {name: 'Load'})
+		await user.click(loadButton)
+
+		const editor = screen.getByLabelText('Exercise JSON') as HTMLTextAreaElement
+		expect(editor.value).toContain('"custom-verb-eimai"')
+	})
+
+	it('deletes saved exercises', async () => {
+		const user = userEvent.setup()
+		render(<ExerciseBuilder />)
+
+		await user.click(screen.getByRole('button', {name: 'Save to library'}))
+
+		const deleteButton = await screen.findByRole('button', {name: 'Delete'})
+		await user.click(deleteButton)
+
+		await waitFor(() => {
+			expect(
+				screen.getByText('You have no saved exercises yet')
+			).toBeInTheDocument()
+		})
 	})
 })
