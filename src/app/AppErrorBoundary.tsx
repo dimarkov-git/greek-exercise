@@ -1,6 +1,6 @@
 import type {PropsWithChildren} from 'react'
 import {ErrorBoundary, type FallbackProps} from 'react-error-boundary'
-import {LoadingOrError} from '@/components/LoadingOrError'
+import {LoadingOrError} from '@/shared/ui/loading-or-error'
 
 function renderFallback({error}: FallbackProps) {
 	return <LoadingOrError error={error} />

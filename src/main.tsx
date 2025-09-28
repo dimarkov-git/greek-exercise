@@ -1,7 +1,7 @@
 import './global.css'
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
-import {detectAutomationEnvironment} from '@/shared/lib/test-utils'
+import {detectAutomationEnvironment} from '@/shared/lib'
 import {App} from './App'
 import {AppErrorBoundary} from './app/AppErrorBoundary'
 import {AppProviders} from './app/AppProviders'

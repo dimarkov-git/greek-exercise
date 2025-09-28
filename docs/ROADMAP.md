@@ -33,7 +33,7 @@ This roadmap outlines the development priorities for the project.
 - ✅ **Phase 4**: Testing expansion and HTTP fallback policies
 - ✅ **Phase 5**: Coverage governance (93%+ statements/lines/functions)
 
-## Phase 6: Feature-Sliced Design Migration & Developer Experience ⚡ IN PROGRESS
+## Phase 6: Feature-Sliced Design Migration & Developer Experience ✅ **COMPLETED**
 
 ### Goals
 
@@ -83,9 +83,37 @@ while adding modern development tooling.
 - ✅ Fixed internal component dependencies and imports
 - ✅ All TypeScript compilation and Biome linting passing
 
+**Phase 5: Create Features** ✅ **COMPLETED**
+- ✅ Completed word-form-exercise feature with all UI components and state management
+- ✅ Created hint-system feature (HintSystem, PulseEffect, useHintState, usePulseEffect)
+- ✅ Created settings-panel feature (SettingsPanel component)
+- ✅ Created learn-view feature (JsonView, TableView, ViewToggle)
+- ✅ Created exercise-header feature (ExerciseHeader component)
+- ✅ Moved remaining UI components to shared/ui (LoadingOrError, Head)
+- ✅ Distributed all hooks to appropriate FSD layers
+- ✅ Updated all public APIs with comprehensive barrel exports
+
+**Phase 6: Create Widgets** ✅ **COMPLETED**
+- ✅ Created app-header widget from Header components
+- ✅ Created exercise-layout widget for consistent exercise layouts
+- ✅ Created mobile-menu widget (MobileMenu, MobileMenuButton)
+- ✅ Created app-footer widget (Footer component)
+- ✅ Created main-navigation widget (MainNavigation component)
+- ✅ All widget components follow proper FSD structure with public APIs
+
+**Import Migration & Fixes** ✅ **COMPLETED**
+- ✅ Fixed 100+ import paths across the entire codebase
+- ✅ Updated all component and hook imports to use new FSD aliases
+- ✅ Resolved internal feature dependencies and cross-layer imports
+- ✅ All TypeScript compilation passes (only minor unused variable warnings in tests)
+- ✅ Biome linting passes with automatic fixes applied
+
 **Next Steps:**
-- Phase 5: Create features (word-form-exercise, hint-system)
-- Phase 6: Create widgets (app-header, exercise-layout)
+- ✅ All core FSD migration phases completed
+- ✅ TypeScript compilation working
+- ✅ Development server running successfully
+- ⚠️ Architecture boundary violations remain (381 violations) - to be addressed in follow-up work
+- 📋 Ready to proceed to Phase 7: Performance & PWA foundation
 
 ### Deliverables
 

@@ -1,5 +1,5 @@
 import {motion} from 'framer-motion'
-import {useTranslations} from '@/hooks/useTranslations'
+import {useTranslations} from '@/shared/lib/i18n'
 import {exerciseUiTranslations} from '@/shared/lib/i18n/dictionaries'
 import {ExerciseLayout} from '@/widgets/exercise-layout'
 

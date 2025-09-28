@@ -5,6 +5,7 @@ export {
 	exerciseLibraryQueryOptions,
 	wordFormExerciseQueryOptions
 } from './api/queryOptions'
+export {useExercise, useExercises} from './api/useExercises'
 // Adapters
 export {
 	createExerciseLibraryViewModel,
@@ -26,6 +27,26 @@ export type {
 	ExerciseSummary,
 	WordFormExerciseWithDefaults
 } from './model/domain-types'
+// Schema DTO types
+export type {
+	ExerciseMetadataDto,
+	ExerciseSettingsDto,
+	ExercisesListDto,
+	WordFormBlockDto,
+	WordFormCaseDto,
+	WordFormExerciseDto
+} from './model/schemas'
+// Schemas
+export {
+	ExerciseMetadataSchema,
+	ExerciseSettingsSchema,
+	ExercisesListSchema,
+	validateExercisesList,
+	validateWordFormExercise,
+	WordFormBlockSchema,
+	WordFormCaseSchema,
+	WordFormExerciseSchema
+} from './model/schemas'
 // Selectors
 export {
 	createMemoizedSelector,

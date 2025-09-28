@@ -1,4 +1,4 @@
-import type {ExerciseMetadataDto} from '@/schemas/exercises'
+import type {ExerciseMetadataDto} from '@/entities/exercise'
 import type {WordFormExerciseWithDefaults} from './domain-types'
 import type {WordFormExerciseJSON} from './types'
 

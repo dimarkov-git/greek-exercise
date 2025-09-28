@@ -2,7 +2,7 @@ import {queryOptions} from '@tanstack/react-query'
 import {
 	validateExercisesList,
 	validateWordFormExercise
-} from '@/schemas/exercises'
+} from '@/entities/exercise'
 import {HttpError, requestJson} from '@/shared/api'
 import {toWordFormExerciseWithDefaults} from '../model/adapters'
 

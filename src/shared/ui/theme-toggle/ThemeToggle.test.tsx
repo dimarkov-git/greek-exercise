@@ -5,7 +5,7 @@ import {useSettingsStore} from '@/shared/model'
 import {DEFAULT_SETTINGS} from '@/shared/model/settings'
 import {ThemeToggle} from '@/shared/ui/theme-toggle'
 
-vi.mock('@/hooks/useTranslations', () => ({
+vi.mock('@/shared/lib/i18n', () => ({
 	useTranslations: () => ({
 		t: (key: string) => key,
 		status: 'complete' as const,

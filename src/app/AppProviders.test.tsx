@@ -1,5 +1,5 @@
 import {describe, expect, it, vi} from 'vitest'
-import {render, screen} from '@/test-utils'
+import {render, screen} from '@/shared/lib'
 import {AppProviders} from './AppProviders'
 
 // Mock environment

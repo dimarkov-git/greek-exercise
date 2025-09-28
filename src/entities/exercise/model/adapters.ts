@@ -4,7 +4,7 @@ import type {
 	WordFormBlockDto,
 	WordFormCaseDto,
 	WordFormExerciseDto
-} from '@/schemas/exercises'
+} from '@/entities/exercise'
 import type {Language} from '@/shared/model/settings'
 import type {
 	ExerciseLibraryViewModel,

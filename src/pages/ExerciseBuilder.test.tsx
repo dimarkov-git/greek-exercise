@@ -1,8 +1,8 @@
 import userEvent from '@testing-library/user-event'
 import type React from 'react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
+import {act, render, screen, waitFor} from '@/shared/lib'
 import {useCustomExercisesStore} from '@/shared/model'
-import {act, render, screen, waitFor} from '@/test-utils'
 import {ExerciseBuilder} from './ExerciseBuilder'
 
 const translations: Record<string, string> = {
@@ -43,7 +43,7 @@ const translations: Record<string, string> = {
 
 const translate = (key: string) => translations[key] ?? key
 
-vi.mock('@/hooks/useTranslations', () => ({
+vi.mock('@/shared/lib/i18n', () => ({
 	useTranslations: vi.fn(() => ({
 		t: translate,
 		translations: {},
@@ -55,13 +55,13 @@ vi.mock('@/hooks/useTranslations', () => ({
 	}))
 }))
 
-vi.mock('@/components/Head', () => ({
+vi.mock('@/shared/ui/head', () => ({
 	Head: ({title}: {title: string}) => (
 		<div data-testid='head' data-title={title} />
 	)
 }))
 
-vi.mock('@/components/learn/TableView', () => ({
+vi.mock('@/features/learn-view/ui/TableView', () => ({
 	TableView: ({exercise}: {exercise: {title: string}}) => (
 		<div data-testid='table-view'>Preview: {exercise.title}</div>
 	)

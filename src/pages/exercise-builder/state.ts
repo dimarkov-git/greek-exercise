@@ -5,9 +5,9 @@ import type {WordFormExerciseWithDefaults} from '@/entities/exercise'
 import {
 	exerciseToJSON,
 	toWordFormExerciseWithDefaults,
-	type WordFormExerciseJSON
+	type WordFormExerciseJSON,
+	WordFormExerciseSchema
 } from '@/entities/exercise'
-import {WordFormExerciseSchema} from '@/schemas/exercises'
 import type {ExerciseBuilderTranslationKey} from '@/shared/lib/i18n/dictionaries'
 import type {Translator} from '@/shared/lib/i18n/dictionary'
 import type {CustomExerciseRecord} from '@/shared/model'

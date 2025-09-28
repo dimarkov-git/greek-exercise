@@ -3,7 +3,7 @@ import {describe, expect, it, vi} from 'vitest'
 import {AppErrorBoundary} from './AppErrorBoundary'
 
 // Mock LoadingOrError component
-vi.mock('@/components/LoadingOrError', () => ({
+vi.mock('@/shared/ui/loading-or-error', () => ({
 	LoadingOrError: ({error}: {error?: Error}) => (
 		<div data-testid='loading-or-error'>
 			{error ? `Error: ${error.message}` : 'Loading...'}

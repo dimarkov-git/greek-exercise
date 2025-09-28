@@ -1,9 +1,9 @@
 import {motion} from 'framer-motion'
-import {Head} from '@/components/Head'
-import {MainNavigation} from '@/components/layout/MainNavigation'
-import {useTranslations} from '@/hooks/useTranslations'
+import {useTranslations} from '@/shared/lib/i18n'
 import {homePageTranslations} from '@/shared/lib/i18n/dictionaries'
+import {Head} from '@/shared/ui/head'
 import {TranslatedText} from '@/shared/ui/translated-text'
+import {MainNavigation} from '@/widgets/main-navigation'
 
 export function HomePage() {
 	const {t, isLoading} = useTranslations(homePageTranslations)

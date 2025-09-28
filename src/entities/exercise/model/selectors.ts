@@ -1,4 +1,4 @@
-import type {ExercisesListDto} from '@/schemas/exercises'
+import type {ExercisesListDto} from '@/entities/exercise'
 import {createExerciseLibraryViewModel} from './adapters'
 import type {
 	ExerciseFilterSelection,

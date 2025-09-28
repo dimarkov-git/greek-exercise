@@ -1,5 +1,5 @@
 import {motion} from 'framer-motion'
-import {useTranslations} from '@/hooks/useTranslations'
+import {useTranslations} from '@/shared/lib/i18n'
 import {themeToggleTranslations} from '@/shared/lib/i18n/dictionaries'
 import {useSettingsStore} from '@/shared/model'
 

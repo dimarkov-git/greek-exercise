@@ -1,9 +1,11 @@
-import {toWordFormExerciseWithDefaults} from '@/entities/exercise'
+import type {WordFormExerciseDto} from '@/entities/exercise'
+import {
+	toWordFormExerciseWithDefaults,
+	validateWordFormExercise
+} from '@/entities/exercise'
 import translationsData from '@/mocks/data/translations.json' with {
 	type: 'json'
 }
-import type {WordFormExerciseDto} from '@/schemas/exercises'
-import {validateWordFormExercise} from '@/schemas/exercises'
 import {extractExerciseMetadata} from '@/shared/lib/exercises'
 import type {TranslationRegistryKey} from '@/shared/lib/i18n/generated/translation-registry'
 import {translationRegistry} from '@/shared/lib/i18n/generated/translation-registry'

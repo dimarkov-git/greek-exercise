@@ -1,6 +1,6 @@
 import {motion} from 'framer-motion'
 import {Link} from 'react-router'
-import {useTranslations} from '@/hooks/useTranslations'
+import {useTranslations} from '@/shared/lib/i18n'
 import {headerLogoTranslations} from '@/shared/lib/i18n/dictionaries'
 import {TranslatedText} from '@/shared/ui/translated-text'
 

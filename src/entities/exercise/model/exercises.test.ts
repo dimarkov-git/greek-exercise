@@ -1,5 +1,9 @@
 import {describe, expect, it, vi} from 'vitest'
-import type {ExerciseSummary} from '@/entities/exercise'
+import type {
+	ExerciseMetadataDto,
+	ExerciseSummary,
+	WordFormExerciseDto
+} from '@/entities/exercise'
 import {
 	createExerciseLibraryViewModel,
 	createMemoizedSelector,
@@ -13,10 +17,6 @@ import {
 	toExerciseSummary,
 	toWordFormExerciseWithDefaults
 } from '@/entities/exercise'
-import type {
-	ExerciseMetadataDto,
-	WordFormExerciseDto
-} from '@/schemas/exercises'
 
 const baseMetadata: ExerciseMetadataDto = {
 	id: 'verbs-present-tense',
