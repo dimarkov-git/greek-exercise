@@ -7,6 +7,7 @@ import {
 	exerciseUiTranslations
 } from '@/i18n/dictionaries'
 import type {Translator} from '@/i18n/dictionary'
+import {cn} from '@/lib/utils'
 import {useSettingsStore} from '@/stores/settings'
 import type {Language} from '@/types/settings'
 
@@ -29,36 +30,29 @@ type ExerciseTranslator = Translator<ExerciseUiTranslationKey>
 
 function getTooltipClasses(placement: PlacementType): string {
 	const baseClasses =
-		'absolute z-50 px-3 py-2 text-sm bg-gray-900 text-white rounded-lg shadow-lg'
-	const maxWidth = 'max-w-xs'
+		'absolute z-50 px-3 py-2 text-sm bg-gray-900 text-white rounded-lg shadow-lg max-w-xs'
 
-	if (placement === 'top') {
-		return `${baseClasses} ${maxWidth} bottom-full left-1/2 transform -translate-x-1/2 mb-2`
-	}
-	if (placement === 'bottom') {
-		return `${baseClasses} ${maxWidth} top-full left-1/2 transform -translate-x-1/2 mt-2`
-	}
-	if (placement === 'left') {
-		return `${baseClasses} ${maxWidth} right-full top-1/2 transform -translate-y-1/2 mr-2`
-	}
-	// placement === 'right'
-	return `${baseClasses} ${maxWidth} left-full top-1/2 transform -translate-y-1/2 ml-2`
+	const placementClasses = {
+		top: 'bottom-full left-1/2 transform -translate-x-1/2 mb-2',
+		bottom: 'top-full left-1/2 transform -translate-x-1/2 mt-2',
+		left: 'right-full top-1/2 transform -translate-y-1/2 mr-2',
+		right: 'left-full top-1/2 transform -translate-y-1/2 ml-2'
+	} as const
+
+	return cn(baseClasses, placementClasses[placement])
 }
 
 function getArrowClasses(placement: PlacementType): string {
 	const baseClasses = 'absolute w-2 h-2 bg-gray-900 transform rotate-45'
 
-	if (placement === 'top') {
-		return `${baseClasses} top-full left-1/2 -translate-x-1/2 -translate-y-1/2`
-	}
-	if (placement === 'bottom') {
-		return `${baseClasses} bottom-full left-1/2 -translate-x-1/2 translate-y-1/2`
-	}
-	if (placement === 'left') {
-		return `${baseClasses} left-full top-1/2 -translate-x-1/2 -translate-y-1/2`
-	}
-	// placement === 'right'
-	return `${baseClasses} right-full top-1/2 translate-x-1/2 -translate-y-1/2`
+	const placementClasses = {
+		top: 'top-full left-1/2 -translate-x-1/2 -translate-y-1/2',
+		bottom: 'bottom-full left-1/2 -translate-x-1/2 translate-y-1/2',
+		left: 'left-full top-1/2 -translate-x-1/2 -translate-y-1/2',
+		right: 'right-full top-1/2 translate-x-1/2 -translate-y-1/2'
+	} as const
+
+	return cn(baseClasses, placementClasses[placement])
 }
 
 function useMobileDetection() {
@@ -242,7 +236,7 @@ export function HintSystem({
 	}
 
 	return (
-		<div className={`relative inline-block ${className}`}>
+		<div className={cn('relative inline-block', className)}>
 			<div className='flex items-center gap-2'>
 				<span>{primaryText}</span>
 				<HintButton
@@ -271,9 +265,6 @@ export function HintSystem({
 	)
 }
 
-/**
- * Упрощенная версия HintSystem для быстрого использования
- */
 interface SimpleHintProps {
 	children: string
 	hint: string

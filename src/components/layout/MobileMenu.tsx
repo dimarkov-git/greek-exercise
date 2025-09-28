@@ -6,6 +6,7 @@ import {useTranslations} from '@/hooks/useTranslations'
 import type {MobileMenuTranslationKey} from '@/i18n/dictionaries'
 import {mobileMenuTranslations} from '@/i18n/dictionaries'
 import type {Translator} from '@/i18n/dictionary'
+import {cn} from '@/lib/utils'
 
 const HOME_ICON = '🏠'
 const LIBRARY_ICON = '📚'
@@ -54,45 +55,57 @@ export function MobileMenu({id, isOpen, onClose}: MobileMenuProps) {
 	return (
 		<AnimatePresence>
 			{isOpen && (
-				<motion.div
-					animate={{opacity: 1, height: 'auto'}}
-					className='border-gray-200 border-t md:hidden dark:border-gray-700'
-					data-testid='mobile-menu'
-					exit={{opacity: 0, height: 0}}
-					id={id}
-					initial={{opacity: 0, height: 0}}
-					transition={{duration: 0.2}}
-				>
-					<div className='space-y-1 py-3'>
-						{navigationItems.map(item => (
-							<Link
-								className={`flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-sm transition-colors ${
-									isActive(item.path)
-										? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
-										: 'text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white'
-								}`}
-								key={item.path}
-								onClick={onClose}
-								to={item.path}
-							>
-								{item.icon}
-								{item.label}
-							</Link>
-						))}
+				<>
+					{/* Backdrop overlay for better mobile UX */}
+					<motion.div
+						animate={{opacity: 1}}
+						className='fixed inset-0 z-40 bg-black/20 backdrop-blur-sm md:hidden'
+						exit={{opacity: 0}}
+						initial={{opacity: 0}}
+						onClick={onClose}
+						transition={{duration: 0.2}}
+					/>
+					<motion.div
+						animate={{opacity: 1, height: 'auto'}}
+						className='relative z-50 border-gray-200 border-t bg-white/90 backdrop-blur-md md:hidden dark:border-gray-700 dark:bg-gray-800/90'
+						data-testid='mobile-menu'
+						exit={{opacity: 0, height: 0}}
+						id={id}
+						initial={{opacity: 0, height: 0}}
+						transition={{duration: 0.2}}
+					>
+						<div className='space-y-1 py-3'>
+							{navigationItems.map(item => (
+								<Link
+									className={cn(
+										'flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-sm transition-colors',
+										isActive(item.path)
+											? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
+											: 'text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white'
+									)}
+									key={item.path}
+									onClick={onClose}
+									to={item.path}
+								>
+									{item.icon}
+									{item.label}
+								</Link>
+							))}
 
-						<div className='border-gray-200 border-t pt-3 dark:border-gray-700'>
-							<div className='flex items-center justify-between px-3 py-2'>
-								<span className='font-medium text-gray-700 text-sm dark:text-gray-300'>
-									{t('settings')}
-								</span>
-								<div className='flex items-center gap-2'>
-									<ThemeToggle />
-									<LanguageDropdown />
+							<div className='border-gray-200 border-t pt-3 dark:border-gray-700'>
+								<div className='flex items-center justify-between px-3 py-2'>
+									<span className='font-medium text-gray-700 text-sm dark:text-gray-300'>
+										{t('settings')}
+									</span>
+									<div className='flex items-center gap-2'>
+										<ThemeToggle />
+										<LanguageDropdown />
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</motion.div>
+					</motion.div>
+				</>
 			)}
 		</AnimatePresence>
 	)

@@ -1,4 +1,5 @@
 import {motion} from 'framer-motion'
+import {cn} from '@/lib/utils'
 
 interface TextSkeletonProps {
 	width?: string
@@ -9,7 +10,7 @@ interface TextSkeletonProps {
 export function TextSkeleton({
 	width = '100px',
 	height = '1em',
-	className = ''
+	className
 }: TextSkeletonProps) {
 	return (
 		<motion.span
@@ -17,7 +18,10 @@ export function TextSkeleton({
 				opacity: [0.3, 0.8, 0.3]
 			}}
 			aria-hidden='true'
-			className={`inline-block rounded bg-gray-200 dark:bg-gray-700 ${className}`}
+			className={cn(
+				'inline-block rounded bg-gray-200 dark:bg-gray-700',
+				className
+			)}
 			initial={{opacity: 0.3}}
 			role='presentation'
 			style={{width, height}}

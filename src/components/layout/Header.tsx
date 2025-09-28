@@ -1,6 +1,7 @@
 import {motion} from 'framer-motion'
 import {useId, useState} from 'react'
 import {useLayout} from '@/hooks/useLayout'
+import {cn} from '@/lib/utils'
 import {HeaderLogo} from './HeaderLogo'
 import {HeaderNavigation} from './HeaderNavigation'
 import {HeaderSettings} from './HeaderSettings'
@@ -22,9 +23,11 @@ export function Header({className}: HeaderProps) {
 				opacity: headerEnabled ? 1 : 0,
 				y: headerEnabled ? 0 : -20
 			}}
-			className={`fixed top-0 z-50 w-full border-gray-200 border-b bg-white/70 shadow-md backdrop-blur-md dark:border-gray-700 dark:bg-gray-800 ${
-				headerEnabled ? 'block' : 'hidden'
-			} ${className || ''}`}
+			className={cn(
+				'fixed top-0 z-50 w-full border-gray-200 border-b bg-white/70 shadow-md backdrop-blur-md dark:border-gray-700 dark:bg-gray-800',
+				headerEnabled ? 'block' : 'hidden',
+				className
+			)}
 			initial={{opacity: 0, y: -20}}
 		>
 			<div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
