@@ -1,6 +1,5 @@
 import {motion} from 'framer-motion'
-import {useTranslations} from '@/shared/lib/i18n'
-import {settingsLabelTranslations} from '@/shared/lib/i18n/dictionaries'
+import {settingsLabelTranslations, useTranslations} from '@/shared/lib/i18n'
 import {LanguageSelector} from '@/shared/ui/language-selector'
 import {ThemeToggle} from '@/shared/ui/theme-toggle'
 import {UserLanguageSelector} from '@/shared/ui/user-language-selector'

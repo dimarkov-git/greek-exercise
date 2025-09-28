@@ -1,6 +1,5 @@
 import {useExercises} from '@/entities/exercise'
-import {useTranslations} from '@/shared/lib/i18n'
-import {exerciseLibraryTranslations} from '@/shared/lib/i18n/dictionaries'
+import {exerciseLibraryTranslations, useTranslations} from '@/shared/lib/i18n'
 import {Head} from '@/shared/ui/head'
 import {LoadingOrError} from '@/shared/ui/loading-or-error'
 import {ExerciseFilters} from './components/ExerciseFilters'

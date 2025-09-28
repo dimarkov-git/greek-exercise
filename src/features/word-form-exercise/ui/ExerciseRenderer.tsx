@@ -1,7 +1,6 @@
 import type {ExerciseEvent} from '@/entities/exercise'
 import {CompletionScreen} from '@/features/word-form-exercise'
-import {useTranslations} from '@/shared/lib/i18n'
-import {exerciseUiTranslations} from '@/shared/lib/i18n/dictionaries'
+import {exerciseUiTranslations, useTranslations} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
 import type {Language} from '@/shared/model/settings'
 import {ExerciseLayout} from '@/widgets/exercise-layout'

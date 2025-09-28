@@ -1,5 +1,4 @@
-import {useTranslations} from '@/shared/lib/i18n'
-import {footerTranslations} from '@/shared/lib/i18n/dictionaries'
+import {footerTranslations, useTranslations} from '@/shared/lib/i18n'
 import {TranslatedText} from '@/shared/ui/translated-text'
 
 const copyrightKey = 'footer.copyright'

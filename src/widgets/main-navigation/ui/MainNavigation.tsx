@@ -1,6 +1,5 @@
 import {motion} from 'framer-motion'
-import {useTranslations} from '@/shared/lib/i18n'
-import {mainNavigationTranslations} from '@/shared/lib/i18n/dictionaries'
+import {mainNavigationTranslations, useTranslations} from '@/shared/lib/i18n'
 import {NavigationCard} from '@/shared/ui/navigation-card'
 
 export function MainNavigation() {

@@ -1,7 +1,6 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {useState} from 'react'
-import type {ExerciseLibraryTranslationKey} from '@/shared/lib/i18n/dictionaries'
-import type {Translator} from '@/shared/lib/i18n/dictionary'
+import type {ExerciseLibraryTranslationKey, Translator} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
 import {UserLanguageSelector} from '@/shared/ui/user-language-selector'
 

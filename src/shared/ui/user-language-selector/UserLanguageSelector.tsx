@@ -1,6 +1,8 @@
 import {motion} from 'framer-motion'
-import {useTranslations} from '@/shared/lib/i18n'
-import {userLanguageSelectorTranslations} from '@/shared/lib/i18n/dictionaries'
+import {
+	userLanguageSelectorTranslations,
+	useTranslations
+} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
 import type {Language} from '@/shared/model/settings'
 import {USER_LANGUAGES} from '@/shared/model/settings'

@@ -1,6 +1,5 @@
 import {motion} from 'framer-motion'
-import {useTranslations} from '@/shared/lib/i18n'
-import {homePageTranslations} from '@/shared/lib/i18n/dictionaries'
+import {homePageTranslations, useTranslations} from '@/shared/lib/i18n'
 import {Head} from '@/shared/ui/head'
 import {TranslatedText} from '@/shared/ui/translated-text'
 import {MainNavigation} from '@/widgets/main-navigation'

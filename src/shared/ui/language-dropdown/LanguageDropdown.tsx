@@ -1,7 +1,6 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {useState} from 'react'
-import {useTranslations} from '@/shared/lib/i18n'
-import {languageDropdownTranslations} from '@/shared/lib/i18n/dictionaries'
+import {languageDropdownTranslations, useTranslations} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
 import type {Language} from '@/shared/model/settings'
 import {UI_LANGUAGES} from '@/shared/model/settings'

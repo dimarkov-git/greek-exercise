@@ -7,8 +7,8 @@ import translationsData from '@/mocks/data/translations.json' with {
 	type: 'json'
 }
 import {extractExerciseMetadata} from '@/shared/lib/exercises'
-import type {TranslationRegistryKey} from '@/shared/lib/i18n/generated/translation-registry'
-import {translationRegistry} from '@/shared/lib/i18n/generated/translation-registry'
+import type {TranslationRegistryKey} from '@/shared/lib/i18n'
+import {translationRegistry} from '@/shared/lib/i18n'
 import type {
 	SupportedLanguage,
 	TranslationsDatabase

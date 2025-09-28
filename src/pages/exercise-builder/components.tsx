@@ -5,7 +5,7 @@ import type {
 	WordFormExerciseJSON,
 	WordFormExerciseWithDefaults
 } from '@/entities/exercise'
-import {TableView} from '@/features/learn-view/ui/TableView'
+import {TableView} from '@/features/learn-view'
 import type {CustomExerciseRecord} from '@/shared/model'
 import type {BuilderSaveStatus, BuilderTranslator} from './state'
 

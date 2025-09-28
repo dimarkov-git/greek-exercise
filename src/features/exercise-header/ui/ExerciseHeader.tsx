@@ -1,11 +1,11 @@
 import {motion} from 'framer-motion'
 import {Link} from 'react-router'
-import {useTranslations} from '@/shared/lib/i18n'
 import {
 	type ExerciseUiTranslationKey,
-	exerciseUiTranslations
-} from '@/shared/lib/i18n/dictionaries'
-import type {Translator} from '@/shared/lib/i18n/dictionary'
+	exerciseUiTranslations,
+	type Translator,
+	useTranslations
+} from '@/shared/lib/i18n'
 
 interface ExerciseHeaderProps {
 	title: string

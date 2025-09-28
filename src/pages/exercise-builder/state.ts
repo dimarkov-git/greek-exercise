@@ -8,8 +8,7 @@ import {
 	type WordFormExerciseJSON,
 	WordFormExerciseSchema
 } from '@/entities/exercise'
-import type {ExerciseBuilderTranslationKey} from '@/shared/lib/i18n/dictionaries'
-import type {Translator} from '@/shared/lib/i18n/dictionary'
+import type {ExerciseBuilderTranslationKey, Translator} from '@/shared/lib/i18n'
 import type {CustomExerciseRecord} from '@/shared/model'
 import {selectCustomExerciseList, useCustomExercisesStore} from '@/shared/model'
 

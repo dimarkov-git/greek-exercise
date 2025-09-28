@@ -1,12 +1,12 @@
 import {motion} from 'framer-motion'
 import {useEffect, useRef, useState} from 'react'
 import type {ExerciseStatus} from '@/entities/exercise'
-import {useTranslations} from '@/shared/lib/i18n'
+import type {Translator} from '@/shared/lib/i18n'
 import {
 	type ExerciseUiTranslationKey,
-	exerciseUiTranslations
-} from '@/shared/lib/i18n/dictionaries'
-import type {Translator} from '@/shared/lib/i18n/dictionary'
+	exerciseUiTranslations,
+	useTranslations
+} from '@/shared/lib/i18n'
 
 type ExerciseTranslator = Translator<ExerciseUiTranslationKey>
 

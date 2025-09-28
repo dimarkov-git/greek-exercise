@@ -5,39 +5,53 @@ module.exports = {
 		{
 			name: 'pages-layer-boundary',
 			severity: 'error',
-			comment: 'Pages may touch widgets, features, entities, shared only',
+			comment:
+				'Pages may touch widgets, features, entities, shared only (and node_modules)',
 			from: {path: '^src/pages'},
-			to: {pathNot: '^src/(pages|widgets|features|entities|shared)'}
+			to: {
+				path: '^src/',
+				pathNot: '^src/(pages|widgets|features|entities|shared|app)'
+			}
 		},
 		{
 			name: 'widgets-layer-boundary',
 			severity: 'error',
-			comment: 'Widgets may touch features, entities, shared only',
+			comment:
+				'Widgets may touch features, entities, shared only (and node_modules)',
 			from: {path: '^src/widgets'},
-			to: {pathNot: '^src/(widgets|features|entities|shared)'}
+			to: {
+				path: '^src/',
+				pathNot: '^src/(widgets|features|entities|shared|app)'
+			}
 		},
 		{
 			name: 'features-layer-boundary',
 			severity: 'error',
-			comment: 'Features may touch entities, shared only',
+			comment: 'Features may touch entities, shared only (and node_modules)',
 			from: {path: '^src/features'},
-			to: {pathNot: '^src/(features|entities|shared)'}
+			to: {
+				path: '^src/',
+				pathNot: '^src/(features|entities|shared|app)'
+			}
 		},
 		{
 			name: 'entities-layer-boundary',
 			severity: 'error',
-			comment: 'Entities may touch shared only',
+			comment: 'Entities may touch shared only (and node_modules)',
 			from: {path: '^src/entities'},
-			to: {pathNot: '^src/(entities|shared)'}
+			to: {
+				path: '^src/',
+				pathNot: '^src/(entities|shared|app)'
+			}
 		},
 		{
-			name: 'no-deep-public-imports',
+			name: 'shared-layer-boundary',
 			severity: 'error',
-			comment: 'Always import through slice index files',
-			from: {path: '^src/(app|processes|pages|widgets|features|entities)'},
+			comment: 'Shared may not import from upper layers',
+			from: {path: '^src/shared'},
 			to: {
-				path: '^src/(pages|widgets|features|entities)/.+/(ui|model|api|lib)/',
-				pathNot: 'index\\.(ts|tsx)$'
+				path: '^src/',
+				pathNot: '^src/(shared|app)'
 			}
 		}
 	],

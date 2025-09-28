@@ -1,6 +1,5 @@
 import {motion} from 'framer-motion'
-import type {ExerciseLibraryTranslationKey} from '@/shared/lib/i18n/dictionaries'
-import type {Translator} from '@/shared/lib/i18n/dictionary'
+import type {ExerciseLibraryTranslationKey, Translator} from '@/shared/lib/i18n'
 
 type LibraryTranslator = Translator<ExerciseLibraryTranslationKey>
 

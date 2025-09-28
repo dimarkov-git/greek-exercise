@@ -1,6 +1,5 @@
 import {motion} from 'framer-motion'
-import {useTranslations} from '@/shared/lib/i18n'
-import {themeToggleTranslations} from '@/shared/lib/i18n/dictionaries'
+import {themeToggleTranslations, useTranslations} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
 
 export function ThemeToggle() {

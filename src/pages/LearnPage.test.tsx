@@ -40,19 +40,13 @@ vi.mock('@/shared/ui/loading-or-error', () => ({
 	)
 }))
 
-vi.mock('@/features/learn-view/ui/JsonView', () => ({
+vi.mock('@/features/learn-view', () => ({
 	JsonView: vi.fn(({exercise}: {exercise: WordFormExerciseWithDefaults}) => (
 		<div data-testid='json-view'>JsonView: {exercise.title}</div>
-	))
-}))
-
-vi.mock('@/features/learn-view/ui/TableView', () => ({
+	)),
 	TableView: vi.fn(({exercise}: {exercise: WordFormExerciseWithDefaults}) => (
 		<div data-testid='table-view'>TableView: {exercise.title}</div>
-	))
-}))
-
-vi.mock('@/features/learn-view/ui/ViewToggle', () => ({
+	)),
 	ViewToggle: vi.fn(
 		({
 			viewMode,

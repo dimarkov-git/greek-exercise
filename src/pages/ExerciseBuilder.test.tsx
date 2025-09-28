@@ -61,7 +61,7 @@ vi.mock('@/shared/ui/head', () => ({
 	)
 }))
 
-vi.mock('@/features/learn-view/ui/TableView', () => ({
+vi.mock('@/features/learn-view', () => ({
 	TableView: ({exercise}: {exercise: {title: string}}) => (
 		<div data-testid='table-view'>Preview: {exercise.title}</div>
 	)

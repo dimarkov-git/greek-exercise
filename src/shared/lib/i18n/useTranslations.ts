@@ -5,9 +5,9 @@ import {requestJson} from '@/shared/api'
 import type {
 	DictionaryKeys,
 	TranslationDictionary,
+	TranslationRegistryKey,
 	Translator
 } from '@/shared/lib/i18n'
-import type {TranslationRegistryKey} from '@/shared/lib/i18n/generated/translation-registry'
 import {useSettingsStore} from '@/shared/model'
 import type {
 	SupportedLanguage,

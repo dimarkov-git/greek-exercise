@@ -1,6 +1,5 @@
 import {motion} from 'framer-motion'
-import {useTranslations} from '@/shared/lib/i18n'
-import {mobileMenuButtonTranslations} from '@/shared/lib/i18n/dictionaries'
+import {mobileMenuButtonTranslations, useTranslations} from '@/shared/lib/i18n'
 
 interface MobileMenuButtonProps {
 	isOpen: boolean

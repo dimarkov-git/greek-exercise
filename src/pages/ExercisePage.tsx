@@ -4,8 +4,7 @@ import type {ExerciseResult} from '@/entities/exercise'
 import {useExercise} from '@/entities/exercise'
 import {WordFormExercise} from '@/features/word-form-exercise'
 import {useLayout} from '@/shared/lib'
-import {useTranslations} from '@/shared/lib/i18n'
-import {exerciseUiTranslations} from '@/shared/lib/i18n/dictionaries'
+import {exerciseUiTranslations, useTranslations} from '@/shared/lib/i18n'
 import {LoadingOrError} from '@/shared/ui/loading-or-error'
 
 /**

@@ -1,6 +1,5 @@
 import {motion} from 'framer-motion'
-import {useTranslations} from '@/shared/lib/i18n'
-import {viewToggleTranslations} from '@/shared/lib/i18n/dictionaries'
+import {useTranslations, viewToggleTranslations} from '@/shared/lib/i18n'
 
 type ViewMode = 'json' | 'table'
 
