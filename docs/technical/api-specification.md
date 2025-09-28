@@ -1,4 +1,4 @@
-# API Specification
+# API specification
 
 ## 📡 Mock API Endpoints
 
@@ -8,25 +8,27 @@ The application uses MSW (Mock Service Worker) to simulate API calls for develop
 
 #### `GET /exercises`
 
-Returns list of available exercises with metadata.
+Returns a list of available exercises with metadata.
 
 **Response**:
+
 ```typescript
 interface ExerciseMetadata {
-  id: string
-  title: string
-  titleI18n: Record<Language, string>
-  tags: string[]
-  difficulty: string
-  estimatedTimeMinutes: number
-  totalBlocks: number
-  totalCases: number
+    id: string
+    title: string
+    titleI18n: Record<Language, string>
+    tags: string[]
+    difficulty: string
+    estimatedTimeMinutes: number
+    totalBlocks: number
+    totalCases: number
 }
 
 type ExercisesResponse = ExerciseMetadata[]
 ```
 
 **Example**:
+
 ```json
 [
   {
@@ -37,7 +39,11 @@ type ExercisesResponse = ExerciseMetadata[]
       "en": "Greek verb 'to be' (είμαι)",
       "ru": "Греческий глагол 'быть' (είμαι)"
     },
-    "tags": ["verbs", "beginner", "grammar"],
+    "tags": [
+      "verbs",
+      "beginner",
+      "grammar"
+    ],
     "difficulty": "beginner",
     "estimatedTimeMinutes": 15,
     "totalBlocks": 6,
@@ -57,19 +63,22 @@ See [data-models.md](data-models.md) for detailed exercise structure.
 
 #### `GET /translations/:language`
 
-Returns translation data for specified language.
+Returns translation data for a specified language.
 
 **Parameters**:
+
 - `language`: 'el' | 'en' | 'ru'
 
 **Response**:
+
 ```typescript
 interface TranslationData {
-  [key: string]: string
+    [key: string]: string
 }
 ```
 
 **Example**:
+
 ```json
 {
   "app.title": "Learn Greek",
@@ -86,24 +95,24 @@ interface TranslationData {
 ```typescript
 // Query keys
 export const queryKeys = {
-  exercises: ['exercises'] as const,
-  exercise: (id: string) => ['exercise', id] as const,
-  translations: (lang: string) => ['translations', lang] as const,
+    exercises: ['exercises'] as const,
+    exercise: (id: string) => ['exercise', id] as const,
+    translations: (lang: string) => ['translations', lang] as const,
 }
 
 // Query functions
 export const exerciseQueries = {
-  all: () => ({
-    queryKey: queryKeys.exercises,
-    queryFn: fetchExercises,
-    staleTime: 30 * 60 * 1000, // 30 minutes
-  }),
+    all: () => ({
+        queryKey: queryKeys.exercises,
+        queryFn: fetchExercises,
+        staleTime: 30 * 60 * 1000, // 30 minutes
+    }),
 
-  byId: (id: string) => ({
-    queryKey: queryKeys.exercise(id),
-    queryFn: () => fetchExercise(id),
-    staleTime: 30 * 60 * 1000,
-  }),
+    byId: (id: string) => ({
+        queryKey: queryKeys.exercise(id),
+        queryFn: () => fetchExercise(id),
+        staleTime: 30 * 60 * 1000,
+    }),
 }
 ```
 
@@ -137,16 +146,16 @@ src/mocks/data/
 ```typescript
 // Example handler structure
 export const exerciseHandlers = [
-  http.get('/exercises', () => {
-    return HttpResponse.json(exerciseMetadata)
-  }),
+    http.get('/exercises', () => {
+        return HttpResponse.json(exerciseMetadata)
+    }),
 
-  http.get('/exercises/:id', ({ params }) => {
-    const exercise = getExerciseById(params.id as string)
-    return exercise
-      ? HttpResponse.json(exercise)
-      : HttpResponse.json({ error: 'Not found' }, { status: 404 })
-  }),
+    http.get('/exercises/:id', ({params}) => {
+        const exercise = getExerciseById(params.id as string)
+        return exercise
+            ? HttpResponse.json(exercise)
+            : HttpResponse.json({error: 'Not found'}, {status: 404})
+    }),
 ]
 ```
 

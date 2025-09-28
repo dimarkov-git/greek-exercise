@@ -1,8 +1,6 @@
 # Documentation
 
-## 📚 Documentation Structure
-
-### 🏗️ **Technical Documentation** [`technical/`](technical/)
+## 🏗️ Technical Documentation
 
 Complete technical reference and API documentation:
 
