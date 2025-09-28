@@ -5,10 +5,10 @@ established through Phases 0-5.
 
 ## Architecture overview
 
-**Current status**: Production-ready React application with comprehensive testing (93%+ coverage)
+**Current status**: Production-ready React application with comprehensive testing (80% statements/lines/functions, 75% branches)
 **Key patterns**:
 
-- **Feature-Sliced Design** with clear module boundaries
+- **Modern React architecture** with clear module boundaries
 - **Type-safe i18n** via generated translation registry
 - **HTTP client** with configurable fallback policies
 - **SSR-safe effects** for DOM state synchronization
@@ -33,8 +33,8 @@ established through Phases 0-5.
 - Configures plugins: React and Tailwind CSS v4
 - Sets up `@/` alias for `src/` folder
 - Configures Vitest for unit/integration tests
-- **Coverage thresholds**: 93%+ statements/lines/functions, 88%+ branches
-- **Scoped coverage**: Critical runtime modules only (excludes mocks, types)
+- **Coverage thresholds**: 80% statements/lines/functions, 75% branches
+- **Scoped coverage**: All source code (excludes main.tsx, browser.ts)
 - Bundle analysis integration via `rollup-plugin-visualizer`
 
 ### tsconfig.json, tsconfig.app.json, tsconfig.node.json
@@ -242,7 +242,7 @@ established through Phases 0-5.
 
 - **Framework**: Vitest + Testing Library
 - **Environment**: happy-dom (lightweight jsdom alternative)
-- **Requirement**: 100% code coverage
+- **Requirement**: 80% statements/lines/functions, 75% branches coverage
 - **Files**: `src/**/*.test.ts(x)`
 
 ### E2E tests

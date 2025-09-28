@@ -312,7 +312,7 @@ function SkipLink() {
 }
 ```
 
-### Screen reader only content
+### Screen-reader-only content
 
 ```css
 /* Tailwind utility: sr-only */
@@ -421,6 +421,6 @@ function useFocusTrap(isActive: boolean) {
 
 1. [ ] All automated accessibility tests pass
 2. [ ] Manual testing completed without issues
-3. [ ] No WCAG AA violations found
+3. [ ] No WCAG AA violations were found
 4. [ ] Documentation updated with accessibility notes
 5. [ ] Accessibility impact assessed and documented
