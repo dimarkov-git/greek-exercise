@@ -1,7 +1,7 @@
 import {motion} from 'framer-motion'
-import {ExerciseLayout} from '@/components/exercises/shared/ExerciseLayout'
 import {useTranslations} from '@/hooks/useTranslations'
 import {exerciseUiTranslations} from '@/shared/lib/i18n/dictionaries'
+import {ExerciseLayout} from '@/widgets/exercise-layout'
 
 interface CompletionScreenProps {
 	correctCount: number

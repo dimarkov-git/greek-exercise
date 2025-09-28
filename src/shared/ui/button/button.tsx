@@ -1,7 +1,7 @@
 import {cva, type VariantProps} from 'class-variance-authority'
 import {motion} from 'framer-motion'
 import {type ButtonHTMLAttributes, forwardRef} from 'react'
-import {cn} from '@/lib/utils'
+import {cn} from '@/shared/lib'
 
 const buttonVariants = cva(
 	// Base styles using CSS custom properties

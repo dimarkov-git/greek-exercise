@@ -1,6 +1,6 @@
 import {cva, type VariantProps} from 'class-variance-authority'
 import React, {createElement, forwardRef, type HTMLAttributes} from 'react'
-import {cn} from '@/lib/utils'
+import {cn} from '@/shared/lib'
 
 // Spacing variants using our 8px grid system
 const spacingVariants = cva('', {

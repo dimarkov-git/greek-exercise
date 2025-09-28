@@ -41,7 +41,7 @@ function getLoadingExportName() {
 	return 'LoadingOrError' as const
 }
 
-vi.mock('@/components/layout/Header', () => ({
+vi.mock('@/widgets/app-header', () => ({
 	[getHeaderExportName()]: () => renderHeaderMock()
 }))
 

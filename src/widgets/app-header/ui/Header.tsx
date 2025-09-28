@@ -1,12 +1,11 @@
 import {motion} from 'framer-motion'
 import {useId, useState} from 'react'
 import {useLayout} from '@/hooks/useLayout'
-import {cn} from '@/lib/utils'
+import {cn} from '@/shared/lib'
+import {MobileMenu, MobileMenuButton} from '@/widgets/mobile-menu'
 import {HeaderLogo} from './HeaderLogo'
 import {HeaderNavigation} from './HeaderNavigation'
 import {HeaderSettings} from './HeaderSettings'
-import {MobileMenu} from './MobileMenu'
-import {MobileMenuButton} from './MobileMenuButton'
 
 interface HeaderProps {
 	className?: string

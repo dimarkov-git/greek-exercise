@@ -1,6 +1,6 @@
 import type {ReactNode} from 'react'
 import {Head} from '@/components/Head'
-import {cn} from '@/lib/utils'
+import {cn} from '@/shared/lib'
 
 interface ExerciseLayoutProps {
 	title: string

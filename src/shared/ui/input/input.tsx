@@ -1,6 +1,6 @@
 import {cva, type VariantProps} from 'class-variance-authority'
 import {forwardRef, type InputHTMLAttributes} from 'react'
-import {cn} from '@/lib/utils'
+import {cn} from '@/shared/lib'
 
 const inputVariants = cva(
 	// Base styles using CSS custom properties

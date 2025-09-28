@@ -1,7 +1,7 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {Link, useLocation} from 'react-router'
 import {useTranslations} from '@/hooks/useTranslations'
-import {cn} from '@/lib/utils'
+import {cn} from '@/shared/lib'
 import type {MobileMenuTranslationKey} from '@/shared/lib/i18n/dictionaries'
 import {mobileMenuTranslations} from '@/shared/lib/i18n/dictionaries'
 import type {Translator} from '@/shared/lib/i18n/dictionary'

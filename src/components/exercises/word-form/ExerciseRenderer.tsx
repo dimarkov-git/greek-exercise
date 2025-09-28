@@ -4,7 +4,7 @@ import {useTranslations} from '@/hooks/useTranslations'
 import {exerciseUiTranslations} from '@/shared/lib/i18n/dictionaries'
 import {useSettingsStore} from '@/shared/model'
 import type {Language} from '@/shared/model/settings'
-import {ExerciseLayout} from '../shared/ExerciseLayout'
+import {ExerciseLayout} from '@/widgets/exercise-layout'
 import {ExerciseContent} from './ExerciseContent'
 import type {WordFormViewState} from './hooks/useWordFormExercise'
 

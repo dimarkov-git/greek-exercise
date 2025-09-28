@@ -2,7 +2,7 @@ import {AnimatePresence, motion} from 'framer-motion'
 import type React from 'react'
 import {useEffect, useRef, useState} from 'react'
 import {useTranslations} from '@/hooks/useTranslations'
-import {cn} from '@/lib/utils'
+import {cn} from '@/shared/lib'
 import {
 	type ExerciseUiTranslationKey,
 	exerciseUiTranslations
