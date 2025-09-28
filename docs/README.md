@@ -1,12 +1,5 @@
 # Learn Greek Documentation
 
-## 📊 Project Status
-
-**Current version:** MVP with comprehensive architecture and testing
-**Completed phases:** 0-5 (foundation through coverage governance)
-**Coverage:** 80% statements/lines/functions, 75% branches
-**Next phase:** Performance optimization and PWA foundation
-
 ## 📚 Documentation Structure
 
 ### 🏗️ **Technical Documentation** [`technical/`](technical/)
@@ -53,22 +46,23 @@ Core project information and planning:
 
 ## 🎯 Quick Navigation
 
-| Need to...                   | Go to...                                               |
-|------------------------------|-------------------------------------------------------|
-| **Start developing**         | [Getting Started Guide](guides/getting-started.md)   |
-| **Understand the system**    | [Technical Overview](technical/overview.md)          |
-| **Learn app functionality**  | [Project Review](REVIEW.md)                         |
-| **Add translations**         | [i18n Implementation](i18n/implementation.md)        |
-| **Create exercises**         | [Exercise Development](guides/exercise-development.md) |
-| **Write tests**              | [Testing Guide](guides/testing-guide.md)             |
-| **Optimize performance**     | [Performance Guidelines](architecture/performance.md) |
-| **Ensure accessibility**     | [Accessibility Guide](guides/accessibility.md)       |
-| **Understand structure**     | [Project Structure](architecture/project-structure.md) |
-| **Plan future work**         | [Development Roadmap](ROADMAP.md)                    |
+| Need to...                  | Go to...                                               |
+|-----------------------------|--------------------------------------------------------|
+| **Start developing**        | [Getting Started Guide](guides/getting-started.md)     |
+| **Understand the system**   | [Technical Overview](technical/overview.md)            |
+| **Learn app functionality** | [Project Review](REVIEW.md)                            |
+| **Add translations**        | [i18n Implementation](i18n/implementation.md)          |
+| **Create exercises**        | [Exercise Development](guides/exercise-development.md) |
+| **Write tests**             | [Testing Guide](guides/testing-guide.md)               |
+| **Optimize performance**    | [Performance Guidelines](architecture/performance.md)  |
+| **Ensure accessibility**    | [Accessibility Guide](guides/accessibility.md)         |
+| **Understand structure**    | [Project Structure](architecture/project-structure.md) |
+| **Plan future work**        | [Development Roadmap](ROADMAP.md)                      |
 
 ## 🚀 Common Tasks
 
 ### Development Setup
+
 ```bash
 # Complete setup instructions
 docs/guides/getting-started.md
@@ -78,6 +72,7 @@ pnpm install && pnpm dev
 ```
 
 ### Code Quality
+
 ```bash
 # Full validation pipeline
 pnpm validate
@@ -89,6 +84,7 @@ pnpm test:e2e  # End-to-end tests
 ```
 
 ### Documentation Maintenance
+
 ```bash
 # When adding features, update:
 1. Technical docs (if adding APIs/types)
@@ -100,26 +96,31 @@ pnpm test:e2e  # End-to-end tests
 ## 🔗 Cross-References
 
 ### Architecture Dependencies
+
 - **Components** → [Component Architecture](architecture/component-architecture.md)
 - **State Management** → [Technical Overview](technical/overview.md#state-management)
 - **Data Flow** → [API Specification](technical/api-specification.md)
 - **Performance** → [Performance Guidelines](architecture/performance.md)
 
 ### Development Workflows
+
 - **Feature Development** → [Getting Started](guides/getting-started.md) + [Technical Overview](technical/overview.md)
-- **Exercise Creation** → [Exercise Development](guides/exercise-development.md) + [JSON Format](exercise-json-format.md)
+- **Exercise Creation
+  ** → [Exercise Development](guides/exercise-development.md) + [JSON Format](exercise-json-format.md)
 - **Testing Strategy** → [Testing Guide](guides/testing-guide.md) + [Project Review](REVIEW.md)
 - **Internationalization** → [i18n Overview](i18n/overview.md) → [Implementation](i18n/implementation.md)
 
 ## 📊 Key Metrics & Standards
 
 ### Code Quality
+
 - **TypeScript**: Strict mode, no `any` types
 - **Test Coverage**: 80% statements/lines/functions, 75% branches
 - **Performance**: Bundle < 250KB main, < 150KB per route
 - **Accessibility**: WCAG AA compliance
 
 ### Supported Technologies
+
 - **Frontend**: React 19, TypeScript 5.9, Vite 7
 - **State**: TanStack Query 5, Zustand
 - **Testing**: Vitest, Playwright, MSW
