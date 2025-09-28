@@ -15,7 +15,9 @@ const selectorsModule = vi.hoisted(() => ({
 	selectLanguageOptions: vi.fn()
 }))
 
-vi.mock('@/domain/exercises/selectors', () => selectorsModule)
+vi.mock('@/entities/exercise', () => ({
+	...selectorsModule
+}))
 
 import {useExerciseFiltering} from './useExerciseFiltering'
 

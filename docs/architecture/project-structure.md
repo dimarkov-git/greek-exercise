@@ -1,17 +1,17 @@
 # Project structure
 
-This document explains the purpose of each file in the **Learn Greek** application, reflecting the architecture
-established through Phases 0-5.
+This document explains the purpose of each file in the **Learn Greek** application, reflecting the Feature-Sliced Design (FSD) architecture established through Phase 6 migration.
 
 ## Architecture overview
 
-**Current status**: Production-ready React application with comprehensive testing (80% statements/lines/functions, 75% branches)
+**Current status**: Production-ready React application with comprehensive testing (80% statements/lines/functions, 75% branches) and complete FSD architecture
 **Key patterns**:
 
-- **Modern React architecture** with clear module boundaries
+- **Feature-Sliced Design (FSD)** with clear layer boundaries and module dependencies
 - **Type-safe i18n** via generated translation registry
 - **HTTP client** with configurable fallback policies
 - **SSR-safe effects** for DOM state synchronization
+- **Architecture boundaries** enforced via dependency-cruiser and Steiger
 - **Coverage governance** on critical runtime modules
 
 ## 🏗️ Root configuration files
@@ -64,7 +64,7 @@ established through Phases 0-5.
 - HTML reporter for test reports
 - Retry logic for CI/CD
 
-## 📁 Source code structure (src/)
+## 📁 Source code structure (src/) - Feature-Sliced Design
 
 ### Entry point
 
@@ -72,169 +72,176 @@ established through Phases 0-5.
     - Conditionally starts MSW mocks outside production and test environments
     - Wraps the SPA with shared providers, router selection, and the global error boundary
     - Chooses router mode (`browser`, `hash`, `memory`) via `AppRouter`
-- **app/** – application shell utilities
-    - `AppProviders.tsx` – React Query provider + optional devtools loader
-    - `AppRouter.tsx` – environment-driven router selection with React Router 7 futures enabled
-    - `AppErrorBoundary.tsx` – top-level error boundary showing `LoadingOrError`
-    - `QueryDevtools.tsx` – lazy React Query Devtools loader (development only)
-    - `queryClient.ts` – shared query client factory with sensible defaults
-    - `routes/AppRoutes.tsx` – centralised route definitions with lazy page loading and nested shell layout
-    - `shell/AppShell.tsx` – shared header/main/footer wrapper that manages the layout context and suspense boundaries
-- **config/environment.ts** – runtime feature flags (router mode, MSW, devtools)
-
-### Routing and components
-
 - **App.tsx** – delegates to `AppRoutes` for navigation
-    - Keeps the root component thin so the shell and routing concerns live in `app/`
 
-### Pages (pages/)
+### FSD Layer: app/
 
-- **HomePage.tsx** - main landing page with navigation
-    - User language selector (for exercise hints)
-    - Navigation cards to Exercise Library and Builder
-    - Multilingual content with real-time language switching
-- **exercise-library/** – modular exercise library slice following the Phase 1 roadmap refactor
-    - `ExerciseLibrary.tsx` – top-level page container that wires translations, data fetching, and feature slices
-    - `components/` – presentation units (`LibraryHeader`, `UserSettings`, `ExerciseFilters`, `ExerciseGrid`) with
-      isolated styling/animation concerns
-    - `hooks/useExerciseFiltering.ts` – encapsulated filtering state with memoised selectors and reset helpers
-    - `constants.ts` – consolidated translation catalogue for the page
-- **ExerciseLibrary.tsx** – re-export for backwards compatibility with existing route loaders/tests
-- **ExerciseBuilder.tsx** – create custom exercises (placeholder)
-- **ExercisePage.tsx** – exercise execution page
-    - Dynamic exercise loading by ID
-    - Integration with word-form exercise system
-    - Progress tracking and completion handling
+Application initialization, routing, and global providers:
 
-### API layer (api/)
+- **providers/** – Global providers setup
+    - `QueryProvider.tsx` – TanStack Query provider with devtools
+    - `index.ts` – Barrel export for providers
+- **router/** – Routing configuration
+    - `AppRoutes.tsx` – Centralized route definitions with lazy loading
+    - `index.ts` – Barrel export for router utilities
+- **shell/** – Application shell components
+    - `AppShell.tsx` – Header/main/footer layout wrapper
+    - `AppErrorBoundary.tsx` – Top-level error boundary
+    - `index.ts` – Barrel export for shell components
+- **config/** – Application configuration
+    - `environment.ts` – Runtime feature flags and environment variables
+    - `queryClient.ts` – Shared TanStack Query client configuration
+    - `index.ts` – Barrel export for configuration
 
-- **httpClient.ts** – typed HTTP utilities (JSON wrapper with retry + error metadata)
-- **texts.ts** – translation API helpers
-    - Uses `httpClient` for consistent error handling
-    - Validates responses with Valibot
-    - Functions: `getTranslations(language, keys)`
+### FSD Layer: pages/
 
-### Components (components/)
+Page-level components representing application routes:
 
-#### Layout components (components/layout/)
+- **HomePage.tsx** – Main landing page with navigation cards
+- **ExercisePage.tsx** – Exercise execution page
+- **ExerciseLibraryPage.tsx** – Exercise library with filtering and search
+- **LearnPage.tsx** – Learning materials and vocabulary page
+- **exercise-library/** – Exercise library page slice
+    - `ui/ExerciseLibrary.tsx` – Main page component
+    - `model/` – Page-specific state and logic
+    - `hooks/useExerciseFiltering.ts` – Filtering state management
+    - `constants.ts` – Page-specific constants
+    - `index.ts` – Barrel export
 
-- **Footer.tsx** - application footer with copyright and GitHub link
-- **Header.tsx** - main application header with adaptive navigation
-    - Desktop: full navigation bar with settings
-    - Mobile: burger menu with dropdown navigation
-    - Conditional rendering (hidden on exercise pages)
-- **HeaderLogo.tsx** - custom logo with Greek letters (ΕΛ)
-- **HeaderNavigation.tsx** - navigation menu for desktop and mobile
-- **HeaderSettings.tsx** - compact theme and language controls
-- **MainNavigation.tsx** - main navigation cards for homepage
-- **SettingsPanel.tsx** - settings panel with theme and language controls (legacy)
+### FSD Layer: widgets/
 
-#### UI components (components/ui/)
+Composite interface blocks combining multiple features:
 
-- **CompactThemeToggle.tsx** - minimal theme switcher for header (icon only)
-- **LanguageDropdown.tsx** - dropdown language selector with flags
-- **LanguageSelector.tsx** - language selection buttons with flags (legacy)
-- **NavigationCard.tsx** - reusable card for navigation links
-- **ThemeToggle.tsx** - theme switcher with animation (full version)
-- **UserLanguageSelector.tsx** - user language preference selector
+- **app-header/** – Main application header
+    - `ui/AppHeader.tsx` – Header component with navigation
+    - `index.ts` – Barrel export
+- **app-footer/** – Application footer
+    - `ui/AppFooter.tsx` – Footer with links and copyright
+    - `index.ts` – Barrel export
+- **exercise-layout/** – Common exercise page layout
+    - `ui/ExerciseLayout.tsx` – Layout wrapper for exercises
+    - `index.ts` – Barrel export
+- **mobile-menu/** – Mobile navigation menu
+    - `ui/MobileMenu.tsx` – Mobile menu component
+    - `ui/MobileMenuButton.tsx` – Menu trigger button
+    - `index.ts` – Barrel export
+- **main-navigation/** – Main navigation component
+    - `ui/MainNavigation.tsx` – Navigation cards for homepage
+    - `index.ts` – Barrel export
 
-#### Exercise components (components/exercises/)
+### FSD Layer: features/
 
-##### Shared exercise components (components/exercises/shared/)
+Business logic functionality with UI components:
 
-- **ExerciseLayout.tsx** - common layout for all exercise types
-- **ExerciseHeader.tsx** - exercise header with progress and controls
-- **HintSystem.tsx** - adaptive hint system (hover/tap for translations)
-- **PulseEffect.tsx** - animated feedback (green/red pulse effects)
+- **word-form-exercise/** – Word form exercise implementation
+    - `ui/` – Exercise UI components
+        - `WordFormInput.tsx` – Text input with validation
+        - `WordFormFeedback.tsx` – Answer feedback display
+        - `CompletionScreen.tsx` – Exercise completion screen
+        - `ExerciseContent.tsx` – Exercise content renderer
+        - `ExerciseRenderer.tsx` – State machine renderer
+    - `model/` – Exercise state management
+        - `useExerciseStore.ts` – Zustand store for exercise state
+    - `index.ts` – Barrel export with public API
+- **hint-system/** – Multilingual hint system
+    - `ui/HintSystem.tsx` – Adaptive hint display component
+    - `ui/PulseEffect.tsx` – Animated feedback effects
+    - `model/useHintState.ts` – Hint state management
+    - `model/usePulseEffect.ts` – Pulse animation logic
+    - `index.ts` – Barrel export
+- **settings-panel/** – Application settings interface
+    - `ui/SettingsPanel.tsx` – Settings configuration UI
+    - `index.ts` – Barrel export
+- **learn-view/** – Learning materials display
+    - `ui/JsonView.tsx` – JSON data viewer
+    - `ui/TableView.tsx` – Tabular data display
+    - `ui/ViewToggle.tsx` – View switching controls
+    - `index.ts` – Barrel export
+- **exercise-header/** – Exercise page header
+    - `ui/ExerciseHeader.tsx` – Header with progress and controls
+    - `index.ts` – Barrel export
 
-##### Word-form exercise components (components/exercises/word-form/)
+### FSD Layer: entities/
 
-- **WordFormExercise.tsx** - main word-form exercise controller
-- **WordFormExerciseWrapper.tsx** - wrapper for exercise page integration
-- **WordFormInput.tsx** - text input with validation and feedback
-- **WordFormFeedback.tsx** - answer feedback and correction display
-- **CompletionScreen.tsx** - exercise completion summary
-- **ExerciseContent.tsx** - exercise content renderer
-- **ExerciseRenderer.tsx** - exercise state machine renderer
+Business entities with their models and API interactions:
 
-#### Utility components
+- **exercise/** – Exercise domain entity
+    - `model/` – Exercise types and business logic
+        - `types.ts` – Core exercise types
+        - `validation.ts` – Exercise data validation
+    - `api/` – Exercise data access
+        - `useExercises.ts` – Exercise list query hook
+        - `useExercise.ts` – Single exercise query hook
+    - `index.ts` – Barrel export with public API
+- **user/** – User domain entity (future expansion)
+    - `model/types.ts` – User-related types
+    - `index.ts` – Barrel export
 
-- **Head.tsx** - page meta tags management
-- **LoadingOrError.tsx** - universal loading and error state component
+### FSD Layer: shared/
 
-### Mocks and testing (mocks/)
+Reusable code without business logic:
 
-- **browser.ts** - MSW setup for browser
-- **server.ts** - MSW setup for Node.js (tests)
-- **handlers.ts** - mock API endpoint handlers
-    - `/api/texts/common` - translation keys endpoint
-    - `/api/translations/{lang}` - localized strings by language
-    - `/api/exercises` - exercise metadata endpoint
-    - `/api/exercises/{id}` - specific exercise data endpoint
-- **data/texts/common.json** - translation key definitions
-- **data/translations/** - localized strings
-    - `el.json` - Greek translations
-    - `ru.json` - Russian translations
-    - `en.json` - English translations
-- **data/exercises/** - exercise data files
-    - `verbs-be.json` - Greek verb conjugation exercise (είμαι)
+- **ui/** – Common UI components
+    - `button/Button.tsx` – Reusable button component
+    - `input/Input.tsx` – Form input component
+    - `theme-toggle/ThemeToggle.tsx` – Theme switcher
+    - `language-selector/LanguageSelector.tsx` – Language picker
+    - `navigation-card/NavigationCard.tsx` – Navigation card
+    - `loading-or-error/LoadingOrError.tsx` – Loading/error states
+    - `head/Head.tsx` – Page meta tags management
+    - Each component has its own directory with barrel export
+    - `index.ts` – Main UI components barrel export
+- **api/** – HTTP client and API utilities
+    - `httpClient.ts` – Configured HTTP client with retry logic
+    - `texts.ts` – Translation API functions
+    - `index.ts` – Barrel export
+- **lib/** – Utility libraries and helpers
+    - `i18n/` – Internationalization system
+        - `createTranslationDictionary.ts` – Translation dictionary factory
+        - `types.ts` – i18n type definitions
+        - `index.ts` – i18n barrel export
+    - `validation.ts` – Common validation utilities
+    - `exercises.ts` – Greek text processing utilities
+    - `index.ts` – Barrel export for utilities
+- **model/** – Shared state and types
+    - `settings.ts` – App settings Zustand store
+    - `types/` – Common type definitions
+        - `settings.ts` – Settings types
+        - `exercises.ts` – Exercise types (re-exported from entities)
+    - `index.ts` – Barrel export
+- **config/** – Configuration and constants
+    - `constants.ts` – Application constants
+    - `index.ts` – Barrel export
+- **test/** – Testing utilities
+    - `msw/handlers.ts` – Mock Service Worker handlers
+    - `render.tsx` – Test rendering utilities
+    - `index.ts` – Barrel export
 
-### State management and hooks
+### Testing structure
 
-#### Stores (stores/)
+Tests are colocated with their respective layers:
 
-- **settings.ts** - Zustand store for app settings
-    - Theme persistence (light/dark)
-    - UI language (el/ru/en)
-    - User language preferences
-    - Local storage integration
+- **Unit tests**: `__tests__/` directories within each slice
+- **MSW mocks**: `src/shared/test/msw/handlers.ts`
+- **E2E tests**: `tests/` directory at project root
 
-#### Hooks (hooks/)
+### Architecture boundaries
 
-- **useI18n.ts** - main internationalization hook
-    - Integration with TanStack Query for translation loading
-    - Fallback translations for critical UI elements
-    - Translation function `t(key)` with caching
-- **useTranslation.ts** - alternative translation hook (unused)
-- **useExercises.ts** - exercise data management hooks
-    - `useExercises()` - fetch exercise metadata list
-    - `useExercise(id)` - fetch specific exercise data
-    - TanStack Query integration with caching
-- **usePulseEffect.ts** - pulse animation management hook
-- **useHintState.ts** - hint system state management hook
+Import rules enforced by dependency-cruiser:
+- **Pages** → widgets, features, entities, shared
+- **Widgets** → features, entities, shared
+- **Features** → entities, shared
+- **Entities** → shared only
+- **Shared** → no internal dependencies
 
-#### Contexts (contexts/)
+### TypeScript path aliases
 
-- **LanguageContext.tsx** - React context for language management
-    - Language state provider
-    - Language switching utilities
-
-### Testing setup
-
-- **test-setup.ts** - global test environment setup
-    - Initialize jest-dom matchers
-    - MSW server setup for tests
-- **test-utils.test.ts** - utilities for component rendering in tests
-
-### TypeScript types and schemas
-
-#### Types (types/)
-
-- **settings.ts** - app settings types (Language, Theme, AppSettings)
-- **exercises.ts** - exercise system types (WordFormExercise, ExerciseState, etc.)
-
-#### Schemas (schemas/)
-
-- **exercises.ts** - Valibot validation schemas for exercise JSON data
-
-#### Utils (utils/)
-
-- **exercises.ts** - exercise utilities (Greek text normalization, answer validation)
-
-### Styles
-
-- **global.css** - global CSS styles with Tailwind CSS
-- **vite-env.d.ts** - types for Vite environment
+- `@/app/*` → `src/app/*`
+- `@/pages/*` → `src/pages/*`
+- `@/widgets/*` → `src/widgets/*`
+- `@/features/*` → `src/features/*`
+- `@/entities/*` → `src/entities/*`
+- `@/shared/*` → `src/shared/*`
 
 ## 🧪 Testing
 
@@ -273,35 +280,57 @@ established through Phases 0-5.
 
 - **.gitignore** - Git exclusions (node_modules, dist, .env, etc.)
 
-## 🎯 Key files and their purposes
+## 🎯 Key files and their purposes (FSD Structure)
 
 ### Application entry points
 
 - **`src/main.tsx`** - App entry point with MSW setup and providers
-- **`src/App.tsx`** - Main routing and error boundary setup
+- **`src/App.tsx`** - Main routing delegation to AppRoutes
 
-### Core functionality
+### FSD Layer: app/
 
-- **`src/api/texts.ts`** - Translation API functions with Valibot validation
-- **`src/hooks/useI18n.ts`** - Main internationalization hook with TanStack Query
-- **`src/hooks/useExercises.ts`** - Exercise data management hooks
-- **`src/stores/settings.ts`** - Zustand store for app settings and language management
+- **`src/app/providers/QueryProvider.tsx`** - TanStack Query provider configuration
+- **`src/app/router/AppRoutes.tsx`** - Centralized routing with lazy loading
+- **`src/app/shell/AppShell.tsx`** - Application layout shell
+- **`src/app/config/queryClient.ts`** - Shared Query client setup
 
-### Type system and validation
+### FSD Layer: shared/
 
-- **`src/types/exercises.ts`** - TypeScript types for exercise system
-- **`src/schemas/exercises.ts`** - Valibot validation schemas for exercises
-- **`src/utils/exercises.ts`** - Greek text processing utilities
+- **`src/shared/api/texts.ts`** - Translation API functions with Valibot validation
+- **`src/shared/api/httpClient.ts`** - Configured HTTP client with retry logic
+- **`src/shared/lib/i18n/`** - Internationalization system with type-safe dictionaries
+- **`src/shared/lib/exercises.ts`** - Greek text processing utilities
+- **`src/shared/model/settings.ts`** - Zustand store for app settings and language management
+- **`src/shared/model/types/`** - Common type definitions
 
-### UI components
+### FSD Layer: entities/
 
-- **`src/components/layout/Header.tsx`** - Adaptive header navigation
-- **`src/components/exercises/`** - Exercise system components
+- **`src/entities/exercise/api/useExercises.ts`** - Exercise data management hooks
+- **`src/entities/exercise/model/types.ts`** - Exercise domain types
+- **`src/entities/exercise/model/validation.ts`** - Exercise data validation schemas
+
+### FSD Layer: features/
+
+- **`src/features/word-form-exercise/`** - Word form exercise implementation
+- **`src/features/hint-system/`** - Multilingual hint system
+- **`src/features/settings-panel/`** - Application settings interface
+
+### FSD Layer: widgets/
+
+- **`src/widgets/app-header/ui/AppHeader.tsx`** - Main application header
+- **`src/widgets/exercise-layout/ui/ExerciseLayout.tsx`** - Exercise page layout wrapper
+- **`src/widgets/mobile-menu/`** - Mobile navigation components
+
+### FSD Layer: pages/
+
+- **`src/pages/HomePage.tsx`** - Main landing page with navigation
+- **`src/pages/ExercisePage.tsx`** - Exercise execution page
+- **`src/pages/exercise-library/`** - Exercise library page slice
 
 ### Development and testing
 
-- **`src/mocks/`** - MSW configuration with translation and exercise endpoints
-- **`vite.config.ts`** - Vite configuration with path aliases (@/ → src/)
+- **`src/shared/test/msw/handlers.ts`** - MSW mock handlers for API endpoints
+- **`vite.config.ts`** - Vite configuration with FSD path aliases
 
 ## 🎯 Architectural decisions
 
@@ -352,6 +381,16 @@ established through Phases 0-5.
 - **Tree-shakeable dictionaries** - Feature-scoped i18n imports
 - **HTTP fallback policies** - Configurable offline support (Phase 4)
 
+### Feature-Sliced Design architecture (Phase 6)
+
+- **Clear layer boundaries** - Each FSD layer has specific responsibilities and import rules
+- **Barrel exports** - All slices provide public APIs through index.ts files
+- **Architecture linting** - Dependency-cruiser and Steiger enforce FSD compliance
+- **TypeScript path aliases** - Clean imports using @/layer/* syntax
+- **Colocated testing** - Tests live alongside their implementations within slices
+- **84% boundary violation reduction** - From 381 violations to 71 internal warnings
+- **Enhanced developer experience** - Predictable structure and clear module dependencies
+
 ### Development workflow patterns
 
 - **Environment-aware bootstrap** (Phase 0) with conditional MSW/DevTools
@@ -359,6 +398,7 @@ established through Phases 0-5.
 - **Bundle analysis** integrated via `pnpm build:analyze`
 - **Single validation entry point** via `pnpm validate`
 - **Accessibility testing** via @axe-core/playwright integration
+- **Architecture validation** - `pnpm lint:boundaries` checks FSD compliance
 
 ---
 

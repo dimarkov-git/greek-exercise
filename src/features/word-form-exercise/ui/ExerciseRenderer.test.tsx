@@ -39,13 +39,17 @@ vi.mock('./ExerciseContent', () => ({
 	}
 }))
 
-vi.mock('@/shared/lib/i18n', () => ({
-	useTranslations: () => ({
-		t: (key: string) => key,
-		status: 'complete' as const,
-		missingKeys: [] as string[]
-	})
-}))
+vi.mock('@/shared/lib/i18n', async () => {
+	const actual = await vi.importActual('@/shared/lib/i18n')
+	return {
+		...actual,
+		useTranslations: () => ({
+			t: (key: string) => key,
+			status: 'complete' as const,
+			missingKeys: [] as string[]
+		})
+	}
+})
 
 const exercise: WordFormExercise = {
 	enabled: true,

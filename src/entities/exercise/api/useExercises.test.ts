@@ -1,12 +1,12 @@
 import {renderHook} from '@testing-library/react'
+import {QueryClientProvider} from '@tanstack/react-query'
+import React from 'react'
 import {afterEach, describe, expect, it, vi} from 'vitest'
+import {queryClient} from '@/shared/lib/test-utils'
 import {useCustomExercisesStore} from '@/shared/model'
 
-type QueryModule = typeof import('@tanstack/react-query')
-
-const mockUseQuery = vi.fn()
+const useQueryMock = vi.hoisted(() => vi.fn())
 const mockSetQueryData = vi.fn()
-const mockUseQueryClient = vi.fn(() => ({setQueryData: mockSetQueryData}))
 const mockWordFormExerciseQueryOptions = vi.fn((id: string | undefined) => ({
 	queryKey: ['exercise', id],
 	enabled: Boolean(id)
@@ -14,52 +14,57 @@ const mockWordFormExerciseQueryOptions = vi.fn((id: string | undefined) => ({
 const mockCreateExerciseLibraryViewModel = vi.fn(() => ({exercises: []}))
 
 vi.mock('@tanstack/react-query', async () => {
-	const actual = await vi.importActual<QueryModule>('@tanstack/react-query')
+	const actual = await vi.importActual<typeof import('@tanstack/react-query')>(
+		'@tanstack/react-query'
+	)
 
 	return {
 		...actual,
-		useQuery: mockUseQuery,
-		useQueryClient: mockUseQueryClient
+		useQuery: useQueryMock,
+		useQueryClient: () => ({setQueryData: mockSetQueryData})
 	}
 })
 
-vi.mock('@/domain/exercises/adapters', () => ({
+vi.mock('@/entities/exercise/model/adapters', () => ({
 	createExerciseLibraryViewModel: mockCreateExerciseLibraryViewModel
 }))
 
-vi.mock('@/domain/exercises/custom', () => ({
+vi.mock('@/entities/exercise/model/custom', () => ({
 	wordFormExerciseJsonToMetadata: vi.fn(),
 	wordFormExerciseJsonToExercise: vi.fn(exercise => exercise)
 }))
 
-vi.mock('@/domain/exercises/queryOptions', () => ({
+vi.mock('@/entities/exercise/api/queryOptions', () => ({
 	exerciseLibraryQueryOptions: {queryKey: ['exercise-library']} as const,
 	wordFormExerciseQueryOptions: mockWordFormExerciseQueryOptions
 }))
 
-async function loadModule() {
-	const module = await import('@/entities/exercise')
-	return module
+function createWrapper() {
+	return function TestWrapper({children}: {children: React.ReactNode}) {
+		return React.createElement(QueryClientProvider, {client: queryClient}, children)
+	}
 }
 
 describe('useExercises', () => {
 	afterEach(() => {
-		mockUseQuery.mockReset()
-		mockUseQueryClient.mockClear()
+		useQueryMock.mockReset()
 		mockSetQueryData.mockReset()
 		mockWordFormExerciseQueryOptions.mockClear()
+		queryClient.clear()
 		useCustomExercisesStore.getState().clearExercises()
 		localStorage.clear()
 	})
 
 	it('delegates to useQuery with library query options', async () => {
 		const queryResult = {data: ['exercise-a']}
-		mockUseQuery.mockReturnValue(queryResult)
+		useQueryMock.mockReturnValue(queryResult)
 
-		const {useExercises} = await loadModule()
-		const {result, unmount} = renderHook(() => useExercises())
+		const {useExercises} = await import('./useExercises')
+		const {result, unmount} = renderHook(() => useExercises(), {
+			wrapper: createWrapper()
+		})
 
-		expect(mockUseQuery).toHaveBeenCalledWith({
+		expect(useQueryMock).toHaveBeenCalledWith({
 			queryKey: ['exercise-library']
 		})
 		expect(mockCreateExerciseLibraryViewModel).toHaveBeenCalledWith([
@@ -72,13 +77,15 @@ describe('useExercises', () => {
 
 	it('requests exercise data using identifier-specific query options', async () => {
 		const queryResult = {data: {id: 'exercise-42'}}
-		mockUseQuery.mockReturnValue(queryResult)
+		useQueryMock.mockReturnValue(queryResult)
 
-		const {useExercise} = await loadModule()
-		const {result, unmount} = renderHook(() => useExercise('exercise-42'))
+		const {useExercise} = await import('./useExercises')
+		const {result, unmount} = renderHook(() => useExercise('exercise-42'), {
+			wrapper: createWrapper()
+		})
 
 		expect(mockWordFormExerciseQueryOptions).toHaveBeenCalledWith('exercise-42')
-		expect(mockUseQuery).toHaveBeenCalledWith(
+		expect(useQueryMock).toHaveBeenCalledWith(
 			expect.objectContaining({
 				queryKey: ['exercise', 'exercise-42'],
 				enabled: true
@@ -92,10 +99,12 @@ describe('useExercises', () => {
 
 	it('passes undefined ids through to the query option factory', async () => {
 		const queryResult = {data: null}
-		mockUseQuery.mockReturnValue(queryResult)
+		useQueryMock.mockReturnValue(queryResult)
 
-		const {useExercise} = await loadModule()
-		const {result, unmount} = renderHook(() => useExercise(undefined))
+		const {useExercise} = await import('./useExercises')
+		const {result, unmount} = renderHook(() => useExercise(undefined), {
+			wrapper: createWrapper()
+		})
 
 		expect(mockWordFormExerciseQueryOptions).toHaveBeenCalledWith(undefined)
 		expect(result.current).toBe(queryResult)
@@ -137,12 +146,14 @@ describe('useExercises', () => {
 		})
 
 		const queryResult = {data: null}
-		mockUseQuery.mockReturnValue(queryResult)
+		useQueryMock.mockReturnValue(queryResult)
 
-		const {useExercise} = await loadModule()
-		const {result, unmount} = renderHook(() => useExercise('exercise-42'))
+		const {useExercise} = await import('./useExercises')
+		const {result, unmount} = renderHook(() => useExercise('exercise-42'), {
+			wrapper: createWrapper()
+		})
 
-		expect(mockUseQuery).toHaveBeenCalledWith(
+		expect(useQueryMock).toHaveBeenCalledWith(
 			expect.objectContaining({
 				queryKey: ['exercise', 'exercise-42'],
 				enabled: false,

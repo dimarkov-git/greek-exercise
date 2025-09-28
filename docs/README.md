@@ -32,7 +32,8 @@ Type-safe multi-language support system:
 Step-by-step development instructions:
 
 - [**Getting Started**](guides/getting-started.md) – Environment setup with Node 24.x and PNPM 10
-- [**Tailwind CSS Guide**](guides/tailwind-css-guide.md) – Modern Tailwind v4 development patterns and UI/UX best practices
+- [**Tailwind CSS Guide**](guides/tailwind-css-guide.md) – Modern Tailwind v4 development patterns and UI/UX best
+  practices
 - [**Exercise Development**](guides/exercise-development.md) – Creating and configuring exercises
 - [**Testing Guide**](guides/testing-guide.md) – Unit, integration, and E2E testing strategies
 - [**Accessibility Guide**](guides/accessibility.md) – WCAG AA compliance patterns

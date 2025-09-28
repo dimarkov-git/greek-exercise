@@ -32,33 +32,37 @@ vi.mock('framer-motion', () => ({
 }))
 
 // Mock useTranslations hook
-vi.mock('@/shared/lib/i18n', () => ({
-	useTranslations: () => ({
-		t: (key: string) => {
-			const translations: Record<string, string> = {
-				settings: 'Settings'
-			}
-			return translations[key] || key
-		},
-		status: 'complete' as const,
-		missingKeys: [] as string[]
-	})
-}))
+vi.mock('@/shared/lib/i18n', async () => {
+	const actual = await vi.importActual('@/shared/lib/i18n')
+	return {
+		...actual,
+		useTranslations: () => ({
+			t: (key: string) => {
+				const translations: Record<string, string> = {
+					settings: 'Settings'
+				}
+				return translations[key] || key
+			},
+			status: 'complete' as const,
+			missingKeys: [] as string[]
+		})
+	}
+})
 
 // Mock child components
-vi.mock('@/components/ui/LanguageSelector', () => ({
+vi.mock('@/shared/ui/language-selector', () => ({
 	LanguageSelector: () => (
 		<div data-testid='language-selector'>Language Selector Component</div>
 	)
 }))
 
-vi.mock('@/components/ui/ThemeToggle', () => ({
+vi.mock('@/shared/ui/theme-toggle', () => ({
 	ThemeToggle: () => (
 		<div data-testid='theme-toggle'>Theme Toggle Component</div>
 	)
 }))
 
-vi.mock('@/components/ui/UserLanguageSelector', () => ({
+vi.mock('@/shared/ui/user-language-selector', () => ({
 	UserLanguageSelector: () => (
 		<div data-testid='user-language-selector'>
 			User Language Selector Component

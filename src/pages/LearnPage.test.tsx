@@ -15,16 +15,30 @@ vi.mock('react-router', async () => {
 })
 
 vi.mock('@/entities/exercise', () => ({
-	useExercise: vi.fn()
+	useExercise: vi.fn(),
+	DEFAULT_EXERCISE_SETTINGS: {
+		autoAdvance: true,
+		autoAdvanceDelayMs: 1500,
+		allowSkip: false,
+		shuffleCases: false
+	}
 }))
 
-vi.mock('@/shared/lib', () => ({
-	useLayout: vi.fn()
-}))
+vi.mock('@/shared/lib', async () => {
+	const actual = await vi.importActual('@/shared/lib')
+	return {
+		...actual,
+		useLayout: vi.fn()
+	}
+})
 
-vi.mock('@/shared/lib/i18n', () => ({
-	useTranslations: vi.fn()
-}))
+vi.mock('@/shared/lib/i18n', async () => {
+	const actual = await vi.importActual('@/shared/lib/i18n')
+	return {
+		...actual,
+		useTranslations: vi.fn()
+	}
+})
 
 vi.mock('@/shared/ui/head', () => ({
 	Head: vi.fn(({title}: {title: string}) => <title>{title}</title>)
