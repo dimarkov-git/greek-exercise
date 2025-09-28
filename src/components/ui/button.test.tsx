@@ -37,7 +37,7 @@ describe('Button', () => {
 	})
 
 	it('renders with loading state', () => {
-		render(<Button loading>Loading</Button>)
+		render(<Button loading={true}>Loading</Button>)
 		const button = screen.getByRole('button')
 
 		expect(button).toBeDisabled()
@@ -45,7 +45,11 @@ describe('Button', () => {
 	})
 
 	it('disables motion when loading', () => {
-		render(<Button loading motionEnabled>Loading</Button>)
+		render(
+			<Button loading={true} motionEnabled={true}>
+				Loading
+			</Button>
+		)
 		const button = screen.getByRole('button')
 
 		expect(button).toBeDisabled()
@@ -63,7 +67,9 @@ describe('Button', () => {
 
 		expect(screen.getByRole('button', {name: 'Small'})).toHaveClass('h-8')
 		expect(screen.getByRole('button', {name: 'Large'})).toHaveClass('h-12')
-		expect(screen.getByRole('button', {name: 'Extra Large'})).toHaveClass('h-14')
+		expect(screen.getByRole('button', {name: 'Extra Large'})).toHaveClass(
+			'h-14'
+		)
 		expect(screen.getByRole('button', {name: 'I'})).toHaveClass('h-10', 'w-10')
 	})
 
@@ -96,14 +102,17 @@ describe('Button', () => {
 	it('handles disabled state correctly', () => {
 		const handleClick = vi.fn()
 		render(
-			<Button disabled onClick={handleClick}>
+			<Button disabled={true} onClick={handleClick}>
 				Disabled
 			</Button>
 		)
 		const button = screen.getByRole('button')
 
 		expect(button).toBeDisabled()
-		expect(button).toHaveClass('disabled:pointer-events-none', 'disabled:opacity-50')
+		expect(button).toHaveClass(
+			'disabled:pointer-events-none',
+			'disabled:opacity-50'
+		)
 	})
 })
 
@@ -160,7 +169,7 @@ describe('Specialized Button variants', () => {
 	})
 
 	it('renders LoadingButton with loading state', () => {
-		render(<LoadingButton loading>Loading</LoadingButton>)
+		render(<LoadingButton loading={true}>Loading</LoadingButton>)
 		const button = screen.getByRole('button')
 
 		expect(button).toHaveTextContent('Loading...')

@@ -80,11 +80,13 @@ describe('Input', () => {
 	})
 
 	it('renders loading spinner', () => {
-		render(<Input loading placeholder='Loading...' />)
+		render(<Input loading={true} placeholder='Loading...' />)
 		const input = screen.getByRole('textbox')
 
 		expect(input).toBeDisabled()
-		expect(input.parentElement?.querySelector('.animate-spin')).toBeInTheDocument()
+		expect(
+			input.parentElement?.querySelector('.animate-spin')
+		).toBeInTheDocument()
 	})
 
 	it('renders clear button when clearable and has value', async () => {
@@ -93,7 +95,7 @@ describe('Input', () => {
 
 		render(
 			<Input
-				clearable
+				clearable={true}
 				onClear={handleClear}
 				placeholder='Type and clear'
 				value='Some text'
@@ -108,21 +110,29 @@ describe('Input', () => {
 	})
 
 	it('does not render clear button when no value', () => {
-		render(<Input clearable placeholder='Empty input' value='' />)
+		render(<Input clearable={true} placeholder='Empty input' value='' />)
 		expect(screen.queryByRole('button')).not.toBeInTheDocument()
 	})
 
 	it('handles disabled state correctly', () => {
-		render(<Input disabled placeholder='Disabled input' />)
+		render(<Input disabled={true} placeholder='Disabled input' />)
 		const input = screen.getByRole('textbox')
 
 		expect(input).toBeDisabled()
-		expect(input).toHaveClass('disabled:cursor-not-allowed', 'disabled:opacity-50')
+		expect(input).toHaveClass(
+			'disabled:cursor-not-allowed',
+			'disabled:opacity-50'
+		)
 	})
 
 	it('does not show clear button when disabled', () => {
 		render(
-			<Input clearable disabled placeholder='Disabled with clear' value='text' />
+			<Input
+				clearable={true}
+				disabled={true}
+				placeholder='Disabled with clear'
+				value='text'
+			/>
 		)
 		expect(screen.queryByRole('button')).not.toBeInTheDocument()
 	})
@@ -169,11 +179,13 @@ describe('Specialized Input variants', () => {
 	})
 
 	it('renders LoadingInput with loading state', () => {
-		render(<LoadingInput loading placeholder='Loading...' />)
+		render(<LoadingInput loading={true} placeholder='Loading...' />)
 		const input = screen.getByRole('textbox')
 
 		expect(input).toBeDisabled()
-		expect(input.parentElement?.querySelector('.animate-spin')).toBeInTheDocument()
+		expect(
+			input.parentElement?.querySelector('.animate-spin')
+		).toBeInTheDocument()
 	})
 
 	it('renders LoadingInput without loading state', () => {
@@ -181,6 +193,8 @@ describe('Specialized Input variants', () => {
 		const input = screen.getByRole('textbox')
 
 		expect(input).not.toBeDisabled()
-		expect(input.parentElement?.querySelector('.animate-spin')).not.toBeInTheDocument()
+		expect(
+			input.parentElement?.querySelector('.animate-spin')
+		).not.toBeInTheDocument()
 	})
 })

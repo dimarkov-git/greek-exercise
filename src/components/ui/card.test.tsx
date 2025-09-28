@@ -80,7 +80,7 @@ describe('Card', () => {
 		const user = userEvent.setup()
 
 		render(
-			<Card interactive onClick={handleClick}>
+			<Card interactive={true} onClick={handleClick}>
 				Interactive Card
 			</Card>
 		)
@@ -224,15 +224,14 @@ describe('Specialized Card variants', () => {
 
 	it('renders ExerciseCard with title and description', () => {
 		render(
-			<ExerciseCard
-				description='Exercise description'
-				title='Exercise Title'
-			>
+			<ExerciseCard description='Exercise description' title='Exercise Title'>
 				Exercise content
 			</ExerciseCard>
 		)
 
-		expect(screen.getByRole('heading', {name: 'Exercise Title'})).toBeInTheDocument()
+		expect(
+			screen.getByRole('heading', {name: 'Exercise Title'})
+		).toBeInTheDocument()
 		expect(screen.getByText('Exercise description')).toBeInTheDocument()
 		expect(screen.getByText('Exercise content')).toBeInTheDocument()
 	})
@@ -240,21 +239,22 @@ describe('Specialized Card variants', () => {
 	it('renders ExerciseCard without description', () => {
 		render(<ExerciseCard title='Simple Exercise' />)
 
-		expect(screen.getByRole('heading', {name: 'Simple Exercise'})).toBeInTheDocument()
+		expect(
+			screen.getByRole('heading', {name: 'Simple Exercise'})
+		).toBeInTheDocument()
 		expect(screen.queryByText('Exercise description')).not.toBeInTheDocument()
 	})
 
 	it('renders SettingsCard with title and description', () => {
 		render(
-			<SettingsCard
-				description='Settings description'
-				title='Settings Title'
-			>
+			<SettingsCard description='Settings description' title='Settings Title'>
 				Settings content
 			</SettingsCard>
 		)
 
-		expect(screen.getByRole('heading', {name: 'Settings Title'})).toBeInTheDocument()
+		expect(
+			screen.getByRole('heading', {name: 'Settings Title'})
+		).toBeInTheDocument()
 		expect(screen.getByText('Settings description')).toBeInTheDocument()
 		expect(screen.getByText('Settings content')).toBeInTheDocument()
 	})
@@ -262,7 +262,9 @@ describe('Specialized Card variants', () => {
 	it('renders SettingsCard without description', () => {
 		render(<SettingsCard title='Simple Settings' />)
 
-		expect(screen.getByRole('heading', {name: 'Simple Settings'})).toBeInTheDocument()
+		expect(
+			screen.getByRole('heading', {name: 'Simple Settings'})
+		).toBeInTheDocument()
 		expect(screen.queryByText('Settings description')).not.toBeInTheDocument()
 	})
 })

@@ -79,6 +79,10 @@ export interface InputProps
 	iconPosition?: 'left' | 'right'
 	clearable?: boolean
 	onClear?: () => void
+	'aria-label'?: string
+	'aria-describedby'?: string
+	error?: boolean
+	errorMessage?: string
 }
 
 // Left Icon Component
@@ -123,11 +127,13 @@ function ClearButton({
 }) {
 	return (
 		<button
+			aria-label="Clear input"
 			className='rounded-full p-0.5 text-[var(--color-text-tertiary)] transition-colors hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-focus-ring)]'
 			onClick={onClear}
 			type='button'
 		>
 			<svg
+				aria-hidden="true"
 				className={getIconSize(size)}
 				fill='none'
 				stroke='currentColor'

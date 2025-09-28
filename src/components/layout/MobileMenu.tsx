@@ -67,7 +67,7 @@ export function MobileMenu({id, isOpen, onClose}: MobileMenuProps) {
 					/>
 					<motion.div
 						animate={{opacity: 1, height: 'auto'}}
-						className='relative z-50 border-gray-200 border-t bg-white/90 backdrop-blur-md md:hidden dark:border-gray-700 dark:bg-gray-800/90'
+						className='relative z-50 border-[var(--color-border)] border-t bg-[var(--color-surface-overlay)] backdrop-blur-md md:hidden'
 						data-testid='mobile-menu'
 						exit={{opacity: 0, height: 0}}
 						id={id}
@@ -80,8 +80,8 @@ export function MobileMenu({id, isOpen, onClose}: MobileMenuProps) {
 									className={cn(
 										'flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-sm transition-colors',
 										isActive(item.path)
-											? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
-											: 'text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white'
+											? 'bg-[var(--color-primary)]/10 text-[var(--color-primary)]'
+											: 'text-[var(--color-text-secondary)] hover:bg-[var(--color-hover-overlay)] hover:text-[var(--color-text-primary)]'
 									)}
 									key={item.path}
 									onClick={onClose}
@@ -92,9 +92,9 @@ export function MobileMenu({id, isOpen, onClose}: MobileMenuProps) {
 								</Link>
 							))}
 
-							<div className='border-gray-200 border-t pt-3 dark:border-gray-700'>
+							<div className='border-[var(--color-border)] border-t pt-3'>
 								<div className='flex items-center justify-between px-3 py-2'>
-									<span className='font-medium text-gray-700 text-sm dark:text-gray-300'>
+									<span className='font-medium text-[var(--color-text-secondary)] text-sm'>
 										{t('settings')}
 									</span>
 									<div className='flex items-center gap-2'>

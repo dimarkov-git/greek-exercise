@@ -1,33 +1,34 @@
+import {memo} from 'react'
 import {cn} from '@/lib/utils'
 
 interface SkeletonProps {
 	className?: string
 }
 
-export function Skeleton({className}: SkeletonProps) {
+export const Skeleton = memo(function Skeleton({className}: SkeletonProps) {
 	return (
 		<div
 			className={cn(
-				'animate-pulse rounded-md bg-gray-200 dark:bg-gray-700',
+				'animate-pulse rounded-md bg-[var(--color-surface)] dark:bg-[var(--color-surface-elevated)]',
 				className
 			)}
 		/>
 	)
-}
+})
 
 // Predefined skeleton components for common use cases
 
-export function SkeletonText({className}: SkeletonProps) {
+export const SkeletonText = memo(function SkeletonText({className}: SkeletonProps) {
 	return <Skeleton className={cn('h-4 w-full', className)} />
-}
+})
 
-export function SkeletonTitle({className}: SkeletonProps) {
+export const SkeletonTitle = memo(function SkeletonTitle({className}: SkeletonProps) {
 	return <Skeleton className={cn('h-6 w-3/4', className)} />
-}
+})
 
-export function SkeletonButton({className}: SkeletonProps) {
+export const SkeletonButton = memo(function SkeletonButton({className}: SkeletonProps) {
 	return <Skeleton className={cn('h-10 w-24 rounded-lg', className)} />
-}
+})
 
 export function SkeletonCard({className}: SkeletonProps) {
 	return (

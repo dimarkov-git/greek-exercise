@@ -50,7 +50,6 @@ export {
 	SearchInput,
 	TextInput
 } from './input'
-
 // Existing UI Components
 export {
 	Skeleton,
@@ -62,3 +61,45 @@ export {
 	SkeletonText,
 	SkeletonTitle
 } from './skeleton'
+export {
+	Blockquote,
+	Body,
+	BodyLarge,
+	BodySmall,
+	Caption,
+	Code,
+	Display,
+	DisplayLarge,
+	Heading,
+	Hero,
+	HeroLarge,
+	Link,
+	List,
+	ListItem,
+	OrderedList,
+	Pre,
+	Subtitle,
+	Title,
+	Typography,
+	type TypographyProps
+} from './typography'
+
+export {
+	Spacing,
+	Stack,
+	VStack,
+	HStack,
+	Grid,
+	Container,
+	Section,
+	Spacer,
+	PageHeader,
+	PageContent,
+	PageFooter,
+	type SpacingProps,
+	type StackProps,
+	type GridProps,
+	type ContainerProps,
+	type SectionProps,
+	type SpacerProps
+} from './spacing'

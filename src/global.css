@@ -81,20 +81,35 @@
 	--space-28: 7rem; /* 112px */
 	--space-32: 8rem; /* 128px */
 
-	/* Typography Scale */
-	--text-xs: 0.75rem; /* 12px */
-	--text-sm: 0.875rem; /* 14px */
-	--text-base: 1rem; /* 16px */
-	--text-lg: 1.125rem; /* 18px */
-	--text-xl: 1.25rem; /* 20px */
-	--text-2xl: 1.5rem; /* 24px */
-	--text-3xl: 1.875rem; /* 30px */
-	--text-4xl: 2.25rem; /* 36px */
-	--text-5xl: 3rem; /* 48px */
-	--text-6xl: 3.75rem; /* 60px */
-	--text-7xl: 4.5rem; /* 72px */
-	--text-8xl: 6rem; /* 96px */
-	--text-9xl: 8rem; /* 128px */
+	/* Typography Scale - Fluid Sizing */
+	--text-xs: clamp(0.65rem, 0.5rem + 0.25vw, 0.75rem); /* 10-12px */
+	--text-sm: clamp(0.775rem, 0.7rem + 0.375vw, 0.875rem); /* 12.4-14px */
+	--text-base: clamp(0.875rem, 0.8rem + 0.5vw, 1rem); /* 14-16px */
+	--text-lg: clamp(1rem, 0.9rem + 0.625vw, 1.125rem); /* 16-18px */
+	--text-xl: clamp(1.125rem, 1rem + 0.75vw, 1.25rem); /* 18-20px */
+	--text-2xl: clamp(1.25rem, 1.1rem + 1vw, 1.5rem); /* 20-24px */
+	--text-3xl: clamp(1.5rem, 1.2rem + 1.5vw, 1.875rem); /* 24-30px */
+	--text-4xl: clamp(1.875rem, 1.5rem + 2vw, 2.25rem); /* 30-36px */
+	--text-5xl: clamp(2.25rem, 1.8rem + 2.5vw, 3rem); /* 36-48px */
+	--text-6xl: clamp(2.75rem, 2.25rem + 3vw, 3.75rem); /* 44-60px */
+	--text-7xl: clamp(3.25rem, 2.75rem + 3.5vw, 4.5rem); /* 52-72px */
+	--text-8xl: clamp(4rem, 3.5rem + 4vw, 6rem); /* 64-96px */
+	--text-9xl: clamp(5rem, 4rem + 5vw, 8rem); /* 80-128px */
+
+	/* Typography Semantic Sizes */
+	--text-caption: var(--text-xs);
+	--text-body-small: var(--text-sm);
+	--text-body: var(--text-base);
+	--text-body-large: var(--text-lg);
+	--text-subtitle: var(--text-xl);
+	--text-title: var(--text-2xl);
+	--text-heading: var(--text-3xl);
+	--text-display-small: var(--text-4xl);
+	--text-display: var(--text-5xl);
+	--text-display-large: var(--text-6xl);
+	--text-hero: var(--text-7xl);
+	--text-hero-large: var(--text-8xl);
+	--text-hero-xl: var(--text-9xl);
 
 	/* Line Heights */
 	--leading-none: 1;
@@ -115,18 +130,18 @@
 	--radius-3xl: 1.5rem; /* 24px */
 	--radius-full: 9999px;
 
-	/* Shadows - Tailwind v4 Updated Scale */
-	--shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	/* Shadows - Tailwind v4 Scale with Modern RGB Syntax */
+	--shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 	--shadow-sm:
-		0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-	--shadow-base:
-		0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+		0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 	--shadow-md:
-		0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+		0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 	--shadow-lg:
-		0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-	--shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-	--shadow-2xl: 0 50px 100px -20px rgba(0, 0, 0, 0.25);
+		0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+	--shadow-xl:
+		0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+	--shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+	--shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
 
 	/* Z-Index Scale */
 	--z-0: 0;
@@ -208,6 +223,20 @@
 	--color-focus-ring: #60a5fa80;
 	--color-hover-overlay: rgba(255, 255, 255, 0.05);
 	--color-active-overlay: rgba(255, 255, 255, 0.1);
+
+	/* Dark Mode Shadows with Enhanced Opacity */
+	--shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+	--shadow-sm:
+		0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+	--shadow-md:
+		0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+	--shadow-lg:
+		0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+	--shadow-xl:
+		0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+	--shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+	--shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.3);
+
 	color-scheme: dark;
 }
 

@@ -47,6 +47,7 @@ export interface ButtonProps
 	asChild?: boolean
 	loading?: boolean
 	motionEnabled?: boolean
+	loadingText?: string
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -58,6 +59,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 			asChild = false,
 			loading = false,
 			motionEnabled = true,
+			loadingText,
 			disabled,
 			children,
 			...props
@@ -69,14 +71,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 		const buttonContent = (
 			<>
 				{loading && (
-					<div className='mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent' />
+					<div
+						aria-hidden="true"
+						className='mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent'
+					/>
 				)}
-				{children}
+				{loading && loadingText ? loadingText : children}
 			</>
 		)
 
 		const buttonElement = (
 			<button
+				aria-busy={loading}
+				aria-disabled={isDisabled}
 				className={cn(buttonVariants({variant, size, className}))}
 				disabled={isDisabled}
 				ref={ref}
