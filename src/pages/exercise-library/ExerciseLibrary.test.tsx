@@ -29,8 +29,50 @@ vi.mock('@/entities/exercise', () => ({
 vi.mock('@/shared/lib/i18n', () => ({
 	useTranslations: vi.fn(),
 	exerciseLibraryTranslations: {
-		'library.title': 'Exercise Library',
-		'library.description': 'Choose an exercise'
+		keys: [
+			'exerciseLibrary',
+			'exerciseLibraryDesc',
+			'settings',
+			'filters',
+			'noExercisesFound',
+			'clearFilters',
+			'hintLanguage',
+			'userLanguageDescription',
+			'exerciseCount',
+			'noExercisesFoundDesc',
+			'startExercise',
+			'learn',
+			'difficulty',
+			'tags',
+			'language',
+			'all',
+			'ui.searchEmoji',
+			'ui.documentEmoji',
+			'ui.booksEmoji',
+			'ui.timerEmoji',
+			'exercise.cases',
+			'exercise.blocks',
+			'exercise.minutes',
+			'ui.hashSymbol',
+			'ui.plusSymbol',
+			'ui.expand',
+			'ui.collapse',
+			'ui.colon',
+			'difficulty.a0',
+			'difficulty.a1',
+			'difficulty.a2',
+			'difficulty.b1',
+			'difficulty.b2',
+			'difficulty.c1',
+			'difficulty.c2',
+			'builder.customBadge'
+		],
+		lookupKeys: [],
+		requests: [],
+		cacheKey: 'mock-cache-key',
+		fixedLanguageKeys: {},
+		getRequest: vi.fn(),
+		getFixedLanguage: vi.fn()
 	}
 }))
 

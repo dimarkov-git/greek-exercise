@@ -1,4 +1,6 @@
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {renderHook} from '@testing-library/react'
+import type React from 'react'
 import {afterEach, describe, expect, it, vi} from 'vitest'
 import {createTranslationDictionary} from '@/shared/lib/i18n'
 
@@ -26,10 +28,29 @@ function mockUseQueryError(errorValue: unknown) {
 	})
 }
 
+function createWrapper() {
+	const queryClient = new QueryClient({
+		defaultOptions: {
+			queries: {retry: false},
+			mutations: {retry: false}
+		}
+	})
+
+	return function TestWrapper({children}: {children: React.ReactNode}) {
+		return (
+			<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+		)
+	}
+}
+
 async function renderUseTranslations(keys: DictionaryKeys) {
+	// Ensure the module is reloaded with the mocked version
+	vi.resetModules()
 	const useTranslations = await loadUseTranslations()
 	const dictionary = createTranslationDictionary(keys)
-	return renderHook(() => useTranslations(dictionary))
+	return renderHook(() => useTranslations(dictionary), {
+		wrapper: createWrapper()
+	})
 }
 
 describe('useTranslations error normalisation', () => {
@@ -40,6 +61,7 @@ describe('useTranslations error normalisation', () => {
 	})
 
 	it('surfaces existing Error instances from query results', async () => {
+		vi.resetModules()
 		mockUseQueryError(new Error('Service unavailable'))
 
 		const {result, unmount} = await renderUseTranslations([
@@ -55,6 +77,7 @@ describe('useTranslations error normalisation', () => {
 	})
 
 	it('converts non-error rejection values into Error instances', async () => {
+		vi.resetModules()
 		mockUseQueryError('server crashed')
 
 		const {result, unmount} = await renderUseTranslations([

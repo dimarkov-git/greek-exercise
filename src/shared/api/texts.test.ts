@@ -1,36 +1,82 @@
-import {afterEach, describe, expect, it, vi} from 'vitest'
+import {afterEach, beforeAll, describe, expect, it, vi} from 'vitest'
 
-const requestJson = vi.fn()
 const INVALID_ERROR_PATTERN = /Invalid/
-
-vi.mock('./httpClient', () => ({
-	requestJson
-}))
+const originalFetch = globalThis.fetch
 
 describe('getTranslations', () => {
+	beforeAll(() => {
+		vi.doMock('@/app/config/environment', () => ({
+			AppModeEnum: {
+				development: 'development',
+				production: 'production',
+				test: 'test'
+			},
+			RouterModeEnum: {
+				browser: 'browser',
+				hash: 'hash',
+				memory: 'memory'
+			},
+			environment: {
+				mode: 'test',
+				baseURL: '/',
+				routerMode: 'memory' as const,
+				enableMockServiceWorker: false,
+				enableQueryDevtools: false,
+				enableHTTPFallback: false
+			}
+		}))
+
+		vi.doMock('./fallbacks', () => ({
+			resolveFallbackResponse: vi.fn(() => {})
+		}))
+	})
+
 	afterEach(() => {
-		requestJson.mockReset()
+		vi.resetModules()
+		vi.restoreAllMocks()
+		globalThis.fetch = originalFetch
 	})
 
 	it('fetches translations with provided keys and language', async () => {
-		requestJson.mockResolvedValue({
-			translations: {'app.title': 'Learn Greek'}
+		const payload = {translations: {'app.title': 'Learn Greek'}}
+		const response = new Response(JSON.stringify(payload), {
+			status: 200,
+			headers: {'Content-Type': 'application/json'}
 		})
+		const fetchMock = vi.fn().mockResolvedValue(response)
+
+		globalThis.fetch = fetchMock as typeof globalThis.fetch
 
 		const {getTranslations} = await import('./texts')
 		const result = await getTranslations('en', ['app.title'])
 
-		expect(requestJson).toHaveBeenCalledWith('/api/translations', {
-			method: 'POST',
-			body: {language: 'en', keys: ['app.title']}
-		})
+		expect(fetchMock).toHaveBeenCalledWith(
+			'/api/translations',
+			expect.objectContaining({
+				method: 'POST',
+				body: JSON.stringify({language: 'en', keys: ['app.title']})
+			})
+		)
+
+		// Check that headers contain the correct content type
+		const call = fetchMock.mock.calls[0]
+		if (call?.[1]) {
+			const headers = call[1].headers as Headers
+			expect(headers.get('Content-Type')).toBe('application/json')
+		}
+
 		expect(result).toEqual({'app.title': 'Learn Greek'})
 	})
 
 	it('throws when server returns invalid translation payload', async () => {
-		requestJson.mockResolvedValue({
-			translations: {'app.title': 123}
+		const payload = {translations: {'app.title': 123}}
+		const response = new Response(JSON.stringify(payload), {
+			status: 200,
+			headers: {'Content-Type': 'application/json'}
 		})
+		const fetchMock = vi.fn().mockResolvedValue(response)
+
+		globalThis.fetch = fetchMock as typeof globalThis.fetch
 
 		const {getTranslations} = await import('./texts')
 

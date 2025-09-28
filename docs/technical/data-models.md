@@ -242,7 +242,7 @@ Server State (TanStack Query) ↔ MSW mock API
 
 - **[API Specification](api-specification.md)** - API endpoints and responses
 - **[Technical Overview](overview.md)** - System architecture
-- **[Exercise JSON Format](../exercise-json-format.md)** - JSON file structure
+- **[Exercise JSON Format](../guides/exercise-json-format.md)** - JSON file structure
 - **[Development Guide](../guides/exercise-development.md)** - Creating exercises
 
 ## 📊 Type Coverage Metrics

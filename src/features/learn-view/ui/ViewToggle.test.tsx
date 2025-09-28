@@ -37,7 +37,16 @@ vi.mock('@/shared/lib/i18n', () => ({
 		},
 		status: 'complete' as const,
 		missingKeys: [] as string[]
-	})
+	}),
+	viewToggleTranslations: {
+		keys: ['jsonView', 'tableView'],
+		lookupKeys: [],
+		requests: [],
+		cacheKey: 'mock-cache-key',
+		fixedLanguageKeys: {},
+		getRequest: vi.fn(),
+		getFixedLanguage: vi.fn()
+	}
 }))
 
 describe('ViewToggle', () => {

@@ -10,7 +10,16 @@ vi.mock('@/shared/lib/i18n', () => ({
 		t: (key: string) => key,
 		status: 'complete' as const,
 		missingKeys: [] as string[]
-	})
+	}),
+	themeToggleTranslations: {
+		keys: ['lightTheme', 'darkTheme', 'ui.sunEmoji', 'ui.moonEmoji'],
+		lookupKeys: [],
+		requests: [],
+		cacheKey: 'mock-cache-key',
+		fixedLanguageKeys: {},
+		getRequest: vi.fn(),
+		getFixedLanguage: vi.fn()
+	}
 }))
 
 describe('ThemeToggle', () => {

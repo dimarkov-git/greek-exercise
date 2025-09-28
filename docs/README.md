@@ -43,7 +43,7 @@ Core project information and planning:
 
 - [**User Guide**](guides/user-guide.md) – Comprehensive application functionality from a user perspective
 - [**Development Roadmap**](ROADMAP.md) – Phases 6+ with performance and PWA focus
-- [**Exercise JSON Format**](exercise-json-format.md) – Exercise data structure specification
+- [**Exercise JSON Format**](guides/exercise-json-format.md) – Exercise data structure specification
 
 ## 🎯 Quick Navigation
 
@@ -76,7 +76,7 @@ Core project information and planning:
 
 - **Feature Development** → [Getting Started](guides/getting-started.md) + [Technical Overview](technical/overview.md)
 - **Exercise Creation
-  ** → [Exercise Development](guides/exercise-development.md) + [JSON Format](exercise-json-format.md)
+  ** → [Exercise Development](guides/exercise-development.md) + [JSON Format](guides/exercise-json-format.md)
 - **Testing Strategy** → [Testing Guide](guides/testing-guide.md) + [User Guide](guides/user-guide.md)
 - **Internationalization** → [i18n Overview](i18n/overview.md) → [Implementation](i18n/implementation.md)
 
