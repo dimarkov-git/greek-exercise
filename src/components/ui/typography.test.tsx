@@ -279,7 +279,7 @@ describe('Specialized Typography components', () => {
 	})
 
 	it('renders Link with underline', () => {
-		render(<Link href='#'>Link text</Link>)
+		render(<Link {...({href: '#'} as {href: string})}>Link text</Link>)
 		const element = screen.getByRole('link')
 
 		expect(element).toBeInTheDocument()

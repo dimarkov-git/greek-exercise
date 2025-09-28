@@ -72,7 +72,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 			<>
 				{loading && (
 					<div
-						aria-hidden="true"
+						aria-hidden='true'
 						className='mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent'
 					/>
 				)}
@@ -155,7 +155,7 @@ export function IconButton(props: Omit<ButtonProps, 'size'>) {
 
 export function LoadingButton({loading, children, ...props}: ButtonProps) {
 	return (
-		<Button loading={loading} {...props}>
+		<Button loading={loading ?? false} {...props}>
 			{loading ? 'Loading...' : children}
 		</Button>
 	)

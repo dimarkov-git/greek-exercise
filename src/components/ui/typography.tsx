@@ -1,5 +1,5 @@
 import {cva, type VariantProps} from 'class-variance-authority'
-import {createElement, forwardRef, type HTMLAttributes} from 'react'
+import React, {createElement, forwardRef, type HTMLAttributes} from 'react'
 import {cn} from '@/lib/utils'
 
 // Typography variants using design tokens
@@ -112,7 +112,7 @@ const elementSizeDefaults = {
 export interface TypographyProps
 	extends Omit<HTMLAttributes<HTMLElement>, 'color'>,
 		VariantProps<typeof typographyVariants> {
-	as?: keyof JSX.IntrinsicElements
+	as?: keyof React.JSX.IntrinsicElements
 	truncate?: boolean
 	responsive?: boolean
 }
@@ -143,7 +143,7 @@ export const Typography = forwardRef<HTMLElement, TypographyProps>(
 			] as TypographyProps['size'])
 
 		return createElement(
-			as,
+			as as string,
 			{
 				className: cn(
 					typographyVariants({

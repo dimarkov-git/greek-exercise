@@ -24,9 +24,7 @@ describe('Spacing', () => {
 	})
 
 	it('renders with custom element', () => {
-		render(
-			<Spacing as='section'>Section content</Spacing>
-		)
+		render(<Spacing as='section'>Section content</Spacing>)
 		const element = screen.getByText('Section content')
 
 		expect(element.tagName).toBe('SECTION')
@@ -55,7 +53,7 @@ describe('Spacing', () => {
 
 	it('combines multiple spacing properties', () => {
 		render(
-			<Spacing p={4} m={2} gap={1}>
+			<Spacing gap={1} m={2} p={4}>
 				Combined spacing
 			</Spacing>
 		)
@@ -210,9 +208,7 @@ describe('Container', () => {
 	})
 
 	it('renders without centering', () => {
-		render(
-			<Container center={false}>Uncentered container</Container>
-		)
+		render(<Container center={false}>Uncentered container</Container>)
 		const container = screen.getByText('Uncentered container')
 
 		expect(container).not.toHaveClass('mx-auto')

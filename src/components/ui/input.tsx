@@ -72,7 +72,7 @@ function getPaddingClasses(
 }
 
 export interface InputProps
-	extends InputHTMLAttributes<HTMLInputElement>,
+	extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>,
 		VariantProps<typeof inputVariants> {
 	loading?: boolean
 	icon?: React.ReactNode
@@ -127,13 +127,13 @@ function ClearButton({
 }) {
 	return (
 		<button
-			aria-label="Clear input"
+			aria-label='Clear input'
 			className='rounded-full p-0.5 text-[var(--color-text-tertiary)] transition-colors hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-focus-ring)]'
 			onClick={onClear}
 			type='button'
 		>
 			<svg
-				aria-hidden="true"
+				aria-hidden='true'
 				className={getIconSize(size)}
 				fill='none'
 				stroke='currentColor'
@@ -185,22 +185,22 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 		ref
 	) => {
 		const hasIcon = Boolean(icon)
-		const hasClearable = clearable && value && !disabled
-		const isLoading = loading && !disabled
+		const hasClearable = Boolean(clearable && value && !disabled)
+		const isLoading = Boolean(loading && !disabled)
 
 		const paddingClass = getPaddingClasses(
 			hasIcon,
 			iconPosition,
 			hasClearable,
 			isLoading,
-			size
+			size ?? 'default'
 		)
 
 		return (
 			<div className='relative'>
 				{/* Left Icon */}
 				{hasIcon && iconPosition === 'left' && (
-					<LeftIcon icon={icon} size={size} />
+					<LeftIcon icon={icon} size={size ?? 'default'} />
 				)}
 
 				<input
@@ -219,18 +219,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 				{/* Right side content */}
 				<div className='-translate-y-1/2 absolute top-1/2 right-3 flex items-center gap-2'>
 					{/* Loading Spinner */}
-					{isLoading && <LoadingSpinner size={size} />}
+					{isLoading && <LoadingSpinner size={size ?? 'default'} />}
 
 					{/* Clear Button */}
-					{hasClearable && !isLoading && (
-						<ClearButton onClear={onClear} size={size} />
+					{hasClearable && !isLoading && onClear && (
+						<ClearButton onClear={onClear} size={size ?? 'default'} />
 					)}
 
 					{/* Right Icon */}
 					{hasIcon &&
 						iconPosition === 'right' &&
 						!hasClearable &&
-						!isLoading && <RightIcon icon={icon} size={size} />}
+						!isLoading && <RightIcon icon={icon} size={size ?? 'default'} />}
 				</div>
 			</div>
 		)
@@ -307,5 +307,5 @@ export function TextInput(props: Omit<InputProps, 'type'>) {
 }
 
 export function LoadingInput({loading, ...props}: InputProps) {
-	return <Input loading={loading} {...props} />
+	return <Input loading={loading ?? false} {...props} />
 }

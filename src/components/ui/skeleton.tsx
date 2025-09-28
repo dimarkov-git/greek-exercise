@@ -5,7 +5,9 @@ interface SkeletonProps {
 	className?: string
 }
 
-export const Skeleton = memo(function Skeleton({className}: SkeletonProps) {
+export const Skeleton = memo(function SkeletonComponent({
+	className
+}: SkeletonProps) {
 	return (
 		<div
 			className={cn(
@@ -18,15 +20,21 @@ export const Skeleton = memo(function Skeleton({className}: SkeletonProps) {
 
 // Predefined skeleton components for common use cases
 
-export const SkeletonText = memo(function SkeletonText({className}: SkeletonProps) {
+export const SkeletonText = memo(function SkeletonTextComponent({
+	className
+}: SkeletonProps) {
 	return <Skeleton className={cn('h-4 w-full', className)} />
 })
 
-export const SkeletonTitle = memo(function SkeletonTitle({className}: SkeletonProps) {
+export const SkeletonTitle = memo(function SkeletonTitleComponent({
+	className
+}: SkeletonProps) {
 	return <Skeleton className={cn('h-6 w-3/4', className)} />
 })
 
-export const SkeletonButton = memo(function SkeletonButton({className}: SkeletonProps) {
+export const SkeletonButton = memo(function SkeletonButtonComponent({
+	className
+}: SkeletonProps) {
 	return <Skeleton className={cn('h-10 w-24 rounded-lg', className)} />
 })
 

@@ -62,6 +62,25 @@ export {
 	SkeletonTitle
 } from './skeleton'
 export {
+	Container,
+	type ContainerProps,
+	Grid,
+	type GridProps,
+	HStack,
+	PageContent,
+	PageFooter,
+	PageHeader,
+	Section,
+	type SectionProps,
+	Spacer,
+	type SpacerProps,
+	Spacing,
+	type SpacingProps,
+	Stack,
+	type StackProps,
+	VStack
+} from './spacing'
+export {
 	Blockquote,
 	Body,
 	BodyLarge,
@@ -83,23 +102,3 @@ export {
 	Typography,
 	type TypographyProps
 } from './typography'
-
-export {
-	Spacing,
-	Stack,
-	VStack,
-	HStack,
-	Grid,
-	Container,
-	Section,
-	Spacer,
-	PageHeader,
-	PageContent,
-	PageFooter,
-	type SpacingProps,
-	type StackProps,
-	type GridProps,
-	type ContainerProps,
-	type SectionProps,
-	type SpacerProps
-} from './spacing'
