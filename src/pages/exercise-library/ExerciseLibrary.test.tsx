@@ -1,11 +1,11 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 import type {
+	Difficulty,
 	ExerciseLibraryViewModel,
 	ExerciseSummary
-} from '@/domain/exercises/types'
-import {render, screen} from '@/test-utils'
-import type {Difficulty} from '@/types/exercises'
-import type {Language} from '@/types/settings'
+} from '@/entities/exercise'
+import {render, screen} from '@/shared/lib'
+import type {Language} from '@/shared/model/settings'
 import {ExerciseLibrary} from './ExerciseLibrary'
 
 // Mock dependencies
@@ -22,12 +22,58 @@ const mockT = vi.fn((key: string) => {
 })
 
 // Mock hooks
-vi.mock('@/hooks/useExercises', () => ({
+vi.mock('@/entities/exercise', () => ({
 	useExercises: vi.fn()
 }))
 
-vi.mock('@/hooks/useTranslations', () => ({
-	useTranslations: vi.fn()
+vi.mock('@/shared/lib/i18n', () => ({
+	useTranslations: vi.fn(),
+	exerciseLibraryTranslations: {
+		keys: [
+			'exerciseLibrary',
+			'exerciseLibraryDesc',
+			'settings',
+			'filters',
+			'noExercisesFound',
+			'clearFilters',
+			'hintLanguage',
+			'userLanguageDescription',
+			'exerciseCount',
+			'noExercisesFoundDesc',
+			'startExercise',
+			'learn',
+			'difficulty',
+			'tags',
+			'language',
+			'all',
+			'ui.searchEmoji',
+			'ui.documentEmoji',
+			'ui.booksEmoji',
+			'ui.timerEmoji',
+			'exercise.cases',
+			'exercise.blocks',
+			'exercise.minutes',
+			'ui.hashSymbol',
+			'ui.plusSymbol',
+			'ui.expand',
+			'ui.collapse',
+			'ui.colon',
+			'difficulty.a0',
+			'difficulty.a1',
+			'difficulty.a2',
+			'difficulty.b1',
+			'difficulty.b2',
+			'difficulty.c1',
+			'difficulty.c2',
+			'builder.customBadge'
+		],
+		lookupKeys: [],
+		requests: [],
+		cacheKey: 'mock-cache-key',
+		fixedLanguageKeys: {},
+		getRequest: vi.fn(),
+		getFixedLanguage: vi.fn()
+	}
 }))
 
 vi.mock('./hooks/useExerciseFiltering', () => ({
@@ -35,7 +81,7 @@ vi.mock('./hooks/useExerciseFiltering', () => ({
 }))
 
 // Mock components
-vi.mock('@/components/Head', () => ({
+vi.mock('@/shared/ui/head', () => ({
 	Head: ({title}: {title: string}) => {
 		// Simulate the real Head component behavior
 		document.title = title
@@ -43,7 +89,7 @@ vi.mock('@/components/Head', () => ({
 	}
 }))
 
-vi.mock('@/components/LoadingOrError', () => ({
+vi.mock('@/shared/ui/loading-or-error', () => ({
 	LoadingOrError: ({error}: {error?: Error}) => (
 		<div data-testid='loading-or-error'>
 			{error ? `Error: ${error.message}` : 'Loading...'}
@@ -158,8 +204,8 @@ vi.mock('./components/ExerciseGrid', () => ({
 }))
 
 // Import mocked modules to set up implementations
-import {useExercises} from '@/hooks/useExercises'
-import {useTranslations} from '@/hooks/useTranslations'
+import {useExercises} from '@/entities/exercise'
+import {useTranslations} from '@/shared/lib/i18n'
 import {useExerciseFiltering} from './hooks/useExerciseFiltering'
 
 // Test data

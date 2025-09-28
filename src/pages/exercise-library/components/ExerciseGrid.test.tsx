@@ -1,11 +1,10 @@
 import {act, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
-import type {ExerciseSummary} from '@/domain/exercises/types'
-import {useSettingsStore} from '@/stores/settings'
-import {render} from '@/test-utils'
-import type {Difficulty} from '@/types/exercises'
-import {DEFAULT_SETTINGS} from '@/types/settings'
+import type {Difficulty, ExerciseSummary} from '@/entities/exercise'
+import {render} from '@/shared/lib'
+import {useSettingsStore} from '@/shared/model'
+import {DEFAULT_SETTINGS} from '@/shared/model/settings'
 import {ExerciseGrid} from './ExerciseGrid'
 
 // Mock framer-motion to avoid animation issues in tests

@@ -186,7 +186,7 @@ const exerciseFiles = {
 
 ### 5. Validate JSON structure
 
-The app uses Valibot schemas to validate exercise data. Invalid exercises will show error messages in development.
+The app uses Valibot schemas for exercise data validation and Zod for UI component validation. Invalid exercises will show error messages in development.
 
 ## 📝 Writing guidelines
 
@@ -524,7 +524,8 @@ Add visual context:
 ### Development tools
 
 - [JSON Validator](https://jsonlint.com/)
-- [Valibot Documentation](https://valibot.dev/)
+- [Valibot Documentation](https://valibot.dev/) - Exercise data validation
+- [Zod Documentation](https://zod.dev/) - UI component validation
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 
 ### Testing resources

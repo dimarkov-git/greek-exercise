@@ -1,17 +1,16 @@
 import type {ChangeEvent} from 'react'
 import {useCallback, useEffect, useMemo, useState} from 'react'
 import {type BaseIssue, safeParse} from 'valibot'
-import {toWordFormExerciseWithDefaults} from '@/domain/exercises/adapters'
-import type {WordFormExerciseWithDefaults} from '@/domain/exercises/types'
-import type {ExerciseBuilderTranslationKey} from '@/i18n/dictionaries'
-import type {Translator} from '@/i18n/dictionary'
-import {WordFormExerciseSchema} from '@/schemas/exercises'
-import type {CustomExerciseRecord} from '@/stores/customExercises'
+import type {WordFormExerciseWithDefaults} from '@/entities/exercise'
 import {
-	selectCustomExerciseList,
-	useCustomExercisesStore
-} from '@/stores/customExercises'
-import {exerciseToJSON, type WordFormExerciseJSON} from '@/types/exercises'
+	exerciseToJSON,
+	toWordFormExerciseWithDefaults,
+	type WordFormExerciseJSON,
+	WordFormExerciseSchema
+} from '@/entities/exercise'
+import type {ExerciseBuilderTranslationKey, Translator} from '@/shared/lib/i18n'
+import type {CustomExerciseRecord} from '@/shared/model'
+import {selectCustomExerciseList, useCustomExercisesStore} from '@/shared/model'
 
 export type BuilderTranslator = Translator<ExerciseBuilderTranslationKey>
 export type BuilderSaveStatus = 'idle' | 'success' | 'error'

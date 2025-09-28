@@ -1,9 +1,9 @@
 import {screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
-import {render} from '@/test-utils'
-import type {Difficulty} from '@/types/exercises'
-import type {Language} from '@/types/settings'
+import type {Difficulty} from '@/entities/exercise'
+import {render} from '@/shared/lib'
+import type {Language} from '@/shared/model/settings'
 import {ExerciseFilters} from './ExerciseFilters'
 
 // Mock framer-motion to avoid animation issues in tests

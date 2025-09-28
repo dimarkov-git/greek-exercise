@@ -1,10 +1,10 @@
 import {Suspense} from 'react'
 import {Outlet} from 'react-router'
-import {LoadingOrError} from '@/components/LoadingOrError'
-import {Footer} from '@/components/layout/Footer'
-import {Header} from '@/components/layout/Header'
-import {LayoutProvider} from '@/contexts/LayoutContext'
-import {useLayout} from '@/hooks/useLayout'
+import {useLayout} from '@/shared/lib'
+import {LayoutProvider} from '@/shared/lib/contexts/LayoutContext'
+import {LoadingOrError} from '@/shared/ui/loading-or-error'
+import {Footer} from '@/widgets/app-footer'
+import {Header} from '@/widgets/app-header'
 
 function AppShellContent() {
 	const {headerEnabled} = useLayout()

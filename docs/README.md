@@ -1,77 +1,100 @@
-# Learn Greek documentation
+# Documentation
 
-## Project status
+## 🏗️ Technical Documentation
 
-**Current version:** MVP with comprehensive architecture and testing
-**Completed phases:** 0-5 (foundation through coverage governance)
-**Coverage:** 93%+ statements/lines/functions, 88%+ branches
-**Next phase:** Performance optimization and PWA foundation
+Complete technical reference and API documentation:
 
-## Documentation structure
+- [**Technical Overview**](technical/overview.md) – Technology stack, architecture, and system design
+- [**API Specification**](technical/api-specification.md) – Mock API endpoints and data flow patterns
+- [**Data Models**](technical/data-models.md) – TypeScript interfaces and validation schemas
 
-### `architecture/`
+### 🏛️ **Architecture Guides** [`architecture/`](architecture/)
 
-Technical architecture and system design:
+System architecture and design patterns:
 
-- [**project-structure.md**](architecture/project-structure.md) – Complete project structure and file organization.
-- [**component-architecture.md**](architecture/component-architecture.md) – Component system and design patterns.
-- [**exercise-system.md**](architecture/exercise-system.md) – Exercise system architecture and data flow.
-- [**performance.md**](architecture/performance.md) – Performance budgets, KPIs, and optimization guidelines.
-- [**i18n-system.md**](architecture/i18n-system.md) – Type-safe internationalization with generated registry.
+- [**Project Structure**](architecture/project-structure.md) – File organization and module boundaries
+- [**Component Architecture**](architecture/component-architecture.md) – React patterns and design principles
+- [**Exercise System**](architecture/exercise-system.md) – Exercise engine architecture and extensibility
+- [**Performance Guidelines**](architecture/performance.md) – Performance budgets and optimization strategies
 
-### `guides/`
+### 🌐 **Internationalization** [`i18n/`](i18n/)
 
-Step-by-step guides for developers:
+Type-safe multi-language support system:
 
-- [**getting-started.md**](guides/getting-started.md) – Complete setup guide with Node 24.x and PNPM 10.
-- [**exercise-development.md**](guides/exercise-development.md) – Creating and configuring exercises.
-- [**testing-guide.md**](guides/testing-guide.md) – Comprehensive testing with 93%+ coverage requirements.
-- [**accessibility.md**](guides/accessibility.md) – WCAG AA compliance and @axe-core/playwright integration.
+- [**i18n Overview**](i18n/overview.md) – System architecture and supported languages
+- [**Implementation Guide**](i18n/implementation.md) – Usage patterns and code examples
+- [**API Reference**](i18n/api-reference.md) – Complete API documentation
 
-### `api/`
+### 📖 **Developer Guides** [`guides/`](guides/)
 
-API documentation and data models:
+Step-by-step development instructions:
 
-- [**exercise-json-format.md**](exercise-json-format.md) – JSON structure specification for exercises.
-- MSW mocking patterns documented in testing guides
+- [**Getting Started**](guides/getting-started.md) – Environment setup with Node 24.x and PNPM 10
+- [**Development Standards**](guides/development-standards.md) – Quality standards and CI/CD requirements
+- [**Tailwind CSS Guide**](guides/tailwind-css-guide.md) – Modern Tailwind v4 development patterns and UI/UX best
+  practices
+- [**Exercise Development**](guides/exercise-development.md) – Creating and configuring exercises
+- [**Testing Guide**](guides/testing-guide.md) – Unit, integration, and E2E testing strategies
+- [**Accessibility Guide**](guides/accessibility.md) – WCAG AA compliance patterns
 
-## Core documentation
+### 📋 **Project Documentation**
 
-### Project specifications
+Core project information and planning:
 
-- [**TECHNICAL_SPEC.md**](TECHNICAL_SPEC.md) – Complete technical specification and requirements.
-- [**ROADMAP.md**](ROADMAP.md) – Development roadmap for Phases 6+ with performance and PWA focus.
+- [**User Guide**](guides/user-guide.md) – Comprehensive application functionality from a user perspective
+- [**Development Roadmap**](ROADMAP.md) – Phases 6+ with performance and PWA focus
+- [**Exercise JSON Format**](guides/exercise-json-format.md) – Exercise data structure specification
 
-### Key architectural decisions
+## 🎯 Quick Navigation
 
-These patterns emerged from the completed phases (0-5):
+| Need to...                   | Go to...                                                 |
+|------------------------------|----------------------------------------------------------|
+| **Start developing**         | [Getting Started Guide](guides/getting-started.md)       |
+| **Follow quality standards** | [Development Standards](guides/development-standards.md) |
+| **Style with Tailwind**      | [Tailwind CSS Guide](guides/tailwind-css-guide.md)       |
+| **Understand the system**    | [Technical Overview](technical/overview.md)              |
+| **Learn app functionality**  | [User Guide](guides/user-guide.md)                       |
+| **Add translations**         | [i18n Implementation](i18n/implementation.md)            |
+| **Create exercises**         | [Exercise Development](guides/exercise-development.md)   |
+| **Write tests**              | [Testing Guide](guides/testing-guide.md)                 |
+| **Optimize performance**     | [Performance Guidelines](architecture/performance.md)    |
+| **Ensure accessibility**     | [Accessibility Guide](guides/accessibility.md)           |
+| **Understand structure**     | [Project Structure](architecture/project-structure.md)   |
+| **Plan future work**         | [Development Roadmap](ROADMAP.md)                        |
 
-- **Component composition** - Page decomposition under 50-line function limits
-- **Generated i18n registry** - Type-safe translations with deterministic fallbacks
-- **HTTP fallback policies** - Configurable offline support via environment flags
-- **Coverage governance** - 93%+ thresholds on critical runtime modules
-- **SSR-safe state sync** - DOM mutations handled via useEffect hooks
 
-### Development workflow
+## 🔗 Cross-References
 
-1. **Setup:** Node 24.x LTS + PNPM 10 with `corepack enable`
-2. **Development:** `pnpm dev` for hot reload development server
-3. **Testing:** Maintain 93%+ coverage with `pnpm test` and `pnpm test:e2e`
-4. **Quality:** `pnpm validate` must pass (lint + test + e2e)
-5. **Bundle analysis:** Use `pnpm build:analyze` for size monitoring
+### Architecture Dependencies
 
-## Quick navigation
+- **Components** → [Component Architecture](architecture/component-architecture.md)
+- **State Management** → [Technical Overview](technical/overview.md#state-management)
+- **Data Flow** → [API Specification](technical/api-specification.md)
+- **Performance** → [Performance Guidelines](architecture/performance.md)
 
-| Task                         | Documentation                                          |
-|------------------------------|--------------------------------------------------------|
-| **Getting started**          | [Setup guide](guides/getting-started.md)               |
-| **Architecture overview**    | [Project structure](architecture/project-structure.md) |
-| **Testing strategy**         | [Testing guide](guides/testing-guide.md)               |
-| **Exercise development**     | [Exercise guide](guides/exercise-development.md)       |
-| **Performance optimization** | [Performance guide](architecture/performance.md)       |
-| **Accessibility**            | [A11y guide](guides/accessibility.md)                  |
-| **i18n implementation**      | [i18n system](architecture/i18n-system.md)             |
-| **Future roadmap**           | [Development roadmap](ROADMAP.md)                      |
+### Development Workflows
+
+- **Feature Development** → [Getting Started](guides/getting-started.md) + [Technical Overview](technical/overview.md)
+- **Exercise Creation
+  ** → [Exercise Development](guides/exercise-development.md) + [JSON Format](guides/exercise-json-format.md)
+- **Testing Strategy** → [Testing Guide](guides/testing-guide.md) + [User Guide](guides/user-guide.md)
+- **Internationalization** → [i18n Overview](i18n/overview.md) → [Implementation](i18n/implementation.md)
+
+## 📊 Key Metrics & Standards
+
+### Code Quality
+
+- **TypeScript**: Strict mode, no `any` types
+- **Test Coverage**: 80% statements/lines/functions, 75% branches
+- **Performance**: Bundle < 250KB main, < 150KB per route
+- **Accessibility**: WCAG AA compliance
+
+### Supported Technologies
+
+- **Frontend**: React 19, TypeScript 5.9, Vite 7
+- **State**: TanStack Query 5, Zustand
+- **Testing**: Vitest, Playwright, MSW
+- **Languages**: Greek (el), English (en), Russian (ru)
 
 ---
 

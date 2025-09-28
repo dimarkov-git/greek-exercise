@@ -1,8 +1,8 @@
 import userEvent from '@testing-library/user-event'
 import type React from 'react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
-import {useCustomExercisesStore} from '@/stores/customExercises'
-import {act, render, screen, waitFor} from '@/test-utils'
+import {act, render, screen, waitFor} from '@/shared/lib'
+import {useCustomExercisesStore} from '@/shared/model'
 import {ExerciseBuilder} from './ExerciseBuilder'
 
 const translations: Record<string, string> = {
@@ -43,7 +43,7 @@ const translations: Record<string, string> = {
 
 const translate = (key: string) => translations[key] ?? key
 
-vi.mock('@/hooks/useTranslations', () => ({
+vi.mock('@/shared/lib/i18n', () => ({
 	useTranslations: vi.fn(() => ({
 		t: translate,
 		translations: {},
@@ -52,16 +52,20 @@ vi.mock('@/hooks/useTranslations', () => ({
 		error: null,
 		missingKeys: [],
 		status: 'complete'
-	}))
+	})),
+	exerciseBuilderTranslations: {
+		'builder.title': 'Exercise Builder',
+		'builder.description': 'Create custom exercises'
+	}
 }))
 
-vi.mock('@/components/Head', () => ({
+vi.mock('@/shared/ui/head', () => ({
 	Head: ({title}: {title: string}) => (
 		<div data-testid='head' data-title={title} />
 	)
 }))
 
-vi.mock('@/components/learn/TableView', () => ({
+vi.mock('@/features/learn-view', () => ({
 	TableView: ({exercise}: {exercise: {title: string}}) => (
 		<div data-testid='table-view'>Preview: {exercise.title}</div>
 	)

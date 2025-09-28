@@ -1,5 +1,4 @@
 import {expect, type Locator, type Page} from '@playwright/test'
-import {TestHelpers} from '../fixtures/helpers'
 import {ROUTES, SELECTORS} from '../fixtures/selectors'
 
 export class ExerciseLibrary {
@@ -7,7 +6,6 @@ export class ExerciseLibrary {
 
 	constructor(page: Page) {
 		this.page = page
-		this.helpers = new TestHelpers(page)
 	}
 
 	// Locators

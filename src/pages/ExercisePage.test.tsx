@@ -1,7 +1,10 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
-import type {WordFormExerciseWithDefaults} from '@/domain/exercises/types'
-import {render, screen, waitFor} from '@/test-utils'
-import {DEFAULT_EXERCISE_SETTINGS, type ExerciseResult} from '@/types/exercises'
+import type {WordFormExerciseWithDefaults} from '@/entities/exercise'
+import {
+	DEFAULT_EXERCISE_SETTINGS,
+	type ExerciseResult
+} from '@/entities/exercise'
+import {render, screen, waitFor} from '@/shared/lib'
 import {ExercisePage} from './ExercisePage'
 
 // Mock dependencies
@@ -27,20 +30,34 @@ vi.mock('react-router', async () => {
 })
 
 // Mock hooks
-vi.mock('@/hooks/useExercises', () => ({
-	useExercise: vi.fn()
+vi.mock('@/entities/exercise', () => ({
+	useExercise: vi.fn(),
+	DEFAULT_EXERCISE_SETTINGS: {
+		autoAdvance: true,
+		autoAdvanceDelayMs: 1500,
+		allowSkip: false,
+		shuffleCases: false
+	}
 }))
 
-vi.mock('@/hooks/useLayout', () => ({
-	useLayout: vi.fn()
-}))
+vi.mock('@/shared/lib', async () => {
+	const actual = await vi.importActual('@/shared/lib')
+	return {
+		...actual,
+		useLayout: vi.fn()
+	}
+})
 
-vi.mock('@/hooks/useTranslations', () => ({
-	useTranslations: vi.fn()
-}))
+vi.mock('@/shared/lib/i18n', async () => {
+	const actual = await vi.importActual('@/shared/lib/i18n')
+	return {
+		...actual,
+		useTranslations: vi.fn()
+	}
+})
 
 // Mock components
-vi.mock('@/components/LoadingOrError', () => ({
+vi.mock('@/shared/ui/loading-or-error', () => ({
 	LoadingOrError: ({error}: {error?: Error}) => (
 		<div data-testid='loading-or-error'>
 			{error ? `Error: ${error.message}` : 'Loading...'}
@@ -48,7 +65,7 @@ vi.mock('@/components/LoadingOrError', () => ({
 	)
 }))
 
-vi.mock('@/components/exercises/word-form/WordFormExercise', () => ({
+vi.mock('@/features/word-form-exercise', () => ({
 	WordFormExercise: ({
 		exercise,
 		onComplete,
@@ -82,9 +99,9 @@ vi.mock('@/components/exercises/word-form/WordFormExercise', () => ({
 
 // Import mocked modules to set up implementations
 import {useNavigate, useParams} from 'react-router'
-import {useExercise} from '@/hooks/useExercises'
-import {useLayout} from '@/hooks/useLayout'
-import {useTranslations} from '@/hooks/useTranslations'
+import {useExercise} from '@/entities/exercise'
+import {useLayout} from '@/shared/lib'
+import {useTranslations} from '@/shared/lib/i18n'
 
 // Test data
 const mockWordFormExercise: WordFormExerciseWithDefaults = {

@@ -1,5 +1,5 @@
-import {useSettingsSync} from '@/hooks/useSettingsSync'
-import {AppRoutes} from './app/routes/AppRoutes'
+import {useSettingsSync} from '@/shared/lib'
+import {AppRoutes} from './app/router/AppRoutes'
 
 export function App() {
 	useSettingsSync()

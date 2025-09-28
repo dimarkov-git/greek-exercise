@@ -55,6 +55,8 @@
 					"nursery": {
 						"useExplicitType": "off",
 						"noUnresolvedImports": "off",
+						"useMaxParams": "off",
+						"noJsxLiterals": "off",
 						"noSecrets": {
 							"level": "error",
 							"options": {
@@ -95,7 +97,12 @@
 			}
 		},
 		{
-			"includes": ["vite.config.ts", "playwright.config.ts"],
+			"includes": [
+				"vite.config.ts",
+				"playwright.config.ts",
+				".steiger.config.js",
+				"tailwind.config.js"
+			],
 			"linter": {
 				"rules": {
 					"correctness": {
@@ -128,6 +135,30 @@
 					"style": {
 						"useNamingConvention": "off",
 						"noNonNullAssertion": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": [
+				"src/{app,entities,features,widgets,pages,shared}/*/index.ts",
+				"src/shared/**/index.ts"
+			],
+			"linter": {
+				"rules": {
+					"performance": {
+						"noBarrelFile": "off",
+						"noReExportAll": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["src/entities/exercise/model/types.ts"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noExportedImports": "off"
 					}
 				}
 			}

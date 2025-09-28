@@ -1,13 +1,12 @@
 import {useCallback, useMemo, useState} from 'react'
+import type {Difficulty, ExerciseLibraryViewModel} from '@/entities/exercise'
 import {
 	selectDifficultyOptions,
 	selectFilteredExercises,
 	selectLanguageOptions,
 	selectTagOptions
-} from '@/domain/exercises/selectors'
-import type {ExerciseLibraryViewModel} from '@/domain/exercises/types'
-import type {Difficulty} from '@/types/exercises'
-import type {Language} from '@/types/settings'
+} from '@/entities/exercise'
+import type {Language} from '@/shared/model/settings'
 
 export function useExerciseFiltering(
 	viewModel: ExerciseLibraryViewModel | undefined

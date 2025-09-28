@@ -1,12 +1,12 @@
 import './global.css'
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
+import {detectAutomationEnvironment} from '@/shared/lib'
 import {App} from './App'
 import {AppErrorBoundary} from './app/AppErrorBoundary'
-import {AppProviders} from './app/AppProviders'
 import {AppRouter} from './app/AppRouter'
-import {AppModeEnum, environment} from './config/environment'
-import {detectAutomationEnvironment} from './utils/test-utils'
+import {AppModeEnum, environment} from './app/config/environment'
+import {AppProviders} from './app/providers/AppProviders'
 
 async function startMockServiceWorker() {
 	if (!environment.enableMockServiceWorker) {
@@ -19,7 +19,7 @@ async function startMockServiceWorker() {
 		return
 	}
 
-	const {worker} = await import('./mocks/browser')
+	const {worker} = await import('./shared/test/msw/browser')
 
 	const startPromise = worker.start({
 		serviceWorker: {

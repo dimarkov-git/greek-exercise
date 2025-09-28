@@ -1,11 +1,11 @@
 import {act, renderHook} from '@testing-library/react'
 import {describe, expect, it, vi} from 'vitest'
 import type {
+	Difficulty,
 	ExerciseLibraryViewModel,
 	ExerciseSummary
-} from '@/domain/exercises/types'
-import type {Difficulty} from '@/types/exercises'
-import type {Language} from '@/types/settings'
+} from '@/entities/exercise'
+import type {Language} from '@/shared/model/settings'
 
 // Mock the selectors module using vi.hoisted()
 const selectorsModule = vi.hoisted(() => ({
@@ -15,7 +15,9 @@ const selectorsModule = vi.hoisted(() => ({
 	selectLanguageOptions: vi.fn()
 }))
 
-vi.mock('@/domain/exercises/selectors', () => selectorsModule)
+vi.mock('@/entities/exercise', () => ({
+	...selectorsModule
+}))
 
 import {useExerciseFiltering} from './useExerciseFiltering'
 

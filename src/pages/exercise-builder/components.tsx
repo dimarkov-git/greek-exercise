@@ -1,10 +1,12 @@
 import {motion} from 'framer-motion'
 import type {ChangeEvent} from 'react'
 import {Link} from 'react-router'
-import {TableView} from '@/components/learn/TableView'
-import type {WordFormExerciseWithDefaults} from '@/domain/exercises/types'
-import type {CustomExerciseRecord} from '@/stores/customExercises'
-import type {WordFormExerciseJSON} from '@/types/exercises'
+import type {
+	WordFormExerciseJSON,
+	WordFormExerciseWithDefaults
+} from '@/entities/exercise'
+import {TableView} from '@/features/learn-view'
+import type {CustomExerciseRecord} from '@/shared/model'
 import type {BuilderSaveStatus, BuilderTranslator} from './state'
 
 export function BuilderHero({t}: {readonly t: BuilderTranslator}) {
@@ -74,8 +76,8 @@ export function TypeSelectorPanel({
 						{t('builder.typeHelp')}
 					</p>
 				</div>
-                                <select
-                                        className='cursor-pointer rounded-full border border-gray-200 bg-white px-4 py-2 font-medium text-gray-700 text-sm shadow-sm transition focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 md:justify-self-end md:self-start dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'
+				<select
+					className='cursor-pointer rounded-full border border-gray-200 bg-white px-4 py-2 font-medium text-gray-700 text-sm shadow-sm transition focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 md:self-start md:justify-self-end dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'
 					onChange={(event: ChangeEvent<HTMLSelectElement>) =>
 						onTypeChange(event.target.value as 'word-form')
 					}
