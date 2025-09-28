@@ -1,5 +1,6 @@
 import type {ExerciseMetadataDto} from '@/schemas/exercises'
 import type {WordFormExerciseJSON} from '@/types/exercises'
+import type {WordFormExerciseWithDefaults} from './types'
 
 function normalizeTags(tags: readonly string[] | undefined): string[] {
 	if (!tags) {
@@ -32,5 +33,15 @@ export function wordFormExerciseJsonToMetadata(
 		totalBlocks,
 		totalCases,
 		enabled: exercise.enabled
+	}
+}
+
+export function wordFormExerciseJsonToExercise(
+	exercise: WordFormExerciseJSON
+): WordFormExerciseWithDefaults {
+	return {
+		...exercise,
+		tags: normalizeTags(exercise.tags),
+		settings: exercise.settings
 	}
 }

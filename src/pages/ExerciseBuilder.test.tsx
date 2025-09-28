@@ -12,7 +12,6 @@ const translations: Record<string, string> = {
 	'ui.backToHome': '← Back to Home',
 	'builder.libraryInfo':
 		'Saved exercises stay locally and appear in the library.',
-	'builder.viewSchema': 'Schema documentation',
 	'builder.openLibrary': 'Open library',
 	'builder.typeSectionTitle': 'Exercise setup',
 	'builder.typeHelp': 'Choose the exercise type to load a template.',

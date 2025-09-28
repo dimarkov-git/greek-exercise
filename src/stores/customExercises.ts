@@ -9,7 +9,7 @@ export interface CustomExerciseRecord {
 	readonly updatedAt: number
 }
 
-interface CustomExercisesState {
+export interface CustomExercisesState {
 	readonly records: Record<string, CustomExerciseRecord>
 	readonly saveExercise: (exercise: WordFormExerciseJSON) => void
 	readonly deleteExercise: (id: string) => void

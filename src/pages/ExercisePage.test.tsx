@@ -116,11 +116,9 @@ const mockWordFormExercise: WordFormExerciseWithDefaults = {
 type UseExerciseReturn = ReturnType<typeof useExercise>
 
 function mockUseExerciseResult(
-	overrides: Partial<UseExerciseReturn>
+	overrides: Record<string, unknown>
 ): UseExerciseReturn {
-	return {
-		...overrides
-	} as UseExerciseReturn
+	return overrides as unknown as UseExerciseReturn
 }
 
 const mockUnsupportedExercise = {

@@ -1,12 +1,16 @@
-import {useQuery} from '@tanstack/react-query'
-import {useMemo} from 'react'
+import {useQuery, useQueryClient} from '@tanstack/react-query'
+import {useEffect, useMemo} from 'react'
 import {createExerciseLibraryViewModel} from '@/domain/exercises/adapters'
-import {wordFormExerciseJsonToMetadata} from '@/domain/exercises/custom'
+import {
+	wordFormExerciseJsonToExercise,
+	wordFormExerciseJsonToMetadata
+} from '@/domain/exercises/custom'
 import {
 	exerciseLibraryQueryOptions,
 	wordFormExerciseQueryOptions
 } from '@/domain/exercises/queryOptions'
 import type {ExerciseLibraryViewModel} from '@/domain/exercises/types'
+import type {CustomExercisesState} from '@/stores/customExercises'
 import {
 	selectCustomExercises,
 	useCustomExercisesStore
@@ -66,5 +70,44 @@ export function useExercises() {
  * Hook to get specific exercise by ID
  */
 export function useExercise(id: string | undefined) {
-	return useQuery(wordFormExerciseQueryOptions(id))
+	const baseOptions = useMemo(() => wordFormExerciseQueryOptions(id), [id])
+	const selectExercise = useMemo(
+		() => (state: CustomExercisesState) =>
+			id ? state.records[id]?.exercise : undefined,
+		[id]
+	)
+	const customExerciseJson = useCustomExercisesStore(selectExercise)
+	const customExercise = useMemo(
+		() =>
+			customExerciseJson
+				? wordFormExerciseJsonToExercise(customExerciseJson)
+				: undefined,
+		[customExerciseJson]
+	)
+	const queryClient = useQueryClient()
+
+	useEffect(() => {
+		if (!(id && customExercise)) {
+			return
+		}
+
+		queryClient.setQueryData(baseOptions.queryKey, customExercise)
+	}, [baseOptions, customExercise, id, queryClient])
+
+	const queryOptions = useMemo(() => {
+		if (customExercise) {
+			return {
+				...baseOptions,
+				enabled: false as const,
+				initialData: customExercise
+			}
+		}
+
+		return {
+			...baseOptions,
+			enabled: Boolean(id)
+		}
+	}, [baseOptions, customExercise, id])
+
+	return useQuery(queryOptions)
 }

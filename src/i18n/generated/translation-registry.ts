@@ -140,7 +140,6 @@ export const translationRegistry = {
 	'builder.validationUnknown': {fallback: 'Unknown validation error'},
 	'builder.validationSuccess': {fallback: 'Valid'},
 	'builder.validationTitle': {fallback: 'Validation'},
-	'builder.viewSchema': {fallback: 'Schema documentation'},
 	'builder.wordFormType': {fallback: 'Word form exercise'},
 	exerciseCount: {fallback: 'Available exercises: {filteredCount}'},
 	exerciseLibrary: {fallback: 'Exercise Library'},

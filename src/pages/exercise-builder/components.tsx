@@ -5,7 +5,6 @@ import {TableView} from '@/components/learn/TableView'
 import type {WordFormExerciseWithDefaults} from '@/domain/exercises/types'
 import type {CustomExerciseRecord} from '@/stores/customExercises'
 import type {WordFormExerciseJSON} from '@/types/exercises'
-import {EXERCISE_SCHEMA_DOC_URL} from './constants'
 import type {BuilderSaveStatus, BuilderTranslator} from './state'
 
 export function BuilderHero({t}: {readonly t: BuilderTranslator}) {
@@ -30,25 +29,17 @@ export function BuilderHero({t}: {readonly t: BuilderTranslator}) {
 					</p>
 				</div>
 				<div className='flex flex-col gap-3 text-sm sm:flex-row sm:text-base'>
-					<a
-						className='inline-flex items-center justify-center rounded-full bg-white/15 px-4 py-2 font-medium text-white transition hover:bg-white/25'
-						href={EXERCISE_SCHEMA_DOC_URL}
-						rel='noopener noreferrer'
-						target='_blank'
-					>
-						{t('builder.viewSchema')}
-					</a>
 					<Link
-						className='inline-flex items-center justify-center rounded-full bg-white/15 px-4 py-2 font-medium text-white transition hover:bg-white/25'
-						to='/exercises'
-					>
-						{t('builder.openLibrary')}
-					</Link>
-					<Link
-						className='inline-flex items-center justify-center rounded-full bg-white/15 px-4 py-2 font-medium text-white transition hover:bg-white/25'
+						className='inline-flex cursor-pointer items-center justify-center rounded-full bg-white/15 px-4 py-2 font-medium text-white transition hover:bg-white/25'
 						to='/'
 					>
 						{t('ui.backToHome')}
+					</Link>
+					<Link
+						className='inline-flex cursor-pointer items-center justify-center rounded-full bg-white/15 px-4 py-2 font-medium text-white transition hover:bg-white/25'
+						to='/exercises'
+					>
+						{t('builder.openLibrary')}
 					</Link>
 				</div>
 			</div>
@@ -74,7 +65,7 @@ export function TypeSelectorPanel({
 			initial={{opacity: 0, y: 20}}
 			transition={{delay: 0.1, duration: 0.4}}
 		>
-			<div className='flex flex-wrap items-center justify-between gap-4'>
+			<div className='grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-start'>
 				<div>
 					<h2 className='font-semibold text-gray-900 text-lg dark:text-white'>
 						{t('builder.typeSectionTitle')}
@@ -83,8 +74,8 @@ export function TypeSelectorPanel({
 						{t('builder.typeHelp')}
 					</p>
 				</div>
-				<select
-					className='rounded-full border border-gray-200 bg-white px-4 py-2 font-medium text-gray-700 text-sm shadow-sm transition focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'
+                                <select
+                                        className='cursor-pointer rounded-full border border-gray-200 bg-white px-4 py-2 font-medium text-gray-700 text-sm shadow-sm transition focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 md:justify-self-end md:self-start dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'
 					onChange={(event: ChangeEvent<HTMLSelectElement>) =>
 						onTypeChange(event.target.value as 'word-form')
 					}
@@ -134,14 +125,14 @@ export function JsonEditorPanel({
 				</h2>
 				<div className='flex flex-wrap gap-2'>
 					<button
-						className='rounded-full border border-purple-500 px-4 py-2 font-medium text-purple-600 text-sm transition hover:bg-purple-50 dark:border-purple-400 dark:text-purple-300 dark:hover:bg-purple-900/30'
+						className='cursor-pointer rounded-full border border-purple-500 px-4 py-2 font-medium text-purple-600 text-sm transition hover:bg-purple-50 dark:border-purple-400 dark:text-purple-300 dark:hover:bg-purple-900/30'
 						onClick={onFormat}
 						type='button'
 					>
 						{t('builder.formatJson')}
 					</button>
 					<button
-						className='rounded-full border border-gray-300 px-4 py-2 font-medium text-gray-600 text-sm transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800'
+						className='cursor-pointer rounded-full border border-gray-300 px-4 py-2 font-medium text-gray-600 text-sm transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800'
 						onClick={onReset}
 						type='button'
 					>
@@ -158,7 +149,7 @@ export function JsonEditorPanel({
 			/>
 			<div className='mt-4 flex flex-wrap items-center gap-3'>
 				<button
-					className='inline-flex items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 px-6 py-2 font-semibold text-sm text-white shadow-lg transition hover:from-purple-600 hover:to-indigo-600 disabled:cursor-not-allowed disabled:opacity-50'
+					className='inline-flex cursor-pointer items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 px-6 py-2 font-semibold text-sm text-white shadow-lg transition hover:from-purple-600 hover:to-indigo-600 disabled:cursor-not-allowed disabled:opacity-50'
 					disabled={hasErrors}
 					onClick={onSave}
 					type='button'
@@ -337,14 +328,14 @@ function SavedExerciseCard({
 				</div>
 				<div className='flex flex-wrap gap-2'>
 					<button
-						className='rounded-full bg-blue-600 px-4 py-2 font-medium text-sm text-white transition hover:bg-blue-700'
+						className='cursor-pointer rounded-full bg-blue-600 px-4 py-2 font-medium text-sm text-white transition hover:bg-blue-700'
 						onClick={() => onLoad(record.exercise)}
 						type='button'
 					>
 						{t('builder.loadButton')}
 					</button>
 					<button
-						className='rounded-full border border-red-500 px-4 py-2 font-medium text-red-600 text-sm transition hover:bg-red-50 dark:border-red-400 dark:text-red-300 dark:hover:bg-red-900/30'
+						className='cursor-pointer rounded-full border border-red-500 px-4 py-2 font-medium text-red-600 text-sm transition hover:bg-red-50 dark:border-red-400 dark:text-red-300 dark:hover:bg-red-900/30'
 						onClick={() => onDelete(record.exercise.id)}
 						type='button'
 					>

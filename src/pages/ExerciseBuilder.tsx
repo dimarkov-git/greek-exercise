@@ -57,7 +57,7 @@ function ExerciseBuilderView({
 			>
 				<div className='mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8'>
 					<BuilderHero t={t} />
-					<div className='mt-10 grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]'>
+					<div className='mt-10 grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start'>
 						<section className='space-y-6'>
 							<TypeSelectorPanel
 								onTypeChange={handleTypeChange}
@@ -74,6 +74,8 @@ function ExerciseBuilderView({
 								saveStatus={saveStatus}
 								t={t}
 							/>
+						</section>
+						<section className='space-y-6'>
 							<ValidationPanel
 								hasErrors={hasErrors}
 								t={t}

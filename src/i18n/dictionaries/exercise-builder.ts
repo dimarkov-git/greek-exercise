@@ -8,7 +8,6 @@ export const exerciseBuilderTranslations = createTranslationDictionary([
 	'comingSoon',
 	'ui.backToHome',
 	'builder.libraryInfo',
-	'builder.viewSchema',
 	'builder.openLibrary',
 	'builder.typeSectionTitle',
 	'builder.typeHelp',
