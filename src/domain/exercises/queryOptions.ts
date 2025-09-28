@@ -5,7 +5,6 @@ import {
 	validateWordFormExercise
 } from '@/schemas/exercises'
 import {toWordFormExerciseWithDefaults} from './adapters'
-import {selectExerciseLibraryViewModel} from './selectors'
 
 const THIRTY_MINUTES = 30 * 60 * 1000
 const ONE_HOUR = 60 * 60 * 1000
@@ -16,7 +15,6 @@ export const exerciseLibraryQueryOptions = queryOptions({
 		const data = await requestJson<unknown>('/api/exercises')
 		return validateExercisesList(data)
 	},
-	select: selectExerciseLibraryViewModel,
 	staleTime: THIRTY_MINUTES,
 	gcTime: ONE_HOUR,
 	retry: 2,

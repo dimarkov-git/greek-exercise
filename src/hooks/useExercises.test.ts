@@ -7,6 +7,7 @@ const mockUseQuery = vi.fn()
 const mockWordFormExerciseQueryOptions = vi.fn((id: string | undefined) => ({
 	queryKey: ['exercise', id]
 }))
+const mockCreateExerciseLibraryViewModel = vi.fn(() => ({exercises: []}))
 
 vi.mock('@tanstack/react-query', async () => {
 	const actual = await vi.importActual<QueryModule>('@tanstack/react-query')
@@ -16,6 +17,14 @@ vi.mock('@tanstack/react-query', async () => {
 		useQuery: mockUseQuery
 	}
 })
+
+vi.mock('@/domain/exercises/adapters', () => ({
+	createExerciseLibraryViewModel: mockCreateExerciseLibraryViewModel
+}))
+
+vi.mock('@/domain/exercises/custom', () => ({
+	wordFormExerciseJsonToMetadata: vi.fn()
+}))
 
 vi.mock('@/domain/exercises/queryOptions', () => ({
 	exerciseLibraryQueryOptions: {queryKey: ['exercise-library']} as const,
@@ -43,7 +52,10 @@ describe('useExercises', () => {
 		expect(mockUseQuery).toHaveBeenCalledWith({
 			queryKey: ['exercise-library']
 		})
-		expect(result.current).toBe(queryResult)
+		expect(mockCreateExerciseLibraryViewModel).toHaveBeenCalledWith([
+			'exercise-a'
+		])
+		expect(result.current.data).toMatchObject({exercises: []})
 
 		unmount()
 	})
