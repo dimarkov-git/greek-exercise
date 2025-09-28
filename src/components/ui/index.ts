@@ -1,4 +1,5 @@
-// Core UI Components with variant system
+// Core UI Components with a variant system
+// biome-ignore lint/performance/noBarrelFile: UI component library barrel file is appropriate here
 export {
 	Button,
 	type ButtonProps,
