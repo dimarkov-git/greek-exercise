@@ -5,7 +5,7 @@ import type {
 	ExerciseSummary
 } from '@/domain/exercises/types'
 import type {Difficulty} from '@/entities/exercise'
-import type {Language} from '@/types/settings'
+import type {Language} from '@/shared/model/settings'
 
 // Mock the selectors module using vi.hoisted()
 const selectorsModule = vi.hoisted(() => ({

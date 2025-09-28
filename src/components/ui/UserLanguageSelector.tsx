@@ -1,9 +1,9 @@
 import {motion} from 'framer-motion'
 import {useTranslations} from '@/hooks/useTranslations'
-import {userLanguageSelectorTranslations} from '@/i18n/dictionaries'
-import {useSettingsStore} from '@/stores/settings'
-import type {Language} from '@/types/settings'
-import {USER_LANGUAGES} from '@/types/settings'
+import {userLanguageSelectorTranslations} from '@/shared/lib/i18n/dictionaries'
+import {useSettingsStore} from '@/shared/model'
+import type {Language} from '@/shared/model/settings'
+import {USER_LANGUAGES} from '@/shared/model/settings'
 
 export function UserLanguageSelector() {
 	const {userLanguage, setUserLanguage} = useSettingsStore()

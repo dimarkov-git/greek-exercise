@@ -7,7 +7,7 @@ import {
 } from '@/domain/exercises/selectors'
 import type {ExerciseLibraryViewModel} from '@/domain/exercises/types'
 import type {Difficulty} from '@/entities/exercise'
-import type {Language} from '@/types/settings'
+import type {Language} from '@/shared/model/settings'
 
 export function useExerciseFiltering(
 	viewModel: ExerciseLibraryViewModel | undefined

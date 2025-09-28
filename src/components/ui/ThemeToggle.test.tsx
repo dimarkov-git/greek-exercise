@@ -2,8 +2,8 @@ import {act, render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {afterEach, describe, expect, it, vi} from 'vitest'
 import {ThemeToggle} from '@/components/ui/ThemeToggle'
-import {useSettingsStore} from '@/stores/settings'
-import {DEFAULT_SETTINGS} from '@/types/settings'
+import {useSettingsStore} from '@/shared/model'
+import {DEFAULT_SETTINGS} from '@/shared/model/settings'
 
 vi.mock('@/hooks/useTranslations', () => ({
 	useTranslations: () => ({

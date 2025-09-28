@@ -3,7 +3,7 @@ import {LanguageSelector} from '@/components/ui/LanguageSelector'
 import {ThemeToggle} from '@/components/ui/ThemeToggle'
 import {UserLanguageSelector} from '@/components/ui/UserLanguageSelector'
 import {useTranslations} from '@/hooks/useTranslations'
-import {settingsLabelTranslations} from '@/i18n/dictionaries'
+import {settingsLabelTranslations} from '@/shared/lib/i18n/dictionaries'
 
 export function SettingsPanel() {
 	const {t} = useTranslations(settingsLabelTranslations)

@@ -12,7 +12,7 @@ import type {
 	WordFormCaseDto,
 	WordFormExerciseDto
 } from '@/schemas/exercises'
-import type {Language} from '@/types/settings'
+import type {Language} from '@/shared/model/settings'
 import type {
 	ExerciseLibraryViewModel,
 	ExerciseSource,

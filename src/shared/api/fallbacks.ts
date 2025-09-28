@@ -1,16 +1,16 @@
 import {toWordFormExerciseWithDefaults} from '@/domain/exercises/adapters'
-import type {TranslationRegistryKey} from '@/i18n/generated/translation-registry'
-import {translationRegistry} from '@/i18n/generated/translation-registry'
 import translationsData from '@/mocks/data/translations.json' with {
 	type: 'json'
 }
 import type {WordFormExerciseDto} from '@/schemas/exercises'
 import {validateWordFormExercise} from '@/schemas/exercises'
+import {extractExerciseMetadata} from '@/shared/lib/exercises'
+import type {TranslationRegistryKey} from '@/shared/lib/i18n/generated/translation-registry'
+import {translationRegistry} from '@/shared/lib/i18n/generated/translation-registry'
 import type {
 	SupportedLanguage,
 	TranslationsDatabase
-} from '@/types/translations'
-import {extractExerciseMetadata} from '@/utils/exercises'
+} from '@/shared/model/translations'
 
 const exerciseModules = import.meta.glob('../mocks/data/exercises/*.json', {
 	eager: true,

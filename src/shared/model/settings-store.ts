@@ -7,7 +7,7 @@ import {
 	type Theme,
 	UI_LANGUAGES,
 	USER_LANGUAGES
-} from '@/types/settings'
+} from '@/shared/model/settings'
 
 type SupportedLanguages = readonly Language[]
 

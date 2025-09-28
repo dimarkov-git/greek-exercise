@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import type React from 'react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
-import {useCustomExercisesStore} from '@/stores/customExercises'
+import {useCustomExercisesStore} from '@/shared/model'
 import {act, render, screen, waitFor} from '@/test-utils'
 import {ExerciseBuilder} from './ExerciseBuilder'
 

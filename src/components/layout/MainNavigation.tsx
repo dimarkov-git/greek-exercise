@@ -1,7 +1,7 @@
 import {motion} from 'framer-motion'
 import {NavigationCard} from '@/components/ui/NavigationCard'
 import {useTranslations} from '@/hooks/useTranslations'
-import {mainNavigationTranslations} from '@/i18n/dictionaries'
+import {mainNavigationTranslations} from '@/shared/lib/i18n/dictionaries'
 
 export function MainNavigation() {
 	const {t} = useTranslations(mainNavigationTranslations)

@@ -3,7 +3,7 @@ import {Head} from '@/components/Head'
 import {MainNavigation} from '@/components/layout/MainNavigation'
 import {TranslatedText} from '@/components/ui/TranslatedText'
 import {useTranslations} from '@/hooks/useTranslations'
-import {homePageTranslations} from '@/i18n/dictionaries'
+import {homePageTranslations} from '@/shared/lib/i18n/dictionaries'
 
 export function HomePage() {
 	const {t, isLoading} = useTranslations(homePageTranslations)

@@ -2,9 +2,9 @@ import {useCallback, useState} from 'react'
 import type {WordFormExercise} from '@/entities/exercise'
 import {exerciseToJSON} from '@/entities/exercise'
 import {useTranslations} from '@/hooks/useTranslations'
-import type {JsonViewTranslationKey} from '@/i18n/dictionaries'
-import {jsonViewTranslations} from '@/i18n/dictionaries'
-import type {Translator} from '@/i18n/dictionary'
+import type {JsonViewTranslationKey} from '@/shared/lib/i18n/dictionaries'
+import {jsonViewTranslations} from '@/shared/lib/i18n/dictionaries'
+import type {Translator} from '@/shared/lib/i18n/dictionary'
 
 type JsonViewTranslator = Translator<JsonViewTranslationKey>
 

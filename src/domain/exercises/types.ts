@@ -1,5 +1,5 @@
 import type {ExerciseMetadata, WordFormExercise} from '@/entities/exercise'
-import type {Language} from '@/types/settings'
+import type {Language} from '@/shared/model/settings'
 
 export type ExerciseSource = 'builtin' | 'custom'
 

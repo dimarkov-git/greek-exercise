@@ -1,4 +1,4 @@
-import type {TranslationRegistryKey} from '@/i18n/generated/translation-registry'
+import type {TranslationRegistryKey} from '@/shared/lib/i18n/generated/translation-registry'
 
 export type SupportedLanguage = 'en' | 'ru' | 'el'
 

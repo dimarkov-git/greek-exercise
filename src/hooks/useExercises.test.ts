@@ -1,6 +1,6 @@
 import {renderHook} from '@testing-library/react'
 import {afterEach, describe, expect, it, vi} from 'vitest'
-import {useCustomExercisesStore} from '@/stores/customExercises'
+import {useCustomExercisesStore} from '@/shared/model'
 
 type QueryModule = typeof import('@tanstack/react-query')
 

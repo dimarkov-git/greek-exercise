@@ -1,4 +1,7 @@
-import type {SupportedLanguage, TranslationRequest} from '@/types/translations'
+import type {
+	SupportedLanguage,
+	TranslationRequest
+} from '@/shared/model/translations'
 import type {TranslationRegistryKey} from './generated/translation-registry'
 import {
 	TRANSLATION_REGISTRY_KEYS,

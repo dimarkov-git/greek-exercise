@@ -6,7 +6,7 @@ import type {ExerciseResult} from '@/entities/exercise'
 import {useExercise} from '@/hooks/useExercises'
 import {useLayout} from '@/hooks/useLayout'
 import {useTranslations} from '@/hooks/useTranslations'
-import {exerciseUiTranslations} from '@/i18n/dictionaries'
+import {exerciseUiTranslations} from '@/shared/lib/i18n/dictionaries'
 
 /**
  * Page for running individual exercises

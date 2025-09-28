@@ -4,14 +4,11 @@ import {type BaseIssue, safeParse} from 'valibot'
 import {toWordFormExerciseWithDefaults} from '@/domain/exercises/adapters'
 import type {WordFormExerciseWithDefaults} from '@/domain/exercises/types'
 import {exerciseToJSON, type WordFormExerciseJSON} from '@/entities/exercise'
-import type {ExerciseBuilderTranslationKey} from '@/i18n/dictionaries'
-import type {Translator} from '@/i18n/dictionary'
 import {WordFormExerciseSchema} from '@/schemas/exercises'
-import type {CustomExerciseRecord} from '@/stores/customExercises'
-import {
-	selectCustomExerciseList,
-	useCustomExercisesStore
-} from '@/stores/customExercises'
+import type {ExerciseBuilderTranslationKey} from '@/shared/lib/i18n/dictionaries'
+import type {Translator} from '@/shared/lib/i18n/dictionary'
+import type {CustomExerciseRecord} from '@/shared/model'
+import {selectCustomExerciseList, useCustomExercisesStore} from '@/shared/model'
 
 export type BuilderTranslator = Translator<ExerciseBuilderTranslationKey>
 export type BuilderSaveStatus = 'idle' | 'success' | 'error'

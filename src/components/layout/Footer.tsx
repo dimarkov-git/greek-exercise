@@ -1,6 +1,6 @@
 import {TranslatedText} from '@/components/ui/TranslatedText'
 import {useTranslations} from '@/hooks/useTranslations'
-import {footerTranslations} from '@/i18n/dictionaries'
+import {footerTranslations} from '@/shared/lib/i18n/dictionaries'
 
 const copyrightKey = 'footer.copyright'
 const madeWithKey = 'footer.madeWith'

@@ -13,8 +13,8 @@ import type {
 } from '@/entities/exercise'
 import {type ExerciseStatus, getExerciseSettings} from '@/entities/exercise'
 import {usePulseEffect} from '@/hooks/usePulseEffect'
-import {checkAnswer} from '@/utils/exercises'
-import {detectAutomationEnvironment} from '@/utils/test-utils'
+import {checkAnswer} from '@/shared/lib/exercises'
+import {detectAutomationEnvironment} from '@/shared/lib/test-utils'
 import {
 	initializeWordFormState,
 	selectCurrentBlock,

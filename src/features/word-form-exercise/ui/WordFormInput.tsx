@@ -5,8 +5,8 @@ import {useTranslations} from '@/hooks/useTranslations'
 import {
 	type ExerciseUiTranslationKey,
 	exerciseUiTranslations
-} from '@/i18n/dictionaries'
-import type {Translator} from '@/i18n/dictionary'
+} from '@/shared/lib/i18n/dictionaries'
+import type {Translator} from '@/shared/lib/i18n/dictionary'
 
 type ExerciseTranslator = Translator<ExerciseUiTranslationKey>
 

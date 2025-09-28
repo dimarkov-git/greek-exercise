@@ -1,6 +1,6 @@
 import {renderHook} from '@testing-library/react'
 import {afterEach, describe, expect, it, vi} from 'vitest'
-import {createTranslationDictionary} from '@/i18n/dictionary'
+import {createTranslationDictionary} from '@/shared/lib/i18n/dictionary'
 
 type QueryModule = typeof import('@tanstack/react-query')
 type DictionaryKeys = Parameters<typeof createTranslationDictionary>[0]

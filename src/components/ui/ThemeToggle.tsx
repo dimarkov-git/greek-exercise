@@ -1,7 +1,7 @@
 import {motion} from 'framer-motion'
 import {useTranslations} from '@/hooks/useTranslations'
-import {themeToggleTranslations} from '@/i18n/dictionaries'
-import {useSettingsStore} from '@/stores/settings'
+import {themeToggleTranslations} from '@/shared/lib/i18n/dictionaries'
+import {useSettingsStore} from '@/shared/model'
 
 export function ThemeToggle() {
 	const {theme, setTheme} = useSettingsStore()

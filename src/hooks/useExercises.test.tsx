@@ -3,10 +3,7 @@ import {renderHook} from '@testing-library/react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
 import type {WordFormExerciseJSON} from '@/entities/exercise'
 import type {ExercisesListDto} from '@/schemas/exercises'
-import {
-	selectCustomExercises,
-	useCustomExercisesStore
-} from '@/stores/customExercises'
+import {selectCustomExercises, useCustomExercisesStore} from '@/shared/model'
 import {useExercises} from './useExercises'
 
 const useQueryMock = vi.hoisted(() => vi.fn())

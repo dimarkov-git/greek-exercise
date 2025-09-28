@@ -4,7 +4,7 @@ import {
 	selectCustomExerciseList,
 	selectCustomExercises,
 	useCustomExercisesStore
-} from './customExercises'
+} from './custom-exercises-store'
 
 const baseExercise: WordFormExerciseJSON = {
 	enabled: true,

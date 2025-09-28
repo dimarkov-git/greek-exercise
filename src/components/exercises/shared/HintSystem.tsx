@@ -2,14 +2,14 @@ import {AnimatePresence, motion} from 'framer-motion'
 import type React from 'react'
 import {useEffect, useRef, useState} from 'react'
 import {useTranslations} from '@/hooks/useTranslations'
+import {cn} from '@/lib/utils'
 import {
 	type ExerciseUiTranslationKey,
 	exerciseUiTranslations
-} from '@/i18n/dictionaries'
-import type {Translator} from '@/i18n/dictionary'
-import {cn} from '@/lib/utils'
-import {useSettingsStore} from '@/stores/settings'
-import type {Language} from '@/types/settings'
+} from '@/shared/lib/i18n/dictionaries'
+import type {Translator} from '@/shared/lib/i18n/dictionary'
+import {useSettingsStore} from '@/shared/model'
+import type {Language} from '@/shared/model/settings'
 
 interface HintSystemProps {
 	/** Основной текст (на греческом) */

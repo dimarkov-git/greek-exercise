@@ -1,14 +1,14 @@
 import {useQuery} from '@tanstack/react-query'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
-import type {JsonValue} from '@/api/httpClient'
-import {requestJson} from '@/api/httpClient'
+import type {JsonValue} from '@/shared/api'
+import {requestJson} from '@/shared/api'
 import type {
 	DictionaryKeys,
 	TranslationDictionary,
 	Translator
-} from '@/i18n/dictionary'
-import type {TranslationRegistryKey} from '@/i18n/generated/translation-registry'
-import {useSettingsStore} from '@/stores/settings'
+} from '@/shared/lib/i18n'
+import type {TranslationRegistryKey} from '@/shared/lib/i18n/generated/translation-registry'
+import {useSettingsStore} from '@/shared/model'
 import type {
 	SupportedLanguage,
 	TranslationMissingPolicy,
@@ -16,7 +16,7 @@ import type {
 	TranslationRequest,
 	TranslationResult,
 	TranslationStatus
-} from '@/types/translations'
+} from '@/shared/model/translations'
 
 interface TranslationsResponse {
 	readonly translations: TranslationResult

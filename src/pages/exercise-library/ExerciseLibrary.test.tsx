@@ -4,8 +4,8 @@ import type {
 	ExerciseSummary
 } from '@/domain/exercises/types'
 import type {Difficulty} from '@/entities/exercise'
+import type {Language} from '@/shared/model/settings'
 import {render, screen} from '@/test-utils'
-import type {Language} from '@/types/settings'
 import {ExerciseLibrary} from './ExerciseLibrary'
 
 // Mock dependencies

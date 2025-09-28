@@ -1,4 +1,4 @@
-import type {Language} from '@/types/settings'
+import type {Language} from '@/shared/model/settings'
 
 type I18nText = Partial<Record<Language, string>>
 

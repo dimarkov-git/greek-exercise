@@ -1,10 +1,10 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {useState} from 'react'
 import {useTranslations} from '@/hooks/useTranslations'
-import {languageDropdownTranslations} from '@/i18n/dictionaries'
-import {useSettingsStore} from '@/stores/settings'
-import type {Language} from '@/types/settings'
-import {UI_LANGUAGES} from '@/types/settings'
+import {languageDropdownTranslations} from '@/shared/lib/i18n/dictionaries'
+import {useSettingsStore} from '@/shared/model'
+import type {Language} from '@/shared/model/settings'
+import {UI_LANGUAGES} from '@/shared/model/settings'
 
 interface DropdownButtonProps {
 	currentLanguage: {flag: string; name: string} | undefined

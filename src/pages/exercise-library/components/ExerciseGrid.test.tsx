@@ -3,9 +3,9 @@ import userEvent from '@testing-library/user-event'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
 import type {ExerciseSummary} from '@/domain/exercises/types'
 import type {Difficulty} from '@/entities/exercise'
-import {useSettingsStore} from '@/stores/settings'
+import {useSettingsStore} from '@/shared/model'
+import {DEFAULT_SETTINGS} from '@/shared/model/settings'
 import {render} from '@/test-utils'
-import {DEFAULT_SETTINGS} from '@/types/settings'
 import {ExerciseGrid} from './ExerciseGrid'
 
 // Mock framer-motion to avoid animation issues in tests

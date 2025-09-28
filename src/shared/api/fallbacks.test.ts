@@ -95,7 +95,7 @@ describe('resolveFallbackResponse', () => {
 			})
 		})
 
-		it('returns 403 when exercise is disabled', async () => {
+		it('returns 404 when exercise is disabled', async () => {
 			vi.doMock('@/domain/exercises/adapters', async () => {
 				const actual = await vi.importActual<
 					typeof import('@/domain/exercises/adapters')
@@ -127,8 +127,8 @@ describe('resolveFallbackResponse', () => {
 
 			expect(result).toEqual({
 				type: 'error',
-				status: 403,
-				message: 'Exercise verbs-be is not available'
+				status: 404,
+				message: 'Exercise verbs-be not found'
 			})
 		})
 	})

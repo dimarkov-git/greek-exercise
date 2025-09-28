@@ -10,11 +10,8 @@ import {
 	wordFormExerciseQueryOptions
 } from '@/domain/exercises/queryOptions'
 import type {ExerciseLibraryViewModel} from '@/domain/exercises/types'
-import type {CustomExercisesState} from '@/stores/customExercises'
-import {
-	selectCustomExercises,
-	useCustomExercisesStore
-} from '@/stores/customExercises'
+import type {CustomExercisesState} from '@/shared/model'
+import {selectCustomExercises, useCustomExercisesStore} from '@/shared/model'
 
 /**
  * Hook to get list of all available exercises with view-model metadata

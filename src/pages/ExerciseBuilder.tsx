@@ -1,7 +1,7 @@
 import {motion} from 'framer-motion'
 import {Head} from '@/components/Head'
 import {useTranslations} from '@/hooks/useTranslations'
-import {exerciseBuilderTranslations} from '@/i18n/dictionaries'
+import {exerciseBuilderTranslations} from '@/shared/lib/i18n/dictionaries'
 import {
 	BuilderHero,
 	JsonEditorPanel,

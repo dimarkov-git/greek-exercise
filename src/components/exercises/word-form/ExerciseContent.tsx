@@ -7,7 +7,7 @@ import type {
 } from '@/entities/exercise'
 import {getExerciseSettings} from '@/entities/exercise'
 import {WordFormFeedback, WordFormInput} from '@/features/word-form-exercise'
-import type {Language} from '@/types/settings'
+import type {Language} from '@/shared/model/settings'
 import {ExerciseHeader} from '../shared/ExerciseHeader'
 import {HintSystem} from '../shared/HintSystem'
 import {PulseEffect, type PulseState} from '../shared/PulseEffect'

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest'
+import {useSettingsStore} from '@/shared/model'
 import {server} from './mocks/server'
-import {useSettingsStore} from './stores/settings'
 
 beforeAll(() => server.listen())
 

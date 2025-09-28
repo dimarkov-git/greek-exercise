@@ -1,12 +1,12 @@
 import './global.css'
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
+import {detectAutomationEnvironment} from '@/shared/lib/test-utils'
 import {App} from './App'
 import {AppErrorBoundary} from './app/AppErrorBoundary'
 import {AppProviders} from './app/AppProviders'
 import {AppRouter} from './app/AppRouter'
 import {AppModeEnum, environment} from './config/environment'
-import {detectAutomationEnvironment} from './utils/test-utils'
 
 async function startMockServiceWorker() {
 	if (!environment.enableMockServiceWorker) {

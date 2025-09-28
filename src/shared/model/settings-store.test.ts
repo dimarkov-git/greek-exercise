@@ -1,6 +1,10 @@
 import {afterEach, beforeEach, expect, it, vi} from 'vitest'
-import {resolveInitialSettings, useSettingsStore} from '@/stores/settings'
-import {DEFAULT_SETTINGS, type Language, type Theme} from '@/types/settings'
+import {resolveInitialSettings, useSettingsStore} from '@/shared/model'
+import {
+	DEFAULT_SETTINGS,
+	type Language,
+	type Theme
+} from '@/shared/model/settings'
 
 const STORAGE_KEY = 'greek-exercise-settings'
 

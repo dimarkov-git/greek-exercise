@@ -11,7 +11,7 @@ import {
 	getNextIndices,
 	getTotalCases,
 	shuffleExerciseCases
-} from '@/utils/exercises'
+} from '@/shared/lib/exercises'
 
 export interface WordFormStats {
 	correct: number

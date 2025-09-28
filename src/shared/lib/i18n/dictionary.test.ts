@@ -2,8 +2,8 @@ import {describe, expect, it} from 'vitest'
 import {
 	createTranslationDictionary,
 	mergeTranslationDictionaries
-} from '@/i18n/dictionary'
-import type {TranslationRegistryKey} from '@/i18n/generated/translation-registry'
+} from '@/shared/lib/i18n/dictionary'
+import type {TranslationRegistryKey} from '@/shared/lib/i18n/generated/translation-registry'
 
 describe('createTranslationDictionary', () => {
 	it('deduplicates keys and exposes deterministic requests', () => {

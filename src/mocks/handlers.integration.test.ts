@@ -35,11 +35,11 @@ async function loadHttpClient() {
 		}
 	}))
 
-	vi.doMock('@/api/fallbacks', () => ({
+	vi.doMock('@/shared/api/fallbacks', () => ({
 		resolveFallbackResponse: fallbackSpy
 	}))
 
-	const module = await import('@/api/httpClient')
+	const module = await import('@/shared/api/httpClient')
 	return {httpClient: module, fallbackSpy}
 }
 

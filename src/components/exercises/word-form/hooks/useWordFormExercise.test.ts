@@ -19,7 +19,7 @@ vi.mock('@/hooks/usePulseEffect', () => ({
 	})
 }))
 
-import * as exerciseUtils from '@/utils/exercises'
+import * as exerciseUtils from '@/shared/lib/exercises'
 import {
 	useWordFormExercise,
 	WORD_FORM_TEST_CONTROL_KEY

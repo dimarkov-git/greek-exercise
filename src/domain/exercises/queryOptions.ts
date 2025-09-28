@@ -1,9 +1,9 @@
 import {queryOptions} from '@tanstack/react-query'
-import {HttpError, requestJson} from '@/api/httpClient'
 import {
 	validateExercisesList,
 	validateWordFormExercise
 } from '@/schemas/exercises'
+import {HttpError, requestJson} from '@/shared/api'
 import {toWordFormExerciseWithDefaults} from './adapters'
 
 const THIRTY_MINUTES = 30 * 60 * 1000

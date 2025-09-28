@@ -5,8 +5,8 @@ import {
 	setDocumentTheme,
 	useSettingsSync
 } from '@/hooks/useSettingsSync'
-import {useSettingsStore} from '@/stores/settings'
-import {DEFAULT_SETTINGS} from '@/types/settings'
+import {useSettingsStore} from '@/shared/model'
+import {DEFAULT_SETTINGS} from '@/shared/model/settings'
 
 describe('useSettingsSync', () => {
 	beforeEach(() => {

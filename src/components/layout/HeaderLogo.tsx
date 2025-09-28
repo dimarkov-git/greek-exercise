@@ -2,7 +2,7 @@ import {motion} from 'framer-motion'
 import {Link} from 'react-router'
 import {TranslatedText} from '@/components/ui/TranslatedText'
 import {useTranslations} from '@/hooks/useTranslations'
-import {headerLogoTranslations} from '@/i18n/dictionaries'
+import {headerLogoTranslations} from '@/shared/lib/i18n/dictionaries'
 
 const titleKey = 'app.title'
 

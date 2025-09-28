@@ -3,10 +3,10 @@ import {motion} from 'framer-motion'
 import {useForm} from 'react-hook-form'
 import {z} from 'zod'
 import {useTranslations} from '@/hooks/useTranslations'
-import {languageSelectorTranslations} from '@/i18n/dictionaries'
-import {useSettingsStore} from '@/stores/settings'
-import type {Language} from '@/types/settings'
-import {UI_LANGUAGES} from '@/types/settings'
+import {languageSelectorTranslations} from '@/shared/lib/i18n/dictionaries'
+import {useSettingsStore} from '@/shared/model'
+import type {Language} from '@/shared/model/settings'
+import {UI_LANGUAGES} from '@/shared/model/settings'
 
 const LanguageSchema = z.object({
 	uiLanguage: z.enum(['el', 'ru', 'en'])

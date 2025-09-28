@@ -1,5 +1,5 @@
 import {useEffect} from 'react'
-import {useSettingsStore} from '@/stores/settings'
+import {useSettingsStore} from '@/shared/model'
 
 export function setDocumentTheme(theme: string) {
 	if (typeof document === 'undefined') {
