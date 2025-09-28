@@ -74,8 +74,8 @@ export function TypeSelectorPanel({
 						{t('builder.typeHelp')}
 					</p>
 				</div>
-                                <select
-                                        className='cursor-pointer rounded-full border border-gray-200 bg-white px-4 py-2 font-medium text-gray-700 text-sm shadow-sm transition focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 md:justify-self-end md:self-start dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'
+				<select
+					className='cursor-pointer rounded-full border border-gray-200 bg-white px-4 py-2 font-medium text-gray-700 text-sm shadow-sm transition focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 md:self-start md:justify-self-end dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'
 					onChange={(event: ChangeEvent<HTMLSelectElement>) =>
 						onTypeChange(event.target.value as 'word-form')
 					}
