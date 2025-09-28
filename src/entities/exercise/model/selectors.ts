@@ -1,11 +1,11 @@
-import type {ExerciseMetadata} from '@/entities/exercise'
 import type {ExercisesListDto} from '@/schemas/exercises'
 import {createExerciseLibraryViewModel} from './adapters'
 import type {
 	ExerciseFilterSelection,
 	ExerciseLibraryViewModel,
 	ExerciseSummary
-} from './types'
+} from './domain-types'
+import type {ExerciseMetadata} from './types'
 
 type Selector<TArgs extends readonly unknown[], TResult> = (
 	...args: TArgs

@@ -1,9 +1,9 @@
 import {motion} from 'framer-motion'
-import {LanguageSelector} from '@/components/ui/LanguageSelector'
-import {ThemeToggle} from '@/components/ui/ThemeToggle'
-import {UserLanguageSelector} from '@/components/ui/UserLanguageSelector'
 import {useTranslations} from '@/hooks/useTranslations'
 import {settingsLabelTranslations} from '@/shared/lib/i18n/dictionaries'
+import {LanguageSelector} from '@/shared/ui/language-selector'
+import {ThemeToggle} from '@/shared/ui/theme-toggle'
+import {UserLanguageSelector} from '@/shared/ui/user-language-selector'
 
 export function SettingsPanel() {
 	const {t} = useTranslations(settingsLabelTranslations)

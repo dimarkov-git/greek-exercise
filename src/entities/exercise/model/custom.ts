@@ -1,6 +1,6 @@
-import type {WordFormExerciseJSON} from '@/entities/exercise'
 import type {ExerciseMetadataDto} from '@/schemas/exercises'
-import type {WordFormExerciseWithDefaults} from './types'
+import type {WordFormExerciseWithDefaults} from './domain-types'
+import type {WordFormExerciseJSON} from './types'
 
 function normalizeTags(tags: readonly string[] | undefined): string[] {
 	if (!tags) {

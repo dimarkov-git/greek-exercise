@@ -1,4 +1,4 @@
-import {toWordFormExerciseWithDefaults} from '@/domain/exercises/adapters'
+import {toWordFormExerciseWithDefaults} from '@/entities/exercise'
 import translationsData from '@/mocks/data/translations.json' with {
 	type: 'json'
 }

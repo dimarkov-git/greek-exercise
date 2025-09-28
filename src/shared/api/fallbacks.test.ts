@@ -5,7 +5,7 @@ type FallbackModule = typeof import('./fallbacks')
 afterEach(() => {
 	vi.resetModules()
 	vi.doUnmock('@/mocks/data/translations.json')
-	vi.doUnmock('@/domain/exercises/adapters')
+	vi.doUnmock('@/entities/exercise')
 })
 
 function loadFallbacks() {
@@ -96,10 +96,10 @@ describe('resolveFallbackResponse', () => {
 		})
 
 		it('returns 404 when exercise is disabled', async () => {
-			vi.doMock('@/domain/exercises/adapters', async () => {
+			vi.doMock('@/entities/exercise', async () => {
 				const actual = await vi.importActual<
-					typeof import('@/domain/exercises/adapters')
-				>('@/domain/exercises/adapters')
+					typeof import('@/entities/exercise')
+				>('@/entities/exercise')
 
 				return {
 					...actual,

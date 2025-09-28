@@ -1,8 +1,8 @@
 import {motion} from 'framer-motion'
 import {Link, useLocation} from 'react-router'
-import {TranslatedText} from '@/components/ui/TranslatedText'
 import {useTranslations} from '@/hooks/useTranslations'
 import {headerNavigationTranslations} from '@/shared/lib/i18n/dictionaries'
+import {TranslatedText} from '@/shared/ui/translated-text'
 
 const homeKey = 'navigation.home'
 const libraryKey = 'navigation.library'

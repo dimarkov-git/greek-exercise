@@ -1,6 +1,6 @@
 import {motion} from 'framer-motion'
-import {LanguageDropdown} from '@/components/ui/LanguageDropdown'
-import {ThemeToggle} from '@/components/ui/ThemeToggle'
+import {LanguageDropdown} from '@/shared/ui/language-dropdown'
+import {ThemeToggle} from '@/shared/ui/theme-toggle'
 
 export function HeaderSettings() {
 	return (

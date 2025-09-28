@@ -1,9 +1,12 @@
 import type {ChangeEvent} from 'react'
 import {useCallback, useEffect, useMemo, useState} from 'react'
 import {type BaseIssue, safeParse} from 'valibot'
-import {toWordFormExerciseWithDefaults} from '@/domain/exercises/adapters'
-import type {WordFormExerciseWithDefaults} from '@/domain/exercises/types'
-import {exerciseToJSON, type WordFormExerciseJSON} from '@/entities/exercise'
+import type {WordFormExerciseWithDefaults} from '@/entities/exercise'
+import {
+	exerciseToJSON,
+	toWordFormExerciseWithDefaults,
+	type WordFormExerciseJSON
+} from '@/entities/exercise'
 import {WordFormExerciseSchema} from '@/schemas/exercises'
 import type {ExerciseBuilderTranslationKey} from '@/shared/lib/i18n/dictionaries'
 import type {Translator} from '@/shared/lib/i18n/dictionary'

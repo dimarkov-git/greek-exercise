@@ -2,8 +2,10 @@ import {motion} from 'framer-motion'
 import type {ChangeEvent} from 'react'
 import {Link} from 'react-router'
 import {TableView} from '@/components/learn/TableView'
-import type {WordFormExerciseWithDefaults} from '@/domain/exercises/types'
-import type {WordFormExerciseJSON} from '@/entities/exercise'
+import type {
+	WordFormExerciseJSON,
+	WordFormExerciseWithDefaults
+} from '@/entities/exercise'
 import type {CustomExerciseRecord} from '@/shared/model'
 import type {BuilderSaveStatus, BuilderTranslator} from './state'
 

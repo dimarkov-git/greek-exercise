@@ -1,5 +1,5 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
-import type {WordFormExerciseWithDefaults} from '@/domain/exercises/types'
+import type {WordFormExerciseWithDefaults} from '@/entities/exercise'
 import {
 	DEFAULT_EXERCISE_SETTINGS,
 	type ExerciseResult

@@ -1,11 +1,4 @@
 import type {
-	ExerciseMetadata,
-	ExerciseSettings,
-	WordFormBlock,
-	WordFormCase
-} from '@/entities/exercise'
-import {DEFAULT_EXERCISE_SETTINGS} from '@/entities/exercise'
-import type {
 	ExerciseMetadataDto,
 	ExercisesListDto,
 	WordFormBlockDto,
@@ -18,7 +11,14 @@ import type {
 	ExerciseSource,
 	ExerciseSummary,
 	WordFormExerciseWithDefaults
+} from './domain-types'
+import type {
+	ExerciseMetadata,
+	ExerciseSettings,
+	WordFormBlock,
+	WordFormCase
 } from './types'
+import {DEFAULT_EXERCISE_SETTINGS} from './types'
 
 const DIFFICULTY_ORDER: ExerciseMetadata['difficulty'][] = [
 	'a0',

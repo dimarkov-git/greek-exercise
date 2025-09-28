@@ -4,7 +4,7 @@ import {
 	validateWordFormExercise
 } from '@/schemas/exercises'
 import {HttpError, requestJson} from '@/shared/api'
-import {toWordFormExerciseWithDefaults} from './adapters'
+import {toWordFormExerciseWithDefaults} from '../model/adapters'
 
 const THIRTY_MINUTES = 30 * 60 * 1000
 const ONE_HOUR = 60 * 60 * 1000

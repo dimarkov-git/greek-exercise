@@ -1,15 +1,13 @@
 import {useQuery, useQueryClient} from '@tanstack/react-query'
 import {useEffect, useMemo} from 'react'
-import {createExerciseLibraryViewModel} from '@/domain/exercises/adapters'
 import {
-	wordFormExerciseJsonToExercise,
-	wordFormExerciseJsonToMetadata
-} from '@/domain/exercises/custom'
-import {
+	createExerciseLibraryViewModel,
+	type ExerciseLibraryViewModel,
 	exerciseLibraryQueryOptions,
+	wordFormExerciseJsonToExercise,
+	wordFormExerciseJsonToMetadata,
 	wordFormExerciseQueryOptions
-} from '@/domain/exercises/queryOptions'
-import type {ExerciseLibraryViewModel} from '@/domain/exercises/types'
+} from '@/entities/exercise'
 import type {CustomExercisesState} from '@/shared/model'
 import {selectCustomExercises, useCustomExercisesStore} from '@/shared/model'
 

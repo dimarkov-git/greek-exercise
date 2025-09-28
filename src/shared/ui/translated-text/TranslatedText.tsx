@@ -1,7 +1,7 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import type {ElementType, ReactNode} from 'react'
 import {useEffect, useMemo, useState} from 'react'
-import {TextSkeleton} from './TextSkeleton'
+import {TextSkeleton} from '../text-skeleton'
 
 function useTranslatedTextSkeletonVisibility(
 	isLoading: boolean,

@@ -1,5 +1,5 @@
-import {toWordFormExerciseWithDefaults} from '@/domain/exercises/adapters'
 import type {WordFormBlock, WordFormExercise} from '@/entities/exercise'
+import {toWordFormExerciseWithDefaults} from '@/entities/exercise'
 import {validateWordFormExercise} from '@/schemas/exercises'
 
 const EXERCISE_CASE_LIMIT_KEY = '__EXERCISE_CASE_LIMIT__' as const

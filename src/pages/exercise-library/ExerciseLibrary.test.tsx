@@ -1,9 +1,9 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 import type {
+	Difficulty,
 	ExerciseLibraryViewModel,
 	ExerciseSummary
-} from '@/domain/exercises/types'
-import type {Difficulty} from '@/entities/exercise'
+} from '@/entities/exercise'
 import type {Language} from '@/shared/model/settings'
 import {render, screen} from '@/test-utils'
 import {ExerciseLibrary} from './ExerciseLibrary'

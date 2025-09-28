@@ -135,11 +135,15 @@
 			}
 		},
 		{
-			"includes": ["src/{entities,features,widgets,pages}/*/index.ts"],
+			"includes": [
+				"src/{entities,features,widgets,pages,shared}/*/index.ts",
+				"src/shared/**/index.ts"
+			],
 			"linter": {
 				"rules": {
 					"performance": {
-						"noBarrelFile": "off"
+						"noBarrelFile": "off",
+						"noReExportAll": "off"
 					}
 				}
 			}

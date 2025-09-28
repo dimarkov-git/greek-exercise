@@ -66,9 +66,26 @@ while adding modern development tooling.
 - ✅ Updated 100+ import statements across entire codebase
 - ✅ All TypeScript compilation and tests passing (557/558 tests)
 
+**Phase 3: Extract Entities** ✅ **COMPLETED**
+- ✅ Moved domain logic (`src/domain/exercises/*` → `src/entities/exercise/`)
+- ✅ Reorganized into model/ and api/ subdirectories within entity
+- ✅ Created user entity with foundational types for future features
+- ✅ Updated 20+ import statements to use new entity public API
+- ✅ Fixed internal entity imports to prevent circular dependencies
+- ✅ Updated Biome configuration for FSD barrel file compliance
+- ✅ All TypeScript compilation passes, 183 expected boundary violations detected
+
+**Phase 4: Extract UI Components to shared/ui** ✅ **COMPLETED**
+- ✅ Moved all UI components from `src/components/ui/` to `src/shared/ui/`
+- ✅ Reorganized components into individual directories with barrel exports
+- ✅ Updated 20+ import statements across entire codebase
+- ✅ Created comprehensive public API for shared/ui layer
+- ✅ Fixed internal component dependencies and imports
+- ✅ All TypeScript compilation and Biome linting passing
+
 **Next Steps:**
-- Phase 3: Extract remaining entities (exercise, user)
-- Phase 4: Extract UI components to shared/ui
+- Phase 5: Create features (word-form-exercise, hint-system)
+- Phase 6: Create widgets (app-header, exercise-layout)
 
 ### Deliverables
 

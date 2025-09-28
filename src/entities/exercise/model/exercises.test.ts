@@ -1,10 +1,7 @@
 import {describe, expect, it, vi} from 'vitest'
+import type {ExerciseSummary} from '@/entities/exercise'
 import {
 	createExerciseLibraryViewModel,
-	toExerciseSummary,
-	toWordFormExerciseWithDefaults
-} from '@/domain/exercises/adapters'
-import {
 	createMemoizedSelector,
 	selectDifficultyOptions,
 	selectExerciseLibraryViewModel,
@@ -12,9 +9,10 @@ import {
 	selectFilterOptions,
 	selectHasEnabledExercises,
 	selectLanguageOptions,
-	selectTagOptions
-} from '@/domain/exercises/selectors'
-import type {ExerciseSummary} from '@/domain/exercises/types'
+	selectTagOptions,
+	toExerciseSummary,
+	toWordFormExerciseWithDefaults
+} from '@/entities/exercise'
 import type {
 	ExerciseMetadataDto,
 	WordFormExerciseDto
