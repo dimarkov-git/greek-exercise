@@ -1,6 +1,6 @@
 import {act, renderHook} from '@testing-library/react'
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
-import type {ExerciseSettings, WordFormExercise} from '@/types/exercises'
+import type {ExerciseSettings, WordFormExercise} from '@/entities/exercise'
 
 const triggerPulseMock = vi.fn()
 const clearPulseMock = vi.fn()

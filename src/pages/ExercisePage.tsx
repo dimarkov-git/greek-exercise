@@ -2,11 +2,11 @@ import {useCallback, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router'
 import {WordFormExercise} from '@/components/exercises/word-form/WordFormExercise'
 import {LoadingOrError} from '@/components/LoadingOrError'
+import type {ExerciseResult} from '@/entities/exercise'
 import {useExercise} from '@/hooks/useExercises'
 import {useLayout} from '@/hooks/useLayout'
 import {useTranslations} from '@/hooks/useTranslations'
 import {exerciseUiTranslations} from '@/i18n/dictionaries'
-import type {ExerciseResult} from '@/types/exercises'
 
 /**
  * Page for running individual exercises

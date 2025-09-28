@@ -1,5 +1,5 @@
+import type {ExerciseMetadata} from '@/entities/exercise'
 import type {ExercisesListDto} from '@/schemas/exercises'
-import type {ExerciseMetadata} from '@/types/exercises'
 import {createExerciseLibraryViewModel} from './adapters'
 import type {
 	ExerciseFilterSelection,

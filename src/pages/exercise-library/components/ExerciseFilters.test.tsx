@@ -1,8 +1,8 @@
 import {screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
+import type {Difficulty} from '@/entities/exercise'
 import {render} from '@/test-utils'
-import type {Difficulty} from '@/types/exercises'
 import type {Language} from '@/types/settings'
 import {ExerciseFilters} from './ExerciseFilters'
 

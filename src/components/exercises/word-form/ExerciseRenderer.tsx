@@ -1,10 +1,10 @@
+import type {ExerciseEvent} from '@/entities/exercise'
+import {CompletionScreen} from '@/features/word-form-exercise'
 import {useTranslations} from '@/hooks/useTranslations'
 import {exerciseUiTranslations} from '@/i18n/dictionaries'
 import {useSettingsStore} from '@/stores/settings'
-import type {ExerciseEvent} from '@/types/exercises'
 import type {Language} from '@/types/settings'
 import {ExerciseLayout} from '../shared/ExerciseLayout'
-import {CompletionScreen} from './CompletionScreen'
 import {ExerciseContent} from './ExerciseContent'
 import type {WordFormViewState} from './hooks/useWordFormExercise'
 

@@ -135,6 +135,16 @@
 			}
 		},
 		{
+			"includes": ["src/{entities,features,widgets,pages}/*/index.ts"],
+			"linter": {
+				"rules": {
+					"performance": {
+						"noBarrelFile": "off"
+					}
+				}
+			}
+		},
+		{
 			"includes": ["public/**"],
 			"formatter": {
 				"enabled": false

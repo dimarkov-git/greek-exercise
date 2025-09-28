@@ -1,11 +1,11 @@
 import {motion} from 'framer-motion'
+import type {ExerciseStatus} from '@/entities/exercise'
 import {useTranslations} from '@/hooks/useTranslations'
 import {
 	type ExerciseUiTranslationKey,
 	exerciseUiTranslations
 } from '@/i18n/dictionaries'
 import type {Translator} from '@/i18n/dictionary'
-import type {ExerciseStatus} from '@/types/exercises'
 
 type ExerciseTranslator = Translator<ExerciseUiTranslationKey>
 

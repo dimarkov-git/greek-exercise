@@ -1,8 +1,8 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {useState} from 'react'
+import type {Difficulty} from '@/entities/exercise'
 import type {ExerciseLibraryTranslationKey} from '@/i18n/dictionaries'
 import type {Translator} from '@/i18n/dictionary'
-import type {Difficulty} from '@/types/exercises'
 import type {Language} from '@/types/settings'
 import {UI_LANGUAGES} from '@/types/settings'
 

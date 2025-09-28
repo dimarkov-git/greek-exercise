@@ -1,5 +1,5 @@
 import {afterEach, beforeEach, expect, it, vi} from 'vitest'
-import type {WordFormExercise} from '@/types/exercises'
+import type {WordFormExercise} from '@/entities/exercise'
 import {
 	initializeWordFormState,
 	selectCurrentCase,

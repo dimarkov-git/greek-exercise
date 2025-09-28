@@ -6,7 +6,7 @@ import {
 	selectTagOptions
 } from '@/domain/exercises/selectors'
 import type {ExerciseLibraryViewModel} from '@/domain/exercises/types'
-import type {Difficulty} from '@/types/exercises'
+import type {Difficulty} from '@/entities/exercise'
 import type {Language} from '@/types/settings'
 
 export function useExerciseFiltering(

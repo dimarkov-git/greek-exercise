@@ -1,4 +1,4 @@
-import type {ExerciseMetadata, WordFormExercise} from '@/types/exercises'
+import type {ExerciseMetadata, WordFormExercise} from '@/entities/exercise'
 import type {Language} from '@/types/settings'
 
 export type ExerciseSource = 'builtin' | 'custom'
@@ -38,5 +38,5 @@ export interface ExerciseFilterSelection {
 
 export type WordFormExerciseWithDefaults = WordFormExercise & {
 	tags: string[]
-	settings: import('@/types/exercises').ExerciseSettings
+	settings: import('@/entities/exercise').ExerciseSettings
 }

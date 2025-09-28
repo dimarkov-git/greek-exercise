@@ -33,12 +33,32 @@ This roadmap outlines the development priorities for the project.
 - ✅ **Phase 4**: Testing expansion and HTTP fallback policies
 - ✅ **Phase 5**: Coverage governance (93%+ statements/lines/functions)
 
-## Phase 6: Feature-Sliced Design Migration & Developer Experience
+## Phase 6: Feature-Sliced Design Migration & Developer Experience ⚡ IN PROGRESS
 
 ### Goals
 
 Migrate to Feature-Sliced Design (FSD) architecture for improved maintainability, scalability, and developer experience
 while adding modern development tooling.
+
+### Current Status (Updated: 2025-09-28)
+
+**Phase 0: Foundation Setup** ✅ **COMPLETED**
+- ✅ TypeScript path aliases for all FSD layers added
+- ✅ Dependency-cruiser installed and configured for boundary enforcement
+- ✅ Basic FSD folder structure created (widgets, features, entities, shared)
+- ✅ Package.json scripts updated with lint:boundaries
+- ✅ Migration log started and tracking progress
+
+**Phase 1: Golden Path Slices** ✅ **COMPLETED**
+- ✅ Created `entities/exercise` with all exercise types and public API
+- ✅ Created `features/word-form-exercise` with UI components
+- ✅ Updated all imports to use new FSD structure
+- ✅ Established barrel exports pattern for all slices
+- ✅ TypeScript compilation passes with new structure
+
+**Next Steps:**
+- Phase 2: Migrate shared layer (API, utils, i18n, stores)
+- Phase 3: Extract remaining entities
 
 ### Deliverables
 

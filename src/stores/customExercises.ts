@@ -1,6 +1,6 @@
 import {create} from 'zustand'
 import {persist} from 'zustand/middleware'
-import type {WordFormExerciseJSON} from '@/types/exercises'
+import type {WordFormExerciseJSON} from '@/entities/exercise'
 
 const STORAGE_KEY = 'greek-exercise-custom-exercises'
 

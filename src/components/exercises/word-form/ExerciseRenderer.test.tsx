@@ -2,8 +2,8 @@ import {render, screen} from '@testing-library/react'
 import type React from 'react'
 import {act} from 'react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
+import type {ExerciseEvent, WordFormExercise} from '@/entities/exercise'
 import {useSettingsStore} from '@/stores/settings'
-import type {ExerciseEvent, WordFormExercise} from '@/types/exercises'
 import {DEFAULT_SETTINGS} from '@/types/settings'
 import type {PulseState} from '../shared/PulseEffect'
 import {ExerciseRenderer} from './ExerciseRenderer'
@@ -14,12 +14,12 @@ vi.mock('@/components/Head', () => ({
 }))
 
 type CompletionScreenProps = React.ComponentProps<
-	typeof import('./CompletionScreen')['CompletionScreen']
+	typeof import('@/features/word-form-exercise')['CompletionScreen']
 >
 
 const completionScreenMock = vi.fn<(props: CompletionScreenProps) => void>()
 
-vi.mock('./CompletionScreen', () => ({
+vi.mock('@/features/word-form-exercise', () => ({
 	CompletionScreen: (props: CompletionScreenProps) => {
 		completionScreenMock(props)
 		return <div data-testid='completion-screen'>{props.exerciseTitle}</div>

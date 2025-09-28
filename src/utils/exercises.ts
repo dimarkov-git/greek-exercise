@@ -2,8 +2,8 @@ import type {
 	ExerciseMetadata,
 	WordFormCase,
 	WordFormExercise
-} from '@/types/exercises'
-import {getExerciseSettings} from '@/types/exercises'
+} from '@/entities/exercise'
+import {getExerciseSettings} from '@/entities/exercise'
 
 /**
  * Normalize Greek text for answer comparison

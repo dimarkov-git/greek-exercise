@@ -3,6 +3,7 @@ import {useCallback, useEffect, useMemo, useState} from 'react'
 import {type BaseIssue, safeParse} from 'valibot'
 import {toWordFormExerciseWithDefaults} from '@/domain/exercises/adapters'
 import type {WordFormExerciseWithDefaults} from '@/domain/exercises/types'
+import {exerciseToJSON, type WordFormExerciseJSON} from '@/entities/exercise'
 import type {ExerciseBuilderTranslationKey} from '@/i18n/dictionaries'
 import type {Translator} from '@/i18n/dictionary'
 import {WordFormExerciseSchema} from '@/schemas/exercises'
@@ -11,7 +12,6 @@ import {
 	selectCustomExerciseList,
 	useCustomExercisesStore
 } from '@/stores/customExercises'
-import {exerciseToJSON, type WordFormExerciseJSON} from '@/types/exercises'
 
 export type BuilderTranslator = Translator<ExerciseBuilderTranslationKey>
 export type BuilderSaveStatus = 'idle' | 'success' | 'error'

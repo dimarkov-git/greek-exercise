@@ -3,8 +3,8 @@ import type {ChangeEvent} from 'react'
 import {Link} from 'react-router'
 import {TableView} from '@/components/learn/TableView'
 import type {WordFormExerciseWithDefaults} from '@/domain/exercises/types'
+import type {WordFormExerciseJSON} from '@/entities/exercise'
 import type {CustomExerciseRecord} from '@/stores/customExercises'
-import type {WordFormExerciseJSON} from '@/types/exercises'
 import type {BuilderSaveStatus, BuilderTranslator} from './state'
 
 export function BuilderHero({t}: {readonly t: BuilderTranslator}) {

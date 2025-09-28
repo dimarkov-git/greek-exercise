@@ -1,12 +1,12 @@
 import type {UseQueryResult} from '@tanstack/react-query'
 import {renderHook} from '@testing-library/react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
+import type {WordFormExerciseJSON} from '@/entities/exercise'
 import type {ExercisesListDto} from '@/schemas/exercises'
 import {
 	selectCustomExercises,
 	useCustomExercisesStore
 } from '@/stores/customExercises'
-import type {WordFormExerciseJSON} from '@/types/exercises'
 import {useExercises} from './useExercises'
 
 const useQueryMock = vi.hoisted(() => vi.fn())

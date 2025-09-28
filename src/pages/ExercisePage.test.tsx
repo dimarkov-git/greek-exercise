@@ -1,7 +1,10 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 import type {WordFormExerciseWithDefaults} from '@/domain/exercises/types'
+import {
+	DEFAULT_EXERCISE_SETTINGS,
+	type ExerciseResult
+} from '@/entities/exercise'
 import {render, screen, waitFor} from '@/test-utils'
-import {DEFAULT_EXERCISE_SETTINGS, type ExerciseResult} from '@/types/exercises'
 import {ExercisePage} from './ExercisePage'
 
 // Mock dependencies

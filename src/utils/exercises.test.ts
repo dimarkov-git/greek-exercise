@@ -3,7 +3,7 @@ import type {
 	ExerciseMetadata,
 	ExerciseSettings,
 	WordFormExercise
-} from '@/types/exercises'
+} from '@/entities/exercise'
 import {
 	calculateAccuracy,
 	checkAnswer,

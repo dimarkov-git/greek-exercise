@@ -1,5 +1,5 @@
+import type {WordFormExerciseJSON} from '@/entities/exercise'
 import type {ExerciseMetadataDto} from '@/schemas/exercises'
-import type {WordFormExerciseJSON} from '@/types/exercises'
 import type {WordFormExerciseWithDefaults} from './types'
 
 function normalizeTags(tags: readonly string[] | undefined): string[] {

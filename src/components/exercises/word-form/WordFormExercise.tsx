@@ -1,4 +1,4 @@
-import type {WordFormExercise as WordFormExerciseType} from '@/types/exercises'
+import type {WordFormExercise as WordFormExerciseType} from '@/entities/exercise'
 import {WordFormExerciseWrapper} from './WordFormExerciseWrapper'
 
 interface WordFormExerciseProps {

@@ -7,12 +7,12 @@ import {
 	useReducer,
 	useRef
 } from 'react'
-import {usePulseEffect} from '@/hooks/usePulseEffect'
 import type {
 	ExerciseEvent,
 	WordFormExercise as WordFormExerciseType
-} from '@/types/exercises'
-import {type ExerciseStatus, getExerciseSettings} from '@/types/exercises'
+} from '@/entities/exercise'
+import {type ExerciseStatus, getExerciseSettings} from '@/entities/exercise'
+import {usePulseEffect} from '@/hooks/usePulseEffect'
 import {checkAnswer} from '@/utils/exercises'
 import {detectAutomationEnvironment} from '@/utils/test-utils'
 import {

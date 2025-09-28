@@ -1,7 +1,7 @@
+import type {WordFormExercise} from '@/entities/exercise'
 import {useTranslations} from '@/hooks/useTranslations'
 import {tableViewTranslations} from '@/i18n/dictionaries'
 import {useSettingsStore} from '@/stores/settings'
-import type {WordFormExercise} from '@/types/exercises'
 
 interface TableViewProps {
 	exercise: WordFormExercise

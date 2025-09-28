@@ -4,14 +4,13 @@ import type {
 	WordFormBlock,
 	WordFormCase,
 	WordFormExercise
-} from '@/types/exercises'
-import {getExerciseSettings} from '@/types/exercises'
+} from '@/entities/exercise'
+import {getExerciseSettings} from '@/entities/exercise'
+import {WordFormFeedback, WordFormInput} from '@/features/word-form-exercise'
 import type {Language} from '@/types/settings'
 import {ExerciseHeader} from '../shared/ExerciseHeader'
 import {HintSystem} from '../shared/HintSystem'
 import {PulseEffect, type PulseState} from '../shared/PulseEffect'
-import {WordFormFeedback} from './WordFormFeedback'
-import {WordFormInput} from './WordFormInput'
 
 function PromptWithHint({currentCase}: {currentCase: WordFormCase}) {
 	return (

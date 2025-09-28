@@ -1,10 +1,10 @@
 import {useCallback, useState} from 'react'
+import type {WordFormExercise} from '@/entities/exercise'
+import {exerciseToJSON} from '@/entities/exercise'
 import {useTranslations} from '@/hooks/useTranslations'
 import type {JsonViewTranslationKey} from '@/i18n/dictionaries'
 import {jsonViewTranslations} from '@/i18n/dictionaries'
 import type {Translator} from '@/i18n/dictionary'
-import type {WordFormExercise} from '@/types/exercises'
-import {exerciseToJSON} from '@/types/exercises'
 
 type JsonViewTranslator = Translator<JsonViewTranslationKey>
 

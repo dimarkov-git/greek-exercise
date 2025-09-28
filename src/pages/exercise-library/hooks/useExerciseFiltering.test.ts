@@ -4,7 +4,7 @@ import type {
 	ExerciseLibraryViewModel,
 	ExerciseSummary
 } from '@/domain/exercises/types'
-import type {Difficulty} from '@/types/exercises'
+import type {Difficulty} from '@/entities/exercise'
 import type {Language} from '@/types/settings'
 
 // Mock the selectors module using vi.hoisted()

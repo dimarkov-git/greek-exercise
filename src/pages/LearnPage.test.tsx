@@ -1,7 +1,7 @@
 import {describe, expect, it, vi} from 'vitest'
 import type {WordFormExerciseWithDefaults} from '@/domain/exercises/types'
+import {DEFAULT_EXERCISE_SETTINGS} from '@/entities/exercise'
 import {render, screen, waitFor} from '@/test-utils'
-import {DEFAULT_EXERCISE_SETTINGS} from '@/types/exercises'
 import {LearnPage} from './LearnPage'
 
 // Mock all the dependencies

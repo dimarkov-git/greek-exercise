@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, it} from 'vitest'
-import type {WordFormExerciseJSON} from '@/types/exercises'
+import type {WordFormExerciseJSON} from '@/entities/exercise'
 import {
 	selectCustomExerciseList,
 	selectCustomExercises,

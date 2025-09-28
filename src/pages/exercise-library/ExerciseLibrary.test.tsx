@@ -3,8 +3,8 @@ import type {
 	ExerciseLibraryViewModel,
 	ExerciseSummary
 } from '@/domain/exercises/types'
+import type {Difficulty} from '@/entities/exercise'
 import {render, screen} from '@/test-utils'
-import type {Difficulty} from '@/types/exercises'
 import type {Language} from '@/types/settings'
 import {ExerciseLibrary} from './ExerciseLibrary'
 

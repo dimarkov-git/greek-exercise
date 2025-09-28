@@ -1,9 +1,9 @@
 import {describe, expect, it, vi} from 'vitest'
-import {render, screen} from '@/test-utils'
 import {
 	DEFAULT_EXERCISE_SETTINGS,
 	type WordFormExercise as WordFormExerciseType
-} from '@/types/exercises'
+} from '@/entities/exercise'
+import {render, screen} from '@/test-utils'
 import {WordFormExercise} from './WordFormExercise'
 
 type WordFormExerciseWrapperProps = Parameters<

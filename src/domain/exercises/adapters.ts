@@ -1,17 +1,17 @@
 import type {
+	ExerciseMetadata,
+	ExerciseSettings,
+	WordFormBlock,
+	WordFormCase
+} from '@/entities/exercise'
+import {DEFAULT_EXERCISE_SETTINGS} from '@/entities/exercise'
+import type {
 	ExerciseMetadataDto,
 	ExercisesListDto,
 	WordFormBlockDto,
 	WordFormCaseDto,
 	WordFormExerciseDto
 } from '@/schemas/exercises'
-import type {
-	ExerciseMetadata,
-	ExerciseSettings,
-	WordFormBlock,
-	WordFormCase
-} from '@/types/exercises'
-import {DEFAULT_EXERCISE_SETTINGS} from '@/types/exercises'
 import type {Language} from '@/types/settings'
 import type {
 	ExerciseLibraryViewModel,

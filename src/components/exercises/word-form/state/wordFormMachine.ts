@@ -4,7 +4,7 @@ import {
 	type WordFormBlock,
 	type WordFormCase,
 	type WordFormExercise
-} from '@/types/exercises'
+} from '@/entities/exercise'
 import {
 	getCaseByIndices,
 	getCompletedCasesCount,
