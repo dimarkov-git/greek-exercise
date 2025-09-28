@@ -55,6 +55,8 @@
 					"nursery": {
 						"useExplicitType": "off",
 						"noUnresolvedImports": "off",
+						"useMaxParams": "off",
+						"noJsxLiterals": "off",
 						"noSecrets": {
 							"level": "error",
 							"options": {
