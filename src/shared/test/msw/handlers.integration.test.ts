@@ -19,7 +19,7 @@ afterAll(() => server.close())
 async function loadHttpClient() {
 	const fallbackSpy = vi.fn()
 
-	vi.doMock('@/config/environment', () => ({
+	vi.doMock('@/app/config/environment', () => ({
 		AppMode: {
 			development: 'development',
 			production: 'production',

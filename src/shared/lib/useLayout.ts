@@ -1,5 +1,5 @@
 import {useContext} from 'react'
-import {LayoutContext} from '@/contexts/LayoutContextDefinition'
+import {LayoutContext} from '@/shared/lib/contexts/LayoutContextDefinition'
 
 export function useLayout() {
 	const context = useContext(LayoutContext)

@@ -1,9 +1,9 @@
 import {describe, expect, it} from 'vitest'
-import {AppModeEnum, RouterModeEnum} from '@/config/environment'
+import {AppModeEnum, RouterModeEnum} from '@/app/config/environment'
 
 describe('environment configuration', () => {
 	it('respects explicit environment variable overrides in test mode', async () => {
-		const {environment} = await import('@/config/environment')
+		const {environment} = await import('@/app/config/environment')
 
 		expect(environment.mode).toBe(AppModeEnum.test)
 		expect(environment.baseURL).toBe('/')

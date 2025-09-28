@@ -1,38 +1,22 @@
 import type {Language} from '@/shared/model/settings'
+import type {
+	Difficulty,
+	ExerciseSettings,
+	ExerciseType,
+	PartialExerciseSettings
+} from '@/shared/model'
+import {DEFAULT_EXERCISE_SETTINGS} from '@/shared/model'
+
+// Re-export shared types for backwards compatibility
+export type {
+	Difficulty,
+	ExerciseSettings,
+	ExerciseType,
+	PartialExerciseSettings
+}
+export {DEFAULT_EXERCISE_SETTINGS}
 
 type I18nText = Partial<Record<Language, string>>
-
-// Base exercise types
-export type ExerciseType =
-	| 'word-form'
-	| 'translation'
-	| 'flashcard'
-	| 'multiple-choice'
-export type Difficulty = 'a0' | 'a1' | 'a2' | 'b1' | 'b2' | 'c1' | 'c2'
-
-// Exercise settings
-export interface ExerciseSettings {
-	autoAdvance: boolean // auto-advance to the next question
-	autoAdvanceDelayMs: number // delay before advancing (ms)
-	allowSkip: boolean // whether skipping questions is allowed
-	shuffleCases: boolean // whether to shuffle question order
-}
-
-// Partial exercise settings (for JSON overrides)
-export interface PartialExerciseSettings {
-	autoAdvance?: boolean // auto-advance to the next question
-	autoAdvanceDelayMs?: number // delay before advancing (ms)
-	allowSkip?: boolean // whether skipping questions is allowed
-	shuffleCases?: boolean // whether to shuffle question order
-}
-
-// Default exercise settings
-export const DEFAULT_EXERCISE_SETTINGS: ExerciseSettings = {
-	autoAdvance: true,
-	autoAdvanceDelayMs: 1500,
-	allowSkip: false,
-	shuffleCases: false
-}
 
 // Exercise block (e.g., "είμαι in present tense")
 export interface WordFormBlock {

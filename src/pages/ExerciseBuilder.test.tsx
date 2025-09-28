@@ -52,7 +52,11 @@ vi.mock('@/shared/lib/i18n', () => ({
 		error: null,
 		missingKeys: [],
 		status: 'complete'
-	}))
+	})),
+	exerciseBuilderTranslations: {
+		'builder.title': 'Exercise Builder',
+		'builder.description': 'Create custom exercises'
+	}
 }))
 
 vi.mock('@/shared/ui/head', () => ({

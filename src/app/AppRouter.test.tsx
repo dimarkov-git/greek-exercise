@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react'
 import {describe, expect, it, vi} from 'vitest'
-import type {RouterMode} from '@/config/environment'
+import type {RouterMode} from '@/app/config/environment'
 import {AppRouter} from './AppRouter'
 
 // Mock the environment module
@@ -10,7 +10,7 @@ const mockEnvironment = vi.hoisted(() => ({
 	}
 }))
 
-vi.mock('@/config/environment', () => mockEnvironment)
+vi.mock('@/app/config/environment', () => mockEnvironment)
 
 describe('AppRouter', () => {
 	it('renders children within router context', () => {

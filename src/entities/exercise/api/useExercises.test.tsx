@@ -1,26 +1,10 @@
-import type {UseQueryResult} from '@tanstack/react-query'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {renderHook, waitFor} from '@testing-library/react'
-import React from 'react'
+import type React from 'react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
-import type {ExercisesListDto, WordFormExerciseJSON} from '@/entities/exercise'
+import type {WordFormExerciseJSON} from '@/entities/exercise'
 import {selectCustomExercises, useCustomExercisesStore} from '@/shared/model'
 import {useExercises} from './useExercises'
-
-
-const baseMetadata: ExercisesListDto[number] = {
-	id: 'builtin-1',
-	type: 'word-form',
-	language: 'el',
-	title: 'Builtin exercise',
-	description: 'Description',
-	tags: ['verbs'],
-	difficulty: 'a1',
-	estimatedTimeMinutes: 5,
-	totalBlocks: 1,
-	totalCases: 1,
-	enabled: true
-}
 
 const customExercise: WordFormExerciseJSON = {
 	enabled: true,
@@ -53,7 +37,6 @@ const customExercise: WordFormExerciseJSON = {
 	]
 }
 
-
 function createWrapper() {
 	const queryClient = new QueryClient({
 		defaultOptions: {
@@ -63,7 +46,9 @@ function createWrapper() {
 	})
 
 	return function TestWrapper({children}: {children: React.ReactNode}) {
-		return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+		return (
+			<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+		)
 	}
 }
 
@@ -75,7 +60,7 @@ describe('useExercises', () => {
 	})
 
 	it('returns view model with builtin exercises when no custom entries', async () => {
-		const {result, rerender} = renderHook(() => useExercises(), {
+		const {result} = renderHook(() => useExercises(), {
 			wrapper: createWrapper()
 		})
 
@@ -86,7 +71,9 @@ describe('useExercises', () => {
 		const exercises = result.current.data?.exercises ?? []
 		expect(exercises.length).toBeGreaterThan(0)
 		// All exercises should be marked as builtin since no custom exercises are added
-		expect(exercises.every(exercise => exercise.source === 'builtin')).toBe(true)
+		expect(exercises.every(exercise => exercise.source === 'builtin')).toBe(
+			true
+		)
 		// Should include the verbs-be exercise from MSW data
 		expect(exercises.find(exercise => exercise.id === 'verbs-be')).toBeDefined()
 	})
@@ -130,7 +117,9 @@ describe('useExercises', () => {
 
 		const exercises = result.current.data?.exercises ?? []
 		// Find the overridden exercise
-		const verbsBeExercise = exercises.find(exercise => exercise.id === 'verbs-be')
+		const verbsBeExercise = exercises.find(
+			exercise => exercise.id === 'verbs-be'
+		)
 		expect(verbsBeExercise).toBeDefined()
 		expect(verbsBeExercise?.title).toBe('Override')
 		expect(verbsBeExercise?.source).toBe('custom')

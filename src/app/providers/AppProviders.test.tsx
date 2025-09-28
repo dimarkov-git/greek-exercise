@@ -3,7 +3,7 @@ import {render, screen} from '@/shared/lib'
 import {AppProviders} from './AppProviders'
 
 // Mock environment
-vi.mock('@/config/environment', () => ({
+vi.mock('@/app/config/environment', () => ({
 	environment: {
 		enableQueryDevtools: false
 	}

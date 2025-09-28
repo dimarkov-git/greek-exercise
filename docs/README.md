@@ -1,4 +1,4 @@
-# Learn Greek Documentation
+# Documentation
 
 ## 📚 Documentation Structure
 
@@ -32,6 +32,7 @@ Type-safe multi-language support system:
 Step-by-step development instructions:
 
 - [**Getting Started**](guides/getting-started.md) – Environment setup with Node 24.x and PNPM 10
+- [**Development Standards**](guides/development-standards.md) – Quality standards and CI/CD requirements
 - [**Tailwind CSS Guide**](guides/tailwind-css-guide.md) – Modern Tailwind v4 development patterns and UI/UX best
   practices
 - [**Exercise Development**](guides/exercise-development.md) – Creating and configuring exercises
@@ -42,59 +43,27 @@ Step-by-step development instructions:
 
 Core project information and planning:
 
-- [**Project Review**](REVIEW.md) – Comprehensive application functionality from user perspective
+- [**User Guide**](guides/user-guide.md) – Comprehensive application functionality from a user perspective
 - [**Development Roadmap**](ROADMAP.md) – Phases 6+ with performance and PWA focus
 - [**Exercise JSON Format**](exercise-json-format.md) – Exercise data structure specification
 
 ## 🎯 Quick Navigation
 
-| Need to...                  | Go to...                                               |
-|-----------------------------|--------------------------------------------------------|
-| **Start developing**        | [Getting Started Guide](guides/getting-started.md)     |
-| **Style with Tailwind**     | [Tailwind CSS Guide](guides/tailwind-css-guide.md)     |
-| **Understand the system**   | [Technical Overview](technical/overview.md)            |
-| **Learn app functionality** | [Project Review](REVIEW.md)                            |
-| **Add translations**        | [i18n Implementation](i18n/implementation.md)          |
-| **Create exercises**        | [Exercise Development](guides/exercise-development.md) |
-| **Write tests**             | [Testing Guide](guides/testing-guide.md)               |
-| **Optimize performance**    | [Performance Guidelines](architecture/performance.md)  |
-| **Ensure accessibility**    | [Accessibility Guide](guides/accessibility.md)         |
-| **Understand structure**    | [Project Structure](architecture/project-structure.md) |
-| **Plan future work**        | [Development Roadmap](ROADMAP.md)                      |
+| Need to...                   | Go to...                                                 |
+|------------------------------|----------------------------------------------------------|
+| **Start developing**         | [Getting Started Guide](guides/getting-started.md)       |
+| **Follow quality standards** | [Development Standards](guides/development-standards.md) |
+| **Style with Tailwind**      | [Tailwind CSS Guide](guides/tailwind-css-guide.md)       |
+| **Understand the system**    | [Technical Overview](technical/overview.md)              |
+| **Learn app functionality**  | [User Guide](guides/user-guide.md)                       |
+| **Add translations**         | [i18n Implementation](i18n/implementation.md)            |
+| **Create exercises**         | [Exercise Development](guides/exercise-development.md)   |
+| **Write tests**              | [Testing Guide](guides/testing-guide.md)                 |
+| **Optimize performance**     | [Performance Guidelines](architecture/performance.md)    |
+| **Ensure accessibility**     | [Accessibility Guide](guides/accessibility.md)           |
+| **Understand structure**     | [Project Structure](architecture/project-structure.md)   |
+| **Plan future work**         | [Development Roadmap](ROADMAP.md)                        |
 
-## 🚀 Common Tasks
-
-### Development Setup
-
-```bash
-# Complete setup instructions
-docs/guides/getting-started.md
-
-# Quick start
-pnpm install && pnpm dev
-```
-
-### Code Quality
-
-```bash
-# Full validation pipeline
-pnpm validate
-
-# Individual checks
-pnpm lint      # Code quality
-pnpm test      # Unit tests (80% coverage)
-pnpm test:e2e  # End-to-end tests
-```
-
-### Documentation Maintenance
-
-```bash
-# When adding features, update:
-1. Technical docs (if adding APIs/types)
-2. Architecture docs (if changing patterns)
-3. i18n docs (if adding translations)
-4. Guides (if changing workflows)
-```
 
 ## 🔗 Cross-References
 
@@ -110,7 +79,7 @@ pnpm test:e2e  # End-to-end tests
 - **Feature Development** → [Getting Started](guides/getting-started.md) + [Technical Overview](technical/overview.md)
 - **Exercise Creation
   ** → [Exercise Development](guides/exercise-development.md) + [JSON Format](exercise-json-format.md)
-- **Testing Strategy** → [Testing Guide](guides/testing-guide.md) + [Project Review](REVIEW.md)
+- **Testing Strategy** → [Testing Guide](guides/testing-guide.md) + [User Guide](guides/user-guide.md)
 - **Internationalization** → [i18n Overview](i18n/overview.md) → [Implementation](i18n/implementation.md)
 
 ## 📊 Key Metrics & Standards

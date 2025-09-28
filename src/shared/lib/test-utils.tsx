@@ -3,7 +3,7 @@ import {type RenderOptions, render as rtlRender} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import type {PropsWithChildren, ReactElement} from 'react'
 import {MemoryRouter} from 'react-router'
-import {createQueryClient} from '@/app/queryClient'
+import {createQueryClient} from '@/app/config/queryClient'
 
 export const queryClient = createQueryClient({
 	queries: {

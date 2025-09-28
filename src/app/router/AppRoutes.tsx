@@ -4,7 +4,7 @@ import {HomePage} from '@/pages/HomePage'
 import {AppShell} from '../shell/AppShell'
 
 const ExerciseLibrary = lazy(async () =>
-	import('@/pages/ExerciseLibrary').then(module => ({
+	import('@/pages/exercise-library/ExerciseLibrary').then(module => ({
 		default: module.ExerciseLibrary
 	}))
 )

@@ -1,6 +1,6 @@
 import type {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {useEffect, useState} from 'react'
-import {AppModeEnum, environment} from '@/config/environment'
+import {AppModeEnum, environment} from '@/app/config/environment'
 
 let DevtoolsComponent: typeof ReactQueryDevtools | null = null
 

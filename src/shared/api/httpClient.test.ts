@@ -33,7 +33,7 @@ async function loadHttpClient({
 		fallbackImplementation ?? defaultFallback
 	)
 
-	vi.doMock('@/config/environment', () => ({
+	vi.doMock('@/app/config/environment', () => ({
 		AppModeEnum: {
 			development: 'development',
 			production: 'production',

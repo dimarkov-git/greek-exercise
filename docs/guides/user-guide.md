@@ -1,25 +1,17 @@
-# Learn Greek Application — Comprehensive Project Documentation
+# User guide
 
-## Application Overview
-
-**Learn Greek** is a production-ready React application designed for interactive Greek language learning. The
-application provides a comprehensive platform for practicing Greek grammar, verb conjugations, and vocabulary through
-structured exercises with real-time feedback and multilingual support.
-
-### Key Features
+## Key features
 
 - Interactive Greek language exercises with instant feedback
 - Multilingual interface (English, Russian, Greek)
 - Custom exercise creation and management
+- Hint system with localized translations
 - Responsive design for desktop and mobile
 - Dark/light theme support
-- Progress tracking and auto-advance functionality
-- Hint system with localized translations
-- Offline-first approach with MSW (Mock Service Worker)
 
 ---
 
-## Page Documentation
+## Page documentation
 
 ### 1. Homepage (`/`)
 

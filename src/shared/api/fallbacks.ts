@@ -3,9 +3,6 @@ import {
 	toWordFormExerciseWithDefaults,
 	validateWordFormExercise
 } from '@/entities/exercise'
-import translationsData from '@/mocks/data/translations.json' with {
-	type: 'json'
-}
 import {extractExerciseMetadata} from '@/shared/lib/exercises'
 import type {TranslationRegistryKey} from '@/shared/lib/i18n'
 import {translationRegistry} from '@/shared/lib/i18n'
@@ -13,6 +10,9 @@ import type {
 	SupportedLanguage,
 	TranslationsDatabase
 } from '@/shared/model/translations'
+import translationsData from '@/shared/test/msw/data/translations.json' with {
+	type: 'json'
+}
 
 const exerciseModules = import.meta.glob('../mocks/data/exercises/*.json', {
 	eager: true,

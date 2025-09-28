@@ -27,7 +27,11 @@ vi.mock('@/entities/exercise', () => ({
 }))
 
 vi.mock('@/shared/lib/i18n', () => ({
-	useTranslations: vi.fn()
+	useTranslations: vi.fn(),
+	exerciseLibraryTranslations: {
+		'library.title': 'Exercise Library',
+		'library.description': 'Choose an exercise'
+	}
 }))
 
 vi.mock('./hooks/useExerciseFiltering', () => ({

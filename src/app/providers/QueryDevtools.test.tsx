@@ -15,7 +15,7 @@ const mockEnvironment = vi.hoisted(() => ({
 	}
 }))
 
-vi.mock('@/config/environment', () => mockEnvironment)
+vi.mock('@/app/config/environment', () => mockEnvironment)
 
 // Mock console.warn
 const mockConsoleWarn = vi.fn()

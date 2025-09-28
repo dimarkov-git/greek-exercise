@@ -8,3 +8,4 @@ export {
 export * from './settings'
 export {resolveInitialSettings, useSettingsStore} from './settings-store'
 export * from './translations'
+export * from './types/exercises'

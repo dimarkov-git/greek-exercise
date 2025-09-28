@@ -12,7 +12,11 @@ vi.mock('@/shared/lib/i18n', () => ({
 		t: (key: string) => `t:${key}`,
 		status: 'complete' as const,
 		missingKeys: [] as string[]
-	})
+	}),
+	exerciseUiTranslations: {
+		'exercise.hint.toggle': 'Toggle hint',
+		'exercise.hint.close': 'Close hint'
+	}
 }))
 
 describe('HintSystem', () => {

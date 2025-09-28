@@ -1,7 +1,7 @@
 import {act, renderHook} from '@testing-library/react'
 import {describe, expect, it} from 'vitest'
-import {LayoutProvider} from '@/contexts/LayoutContext'
 import {useLayout} from '@/shared/lib'
+import {LayoutProvider} from '@/shared/lib/contexts/LayoutContext'
 
 describe('useLayout', () => {
 	it('throws when used outside of a LayoutProvider', () => {
