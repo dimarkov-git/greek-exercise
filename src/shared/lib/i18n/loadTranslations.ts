@@ -6,7 +6,10 @@ import type {
 	SupportedLanguage,
 	TranslationStatus
 } from '@/shared/model/translations'
-import type {TranslationDictionary, TranslationEntry} from './translation-types'
+import type {
+	AutonomousTranslationDictionary,
+	TranslationEntry
+} from './translation-types'
 
 interface TranslationsResponse {
 	readonly translations: Record<string, string>
@@ -47,7 +50,9 @@ export interface LoadTranslationsOptions {
 	readonly language?: SupportedLanguage
 }
 
-export interface LoadTranslationsResult<T extends TranslationDictionary> {
+export interface LoadTranslationsResult<
+	T extends AutonomousTranslationDictionary
+> {
 	readonly t: (entry: T[keyof T]) => string
 	readonly language: SupportedLanguage
 	readonly isLoading: boolean
@@ -61,7 +66,7 @@ export interface LoadTranslationsResult<T extends TranslationDictionary> {
  */
 function normalizeEntry(
 	dictKey: string,
-	value: string | TranslationDictionary[string]
+	value: string | AutonomousTranslationDictionary[string]
 ): TranslationEntry {
 	if (typeof value === 'string') {
 		return {key: value, fallback: value}
@@ -73,7 +78,9 @@ function normalizeEntry(
  * Collect service keys that need to be requested
  * Only includes entries with a key property
  */
-function collectServiceKeys(dictionary: TranslationDictionary): string[] {
+function collectServiceKeys(
+	dictionary: AutonomousTranslationDictionary
+): string[] {
 	return Object.entries(dictionary)
 		.filter(([_, value]) => {
 			if (typeof value === 'string') return true
@@ -121,7 +128,7 @@ function resolveTranslation(
 /**
  * Calculate missing keys (entries with service key but no translation)
  */
-function calculateMissingKeys<T extends TranslationDictionary>(
+function calculateMissingKeys<T extends AutonomousTranslationDictionary>(
 	dictionary: T,
 	serviceTranslations?: Record<string, string>
 ): (keyof T)[] {
@@ -132,7 +139,7 @@ function calculateMissingKeys<T extends TranslationDictionary>(
 				return !serviceTranslations?.[value]
 			}
 			// Object entries only if they have a key
-			if (value.key) {
+			if (typeof value === 'object' && value.key) {
 				return !serviceTranslations?.[value.key]
 			}
 			// Entries without key don't need service
@@ -178,7 +185,7 @@ function calculateStatus(
  * <h1>{t(translations.pageTitle)}</h1>
  * ```
  */
-export function loadTranslations<T extends TranslationDictionary>(
+export function loadTranslations<T extends AutonomousTranslationDictionary>(
 	dictionary: T,
 	options?: LoadTranslationsOptions
 ): LoadTranslationsResult<T> {

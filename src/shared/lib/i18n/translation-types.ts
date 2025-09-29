@@ -41,4 +41,7 @@ export interface TranslationEntry {
  * - string: service key (requests from service, key as fallback)
  * - TranslationEntry: full entry with an optional service key and inline translations
  */
-export type TranslationDictionary = Record<string, string | TranslationEntry>
+export type AutonomousTranslationDictionary = Record<
+	string,
+	string | TranslationEntry
+>

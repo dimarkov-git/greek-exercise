@@ -1,13 +1,14 @@
 import type {WordFormExercise} from '@/entities/exercise'
-import {tableViewTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
+import {translations} from './translations-table-view'
 
 interface TableViewProps {
 	exercise: WordFormExercise
 }
 
 export function TableView({exercise}: TableViewProps) {
-	const {t} = useTranslations(tableViewTranslations)
+	const {t} = loadTranslations(translations)
 	const {userLanguage} = useSettingsStore()
 
 	return (
@@ -24,24 +25,24 @@ export function TableView({exercise}: TableViewProps) {
 				{/* Exercise Metadata */}
 				<div className='mb-4 flex flex-wrap gap-4 text-sm'>
 					<span className='inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'>
-						{t('exercise.difficulty')}
-						{t('ui.colon')}
+						{t(translations.difficulty)}
+						{t(translations.colon)}
 						{exercise.difficulty.toUpperCase()}
 					</span>
 					<span className='inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-green-800 dark:bg-green-900/30 dark:text-green-300'>
-						{t('ui.clockIcon')} {exercise.estimatedTimeMinutes}{' '}
-						{t('exercise.minutes')}
+						{t(translations.clockIcon)} {exercise.estimatedTimeMinutes}{' '}
+						{t(translations.minutes)}
 					</span>
 					<span className='inline-flex items-center rounded-full bg-purple-100 px-3 py-1 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300'>
-						{t('ui.booksIcon')} {exercise.blocks.length} {t('exercise.blocks')}
+						{t(translations.booksIcon)} {exercise.blocks.length} {t(translations.blocks)}
 					</span>
 					<span className='inline-flex items-center rounded-full bg-orange-100 px-3 py-1 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300'>
-						{t('ui.notesIcon')}{' '}
+						{t(translations.notesIcon)}{' '}
 						{exercise.blocks.reduce(
 							(total, block) => total + block.cases.length,
 							0
 						)}{' '}
-						{t('exercise.cases')}
+						{t(translations.cases)}
 					</span>
 				</div>
 
@@ -63,7 +64,7 @@ export function TableView({exercise}: TableViewProps) {
 			{/* Exercise Structure */}
 			<div className='space-y-6'>
 				<h4 className='font-semibold text-gray-900 text-lg dark:text-white'>
-					{t('exerciseStructure')}
+					{t(translations.exerciseStructure)}
 				</h4>
 
 				{exercise.blocks.map((block, blockIndex) => (
@@ -74,8 +75,8 @@ export function TableView({exercise}: TableViewProps) {
 						{/* Block Header */}
 						<div className='border-gray-200 border-b bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-800'>
 							<h5 className='font-medium text-gray-900 dark:text-white'>
-								{t('block')} {blockIndex + 1}
-								{t('ui.colon')}
+								{t(translations.block)} {blockIndex + 1}
+								{t(translations.colon)}
 								{block.name}
 							</h5>
 							<p className='text-gray-600 text-sm dark:text-gray-400'>
@@ -89,16 +90,16 @@ export function TableView({exercise}: TableViewProps) {
 								<thead className='border-gray-200 border-b bg-gray-50 dark:border-gray-700 dark:bg-gray-800'>
 									<tr>
 										<th className='px-4 py-3 text-left font-medium text-gray-600 text-sm dark:text-gray-400'>
-											{t('ui.hashSymbol')}
+											{t(translations.hashSymbol)}
 										</th>
 										<th className='px-4 py-3 text-left font-medium text-gray-600 text-sm dark:text-gray-400'>
-											{t('prompt')}
+											{t(translations.prompt)}
 										</th>
 										<th className='px-4 py-3 text-left font-medium text-gray-600 text-sm dark:text-gray-400'>
-											{t('answer')}
+											{t(translations.answer)}
 										</th>
 										<th className='px-4 py-3 text-left font-medium text-gray-600 text-sm dark:text-gray-400'>
-											{t('hint')}
+											{t(translations.hint)}
 										</th>
 									</tr>
 								</thead>
@@ -148,7 +149,7 @@ export function TableView({exercise}: TableViewProps) {
 													</div>
 												) : (
 													<span className='text-gray-400 text-sm dark:text-gray-600'>
-														{t('ui.emptyHint')}
+														{t(translations.emptyHint)}
 													</span>
 												)}
 											</td>

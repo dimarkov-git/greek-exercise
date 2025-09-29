@@ -1,10 +1,11 @@
 import {motion} from 'framer-motion'
 import {AppModeEnum, environment} from '@/app/config'
-import {mainNavigationTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {NavigationCard} from '@/shared/ui/navigation-card'
+import {translations} from './translations'
 
 export function MainNavigation() {
-	const {t} = useTranslations(mainNavigationTranslations)
+	const {t} = loadTranslations(translations)
 
 	const showTestSection = environment.mode === AppModeEnum.development
 
@@ -24,9 +25,9 @@ export function MainNavigation() {
 				>
 					<NavigationCard
 						color='blue'
-						description={t('exerciseLibraryDesc')}
+						description={t(translations.exerciseLibraryDesc)}
 						icon='📚'
-						title={t('exerciseLibrary')}
+						title={t(translations.exerciseLibrary)}
 						to='/exercises'
 					/>
 				</motion.div>
@@ -38,9 +39,9 @@ export function MainNavigation() {
 				>
 					<NavigationCard
 						color='purple'
-						description={t('exerciseBuilderDesc')}
+						description={t(translations.exerciseBuilderDesc)}
 						icon='🔧'
-						title={t('exerciseBuilder')}
+						title={t(translations.exerciseBuilder)}
 						to='/builder'
 					/>
 				</motion.div>
@@ -55,9 +56,9 @@ export function MainNavigation() {
 					>
 						<NavigationCard
 							color='orange'
-							description={t('testSectionDesc')}
+							description={t(translations.testSectionDesc)}
 							icon='🧪'
-							title={t('testSection')}
+							title={t(translations.testSection)}
 							to='/test/i18n'
 						/>
 					</motion.div>

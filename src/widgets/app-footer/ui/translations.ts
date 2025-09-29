@@ -1,4 +1,4 @@
-import type {TranslationDictionary} from '@/shared/lib/i18n'
+import type {AutonomousTranslationDictionary} from '@/shared/lib/i18n'
 
 export const translations = {
 	copyright: 'footer.copyright',
@@ -11,6 +11,6 @@ export const translations = {
 		defaultLanguage: 'el',
 		fallback: 'Made by Denis with love'
 	}
-} as const satisfies TranslationDictionary
+} as const satisfies AutonomousTranslationDictionary
 
 export type TranslationKey = keyof typeof translations

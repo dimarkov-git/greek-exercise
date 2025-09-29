@@ -16,13 +16,3 @@ export const userLanguageSelectorTranslations = createTranslationDictionary([
 export type UserLanguageSelectorTranslationKey = DictionaryKeys<
 	typeof userLanguageSelectorTranslations
 >
-
-export const languageDropdownTranslations = createTranslationDictionary([
-	'header.selectLanguage',
-	'ui.dropdownArrow',
-	'ui.selectedLanguage'
-] as const)
-
-export type LanguageDropdownTranslationKey = DictionaryKeys<
-	typeof languageDropdownTranslations
->

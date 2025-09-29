@@ -8,15 +8,14 @@ import {HintSystem, SimpleHint} from './HintSystem'
 const TEST_CONTENT = 'Κείμενο'
 
 vi.mock('@/shared/lib/i18n', () => ({
-	useTranslations: () => ({
-		t: (key: string) => `t:${key}`,
-		status: 'complete' as const,
-		missingKeys: [] as string[]
-	}),
-	exerciseUiTranslations: {
-		'exercise.hint.toggle': 'Toggle hint',
-		'exercise.hint.close': 'Close hint'
-	}
+	loadTranslations: () => ({
+		t: (key: unknown) => `t:${String(key)}`,
+		language: 'en' as const,
+		isLoading: false,
+		error: null,
+		missingKeys: [],
+		status: 'complete' as const
+	})
 }))
 
 describe('HintSystem', () => {

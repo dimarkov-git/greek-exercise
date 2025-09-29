@@ -2,14 +2,11 @@ import {AnimatePresence, motion} from 'framer-motion'
 import type React from 'react'
 import {useEffect, useRef, useState} from 'react'
 import {cn} from '@/shared/lib'
-import type {Translator} from '@/shared/lib/i18n'
-import {
-	type ExerciseUiTranslationKey,
-	exerciseUiTranslations,
-	useTranslations
-} from '@/shared/lib/i18n'
+import type {TranslationEntry} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
 import type {Language} from '@/shared/model/settings'
+import {translations} from './translations'
 
 interface HintSystemProps {
 	/** Основной текст (на греческом) */
@@ -25,8 +22,7 @@ interface HintSystemProps {
 }
 
 type PlacementType = 'top' | 'bottom' | 'left' | 'right'
-
-type ExerciseTranslator = Translator<ExerciseUiTranslationKey>
+type HintTranslator = (entry: string | TranslationEntry) => string
 
 function getTooltipClasses(placement: PlacementType): string {
 	const baseClasses =
@@ -115,7 +111,7 @@ function HintButton({
 	onMouseEnter: () => void
 	onMouseLeave: () => void
 	triggerRef: React.RefObject<HTMLButtonElement | null>
-	translator: ExerciseTranslator
+	translator: HintTranslator
 }) {
 	const t = translator
 	const handleClick = () => {
@@ -146,7 +142,7 @@ function HintButton({
 					stroke='currentColor'
 					viewBox='0 0 24 24'
 				>
-					<title>{t('exercise.hintIcon')}</title>
+					<title>{t(translations.hintIcon)}</title>
 					<path
 						d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
 						strokeLinecap='round'
@@ -205,7 +201,7 @@ export function HintSystem({
 	const triggerRef = useRef<HTMLButtonElement>(null)
 	const {userLanguage} = useSettingsStore()
 	const isMobile = useMobileDetection()
-	const {t} = useTranslations(exerciseUiTranslations)
+	const {t} = loadTranslations(translations)
 
 	useClickOutside(isHintVisible, hintRef, triggerRef, () =>
 		setIsHintVisible(false)
@@ -247,7 +243,7 @@ export function HintSystem({
 					onMouseEnter={handleMouseEnter}
 					onMouseLeave={handleMouseLeave}
 					onToggle={handleToggle}
-					translator={t}
+					translator={t as HintTranslator}
 					triggerRef={triggerRef}
 				/>
 			</div>

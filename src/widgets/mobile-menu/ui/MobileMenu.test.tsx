@@ -1,35 +1,10 @@
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {render, screen} from '@testing-library/react'
 import {userEvent} from '@testing-library/user-event'
+import type {ReactNode} from 'react'
 import {BrowserRouter} from 'react-router'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
 import {MobileMenu} from './MobileMenu'
-
-// Mock the translations
-vi.mock('@/shared/lib/i18n', () => ({
-	mobileMenuTranslations: {
-		keys: [
-			'navigation.home',
-			'navigation.library',
-			'navigation.builder',
-			'navigation.testSection',
-			'settings'
-		],
-		getRequest: vi.fn(() => ({key: 'test', fallback: 'test'}))
-	},
-	useTranslations: vi.fn(() => ({
-		t: (key: string) => {
-			const translations: Record<string, string> = {
-				'navigation.home': 'Home',
-				'navigation.library': 'Library',
-				'navigation.builder': 'Builder',
-				'navigation.testSection': 'Test Section',
-				settings: 'Settings'
-			}
-			return translations[key] || key
-		},
-		isLoading: false
-	}))
-}))
 
 // Mock language dropdown and theme toggle
 vi.mock('@/shared/ui/language-dropdown', () => ({
@@ -41,6 +16,28 @@ vi.mock('@/shared/ui/language-dropdown', () => ({
 vi.mock('@/shared/ui/theme-toggle', () => ({
 	ThemeToggle: () => <div data-testid='theme-toggle'>Theme Toggle</div>
 }))
+
+// Create QueryClient for tests
+let queryClient: QueryClient
+
+const createWrapper = () => {
+	queryClient = new QueryClient({
+		defaultOptions: {
+			queries: {
+				retry: false,
+				gcTime: 0
+			}
+		}
+	})
+
+	return function Wrapper({children}: {children: ReactNode}) {
+		return (
+			<QueryClientProvider client={queryClient}>
+				<BrowserRouter>{children}</BrowserRouter>
+			</QueryClientProvider>
+		)
+	}
+}
 
 // Mock framer motion to avoid animation complexity in tests
 vi.mock('framer-motion', () => ({
@@ -97,11 +94,9 @@ const renderMobileMenu = (props = {}) => {
 		onClose: vi.fn()
 	}
 
-	return render(
-		<BrowserRouter>
-			<MobileMenu {...defaultProps} {...props} />
-		</BrowserRouter>
-	)
+	return render(<MobileMenu {...defaultProps} {...props} />, {
+		wrapper: createWrapper()
+	})
 }
 
 describe('MobileMenu', () => {
@@ -121,33 +116,36 @@ describe('MobileMenu', () => {
 		expect(screen.queryByTestId('mobile-menu')).not.toBeInTheDocument()
 	})
 
-	it('renders all navigation items', () => {
+	it('renders all navigation items', async () => {
 		renderMobileMenu()
 
-		expect(screen.getByText('Home')).toBeInTheDocument()
-		expect(screen.getByText('Library')).toBeInTheDocument()
-		expect(screen.getByText('Builder')).toBeInTheDocument()
+		// Wait for translations to load from MSW
+		expect(await screen.findByText('Home')).toBeInTheDocument()
+		expect(await screen.findByText('Library')).toBeInTheDocument()
+		expect(await screen.findByText('Builder')).toBeInTheDocument()
 	})
 
-	it('highlights active navigation item', () => {
+	it('highlights active navigation item', async () => {
 		// Mock current location
 		mockLocation.pathname = '/exercises'
 
 		renderMobileMenu()
 
-		const libraryLink = screen.getByText('Library').closest('a')
+		// Wait for translations to load
+		const libraryLink = (await screen.findByText('Library')).closest('a')
 		expect(libraryLink).toHaveClass(
 			'bg-[var(--color-primary)]/10',
 			'text-[var(--color-primary)]'
 		)
 	})
 
-	it('shows home as active when on root path', () => {
+	it('shows home as active when on root path', async () => {
 		mockLocation.pathname = '/'
 
 		renderMobileMenu()
 
-		const homeLink = screen.getByText('Home').closest('a')
+		// Wait for translations to load
+		const homeLink = (await screen.findByText('Home')).closest('a')
 		expect(homeLink).toHaveClass(
 			'bg-[var(--color-primary)]/10',
 			'text-[var(--color-primary)]'
@@ -160,7 +158,8 @@ describe('MobileMenu', () => {
 
 		renderMobileMenu({onClose: mockOnClose})
 
-		const homeLink = screen.getByText('Home')
+		// Wait for translations to load
+		const homeLink = await screen.findByText('Home')
 		await user.click(homeLink)
 
 		expect(mockOnClose).toHaveBeenCalled()
@@ -180,9 +179,9 @@ describe('MobileMenu', () => {
 		expect(mockOnClose).toHaveBeenCalled()
 	})
 
-	it('renders settings section', () => {
+	it('renders settings section', async () => {
 		renderMobileMenu()
-		expect(screen.getByText('Settings')).toBeInTheDocument()
+		expect(await screen.findByText('Settings')).toBeInTheDocument()
 	})
 
 	it('renders theme toggle and language dropdown in settings', () => {
@@ -208,26 +207,27 @@ describe('MobileMenu', () => {
 		expect(screen.getByText('🔧')).toBeInTheDocument() // Builder
 	})
 
-	it('has proper accessibility structure', () => {
+	it('has proper accessibility structure', async () => {
 		renderMobileMenu()
 
-		// Check that links have proper href attributes
-		const homeLink = screen.getByText('Home').closest('a')
-		const libraryLink = screen.getByText('Library').closest('a')
-		const builderLink = screen.getByText('Builder').closest('a')
+		// Wait for translations and check that links have proper href attributes
+		const homeLink = (await screen.findByText('Home')).closest('a')
+		const libraryLink = (await screen.findByText('Library')).closest('a')
+		const builderLink = (await screen.findByText('Builder')).closest('a')
 
 		expect(homeLink).toHaveAttribute('href', '/')
 		expect(libraryLink).toHaveAttribute('href', '/exercises')
 		expect(builderLink).toHaveAttribute('href', '/builder')
 	})
 
-	it('applies correct inactive styles to non-active items', () => {
+	it('applies correct inactive styles to non-active items', async () => {
 		mockLocation.pathname = '/exercises' // Library is active
 
 		renderMobileMenu()
 
-		const homeLink = screen.getByText('Home').closest('a')
-		const builderLink = screen.getByText('Builder').closest('a')
+		// Wait for translations to load
+		const homeLink = (await screen.findByText('Home')).closest('a')
+		const builderLink = (await screen.findByText('Builder')).closest('a')
 
 		// These should have inactive styles
 		expect(homeLink).toHaveClass('text-[var(--color-text-secondary)]')

@@ -1,11 +1,8 @@
 import {motion} from 'framer-motion'
 import {Link} from 'react-router'
-import {
-	type ExerciseUiTranslationKey,
-	exerciseUiTranslations,
-	type Translator,
-	useTranslations
-} from '@/shared/lib/i18n'
+import type {TranslationEntry} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
+import {translations} from './translations'
 
 interface ExerciseHeaderProps {
 	title: string
@@ -19,7 +16,7 @@ interface ExerciseHeaderProps {
 	showBackButton?: boolean
 }
 
-type ExerciseTranslator = Translator<ExerciseUiTranslationKey>
+type ExerciseTranslator = (entry: string | TranslationEntry) => string
 
 function BackButton({t}: {t: ExerciseTranslator}) {
 	return (
@@ -34,7 +31,7 @@ function BackButton({t}: {t: ExerciseTranslator}) {
 				stroke='currentColor'
 				viewBox='0 0 24 24'
 			>
-				<title>{t('exercise.backArrow')}</title>
+				<title>{t(translations.backArrow)}</title>
 				<path
 					d='M15 19l-7-7 7-7'
 					strokeLinecap='round'
@@ -42,7 +39,7 @@ function BackButton({t}: {t: ExerciseTranslator}) {
 					strokeWidth={2}
 				/>
 			</svg>
-			{t('exercise.backToLibrary')}
+			{t(translations.backToLibrary)}
 		</Link>
 	)
 }
@@ -68,8 +65,8 @@ function AutoAdvanceToggle({
 			onClick={onToggleAutoAdvance}
 			title={
 				autoAdvanceEnabled
-					? t('exercise.autoAdvanceEnabled')
-					: t('exercise.autoAdvanceDisabled')
+					? t(translations.autoAdvanceEnabled)
+					: t(translations.autoAdvanceDisabled)
 			}
 			type='button'
 		>
@@ -80,7 +77,7 @@ function AutoAdvanceToggle({
 					stroke='currentColor'
 					viewBox='0 0 24 24'
 				>
-					<title>{t('exercise.autoAdvanceEnabledIcon')}</title>
+					<title>{t(translations.autoAdvanceEnabledIcon)}</title>
 					<path
 						d='M14.828 14.828a4 4 0 01-5.656 0M9 10h6m-3-3v6m3.586-5.414L16 7.172V20a2 2 0 01-2 2H10a2 2 0 01-2-2V7.172l.414-.414A2 2 0 009.828 6h4.344a2 2 0 011.414.586z'
 						strokeLinecap='round'
@@ -95,7 +92,7 @@ function AutoAdvanceToggle({
 					stroke='currentColor'
 					viewBox='0 0 24 24'
 				>
-					<title>{t('exercise.autoAdvanceDisabledIcon')}</title>
+					<title>{t(translations.autoAdvanceDisabledIcon)}</title>
 					<path
 						d='M10 9v6m4-6v6'
 						strokeLinecap='round'
@@ -104,7 +101,7 @@ function AutoAdvanceToggle({
 					/>
 				</svg>
 			)}
-			{t('exercise.autoAdvance')}
+			{t(translations.autoAdvance)}
 		</button>
 	)
 }
@@ -120,7 +117,7 @@ function ProgressBar({
 		<div className='w-full' data-testid='exercise-progress'>
 			<div className='mb-2 flex items-center justify-between'>
 				<span className='text-gray-600 text-sm dark:text-gray-400'>
-					{t('exercise.progress')}
+					{t(translations.progress)}
 				</span>
 				<span
 					className='font-medium text-gray-900 text-sm dark:text-white'
@@ -128,7 +125,7 @@ function ProgressBar({
 					data-progress-total={progress.total}
 					data-testid='progress-text'
 				>
-					{progress.current} {t('exercise.progressOf')} {progress.total}
+					{progress.current} {t(translations.progressOf)} {progress.total}
 				</span>
 			</div>
 
@@ -157,7 +154,7 @@ export function ExerciseHeader({
 	autoAdvanceEnabled = true,
 	showBackButton = true
 }: ExerciseHeaderProps) {
-	const {t} = useTranslations(exerciseUiTranslations)
+	const {t} = loadTranslations(translations)
 
 	return (
 		<motion.div
@@ -167,13 +164,13 @@ export function ExerciseHeader({
 		>
 			{/* Верхняя строка с кнопкой назад и заголовком */}
 			<div className='mb-4 flex items-center justify-between'>
-				{showBackButton && <BackButton t={t} />}
+				{showBackButton && <BackButton t={t as ExerciseTranslator} />}
 
 				{onToggleAutoAdvance && (
 					<AutoAdvanceToggle
 						autoAdvanceEnabled={autoAdvanceEnabled}
 						onToggleAutoAdvance={onToggleAutoAdvance}
-						t={t}
+						t={t as ExerciseTranslator}
 					/>
 				)}
 			</div>
@@ -191,7 +188,7 @@ export function ExerciseHeader({
 				)}
 			</div>
 
-			{progress && <ProgressBar progress={progress} t={t} />}
+			{progress && <ProgressBar progress={progress} t={t as ExerciseTranslator} />}
 		</motion.div>
 	)
 }

@@ -1,11 +1,12 @@
 import {motion} from 'framer-motion'
-import {settingsLabelTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {LanguageSelector} from '@/shared/ui/language-selector'
 import {ThemeToggle} from '@/shared/ui/theme-toggle'
 import {UserLanguageSelector} from '@/shared/ui/user-language-selector'
+import {translations} from './translations'
 
 export function SettingsPanel() {
-	const {t} = useTranslations(settingsLabelTranslations)
+	const {t} = loadTranslations(translations)
 
 	return (
 		<motion.div
@@ -20,7 +21,7 @@ export function SettingsPanel() {
 				transition={{delay: 0.1}}
 			>
 				<h2 className='font-semibold text-gray-900 text-lg dark:text-white'>
-					{t('settings')}
+					{t(translations.settings)}
 				</h2>
 				<ThemeToggle />
 			</motion.div>

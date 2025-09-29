@@ -1,11 +1,12 @@
 import type {ExerciseEvent} from '@/entities/exercise'
 import {CompletionScreen} from '@/features/word-form-exercise'
-import {exerciseUiTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
 import type {Language} from '@/shared/model/settings'
 import {ExerciseLayout} from '@/widgets/exercise-layout'
 import type {WordFormViewState} from '../model/hooks/useWordFormExercise'
 import {ExerciseContent} from './ExerciseContent'
+import {exerciseRendererTranslations} from './translations'
 
 interface ExerciseRendererProps {
 	state: WordFormViewState
@@ -132,7 +133,7 @@ export function ExerciseRenderer({
 	onExit
 }: ExerciseRendererProps) {
 	const {userLanguage} = useSettingsStore()
-	const {t} = useTranslations(exerciseUiTranslations)
+	const {t} = loadTranslations(exerciseRendererTranslations)
 
 	const exerciseTitle =
 		state.exercise.titleI18n?.[userLanguage as Language] || state.exercise.title
@@ -151,8 +152,8 @@ export function ExerciseRenderer({
 	return (
 		<RendererContent
 			clearPulse={clearPulse}
-			errorMessage={t('error.couldNotLoadExercise')}
-			errorTitle={t('error.title')}
+			errorMessage={t(exerciseRendererTranslations['error.couldNotLoadExercise'])}
+			errorTitle={t(exerciseRendererTranslations['error.title'])}
 			exerciseTitle={exerciseTitle}
 			onAnswerChange={handleAnswerChange}
 			onSkip={() => handleEvent({type: 'SKIP'})}

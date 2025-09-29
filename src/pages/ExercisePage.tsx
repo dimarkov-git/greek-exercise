@@ -4,8 +4,9 @@ import type {ExerciseResult} from '@/entities/exercise'
 import {useExercise} from '@/entities/exercise'
 import {WordFormExercise} from '@/features/word-form-exercise'
 import {useLayout} from '@/shared/lib'
-import {exerciseUiTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {LoadingOrError} from '@/shared/ui/loading-or-error'
+import {exercisePageTranslations} from './translations'
 
 /**
  * Page for running individual exercises
@@ -16,7 +17,7 @@ export function ExercisePage() {
 	const navigate = useNavigate()
 	const {setHeaderEnabled} = useLayout()
 	const {data: exercise, isLoading, error} = useExercise(exerciseId)
-	const {t} = useTranslations(exerciseUiTranslations)
+	const {t} = loadTranslations(exercisePageTranslations)
 
 	// Hide header on exercise pages
 	useEffect(() => {
@@ -65,17 +66,17 @@ export function ExercisePage() {
 				<div className='flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900'>
 					<div className='text-center'>
 						<h2 className='mb-4 font-semibold text-red-600 text-xl'>
-							{t('exercise.unsupportedType')}
+							{t(exercisePageTranslations['exercise.unsupportedType'])}
 						</h2>
 						<p className='mb-6 text-gray-600 dark:text-gray-400'>
-							{t('exercise.notImplemented').replace('{type}', exercise.type)}
+							{t(exercisePageTranslations['exercise.notImplemented']).replace('{type}', exercise.type)}
 						</p>
 						<button
 							className='rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700'
 							onClick={handleExit}
 							type='button'
 						>
-							{t('exercise.backToLibrary')}
+							{t(exercisePageTranslations['exercise.backToLibrary'])}
 						</button>
 					</div>
 				</div>

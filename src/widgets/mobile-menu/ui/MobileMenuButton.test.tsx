@@ -1,25 +1,9 @@
-import {render, screen} from '@testing-library/react'
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import {render, screen, waitFor} from '@testing-library/react'
 import {userEvent} from '@testing-library/user-event'
+import type {ReactNode} from 'react'
 import {describe, expect, it, vi} from 'vitest'
 import {MobileMenuButton} from './MobileMenuButton'
-
-// Mock the translations
-vi.mock('@/shared/lib/i18n', () => ({
-	mobileMenuButtonTranslations: {
-		keys: ['navigation.menu', 'navigation.close'],
-		getRequest: vi.fn(() => ({key: 'test', fallback: 'test'}))
-	},
-	useTranslations: vi.fn(() => ({
-		t: (key: string) => {
-			const translations: Record<string, string> = {
-				'navigation.menu': 'Menu',
-				'navigation.close': 'Close'
-			}
-			return translations[key] || key
-		},
-		isLoading: false
-	}))
-}))
 
 // Mock framer motion to avoid animation complexity in tests
 vi.mock('framer-motion', () => ({
@@ -33,6 +17,26 @@ vi.mock('framer-motion', () => ({
 	}
 }))
 
+// Create QueryClient for tests
+let queryClient: QueryClient
+
+const createWrapper = () => {
+	queryClient = new QueryClient({
+		defaultOptions: {
+			queries: {
+				retry: false,
+				gcTime: 0
+			}
+		}
+	})
+
+	return function Wrapper({children}: {children: ReactNode}) {
+		return (
+			<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+		)
+	}
+}
+
 const renderMobileMenuButton = (props = {}) => {
 	const defaultProps = {
 		isOpen: false,
@@ -40,7 +44,9 @@ const renderMobileMenuButton = (props = {}) => {
 		onClick: vi.fn()
 	}
 
-	return render(<MobileMenuButton {...defaultProps} {...props} />)
+	return render(<MobileMenuButton {...defaultProps} {...props} />, {
+		wrapper: createWrapper()
+	})
 }
 
 describe('MobileMenuButton', () => {
@@ -49,16 +55,22 @@ describe('MobileMenuButton', () => {
 		expect(screen.getByRole('button')).toBeInTheDocument()
 	})
 
-	it('shows menu label when closed', () => {
+	it('shows menu label when closed', async () => {
 		renderMobileMenuButton({isOpen: false})
 		const button = screen.getByRole('button')
-		expect(button).toHaveAttribute('aria-label', 'Menu')
+		// Wait for MSW to provide translations
+		await waitFor(() => {
+			expect(button).toHaveAttribute('aria-label', 'Menu')
+		})
 	})
 
-	it('shows close label when open', () => {
+	it('shows close label when open', async () => {
 		renderMobileMenuButton({isOpen: true})
 		const button = screen.getByRole('button')
-		expect(button).toHaveAttribute('aria-label', 'Close')
+		// Wait for MSW to provide translations
+		await waitFor(() => {
+			expect(button).toHaveAttribute('aria-label', 'Close')
+		})
 	})
 
 	it('has correct aria-expanded attribute when closed', () => {
@@ -128,18 +140,24 @@ describe('MobileMenuButton', () => {
 		expect(svg).not.toHaveClass('rotate-90')
 	})
 
-	it('has proper SVG accessibility', () => {
+	it('has proper SVG accessibility', async () => {
 		renderMobileMenuButton({isOpen: false})
 		const title = screen.getByRole('button').querySelector('svg title')
 
-		expect(title).toHaveTextContent('Menu')
+		// Wait for MSW to provide translations
+		await waitFor(() => {
+			expect(title).toHaveTextContent('Menu')
+		})
 	})
 
-	it('updates SVG title when state changes', () => {
+	it('updates SVG title when state changes', async () => {
 		renderMobileMenuButton({isOpen: true})
 		const title = screen.getByRole('button').querySelector('svg title')
 
-		expect(title).toHaveTextContent('Close')
+		// Wait for MSW to provide translations
+		await waitFor(() => {
+			expect(title).toHaveTextContent('Close')
+		})
 	})
 
 	it('has mobile-only visibility classes', () => {

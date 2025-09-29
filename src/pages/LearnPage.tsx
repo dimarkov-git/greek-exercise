@@ -4,23 +4,23 @@ import type {WordFormExercise} from '@/entities/exercise'
 import {useExercise} from '@/entities/exercise'
 import {JsonView, TableView, ViewToggle} from '@/features/learn-view'
 import {useLayout} from '@/shared/lib'
-import type {LearnPageTranslationKey, Translator} from '@/shared/lib/i18n'
-import {learnPageTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
 import {UI_LANGUAGES, USER_LANGUAGES} from '@/shared/model/settings'
 import {Head} from '@/shared/ui/head'
 import {LoadingOrError} from '@/shared/ui/loading-or-error'
+import {learnPageTranslations} from './translations'
 
 type ViewMode = 'json' | 'table'
 
-type LearnPageTranslator = Translator<LearnPageTranslationKey>
+type LearnPageTranslator = (entry: string) => string
 
 export function LearnPage() {
 	const {exerciseId} = useParams()
 	const navigate = useNavigate()
 	const {setHeaderEnabled} = useLayout()
 	const {data: exercise, isLoading, error} = useExercise(exerciseId)
-	const {t} = useTranslations(learnPageTranslations)
+	const {t} = loadTranslations(learnPageTranslations)
 	const [viewMode, setViewMode] = useState<ViewMode>('table')
 
 	useEffect(() => {
@@ -54,7 +54,7 @@ export function LearnPage() {
 			<UnsupportedExerciseNotice
 				exerciseType={exercise.type}
 				onBack={handleBack}
-				t={t}
+				t={t as LearnPageTranslator}
 			/>
 		)
 	}
@@ -65,7 +65,7 @@ export function LearnPage() {
 			onBack={handleBack}
 			onStart={handleStartExercise}
 			onViewModeChange={setViewMode}
-			t={t}
+			t={t as LearnPageTranslator}
 			viewMode={viewMode}
 		/>
 	)
@@ -84,20 +84,20 @@ function UnsupportedExerciseNotice({
 }: UnsupportedExerciseNoticeProps) {
 	return (
 		<div className='flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900'>
-			<Head title={t('learnExercise')} />
+			<Head title={t(learnPageTranslations.learnExercise)} />
 			<div className='text-center'>
 				<h2 className='mb-4 font-semibold text-red-600 text-xl'>
-					{t('exercise.unsupportedType')}
+					{t(learnPageTranslations['exercise.unsupportedType'])}
 				</h2>
 				<p className='mb-6 text-gray-600 dark:text-gray-400'>
-					{t('exercise.notImplemented').replace('{type}', exerciseType)}
+					{t(learnPageTranslations['exercise.notImplemented']).replace('{type}', exerciseType)}
 				</p>
 				<button
 					className='rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700'
 					onClick={onBack}
 					type='button'
 				>
-					{t('exercise.backToLibrary')}
+					{t(learnPageTranslations['exercise.backToLibrary'])}
 				</button>
 			</div>
 		</div>
@@ -123,7 +123,7 @@ function LearnPageContent({
 }: LearnPageContentProps) {
 	return (
 		<div className='min-h-screen bg-gray-50 pb-16 dark:bg-gray-950'>
-			<Head title={`${exercise.title} | ${t('learnExercise')}`} />
+			<Head title={`${exercise.title} | ${t(learnPageTranslations.learnExercise)}`} />
 			<main className='mx-auto max-w-6xl px-4 pt-10 sm:px-6 lg:px-8'>
 				<LearnPageHero exercise={exercise} onBack={onBack} t={t} />
 				<LearnPageActions
@@ -160,11 +160,11 @@ function LearnPageHero({exercise, onBack, t}: LearnPageHeroProps) {
 				onClick={onBack}
 				type='button'
 			>
-				<span aria-hidden='true'>{t('ui.leftArrow')}</span>
-				{t('exercise.backToLibrary')}
+				<span aria-hidden='true'>{t(learnPageTranslations['ui.leftArrow'])}</span>
+				{t(learnPageTranslations['exercise.backToLibrary'])}
 			</button>
 			<p className='mt-6 font-semibold text-sm text-white/70 uppercase tracking-[0.3em]'>
-				{t('learnExercise')}
+				{t(learnPageTranslations.learnExercise)}
 			</p>
 			<h1 className='mt-4 font-bold text-3xl leading-tight sm:text-4xl md:text-5xl'>
 				{exercise.title}
@@ -191,18 +191,18 @@ function ExerciseStats({exercise, t}: ExerciseStatsProps) {
 	return (
 		<dl className='mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
 			<StatCard
-				label={t('exercise.difficulty')}
+				label={t(learnPageTranslations['exercise.difficulty'])}
 				value={exercise.difficulty.toUpperCase()}
 			/>
 			<StatCard
-				label={t('exercise.minutes')}
+				label={t(learnPageTranslations['exercise.minutes'])}
 				value={`${exercise.estimatedTimeMinutes}`}
 			/>
 			<StatCard
-				label={t('exercise.blocks')}
+				label={t(learnPageTranslations['exercise.blocks'])}
 				value={`${exercise.blocks.length}`}
 			/>
-			<StatCard label={t('exercise.cases')} value={`${totalCases}`} />
+			<StatCard label={t(learnPageTranslations['exercise.cases'])} value={`${totalCases}`} />
 		</dl>
 	)
 }
@@ -244,8 +244,8 @@ function LearnPageActions({
 				onClick={onStart}
 				type='button'
 			>
-				<span aria-hidden='true'>{t('ui.playIcon')}</span>
-				{t('startExercise')}
+				<span aria-hidden='true'>{t(learnPageTranslations['ui.playIcon'])}</span>
+				{t(learnPageTranslations.startExercise)}
 			</button>
 		</div>
 	)
@@ -268,7 +268,7 @@ function ExerciseTags({tags, t}: ExerciseTagsProps) {
 					className='inline-flex items-center rounded-full bg-blue-100/80 px-3 py-1 font-medium text-blue-700 text-xs uppercase tracking-wide dark:bg-blue-900/30 dark:text-blue-200'
 					key={tag}
 				>
-					{`${t('ui.hashSymbol')}${tag}`}
+					{`${t(learnPageTranslations['ui.hashSymbol'])}${tag}`}
 				</li>
 			))}
 		</ul>
@@ -293,23 +293,23 @@ function CurrentSettings({t}: CurrentSettingsProps) {
 	return (
 		<div className='mt-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800'>
 			<h3 className='mb-4 font-semibold text-gray-900 text-lg dark:text-white'>
-				{t('exercise.currentSettings')}
+				{t(learnPageTranslations['exercise.currentSettings'])}
 			</h3>
 			<p className='mb-4 text-gray-600 text-sm dark:text-gray-400'>
-				{t('exercise.settingsInfo')}
+				{t(learnPageTranslations['exercise.settingsInfo'])}
 			</p>
 			<dl className='grid gap-4 sm:grid-cols-3'>
 				<SettingItem
-					label={t('interfaceLanguage')}
+					label={t(learnPageTranslations.interfaceLanguage)}
 					value={getLanguageName(uiLanguage, UI_LANGUAGES)}
 				/>
 				<SettingItem
-					label={t('userLanguage')}
+					label={t(learnPageTranslations.userLanguage)}
 					value={getLanguageName(userLanguage, USER_LANGUAGES)}
 				/>
 				<SettingItem
-					label={t('theme')}
-					value={theme === 'dark' ? t('darkTheme') : t('lightTheme')}
+					label={t(learnPageTranslations.theme)}
+					value={theme === 'dark' ? t(learnPageTranslations.darkTheme) : t(learnPageTranslations.lightTheme)}
 				/>
 			</dl>
 		</div>

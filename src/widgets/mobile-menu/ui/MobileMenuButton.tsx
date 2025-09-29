@@ -1,5 +1,6 @@
 import {motion} from 'framer-motion'
-import {mobileMenuButtonTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
+import {mobileMenuButtonTranslations} from './translations'
 
 interface MobileMenuButtonProps {
 	isOpen: boolean
@@ -12,14 +13,18 @@ export function MobileMenuButton({
 	menuId,
 	onClick
 }: MobileMenuButtonProps) {
-	const {t} = useTranslations(mobileMenuButtonTranslations)
+	const {t} = loadTranslations(mobileMenuButtonTranslations)
 
 	return (
 		<motion.button
 			animate={{opacity: 1, scale: 1}}
 			aria-controls={menuId}
 			aria-expanded={isOpen}
-			aria-label={isOpen ? t('navigation.close') : t('navigation.menu')}
+			aria-label={
+				isOpen
+					? t(mobileMenuButtonTranslations.close)
+					: t(mobileMenuButtonTranslations.menu)
+			}
 			className='flex items-center justify-center rounded-lg border border-gray-300 bg-white p-2 md:hidden dark:border-gray-600 dark:bg-gray-800'
 			initial={{opacity: 0, scale: 0.9}}
 			onClick={onClick}
@@ -33,7 +38,11 @@ export function MobileMenuButton({
 				stroke='currentColor'
 				viewBox='0 0 24 24'
 			>
-				<title>{isOpen ? t('navigation.close') : t('navigation.menu')}</title>
+				<title>
+					{isOpen
+						? t(mobileMenuButtonTranslations.close)
+						: t(mobileMenuButtonTranslations.menu)}
+				</title>
 				<path
 					d={isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
 					strokeLinecap='round'

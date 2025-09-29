@@ -1,6 +1,7 @@
 import {motion} from 'framer-motion'
-import {exerciseBuilderTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {Head} from '@/shared/ui/head'
+import {exerciseBuilderPageTranslations} from './translations'
 import {
 	BuilderHero,
 	JsonEditorPanel,
@@ -21,10 +22,10 @@ interface ExerciseBuilderViewProps extends ExerciseBuilderState {
 }
 
 export function ExerciseBuilder() {
-	const {t} = useTranslations(exerciseBuilderTranslations)
-	const state = useExerciseBuilderState(t)
+	const {t} = loadTranslations(exerciseBuilderPageTranslations)
+	const state = useExerciseBuilderState(t as unknown as BuilderTranslator)
 
-	return <ExerciseBuilderView {...state} t={t} />
+	return <ExerciseBuilderView {...state} t={t as unknown as BuilderTranslator} />
 }
 
 function ExerciseBuilderView({
@@ -48,7 +49,7 @@ function ExerciseBuilderView({
 
 	return (
 		<>
-			<Head title={t('exerciseBuilder')} />
+			<Head title={t(exerciseBuilderPageTranslations.exerciseBuilder)} />
 			<motion.div
 				animate={{opacity: 1}}
 				className='min-h-screen bg-gray-50 pb-16 dark:bg-gray-950'

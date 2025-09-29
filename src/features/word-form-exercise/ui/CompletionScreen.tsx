@@ -1,6 +1,7 @@
 import {motion} from 'framer-motion'
-import {exerciseUiTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {ExerciseLayout} from '@/widgets/exercise-layout'
+import {completionScreenTranslations} from './translations'
 
 interface CompletionScreenProps {
 	correctCount: number
@@ -21,7 +22,7 @@ export function CompletionScreen({
 	onRestart,
 	onExit
 }: CompletionScreenProps) {
-	const {t} = useTranslations(exerciseUiTranslations)
+	const {t} = loadTranslations(completionScreenTranslations)
 
 	const accuracy = Math.round((correctCount / totalCases) * 100)
 
@@ -32,15 +33,15 @@ export function CompletionScreen({
 				className='space-y-6 p-8 text-center'
 				initial={{opacity: 0, scale: 0.9}}
 			>
-				<div className='mb-4 text-6xl'>{t('exercise.celebrationEmoji')}</div>
+				<div className='mb-4 text-6xl'>{t(completionScreenTranslations['exercise.celebrationEmoji'])}</div>
 				<h2 className='font-bold text-2xl text-green-600 dark:text-green-400'>
-					{t('exercise.congratulations')}
+					{t(completionScreenTranslations['exercise.congratulations'])}
 				</h2>
 				<div className='space-y-4 rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800'>
 					<div className='grid grid-cols-2 gap-4 text-sm'>
 						<div>
 							<div className='text-gray-600 dark:text-gray-400'>
-								{t('exercise.correctAnswers')}
+								{t(completionScreenTranslations['exercise.correctAnswers'])}
 							</div>
 							<div className='font-bold text-2xl text-green-600'>
 								{correctCount}
@@ -48,7 +49,7 @@ export function CompletionScreen({
 						</div>
 						<div>
 							<div className='text-gray-600 dark:text-gray-400'>
-								{t('exercise.incorrectAnswers')}
+								{t(completionScreenTranslations['exercise.incorrectAnswers'])}
 							</div>
 							<div className='font-bold text-2xl text-red-600'>
 								{incorrectCount}
@@ -56,20 +57,20 @@ export function CompletionScreen({
 						</div>
 						<div>
 							<div className='text-gray-600 dark:text-gray-400'>
-								{t('exercise.accuracy')}
+								{t(completionScreenTranslations['exercise.accuracy'])}
 							</div>
 							<div className='font-bold text-2xl text-blue-600'>
 								{accuracy}
-								{t('exercise.percentSymbol')}
+								{t(completionScreenTranslations['exercise.percentSymbol'])}
 							</div>
 						</div>
 						<div>
 							<div className='text-gray-600 dark:text-gray-400'>
-								{t('exercise.time')}
+								{t(completionScreenTranslations['exercise.time'])}
 							</div>
 							<div className='font-bold text-2xl text-purple-600'>
 								{Math.round(timeSpentMs / 1000)}
-								{t('exercise.secondsSymbol')}
+								{t(completionScreenTranslations['exercise.secondsSymbol'])}
 							</div>
 						</div>
 					</div>
@@ -80,14 +81,14 @@ export function CompletionScreen({
 						onClick={onRestart}
 						type='button'
 					>
-						{t('exercise.restartExercise')}
+						{t(completionScreenTranslations['exercise.restartExercise'])}
 					</button>
 					<button
 						className='rounded-lg bg-gray-600 px-6 py-2 text-white transition-colors hover:bg-gray-700'
 						onClick={onExit}
 						type='button'
 					>
-						{t('exercise.returnToLibrary')}
+						{t(completionScreenTranslations['exercise.returnToLibrary'])}
 					</button>
 				</div>
 			</motion.div>

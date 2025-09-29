@@ -2,10 +2,11 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import {motion} from 'framer-motion'
 import {useForm} from 'react-hook-form'
 import {z} from 'zod'
-import {languageSelectorTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
 import type {Language} from '@/shared/model/settings'
 import {UI_LANGUAGES} from '@/shared/model/settings'
+import {translations} from './translations'
 
 const LanguageSchema = z.object({
 	uiLanguage: z.enum(['el', 'ru', 'en'])
@@ -13,7 +14,7 @@ const LanguageSchema = z.object({
 
 export function LanguageSelector() {
 	const {uiLanguage, setUiLanguage} = useSettingsStore()
-	const {t} = useTranslations(languageSelectorTranslations)
+	const {t} = loadTranslations(translations)
 
 	const {setValue} = useForm({
 		resolver: zodResolver(LanguageSchema),
@@ -32,7 +33,7 @@ export function LanguageSelector() {
 			initial={{opacity: 0, y: 20}}
 		>
 			<div className='block font-medium text-gray-700 text-sm dark:text-gray-300'>
-				{t('interfaceLanguage')}
+				{t(translations.interfaceLanguage)}
 			</div>
 			<div className='flex gap-1.5'>
 				{UI_LANGUAGES.map(language => (

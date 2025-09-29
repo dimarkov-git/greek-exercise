@@ -2,33 +2,33 @@ import {AnimatePresence, motion} from 'framer-motion'
 import {Link, useLocation} from 'react-router'
 import {AppModeEnum, environment} from '@/app/config'
 import {cn} from '@/shared/lib'
-import type {MobileMenuTranslationKey, Translator} from '@/shared/lib/i18n'
-import {mobileMenuTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {LanguageDropdown} from '@/shared/ui/language-dropdown'
 import {ThemeToggle} from '@/shared/ui/theme-toggle'
+import {mobileMenuTranslations} from './translations'
 
 const HOME_ICON = '🏠'
 const LIBRARY_ICON = '📚'
 const BUILDER_ICON = '🔧'
 const TEST_ICON = '🧪'
 
-type MobileMenuTranslator = Translator<MobileMenuTranslationKey>
-
-const createNavigationItems = (t: MobileMenuTranslator) => {
+const createNavigationItems = (
+	t: ReturnType<typeof loadTranslations<typeof mobileMenuTranslations>>['t']
+) => {
 	const items = [
 		{
 			path: '/',
-			label: t('navigation.home'),
+			label: t(mobileMenuTranslations.home),
 			icon: <span className='text-base'>{HOME_ICON}</span>
 		},
 		{
 			path: '/exercises',
-			label: t('navigation.library'),
+			label: t(mobileMenuTranslations.library),
 			icon: <span className='text-base'>{LIBRARY_ICON}</span>
 		},
 		{
 			path: '/builder',
-			label: t('navigation.builder'),
+			label: t(mobileMenuTranslations.builder),
 			icon: <span className='text-base'>{BUILDER_ICON}</span>
 		}
 	]
@@ -36,7 +36,7 @@ const createNavigationItems = (t: MobileMenuTranslator) => {
 	if (environment.mode === AppModeEnum.development) {
 		items.push({
 			path: '/test/i18n',
-			label: t('navigation.testSection'),
+			label: t(mobileMenuTranslations.testSection),
 			icon: <span className='text-base'>{TEST_ICON}</span>
 		})
 	}
@@ -51,7 +51,7 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({id, isOpen, onClose}: MobileMenuProps) {
-	const {t} = useTranslations(mobileMenuTranslations)
+	const {t} = loadTranslations(mobileMenuTranslations)
 	const location = useLocation()
 
 	const isActive = (path: string) => {
@@ -107,7 +107,7 @@ export function MobileMenu({id, isOpen, onClose}: MobileMenuProps) {
 							<div className='border-[var(--color-border)] border-t pt-3'>
 								<div className='flex items-center justify-between px-3 py-2'>
 									<span className='font-medium text-[var(--color-text-secondary)] text-sm'>
-										{t('settings')}
+										{t(mobileMenuTranslations.settings)}
 									</span>
 									<div className='flex items-center gap-2'>
 										<ThemeToggle />
