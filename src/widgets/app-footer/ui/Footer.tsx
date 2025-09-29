@@ -1,12 +1,11 @@
-import {footerTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {TranslatedText} from '@/shared/ui/translated-text'
+import {translations} from './translations'
 
-const copyrightKey = 'footer.copyright'
-const madeWithKey = 'footer.madeWith'
 const repoURL = 'https://github.com/dimarkov-git/greek-exercise'
 
 export function Footer() {
-	const {t, isLoading} = useTranslations(footerTranslations)
+	const {t, isLoading} = loadTranslations(translations)
 
 	return (
 		<footer className='border-gray-800 border-t bg-slate-900 text-gray-400'>
@@ -16,24 +15,24 @@ export function Footer() {
 						<TranslatedText
 							isLoading={isLoading}
 							skeletonWidth='280px'
-							text={t(copyrightKey)}
+							text={t(translations.copyright)}
 						/>
 						<br />
 						<TranslatedText
 							isLoading={isLoading}
 							skeletonWidth='180px'
-							text={t(madeWithKey)}
+							text={t(translations.madeWith)}
 						/>
 					</div>
 					<div className='flex space-x-6'>
 						<a
-							aria-label={t('footer.github')}
+							aria-label={t(translations.github)}
 							className='text-gray-400 transition-colors hover:text-gray-300'
 							href={repoURL}
 							rel='noopener noreferrer'
 							target='_blank'
 						>
-							<span className='sr-only'>{t('footer.github')}</span>
+							<span className='sr-only'>{t(translations.github)}</span>
 							<svg
 								aria-hidden={true}
 								className='h-6 w-6'
