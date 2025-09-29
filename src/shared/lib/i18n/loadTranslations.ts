@@ -6,7 +6,7 @@ import type {
 	SupportedLanguage,
 	TranslationStatus
 } from '@/shared/model/translations'
-import type {TranslationDictionary, TranslationEntry} from './types'
+import type {TranslationDictionary, TranslationEntry} from './translation-types'
 
 interface TranslationsResponse {
 	readonly translations: Record<string, string>
@@ -43,11 +43,11 @@ async function fetchTranslations(
 	return data.translations
 }
 
-export interface UseTranslationsOptions {
+export interface LoadTranslationsOptions {
 	readonly language?: SupportedLanguage
 }
 
-export interface UseTranslationsResult<T extends TranslationDictionary> {
+export interface LoadTranslationsResult<T extends TranslationDictionary> {
 	readonly t: (entry: T[keyof T]) => string
 	readonly language: SupportedLanguage
 	readonly isLoading: boolean
@@ -156,18 +156,32 @@ function calculateStatus(
 }
 
 /**
- * Hook for autonomous translations with smart fallback chain
+ * Hook for loading translations with smart fallback chain
  *
  * Fallback chain:
  * 1. Service translation in app language
  * 2. Inline translations[appLanguage]
  * 3. Inline translations[defaultLanguage] (if specified and different from app)
- * 4. fallback value (defaults to service key)
+ * 4. fallback value (defaults to service key or English fallback)
+ *
+ * @example
+ * ```typescript
+ * const translations = {
+ *   pageTitle: 'Select Language', // English fallback
+ *   greeting: {
+ *     key: 'app.greeting',
+ *     translations: { en: 'Hello', el: 'Γεια' }
+ *   }
+ * }
+ *
+ * const { t } = loadTranslations(translations)
+ * <h1>{t(translations.pageTitle)}</h1>
+ * ```
  */
-export function useTranslations<T extends TranslationDictionary>(
+export function loadTranslations<T extends TranslationDictionary>(
 	dictionary: T,
-	options?: UseTranslationsOptions
-): UseTranslationsResult<T> {
+	options?: LoadTranslationsOptions
+): LoadTranslationsResult<T> {
 	const storeLanguage = useSettingsStore(state => state.uiLanguage)
 	const appLanguage = options?.language ?? storeLanguage ?? 'en'
 	const serviceKeys = useMemo(
@@ -182,7 +196,7 @@ export function useTranslations<T extends TranslationDictionary>(
 	} = useQuery({
 		queryKey: [
 			'translations',
-			'new',
+			'autonomous',
 			appLanguage,
 			serviceKeys.sort().join(',')
 		],

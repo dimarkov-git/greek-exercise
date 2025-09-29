@@ -1,27 +1,10 @@
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {render, screen, waitFor} from '@testing-library/react'
 import {userEvent} from '@testing-library/user-event'
+import type {ReactNode} from 'react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
 import {useSettingsStore} from '@/shared/model'
 import {LanguageDropdown} from './LanguageDropdown'
-
-// Mock the translations
-vi.mock('@/shared/lib/i18n', () => ({
-	languageDropdownTranslations: {
-		keys: ['header.selectLanguage', 'ui.dropdownArrow', 'ui.selectedLanguage'],
-		getRequest: vi.fn(() => ({key: 'test', fallback: 'test'}))
-	},
-	useTranslations: vi.fn(() => ({
-		t: (key: string) => {
-			const translations: Record<string, string> = {
-				'header.selectLanguage': 'Select language',
-				'ui.dropdownArrow': 'Dropdown arrow',
-				'ui.selectedLanguage': 'Selected language'
-			}
-			return translations[key] || key
-		},
-		isLoading: false
-	}))
-}))
 
 // Mock settings store
 vi.mock('@/shared/model', () => ({
@@ -31,6 +14,27 @@ vi.mock('@/shared/model', () => ({
 const mockUseSettingsStore = vi.mocked(useSettingsStore)
 
 describe('LanguageDropdown', () => {
+	let queryClient: QueryClient
+
+	const createWrapper = () => {
+		queryClient = new QueryClient({
+			defaultOptions: {
+				queries: {
+					retry: false,
+					gcTime: 0
+				}
+			}
+		})
+
+		return function Wrapper({children}: {children: ReactNode}) {
+			return (
+				<QueryClientProvider client={queryClient}>
+					{children}
+				</QueryClientProvider>
+			)
+		}
+	}
+
 	beforeEach(() => {
 		mockUseSettingsStore.mockReturnValue({
 			uiLanguage: 'en',
@@ -39,16 +43,16 @@ describe('LanguageDropdown', () => {
 	})
 
 	it('renders dropdown button with current language flag', () => {
-		render(<LanguageDropdown />)
+		render(<LanguageDropdown />, {wrapper: createWrapper()})
 
 		const dropdownButton = screen.getByTestId('ui-language-dropdown')
 		expect(dropdownButton).toBeInTheDocument()
-		expect(dropdownButton).toHaveAttribute('title', 'Select language')
+		expect(dropdownButton).toHaveAttribute('title', 'Select Language')
 	})
 
 	it('shows dropdown menu when button is clicked', async () => {
 		const user = userEvent.setup()
-		render(<LanguageDropdown />)
+		render(<LanguageDropdown />, {wrapper: createWrapper()})
 
 		const dropdownButton = screen.getByTestId('ui-language-dropdown')
 		await user.click(dropdownButton)
@@ -59,7 +63,7 @@ describe('LanguageDropdown', () => {
 
 	it('displays all available languages in dropdown menu', async () => {
 		const user = userEvent.setup()
-		render(<LanguageDropdown />)
+		render(<LanguageDropdown />, {wrapper: createWrapper()})
 
 		const dropdownButton = screen.getByTestId('ui-language-dropdown')
 		await user.click(dropdownButton)
@@ -77,7 +81,7 @@ describe('LanguageDropdown', () => {
 		} as ReturnType<typeof useSettingsStore>)
 
 		const user = userEvent.setup()
-		render(<LanguageDropdown />)
+		render(<LanguageDropdown />, {wrapper: createWrapper()})
 
 		const dropdownButton = screen.getByTestId('ui-language-dropdown')
 		await user.click(dropdownButton)
@@ -96,7 +100,7 @@ describe('LanguageDropdown', () => {
 			setUiLanguage: mockSetUiLanguage
 		} as ReturnType<typeof useSettingsStore>)
 
-		render(<LanguageDropdown />)
+		render(<LanguageDropdown />, {wrapper: createWrapper()})
 
 		const dropdownButton = screen.getByTestId('ui-language-dropdown')
 		await user.click(dropdownButton)
@@ -109,7 +113,7 @@ describe('LanguageDropdown', () => {
 
 	it('closes dropdown after selecting a language', async () => {
 		const user = userEvent.setup()
-		render(<LanguageDropdown />)
+		render(<LanguageDropdown />, {wrapper: createWrapper()})
 
 		const dropdownButton = screen.getByTestId('ui-language-dropdown')
 		await user.click(dropdownButton)
@@ -134,7 +138,8 @@ describe('LanguageDropdown', () => {
 			<div>
 				<LanguageDropdown />
 				<div data-testid='outside'>Outside element</div>
-			</div>
+			</div>,
+			{wrapper: createWrapper()}
 		)
 
 		const dropdownButton = screen.getByTestId('ui-language-dropdown')
@@ -157,7 +162,7 @@ describe('LanguageDropdown', () => {
 
 	it('shows checkmark icon for selected language', async () => {
 		const user = userEvent.setup()
-		render(<LanguageDropdown />)
+		render(<LanguageDropdown />, {wrapper: createWrapper()})
 
 		const dropdownButton = screen.getByTestId('ui-language-dropdown')
 		await user.click(dropdownButton)
@@ -176,7 +181,7 @@ describe('LanguageDropdown', () => {
 			setUiLanguage: mockSetUiLanguage
 		} as ReturnType<typeof useSettingsStore>)
 
-		render(<LanguageDropdown />)
+		render(<LanguageDropdown />, {wrapper: createWrapper()})
 
 		const dropdownButton = screen.getByTestId('ui-language-dropdown')
 		await user.click(dropdownButton)
@@ -188,7 +193,7 @@ describe('LanguageDropdown', () => {
 	})
 
 	it('has proper dropdown arrow rotation', () => {
-		render(<LanguageDropdown />)
+		render(<LanguageDropdown />, {wrapper: createWrapper()})
 
 		const dropdownButton = screen.getByTestId('ui-language-dropdown')
 		const arrow = dropdownButton.querySelector('svg')
@@ -198,12 +203,12 @@ describe('LanguageDropdown', () => {
 	})
 
 	it('has proper accessibility attributes', () => {
-		render(<LanguageDropdown />)
+		render(<LanguageDropdown />, {wrapper: createWrapper()})
 
 		const dropdownButton = screen.getByTestId('ui-language-dropdown')
 
 		expect(dropdownButton).toHaveAttribute('type', 'button')
-		expect(dropdownButton).toHaveAttribute('title', 'Select language')
+		expect(dropdownButton).toHaveAttribute('title', 'Select Language')
 
 		const arrow = dropdownButton.querySelector('svg title')
 		expect(arrow).toHaveTextContent('Dropdown arrow')
@@ -216,7 +221,7 @@ describe('LanguageDropdown', () => {
 		} as ReturnType<typeof useSettingsStore>)
 
 		const user = userEvent.setup()
-		render(<LanguageDropdown />)
+		render(<LanguageDropdown />, {wrapper: createWrapper()})
 
 		const dropdownButton = screen.getByTestId('ui-language-dropdown')
 
@@ -229,7 +234,7 @@ describe('LanguageDropdown', () => {
 
 	it('renders language names correctly in dropdown menu', async () => {
 		const user = userEvent.setup()
-		render(<LanguageDropdown />)
+		render(<LanguageDropdown />, {wrapper: createWrapper()})
 
 		const dropdownButton = screen.getByTestId('ui-language-dropdown')
 		await user.click(dropdownButton)

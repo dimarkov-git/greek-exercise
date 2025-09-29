@@ -1,9 +1,9 @@
 import {motion} from 'framer-motion'
 import {useState} from 'react'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
 import type {SupportedLanguage} from '@/shared/model/translations'
 import {Head} from '@/shared/ui/head'
-import {useTranslations} from './lib/useTranslations'
 import {translations} from './translations'
 
 type Scenario = 'basic' | 'missing' | 'status' | 'fixed' | 'unicode'
@@ -27,7 +27,7 @@ const statusBadgeColors = {
 
 export function TestI18nPage() {
 	const {t, language, isLoading, status, missingKeys} =
-		useTranslations(translations)
+		loadTranslations(translations)
 	const [activeScenario, setActiveScenario] = useState<Scenario>('basic')
 
 	return (

@@ -3,10 +3,10 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {renderHook, waitFor} from '@testing-library/react'
 import type {ReactNode} from 'react'
 import {afterEach, beforeEach, describe, expect, it} from 'vitest'
+import type {TranslationDictionary} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
 import {DEFAULT_SETTINGS} from '@/shared/model/settings'
-import type {TranslationDictionary} from './types'
-import {useTranslations} from './useTranslations'
 
 // Test dictionary with various entry types
 const testDict = {
@@ -45,7 +45,7 @@ const testDict = {
 	}
 } as const satisfies TranslationDictionary
 
-describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
+describe('loadTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 	let queryClient: QueryClient
 
 	beforeEach(() => {
@@ -78,7 +78,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 
 	describe('Basic Fallback Chain', () => {
 		it('uses service key as fallback for string entries', () => {
-			const {result} = renderHook(() => useTranslations(testDict), {
+			const {result} = renderHook(() => loadTranslations(testDict), {
 				wrapper: createWrapper()
 			})
 
@@ -88,7 +88,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 
 		it('returns inline translation for current language', () => {
 			const {result} = renderHook(
-				() => useTranslations(testDict, {language: 'el'}),
+				() => loadTranslations(testDict, {language: 'el'}),
 				{wrapper: createWrapper()}
 			)
 
@@ -97,7 +97,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 
 		it('returns inline translation for Russian', () => {
 			const {result} = renderHook(
-				() => useTranslations(testDict, {language: 'ru'}),
+				() => loadTranslations(testDict, {language: 'ru'}),
 				{wrapper: createWrapper()}
 			)
 
@@ -108,7 +108,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 	describe('Default Language Fallback', () => {
 		it('falls back to defaultLanguage when app language not found', () => {
 			const {result} = renderHook(
-				() => useTranslations(testDict, {language: 'ru'}), // ru not in withDefault
+				() => loadTranslations(testDict, {language: 'ru'}), // ru not in withDefault
 				{wrapper: createWrapper()}
 			)
 
@@ -118,7 +118,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 
 		it('uses app language if available, ignoring defaultLanguage', () => {
 			const {result} = renderHook(
-				() => useTranslations(testDict, {language: 'en'}),
+				() => loadTranslations(testDict, {language: 'en'}),
 				{wrapper: createWrapper()}
 			)
 
@@ -128,7 +128,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 
 		it('uses fallback when no translations match', () => {
 			const {result} = renderHook(
-				() => useTranslations(testDict, {language: 'ru'}), // ru not available for withDefault
+				() => loadTranslations(testDict, {language: 'ru'}), // ru not available for withDefault
 				{wrapper: createWrapper()}
 			)
 
@@ -138,7 +138,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 
 		it('uses defaultLanguage even when app language is different and no inline translation exists', () => {
 			const {result} = renderHook(
-				() => useTranslations(testDict, {language: 'en'}),
+				() => loadTranslations(testDict, {language: 'en'}),
 				{wrapper: createWrapper()}
 			)
 
@@ -150,7 +150,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 	describe('Inline Translations', () => {
 		it('uses inline translations without service', () => {
 			const {result} = renderHook(
-				() => useTranslations(testDict, {language: 'el'}),
+				() => loadTranslations(testDict, {language: 'el'}),
 				{wrapper: createWrapper()}
 			)
 
@@ -159,7 +159,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 		})
 
 		it('uses custom fallback when specified', async () => {
-			const {result} = renderHook(() => useTranslations(testDict), {
+			const {result} = renderHook(() => loadTranslations(testDict), {
 				wrapper: createWrapper()
 			})
 
@@ -171,7 +171,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 
 		it('uses only inline translations when no service key', () => {
 			const {result} = renderHook(
-				() => useTranslations(testDict, {language: 'el'}),
+				() => loadTranslations(testDict, {language: 'el'}),
 				{wrapper: createWrapper()}
 			)
 
@@ -184,7 +184,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 		it('returns current language from settings store', () => {
 			useSettingsStore.setState({...DEFAULT_SETTINGS, uiLanguage: 'el'})
 
-			const {result} = renderHook(() => useTranslations(testDict), {
+			const {result} = renderHook(() => loadTranslations(testDict), {
 				wrapper: createWrapper()
 			})
 
@@ -195,7 +195,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 			useSettingsStore.setState({...DEFAULT_SETTINGS, uiLanguage: 'en'})
 
 			const {result} = renderHook(
-				() => useTranslations(testDict, {language: 'ru'}),
+				() => loadTranslations(testDict, {language: 'ru'}),
 				{wrapper: createWrapper()}
 			)
 
@@ -209,7 +209,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 				theme: 'light'
 			})
 
-			const {result} = renderHook(() => useTranslations(testDict), {
+			const {result} = renderHook(() => loadTranslations(testDict), {
 				wrapper: createWrapper()
 			})
 
@@ -219,7 +219,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 
 	describe('Status and Missing Keys', () => {
 		it('reports status as partial when service unavailable', async () => {
-			const {result} = renderHook(() => useTranslations(testDict), {
+			const {result} = renderHook(() => loadTranslations(testDict), {
 				wrapper: createWrapper()
 			})
 
@@ -238,7 +238,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 				}
 			} as const satisfies TranslationDictionary
 
-			const {result} = renderHook(() => useTranslations(mixedDict), {
+			const {result} = renderHook(() => loadTranslations(mixedDict), {
 				wrapper: createWrapper()
 			})
 
@@ -250,7 +250,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 		})
 
 		it('identifies missing keys for non-local entries without service', async () => {
-			const {result} = renderHook(() => useTranslations(testDict), {
+			const {result} = renderHook(() => loadTranslations(testDict), {
 				wrapper: createWrapper()
 			})
 
@@ -264,7 +264,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 
 	describe('Fallback Behavior', () => {
 		it('uses service key as fallback for string entries', async () => {
-			const {result} = renderHook(() => useTranslations(testDict), {
+			const {result} = renderHook(() => loadTranslations(testDict), {
 				wrapper: createWrapper()
 			})
 
@@ -276,7 +276,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 
 		it('uses inline translations when available', async () => {
 			const {result} = renderHook(
-				() => useTranslations(testDict, {language: 'el'}),
+				() => loadTranslations(testDict, {language: 'el'}),
 				{wrapper: createWrapper()}
 			)
 
@@ -287,7 +287,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 		})
 
 		it('uses custom fallback when specified', async () => {
-			const {result} = renderHook(() => useTranslations(testDict), {
+			const {result} = renderHook(() => loadTranslations(testDict), {
 				wrapper: createWrapper()
 			})
 
@@ -302,7 +302,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 		it('handles empty dictionary', () => {
 			const emptyDict = {} as const satisfies TranslationDictionary
 
-			const {result} = renderHook(() => useTranslations(emptyDict), {
+			const {result} = renderHook(() => loadTranslations(emptyDict), {
 				wrapper: createWrapper()
 			})
 
@@ -320,7 +320,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 				}
 			} as const satisfies TranslationDictionary
 
-			const {result} = renderHook(() => useTranslations(mixedDict), {
+			const {result} = renderHook(() => loadTranslations(mixedDict), {
 				wrapper: createWrapper()
 			})
 
@@ -331,7 +331,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 		})
 
 		it('returns empty string when entry is undefined', () => {
-			const {result} = renderHook(() => useTranslations(testDict), {
+			const {result} = renderHook(() => loadTranslations(testDict), {
 				wrapper: createWrapper()
 			})
 
