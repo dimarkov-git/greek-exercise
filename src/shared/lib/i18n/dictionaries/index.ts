@@ -22,6 +22,7 @@ import {
 	tableViewTranslations as tableViewTranslationsImpl,
 	viewToggleTranslations as viewToggleTranslationsImpl
 } from './learn-ui'
+import {testShowcaseTranslations as testShowcaseTranslationsImpl} from './test-showcase'
 import {themeToggleTranslations as themeToggleTranslationsImpl} from './theme'
 
 export const exerciseBuilderTranslations = exerciseBuilderTranslationsImpl
@@ -44,6 +45,7 @@ export const themeToggleTranslations = themeToggleTranslationsImpl
 export const userLanguageSelectorTranslations =
 	userLanguageSelectorTranslationsImpl
 export const viewToggleTranslations = viewToggleTranslationsImpl
+export const testShowcaseTranslations = testShowcaseTranslationsImpl
 
 export type ExerciseBuilderTranslationKey =
 	import('./exercise-builder').ExerciseBuilderTranslationKey
@@ -80,3 +82,5 @@ export type UserLanguageSelectorTranslationKey =
 	import('./language').UserLanguageSelectorTranslationKey
 export type ViewToggleTranslationKey =
 	import('./learn-ui').ViewToggleTranslationKey
+export type TestShowcaseTranslationKey =
+	import('./test-showcase').TestShowcaseTranslationKey

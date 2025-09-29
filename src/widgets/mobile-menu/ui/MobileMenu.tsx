@@ -1,5 +1,6 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {Link, useLocation} from 'react-router'
+import {AppModeEnum, environment} from '@/app/config'
 import {cn} from '@/shared/lib'
 import type {MobileMenuTranslationKey, Translator} from '@/shared/lib/i18n'
 import {mobileMenuTranslations, useTranslations} from '@/shared/lib/i18n'
@@ -9,26 +10,39 @@ import {ThemeToggle} from '@/shared/ui/theme-toggle'
 const HOME_ICON = '🏠'
 const LIBRARY_ICON = '📚'
 const BUILDER_ICON = '🔧'
+const TEST_ICON = '🧪'
 
 type MobileMenuTranslator = Translator<MobileMenuTranslationKey>
 
-const createNavigationItems = (t: MobileMenuTranslator) => [
-	{
-		path: '/',
-		label: t('navigation.home'),
-		icon: <span className='text-base'>{HOME_ICON}</span>
-	},
-	{
-		path: '/exercises',
-		label: t('navigation.library'),
-		icon: <span className='text-base'>{LIBRARY_ICON}</span>
-	},
-	{
-		path: '/builder',
-		label: t('navigation.builder'),
-		icon: <span className='text-base'>{BUILDER_ICON}</span>
+const createNavigationItems = (t: MobileMenuTranslator) => {
+	const items = [
+		{
+			path: '/',
+			label: t('navigation.home'),
+			icon: <span className='text-base'>{HOME_ICON}</span>
+		},
+		{
+			path: '/exercises',
+			label: t('navigation.library'),
+			icon: <span className='text-base'>{LIBRARY_ICON}</span>
+		},
+		{
+			path: '/builder',
+			label: t('navigation.builder'),
+			icon: <span className='text-base'>{BUILDER_ICON}</span>
+		}
+	]
+
+	if (environment.mode === AppModeEnum.development) {
+		items.push({
+			path: '/test/i18n',
+			label: t('navigation.testSection'),
+			icon: <span className='text-base'>{TEST_ICON}</span>
+		})
 	}
-]
+
+	return items
+}
 
 interface MobileMenuProps {
 	readonly id: string

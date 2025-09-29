@@ -15,6 +15,7 @@ export const mobileMenuTranslations = createTranslationDictionary([
 	'navigation.home',
 	'navigation.library',
 	'navigation.builder',
+	'navigation.testSection',
 	'settings'
 ] as const)
 
@@ -44,7 +45,9 @@ export const mainNavigationTranslations = createTranslationDictionary([
 	'exerciseLibrary',
 	'exerciseLibraryDesc',
 	'exerciseBuilder',
-	'exerciseBuilderDesc'
+	'exerciseBuilderDesc',
+	'testSection',
+	'testSectionDesc'
 ] as const)
 
 export type MainNavigationTranslationKey = DictionaryKeys<

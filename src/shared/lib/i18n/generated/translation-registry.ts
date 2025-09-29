@@ -11,6 +11,46 @@ export const translationRegistry = {
 	},
 	'app.title': {fallback: 'Learn Greek'},
 	block: {fallback: 'Block'},
+	'builder.customBadge': {fallback: 'Custom'},
+	'builder.deleteButton': {fallback: 'Delete'},
+	'builder.formatJson': {fallback: 'Format JSON'},
+	'builder.jsonEditorHelp': {
+		fallback:
+			'Edit the JSON structure below. All required fields must be present.'
+	},
+	'builder.jsonEditorTitle': {fallback: 'Exercise JSON'},
+	'builder.lastUpdated': {fallback: 'Updated {date}'},
+	'builder.libraryInfo': {
+		fallback:
+			'Saved exercises stay in your browser and appear in the library alongside built-in content.'
+	},
+	'builder.loadButton': {fallback: 'Load'},
+	'builder.noSavedExercises': {fallback: "You haven't saved any exercises yet"},
+	'builder.openLibrary': {fallback: 'Open library'},
+	'builder.parseError': {fallback: 'Parse error: {message}'},
+	'builder.previewTitle': {fallback: 'Table preview'},
+	'builder.previewUnavailable': {fallback: 'Preview unavailable'},
+	'builder.previewUnavailableHint': {
+		fallback: 'Fix validation errors to see a structured preview.'
+	},
+	'builder.resetTemplate': {fallback: 'Reset template'},
+	'builder.saveError': {fallback: 'Could not save exercise'},
+	'builder.saveSuccess': {fallback: 'Exercise saved'},
+	'builder.saveToLibrary': {fallback: 'Save to library'},
+	'builder.savedExercisesTitle': {fallback: 'My exercises'},
+	'builder.typeHelp': {
+		fallback: 'Choose the exercise type to load an editable template.'
+	},
+	'builder.typeSectionTitle': {fallback: 'Exercise setup'},
+	'builder.validationEmpty': {fallback: 'Provide exercise JSON to validate'},
+	'builder.validationError': {fallback: 'Errors'},
+	'builder.validationHint': {
+		fallback: 'Everything looks correct. You can save the exercise.'
+	},
+	'builder.validationSuccess': {fallback: 'Valid'},
+	'builder.validationTitle': {fallback: 'Validation'},
+	'builder.validationUnknown': {fallback: 'Unknown validation error'},
+	'builder.wordFormType': {fallback: 'Word form exercise'},
 	'buttons.back': {fallback: 'Back'},
 	'buttons.cancel': {fallback: 'Cancel'},
 	'buttons.continue': {fallback: 'Continue'},
@@ -101,46 +141,6 @@ export const translationRegistry = {
 	'exercise.yourAnswerIs': {fallback: 'Your answer:'},
 	exerciseBuilder: {fallback: 'Exercise Builder'},
 	exerciseBuilderDesc: {fallback: 'Create your own exercises'},
-	'builder.customBadge': {fallback: 'My exercise'},
-	'builder.deleteButton': {fallback: 'Delete'},
-	'builder.jsonEditorHelp': {
-		fallback:
-			'Edit the JSON structure below. All fields must match the documented schema.'
-	},
-	'builder.jsonEditorTitle': {fallback: 'Exercise JSON'},
-	'builder.lastUpdated': {fallback: 'Updated {date}'},
-	'builder.libraryInfo': {
-		fallback:
-			'Saved exercises stay in your browser and appear in the library alongside built-in content.'
-	},
-	'builder.loadButton': {fallback: 'Load'},
-	'builder.noSavedExercises': {fallback: 'No saved exercises yet'},
-	'builder.openLibrary': {fallback: 'Open library'},
-	'builder.parseError': {fallback: 'Parse error: {message}'},
-	'builder.formatJson': {fallback: 'Format JSON'},
-	'builder.resetTemplate': {fallback: 'Reset template'},
-	'builder.previewTitle': {fallback: 'Table preview'},
-	'builder.previewUnavailable': {fallback: 'Preview unavailable'},
-	'builder.previewUnavailableHint': {
-		fallback: 'Fix validation errors to see a structured preview.'
-	},
-	'builder.saveError': {fallback: 'Could not save exercise'},
-	'builder.saveSuccess': {fallback: 'Exercise saved'},
-	'builder.saveToLibrary': {fallback: 'Save to library'},
-	'builder.savedExercisesTitle': {fallback: 'My exercises'},
-	'builder.typeHelp': {
-		fallback: 'Choose the exercise type to load an editable template.'
-	},
-	'builder.typeSectionTitle': {fallback: 'Exercise setup'},
-	'builder.validationEmpty': {fallback: 'Provide exercise JSON to validate'},
-	'builder.validationError': {fallback: 'Errors'},
-	'builder.validationHint': {
-		fallback: 'Everything looks correct. You can save the exercise.'
-	},
-	'builder.validationUnknown': {fallback: 'Unknown validation error'},
-	'builder.validationSuccess': {fallback: 'Valid'},
-	'builder.validationTitle': {fallback: 'Validation'},
-	'builder.wordFormType': {fallback: 'Word form exercise'},
 	exerciseCount: {fallback: 'Available exercises: {filteredCount}'},
 	exerciseLibrary: {fallback: 'Exercise Library'},
 	exerciseLibraryDesc: {fallback: 'Browse and execute available exercises'},
@@ -174,6 +174,7 @@ export const translationRegistry = {
 	'navigation.library': {fallback: 'Library'},
 	'navigation.menu': {fallback: 'Menu'},
 	'navigation.profile': {fallback: 'Profile'},
+	'navigation.testSection': {fallback: 'Test Section'},
 	noExercisesFound: {fallback: 'No exercises found'},
 	noExercisesFoundDesc: {
 		fallback: 'Try adjusting your filters or browse all exercises'
@@ -184,6 +185,88 @@ export const translationRegistry = {
 	success: {fallback: 'Success'},
 	tableView: {fallback: 'Table View'},
 	tags: {fallback: 'Tags'},
+	'testI18n.currentLanguage': {fallback: 'Current Language'},
+	'testI18n.demo.greeting': {fallback: 'Hello and welcome!'},
+	'testI18n.demo.instructions': {
+		fallback:
+			'Switch languages using the controls above to see how translations change dynamically.'
+	},
+	'testI18n.demo.switchLanguage': {fallback: 'Switch language to see changes'},
+	'testI18n.demo.welcome': {
+		fallback: 'Welcome to the i18n system demonstration page.'
+	},
+	'testI18n.info.errorState': {fallback: 'Error State'},
+	'testI18n.info.loadingState': {fallback: 'Loading State'},
+	'testI18n.info.missingKeys': {fallback: 'Missing Keys'},
+	'testI18n.info.totalKeys': {fallback: 'Total Keys'},
+	'testI18n.info.translationStatus': {fallback: 'Translation Status'},
+	'testI18n.languageControls': {fallback: 'Language Controls'},
+	'testI18n.pageDescription': {
+		fallback:
+			'This page showcases the i18n system features and different translation scenarios'
+	},
+	'testI18n.pageTitle': {fallback: 'Internationalization Test Page'},
+	'testI18n.scenarios.basic.description': {
+		fallback:
+			'Simple key-value translations that change with the current UI language'
+	},
+	'testI18n.scenarios.basic.multilineText': {
+		fallback:
+			'This is a multiline text example.\nIt spans multiple lines\nand demonstrates how the i18n system handles longer content.'
+	},
+	'testI18n.scenarios.basic.sampleText': {
+		fallback: 'This is a sample text that will be translated'
+	},
+	'testI18n.scenarios.basic.title': {fallback: 'Basic Translation'},
+	'testI18n.scenarios.fixed.description': {
+		fallback:
+			'Keys that remain in a specific language regardless of UI language setting'
+	},
+	'testI18n.scenarios.fixed.title': {fallback: 'Fixed Language Keys'},
+	'testI18n.scenarios.missing.description': {
+		fallback:
+			'How the system handles missing translation keys with different policies'
+	},
+	'testI18n.scenarios.missing.fallbackPolicy': {fallback: 'Fallback Policy'},
+	'testI18n.scenarios.missing.keyPolicy': {fallback: 'Key Policy'},
+	'testI18n.scenarios.missing.missingKey': {
+		fallback: 'This key does not exist in translations'
+	},
+	'testI18n.scenarios.missing.title': {
+		fallback: 'Missing Translation Handling'
+	},
+	'testI18n.scenarios.status.complete': {fallback: 'Complete'},
+	'testI18n.scenarios.status.description': {
+		fallback: 'Shows the current status of translation loading and processing'
+	},
+	'testI18n.scenarios.status.error': {fallback: 'Error'},
+	'testI18n.scenarios.status.loading': {fallback: 'Loading'},
+	'testI18n.scenarios.status.missing': {fallback: 'Missing'},
+	'testI18n.scenarios.status.partial': {fallback: 'Partial'},
+	'testI18n.scenarios.status.title': {fallback: 'Translation Status'},
+	'testI18n.scenarios.unicode.cyrillicSample': {
+		fallback: 'Привет! Добро пожаловать в Россию 🇷🇺'
+	},
+	'testI18n.scenarios.unicode.description': {
+		fallback:
+			'Demonstration of Unicode character handling across different scripts'
+	},
+	'testI18n.scenarios.unicode.greekSample': {
+		fallback: 'Γεια σας! Καλώς ήρθατε στην Ελλάδα 🇬🇷'
+	},
+	'testI18n.scenarios.unicode.mixedSample': {
+		fallback: 'Mixed: αβγδ + АБВГ + 123 + 🎉'
+	},
+	'testI18n.scenarios.unicode.title': {fallback: 'Unicode Support'},
+	'testI18n.tabs.basic': {fallback: 'Basic'},
+	'testI18n.tabs.fixed': {fallback: 'Fixed Language'},
+	'testI18n.tabs.missing': {fallback: 'Missing Keys'},
+	'testI18n.tabs.status': {fallback: 'Status'},
+	'testI18n.tabs.unicode': {fallback: 'Unicode'},
+	testSection: {fallback: 'Test Section'},
+	testSectionDesc: {
+		fallback: 'Test i18n system features and showcase translations'
+	},
 	theme: {fallback: 'Theme'},
 	'ui.backToHome': {fallback: '← Back to Home'},
 	'ui.booksEmoji': {fallback: '📚'},
