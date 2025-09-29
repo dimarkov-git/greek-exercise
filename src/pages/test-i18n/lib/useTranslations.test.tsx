@@ -83,7 +83,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 			})
 
 			// Simple string entry falls back to service key
-			expect(result.current.t('simple')).toBe('test.simple')
+			expect(result.current.t(testDict.simple)).toBe('test.simple')
 		})
 
 		it('returns inline translation for current language', () => {
@@ -92,7 +92,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 				{wrapper: createWrapper()}
 			)
 
-			expect(result.current.t('withTranslations')).toBe('Γεια')
+			expect(result.current.t(testDict.withTranslations)).toBe('Γεια')
 		})
 
 		it('returns inline translation for Russian', () => {
@@ -101,7 +101,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 				{wrapper: createWrapper()}
 			)
 
-			expect(result.current.t('withTranslations')).toBe('Привет')
+			expect(result.current.t(testDict.withTranslations)).toBe('Привет')
 		})
 	})
 
@@ -113,7 +113,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 			)
 
 			// Should use defaultLanguage: 'el'
-			expect(result.current.t('withDefault')).toBe('Ελληνικά')
+			expect(result.current.t(testDict.withDefault)).toBe('Ελληνικά')
 		})
 
 		it('uses app language if available, ignoring defaultLanguage', () => {
@@ -123,7 +123,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 			)
 
 			// en is available, so use it instead of defaultLanguage
-			expect(result.current.t('withDefault')).toBe('English')
+			expect(result.current.t(testDict.withDefault)).toBe('English')
 		})
 
 		it('uses fallback when no translations match', () => {
@@ -133,7 +133,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 			)
 
 			// withDefault has no ru translation, should fall back to defaultLanguage (el)
-			expect(result.current.t('withDefault')).toBe('Ελληνικά')
+			expect(result.current.t(testDict.withDefault)).toBe('Ελληνικά')
 		})
 
 		it('uses defaultLanguage even when app language is different and no inline translation exists', () => {
@@ -143,7 +143,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 			)
 
 			// onlyDefaultLang has only ru translation, should use it via defaultLanguage
-			expect(result.current.t('onlyDefaultLang')).toBe('Только русский')
+			expect(result.current.t(testDict.onlyDefaultLang)).toBe('Только русский')
 		})
 	})
 
@@ -155,7 +155,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 			)
 
 			// Should use inline translation immediately
-			expect(result.current.t('withTranslations')).toBe('Γεια')
+			expect(result.current.t(testDict.withTranslations)).toBe('Γεια')
 		})
 
 		it('uses custom fallback when specified', async () => {
@@ -166,7 +166,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 			await waitFor(() => expect(result.current.isLoading).toBe(false))
 
 			// Should use custom fallback
-			expect(result.current.t('withFallback')).toBe('Custom Fallback')
+			expect(result.current.t(testDict.withFallback)).toBe('Custom Fallback')
 		})
 
 		it('uses only inline translations when no service key', () => {
@@ -176,7 +176,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 			)
 
 			// Should use inline translation without service request
-			expect(result.current.t('localOnly')).toBe('Τοπικό')
+			expect(result.current.t(testDict.localOnly)).toBe('Τοπικό')
 		})
 	})
 
@@ -271,7 +271,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 			await waitFor(() => expect(result.current.isLoading).toBe(false))
 
 			// String entry uses service key as fallback
-			expect(result.current.t('simple')).toBe('test.simple')
+			expect(result.current.t(testDict.simple)).toBe('test.simple')
 		})
 
 		it('uses inline translations when available', async () => {
@@ -283,7 +283,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 			await waitFor(() => expect(result.current.isLoading).toBe(false))
 
 			// Should use inline translation
-			expect(result.current.t('withTranslations')).toBe('Γεια')
+			expect(result.current.t(testDict.withTranslations)).toBe('Γεια')
 		})
 
 		it('uses custom fallback when specified', async () => {
@@ -294,7 +294,7 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 			await waitFor(() => expect(result.current.isLoading).toBe(false))
 
 			// Should use custom fallback
-			expect(result.current.t('withFallback')).toBe('Custom Fallback')
+			expect(result.current.t(testDict.withFallback)).toBe('Custom Fallback')
 		})
 	})
 
@@ -325,18 +325,18 @@ describe('useTranslations - Autonomous System (NO MOCKING NEEDED)', () => {
 			})
 
 			// String entry uses key as fallback
-			expect(result.current.t('simple')).toBe('test.simple')
+			expect(result.current.t(mixedDict.simple)).toBe('test.simple')
 			// Complex entry uses inline translation
-			expect(result.current.t('complex')).toBe('Complex')
+			expect(result.current.t(mixedDict.complex)).toBe('Complex')
 		})
 
-		it('returns key when entry not found', () => {
+		it('returns empty string when entry is undefined', () => {
 			const {result} = renderHook(() => useTranslations(testDict), {
 				wrapper: createWrapper()
 			})
 
-			// @ts-expect-error - intentionally testing missing key
-			expect(result.current.t('nonexistent')).toBe('nonexistent')
+			// @ts-expect-error - intentionally testing undefined entry
+			expect(result.current.t(undefined)).toBe('')
 		})
 	})
 })

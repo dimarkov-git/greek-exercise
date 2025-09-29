@@ -48,7 +48,7 @@ export interface UseTranslationsOptions {
 }
 
 export interface UseTranslationsResult<T extends TranslationDictionary> {
-	readonly t: (key: keyof T) => string
+	readonly t: (entry: T[keyof T]) => string
 	readonly language: SupportedLanguage
 	readonly isLoading: boolean
 	readonly error: Error | null
@@ -193,13 +193,14 @@ export function useTranslations<T extends TranslationDictionary>(
 	})
 
 	const t = useCallback(
-		(dictKey: keyof T): string => {
-			const value = dictionary[dictKey]
-			if (!value) return String(dictKey)
-			const entry = normalizeEntry(String(dictKey), value)
+		(value: T[keyof T]): string => {
+			if (!value) return ''
+			// Generate a fallback key for normalization (won't be used if entry has key/fallback)
+			const fallbackKey = typeof value === 'string' ? value : (value.key ?? '')
+			const entry = normalizeEntry(fallbackKey, value)
 			return resolveTranslation(entry, appLanguage, serviceTranslations)
 		},
-		[dictionary, appLanguage, serviceTranslations]
+		[appLanguage, serviceTranslations]
 	)
 
 	const missingKeys = useMemo(

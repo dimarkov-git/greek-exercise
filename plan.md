@@ -2,7 +2,8 @@
 
 ## Overview
 
-Simplify the current translation system by removing build-time code generation and increasing component autonomy. Components should work independently with inline fallbacks, reducing test complexity and build dependencies.
+Simplify the current translation system by removing build-time code generation and increasing component autonomy.
+Components should work independently with inline fallbacks, reducing test complexity and build dependencies.
 
 ## Current Problems
 
@@ -18,31 +19,36 @@ Simplify the current translation system by removing build-time code generation a
 Components define their own translations with two simple formats:
 
 **Simple Format** (service key only):
+
 ```typescript
 const translations = {
-  pageTitle: 'app.pageTitle'  // Requests from service, key as fallback
+    pageTitle: 'app.pageTitle'  // Requests from service, key as fallback
 }
 ```
 
 **Full Format** (with inline translations):
+
 ```typescript
 const translations = {
-  greeting: {
-    key: 'app.greeting',           // Service request key (required)
-    translations: {                 // Inline fallbacks (optional)
-      en: 'Hello',
-      el: 'Γεια',
-      ru: 'Привет'
-    },
-    fallback: 'Hello',             // Custom fallback (optional, defaults to key)
-    defaultLanguage: 'en'          // Override app language (optional)
-  }
+    greeting: {
+        key: 'app.greeting',           // Service request key (required)
+        translations: {                 // Inline fallbacks (optional)
+            en: 'Hello',
+            el: 'Γεια',
+            ru: 'Привет'
+        },
+        fallback: 'Hello',             // Custom fallback (optional, defaults to key)
+        defaultLanguage: 'en'          // Override app language (optional)
+    }
 }
 ```
 
 **Usage Pattern**:
+
 ```typescript
-{t(translations.pageTitle)}  // Type-safe, IDE auto-complete
+{
+    t(translations.pageTitle)
+}  // Type-safe, IDE auto-complete
 ```
 
 ### Smart Fallback Chain
@@ -62,6 +68,7 @@ const translations = {
 **Target**: `src/pages/test-i18n` showcase page
 
 **Deliverables**:
+
 - ✅ Translation types (`src/pages/test-i18n/lib/types.ts`)
 - ✅ Core hook (`src/pages/test-i18n/lib/useTranslations.ts`)
 - ✅ Translation dictionary (`src/pages/test-i18n/translations.ts`)
@@ -69,12 +76,14 @@ const translations = {
 - ✅ Comprehensive tests (20 tests, zero-mocking)
 
 **Results**:
+
 - All linting passes (Biome, TypeScript, boundaries)
 - 742 tests pass (including 20 new translation tests)
 - All functions under 50 lines
 - Coverage: 77.17% (slightly below 80% due to new code)
 
 **Features Demonstrated**:
+
 - Service-enhanced translations (default behavior)
 - Local-only translations (`local: true`)
 - Fixed language translations (`defaultLanguage`)
@@ -86,19 +95,21 @@ const translations = {
 **Approach**: Gradual migration, feature by feature
 
 **Priority Order**:
+
 1. **Simple components** (buttons, labels, static content)
-   - Example: Header, Footer, LanguageDropdown
-   - Low risk, straightforward translation dictionaries
+    - Example: Header, Footer, LanguageDropdown
+    - Low risk, straightforward translation dictionaries
 
 2. **Medium components** (forms, settings, filters)
-   - Example: UserSettings, ExerciseFilters
-   - May have dynamic content, more translation keys
+    - Example: UserSettings, ExerciseFilters
+    - May have dynamic content, more translation keys
 
 3. **Complex components** (pages, exercise types)
-   - Example: LearnPage, ExercisePage, ExerciseLibrary
-   - Many translations, complex state, business logic
+    - Example: LearnPage, ExercisePage, ExerciseLibrary
+    - Many translations, complex state, business logic
 
 **Migration Checklist** (per component):
+
 - [ ] Create component-local translation dictionary
 - [ ] Add useTranslations hook with dictionary
 - [ ] Update component to use `t()` function
@@ -108,6 +119,7 @@ const translations = {
 - [ ] Update documentation
 
 **Compatibility Strategy**:
+
 - New system coexists with old during migration
 - No breaking changes to existing components
 - Both systems use same language store (Zustand)
@@ -118,6 +130,7 @@ const translations = {
 **After all components migrated**:
 
 **Remove**:
+
 - [ ] `scripts/generate-translation-registry.mjs`
 - [ ] Generated registry files in `src/shared/lib/i18n`
 - [ ] Old `useTranslations` hook in `src/shared/lib/i18n`
@@ -125,6 +138,7 @@ const translations = {
 - [ ] Related build scripts and dependencies
 
 **Update**:
+
 - [ ] Build configuration (remove registry generation step)
 - [ ] Package.json scripts
 - [ ] CI/CD pipelines
@@ -132,6 +146,7 @@ const translations = {
 - [ ] README
 
 **Verify**:
+
 - [ ] All tests pass
 - [ ] All linting passes
 - [ ] Coverage remains ≥80%
@@ -158,15 +173,15 @@ src/
 
 ```typescript
 interface TranslationEntry {
-  key: string                           // Service request key (required)
-  translations?: Partial<Record<SupportedLanguage, string>>
-  fallback?: string                     // Defaults to key if not specified
-  defaultLanguage?: SupportedLanguage   // Override app language
+    key: string                           // Service request key (required)
+    translations?: Partial<Record<SupportedLanguage, string>>
+    fallback?: string                     // Defaults to key if not specified
+    defaultLanguage?: SupportedLanguage   // Override app language
 }
 
 type TranslationDictionary = Record<
-  string,
-  string | TranslationEntry  // String shorthand supported
+    string,
+    string | TranslationEntry  // String shorthand supported
 >
 ```
 
@@ -174,17 +189,17 @@ type TranslationDictionary = Record<
 
 ```typescript
 interface UseTranslationsResult<T extends TranslationDictionary> {
-  t: (key: keyof T) => string
-  language: SupportedLanguage
-  isLoading: boolean
-  error: Error | null
-  missingKeys: readonly (keyof T)[]
-  status: TranslationStatus
+    t: (key: keyof T) => string
+    language: SupportedLanguage
+    isLoading: boolean
+    error: Error | null
+    missingKeys: readonly (keyof T)[]
+    status: TranslationStatus
 }
 
 function useTranslations<T extends TranslationDictionary>(
-  dictionary: T,
-  options?: UseTranslationsOptions
+    dictionary: T,
+    options?: UseTranslationsOptions
 ): UseTranslationsResult<T>
 ```
 
@@ -214,8 +229,8 @@ function useTranslations<T extends TranslationDictionary>(
 
 ```typescript
 it('returns fallback for simple entries', () => {
-  const {result} = renderHook(() => useTranslations(testDict))
-  expect(result.current.t('simple')).toBe('Simple Text')
+    const {result} = renderHook(() => useTranslations(testDict))
+    expect(result.current.t('simple')).toBe('Simple Text')
 })
 ```
 
@@ -238,17 +253,20 @@ it('returns fallback for simple entries', () => {
 ## Migration Timeline
 
 ### Phase 1: ✅ COMPLETED (Current)
+
 - **Duration**: Complete
 - **Status**: Test-i18n page fully implemented
 - **Next**: User approval for Phase 2
 
 ### Phase 2: Component Migration (Estimated)
+
 - **Duration**: 2-3 weeks
 - **Effort**: ~15-20 components
 - **Approach**: Incremental, feature-by-feature
 - **Validation**: Continuous testing after each migration
 
 ### Phase 3: Cleanup (Estimated)
+
 - **Duration**: 1 week
 - **Effort**: Remove old system, update docs
 - **Validation**: Full regression testing
@@ -260,6 +278,7 @@ it('returns fallback for simple entries', () => {
 **Issue**: Real service may behave differently than expected
 
 **Mitigation**:
+
 - Fallback chain ensures content always displays
 - Comprehensive error handling
 - Monitor `missingKeys` and `status` for debugging
@@ -269,6 +288,7 @@ it('returns fallback for simple entries', () => {
 **Issue**: Multiple translation fetches per page
 
 **Mitigation**:
+
 - TanStack Query handles caching and deduplication
 - Service requests are batched by component
 - `staleTime: Infinity` prevents refetching
@@ -279,6 +299,7 @@ it('returns fallback for simple entries', () => {
 **Issue**: Adding new code lowered overall coverage to 77.17%
 
 **Mitigation**:
+
 - Add more tests for uncovered paths
 - Test service integration scenarios
 - Test error handling edge cases
@@ -289,6 +310,7 @@ it('returns fallback for simple entries', () => {
 **Issue**: Migration might break existing functionality
 
 **Mitigation**:
+
 - Both systems coexist during migration
 - Incremental migration with continuous testing
 - No changes to language store (Zustand)
@@ -297,6 +319,7 @@ it('returns fallback for simple entries', () => {
 ## Success Metrics
 
 ### Phase 1 (Proof of Concept)
+
 - ✅ New system works in test-i18n page
 - ✅ All tests pass (20 new tests, 742 total)
 - ✅ All linting passes
@@ -304,12 +327,14 @@ it('returns fallback for simple entries', () => {
 - ✅ Code quality (all functions <50 lines)
 
 ### Phase 2 (Migration)
+
 - [ ] All components migrated to new system
 - [ ] All tests pass with reduced mocking
 - [ ] Coverage ≥80%
 - [ ] No regressions in functionality
 
 ### Phase 3 (Cleanup)
+
 - [ ] Old system completely removed
 - [ ] Build time improved (no code generation)
 - [ ] Bundle size reduced

@@ -4,7 +4,6 @@ import {useSettingsStore} from '@/shared/model'
 import type {SupportedLanguage} from '@/shared/model/translations'
 import {Head} from '@/shared/ui/head'
 import {useTranslations} from './lib/useTranslations'
-import type {TranslationKey} from './translations'
 import {translations} from './translations'
 
 type Scenario = 'basic' | 'missing' | 'status' | 'fixed' | 'unicode'
@@ -33,7 +32,7 @@ export function TestI18nPage() {
 
 	return (
 		<>
-			<Head title={t('pageTitle')} />
+			<Head title={t(translations.pageTitle)} />
 			<div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
 				<div className='mx-auto max-w-6xl px-4 py-8'>
 					<PageHeader t={t} />
@@ -59,7 +58,11 @@ export function TestI18nPage() {
 	)
 }
 
-function PageHeader({t}: {t: (key: TranslationKey) => string}) {
+function PageHeader({
+	t
+}: {
+	t: (entry: (typeof translations)[keyof typeof translations]) => string
+}) {
 	return (
 		<motion.header
 			animate={{opacity: 1, y: 0}}
@@ -68,19 +71,19 @@ function PageHeader({t}: {t: (key: TranslationKey) => string}) {
 		>
 			<div className='text-center'>
 				<h1 className='mb-4 font-bold text-3xl text-gray-900 md:text-4xl dark:text-white'>
-					{t('pageTitle')}
+					{t(translations.pageTitle)}
 				</h1>
 				<p className='mx-auto max-w-2xl text-gray-600 text-lg dark:text-gray-300'>
-					{t('pageDescription')}
+					{t(translations.pageDescription)}
 				</p>
 				<div className='mt-6 inline-flex items-center gap-3 rounded-lg border border-green-200 bg-green-50 px-6 py-3 dark:border-green-800 dark:bg-green-900/20'>
-					<span className='text-2xl'>{t('checkIcon')}</span>
+					<span className='text-2xl'>{t(translations.checkIcon)}</span>
 					<div className='text-left text-sm'>
 						<div className='font-semibold text-green-900 dark:text-green-100'>
-							{t('systemBenefits')}
+							{t(translations.systemBenefits)}
 						</div>
 						<div className='text-green-700 dark:text-green-300'>
-							{t('benefitsSubtext')}
+							{t(translations.benefitsSubtext)}
 						</div>
 					</div>
 				</div>
@@ -90,7 +93,9 @@ function PageHeader({t}: {t: (key: TranslationKey) => string}) {
 }
 
 interface LanguageControlsSectionProps {
-	readonly t: (key: TranslationKey) => string
+	readonly t: (
+		entry: (typeof translations)[keyof typeof translations]
+	) => string
 	readonly language: SupportedLanguage
 	readonly isLoading: boolean
 	readonly status: string
@@ -116,7 +121,7 @@ function LanguageControlsSection({
 			<div className='rounded-lg border bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800'>
 				<div className='mb-4 flex items-center justify-between'>
 					<h2 className='font-semibold text-gray-900 text-xl dark:text-white'>
-						{t('currentLanguage')}: {language.toUpperCase()}
+						{t(translations.currentLanguage)}: {language.toUpperCase()}
 					</h2>
 					<div className='flex gap-2'>
 						{(['en', 'el', 'ru'] as const).map(lang => (
@@ -151,7 +156,9 @@ function LanguageControlsSection({
 }
 
 interface StatusGridProps {
-	readonly t: (key: TranslationKey) => string
+	readonly t: (
+		entry: (typeof translations)[keyof typeof translations]
+	) => string
 	readonly status: string
 	readonly isLoading: boolean
 	readonly missingKeys: readonly (keyof typeof translations)[]
@@ -169,27 +176,27 @@ function StatusGrid({
 		<div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
 			<div className='rounded-md bg-gray-50 p-4 dark:bg-gray-700'>
 				<dt className='font-medium text-gray-500 text-sm dark:text-gray-400'>
-					{t('translationStatus')}
+					{t(translations.translationStatus)}
 				</dt>
 				<dd className='mt-1'>
 					<span
 						className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-medium text-xs ${statusBadgeColors[status as keyof typeof statusBadgeColors]}`}
 					>
-						{t(status as TranslationKey)}
+						{t(translations[status as keyof typeof translations])}
 					</span>
 				</dd>
 			</div>
 			<div className='rounded-md bg-gray-50 p-4 dark:bg-gray-700'>
 				<dt className='font-medium text-gray-500 text-sm dark:text-gray-400'>
-					{t('loadingLabel')}
+					{t(translations.loadingLabel)}
 				</dt>
 				<dd className='mt-1 font-semibold text-gray-900 dark:text-white'>
-					{isLoading ? t('yes') : t('no')}
+					{isLoading ? t(translations.yes) : t(translations.no)}
 				</dd>
 			</div>
 			<div className='rounded-md bg-gray-50 p-4 dark:bg-gray-700'>
 				<dt className='font-medium text-gray-500 text-sm dark:text-gray-400'>
-					{t('missingKeysLabel')}
+					{t(translations.missingKeysLabel)}
 				</dt>
 				<dd className='mt-1 font-semibold text-gray-900 dark:text-white'>
 					{missingKeys.length}
@@ -197,7 +204,7 @@ function StatusGrid({
 			</div>
 			<div className='rounded-md bg-gray-50 p-4 dark:bg-gray-700'>
 				<dt className='font-medium text-gray-500 text-sm dark:text-gray-400'>
-					{t('languageLabel')}
+					{t(translations.languageLabel)}
 				</dt>
 				<dd className='mt-1 font-mono font-semibold text-gray-900 dark:text-white'>
 					{language}
@@ -208,7 +215,9 @@ function StatusGrid({
 }
 
 interface MissingKeysAlertProps {
-	readonly t: (key: TranslationKey) => string
+	readonly t: (
+		entry: (typeof translations)[keyof typeof translations]
+	) => string
 	readonly missingKeys: readonly (keyof typeof translations)[]
 }
 
@@ -220,7 +229,7 @@ function MissingKeysAlert({t, missingKeys}: MissingKeysAlertProps) {
 			initial={{opacity: 0, height: 0}}
 		>
 			<h3 className='font-medium text-sm text-yellow-800 dark:text-yellow-200'>
-				{t('infoIcon')} Missing Keys (will use inline fallbacks):
+				{t(translations.infoIcon)} Missing Keys (will use inline fallbacks):
 			</h3>
 			<ul className='mt-2 space-y-1'>
 				{missingKeys.slice(0, 5).map(key => (
@@ -242,7 +251,9 @@ function MissingKeysAlert({t, missingKeys}: MissingKeysAlertProps) {
 }
 
 interface ScenarioTabsSectionProps {
-	readonly t: (key: TranslationKey) => string
+	readonly t: (
+		entry: (typeof translations)[keyof typeof translations]
+	) => string
 	readonly activeScenario: Scenario
 	readonly setActiveScenario: (scenario: Scenario) => void
 	readonly language: SupportedLanguage
@@ -282,7 +293,11 @@ function ScenarioTabsSection({
 									onClick={() => setActiveScenario(scenario)}
 									type='button'
 								>
-									{t(`${scenario}Title` as TranslationKey)}
+									{t(
+										translations[
+											`${scenario}Title` as keyof typeof translations
+										]
+									)}
 									{isActive && (
 										<motion.div
 											className='absolute inset-x-0 bottom-0 h-0.5 bg-blue-500'
@@ -318,7 +333,7 @@ function ScenarioTabsSection({
 
 function renderScenarioContent(
 	scenario: Scenario,
-	t: (key: TranslationKey) => string,
+	t: (entry: (typeof translations)[keyof typeof translations]) => string,
 	language: SupportedLanguage,
 	status: string,
 	missingKeys: readonly (keyof typeof translations)[],
@@ -331,13 +346,13 @@ function renderScenarioContent(
 				<div className='space-y-4'>
 					<div className='rounded-md border border-gray-200 bg-gray-50 p-4 dark:border-gray-600 dark:bg-gray-700'>
 						<h4 className='font-medium text-gray-900 dark:text-white'>
-							{t('basicGreeting')}
+							{t(translations.basicGreeting)}
 						</h4>
 						<p className='mt-2 text-gray-600 dark:text-gray-300'>
-							{t('basicWelcome')}
+							{t(translations.basicWelcome)}
 						</p>
 						<p className='mt-2 text-gray-600 dark:text-gray-300'>
-							{t('basicInstructions')}
+							{t(translations.basicInstructions)}
 						</p>
 					</div>
 				</div>
@@ -348,24 +363,25 @@ function renderScenarioContent(
 				<div className='space-y-4'>
 					<div className='rounded-md border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900/20'>
 						<h4 className='font-medium text-blue-800 dark:text-blue-200'>
-							{t('fallbackChainTitle')}
+							{t(translations.fallbackChainTitle)}
 						</h4>
 						<ol className='mt-2 space-y-1 text-blue-700 text-sm dark:text-blue-300'>
-							<li>{t('fallbackStep1')}</li>
-							<li>{t('fallbackStep2')}</li>
-							<li>{t('fallbackStep3')}</li>
-							<li>{t('fallbackStep4')}</li>
+							<li>{t(translations.fallbackStep1)}</li>
+							<li>{t(translations.fallbackStep2)}</li>
+							<li>{t(translations.fallbackStep3)}</li>
+							<li>{t(translations.fallbackStep4)}</li>
 						</ol>
 					</div>
 
 					<div className='rounded-md border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20'>
 						<h4 className='font-medium text-green-800 dark:text-green-200'>
-							{t('currentStatusTitle')}
+							{t(translations.currentStatusTitle)}
 						</h4>
 						<p className='mt-2 text-green-700 text-sm dark:text-green-300'>
-							{t('statusLabel')}: {t(status as TranslationKey)}
+							{t(translations.statusLabel)}:{' '}
+							{t(translations[status as keyof typeof translations])}
 							<br />
-							{t('missingKeysLabel')}: {missingKeys.length}
+							{t(translations.missingKeysLabel)}: {missingKeys.length}
 						</p>
 					</div>
 				</div>
@@ -377,25 +393,25 @@ function renderScenarioContent(
 					<dl className='grid gap-4 sm:grid-cols-2'>
 						<div className='rounded-md border bg-gray-50 p-4 dark:bg-gray-700'>
 							<dt className='font-medium text-gray-500 text-sm dark:text-gray-400'>
-								{t('statusLabel')}
+								{t(translations.statusLabel)}
 							</dt>
 							<dd className='mt-1 font-semibold text-gray-900 dark:text-white'>
-								{t(status as TranslationKey)}
+								{t(translations[status as keyof typeof translations])}
 							</dd>
 						</div>
 
 						<div className='rounded-md border bg-gray-50 p-4 dark:bg-gray-700'>
 							<dt className='font-medium text-gray-500 text-sm dark:text-gray-400'>
-								{t('loadingLabel')}
+								{t(translations.loadingLabel)}
 							</dt>
 							<dd className='mt-1 font-semibold text-gray-900 dark:text-white'>
-								{isLoading ? t('yes') : t('no')}
+								{isLoading ? t(translations.yes) : t(translations.no)}
 							</dd>
 						</div>
 
 						<div className='rounded-md border bg-gray-50 p-4 dark:bg-gray-700'>
 							<dt className='font-medium text-gray-500 text-sm dark:text-gray-400'>
-								{t('languageLabel')}
+								{t(translations.languageLabel)}
 							</dt>
 							<dd className='mt-1 font-mono font-semibold text-gray-900 dark:text-white'>
 								{language}
@@ -404,7 +420,7 @@ function renderScenarioContent(
 
 						<div className='rounded-md border bg-gray-50 p-4 dark:bg-gray-700'>
 							<dt className='font-medium text-gray-500 text-sm dark:text-gray-400'>
-								{t('missingKeysLabel')}
+								{t(translations.missingKeysLabel)}
 							</dt>
 							<dd className='mt-1 font-semibold text-gray-900 dark:text-white'>
 								{missingKeys.length}
@@ -419,26 +435,26 @@ function renderScenarioContent(
 				<div className='space-y-4'>
 					<div className='rounded-md border border-purple-200 bg-purple-50 p-4 dark:border-purple-800 dark:bg-purple-900/20'>
 						<p className='text-purple-700 text-sm dark:text-purple-300'>
-							{t('fixedLanguageDescription')}
+							{t(translations.fixedLanguageDescription)}
 						</p>
 					</div>
 
 					<div className='space-y-4'>
 						<div className='rounded-md border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900/20'>
 							<p className='mb-2 text-blue-600 text-sm dark:text-blue-400'>
-								{t('alwaysGreekLabel')}
+								{t(translations.alwaysGreekLabel)}
 							</p>
 							<p className='text-2xl text-blue-900 dark:text-blue-100'>
-								{t('greekSample')}
+								{t(translations.greekSample)}
 							</p>
 						</div>
 
 						<div className='rounded-md border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20'>
 							<p className='mb-2 text-red-600 text-sm dark:text-red-400'>
-								{t('alwaysRussianLabel')}
+								{t(translations.alwaysRussianLabel)}
 							</p>
 							<p className='text-2xl text-red-900 dark:text-red-100'>
-								{t('russianSample')}
+								{t(translations.russianSample)}
 							</p>
 						</div>
 					</div>
@@ -451,35 +467,35 @@ function renderScenarioContent(
 					<div className='grid gap-4 md:grid-cols-3'>
 						<div className='rounded-md border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900/20'>
 							<h4 className='font-medium text-blue-800 dark:text-blue-200'>
-								{t('greekLabel')}
+								{t(translations.greekLabel)}
 							</h4>
 							<p className='mt-2 text-blue-700 text-lg dark:text-blue-300'>
-								{t('greekSample')}
+								{t(translations.greekSample)}
 							</p>
 						</div>
 
 						<div className='rounded-md border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20'>
 							<h4 className='font-medium text-red-800 dark:text-red-200'>
-								{t('russianLabel')}
+								{t(translations.russianLabel)}
 							</h4>
 							<p className='mt-2 text-lg text-red-700 dark:text-red-300'>
-								{t('russianSample')}
+								{t(translations.russianSample)}
 							</p>
 						</div>
 
 						<div className='rounded-md border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20'>
 							<h4 className='font-medium text-green-800 dark:text-green-200'>
-								{t('mixedLabel')}
+								{t(translations.mixedLabel)}
 							</h4>
 							<p className='mt-2 text-green-700 text-lg dark:text-green-300'>
-								{t('mixedSample')}
+								{t(translations.mixedSample)}
 							</p>
 						</div>
 					</div>
 
 					<div className='rounded-md border border-indigo-200 bg-indigo-50 p-4 dark:border-indigo-800 dark:bg-indigo-900/20'>
 						<p className='text-indigo-700 text-sm dark:text-indigo-300'>
-							{t('unicodeDescription')}
+							{t(translations.unicodeDescription)}
 						</p>
 					</div>
 				</div>
