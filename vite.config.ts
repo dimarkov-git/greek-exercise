@@ -33,7 +33,7 @@ function createTestConfiguration(): NonNullable<UserConfig['test']> {
 		clearMocks: true,
 		coverage: {
 			enabled: true,
-			exclude: ['src/main.tsx', 'src/mocks/browser.ts'],
+			exclude: ['src/app/main.tsx', 'src/mocks/browser.ts'],
 			include: ['src/**/*'],
 			reporter: ['text', 'lcov'],
 			reportsDirectory: 'coverage',

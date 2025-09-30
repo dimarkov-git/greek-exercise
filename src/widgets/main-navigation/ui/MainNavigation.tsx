@@ -1,5 +1,5 @@
 import {motion} from 'framer-motion'
-import {AppModeEnum, environment} from '@/app/config'
+import {shouldShowTestSection} from '@/shared/config'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {NavigationCard} from '@/shared/ui/navigation-card'
 import {translations} from './translations'
@@ -7,7 +7,7 @@ import {translations} from './translations'
 export function MainNavigation() {
 	const {t} = loadTranslations(translations)
 
-	const showTestSection = environment.mode === AppModeEnum.development
+	const showTestSection = shouldShowTestSection()
 
 	return (
 		<motion.div

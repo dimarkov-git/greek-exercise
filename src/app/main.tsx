@@ -1,14 +1,14 @@
-import './global.css'
+import '../global.css'
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
-import {configureHttpClient} from '@/shared/api/httpClient'
+import {configureHttpClient} from '@/shared/api'
 import {detectAutomationEnvironment} from '@/shared/lib'
+import {resolveFallbackResponse} from '@/shared/test'
 import {App} from './App'
-import {AppErrorBoundary} from './app/AppErrorBoundary'
-import {AppRouter} from './app/AppRouter'
-import {AppModeEnum, environment} from './app/config/environment'
-import {AppProviders} from './app/providers/AppProviders'
-import {resolveFallbackResponse} from './app/test/fallbacks'
+import {AppErrorBoundary} from './AppErrorBoundary'
+import {AppRouter} from './AppRouter'
+import {AppModeEnum, environment} from './config/environment'
+import {AppProviders} from './providers/AppProviders'
 
 // Configure httpClient with app-level dependencies
 configureHttpClient({
@@ -28,7 +28,8 @@ async function startMockServiceWorker() {
 		return
 	}
 
-	const {worker} = await import('./app/test/msw/browser')
+	// Import worker directly from msw/browser (not through shared/test to avoid Node.js test issues)
+	const {worker} = await import('@/shared/test/msw/browser')
 
 	const startPromise = worker.start({
 		serviceWorker: {

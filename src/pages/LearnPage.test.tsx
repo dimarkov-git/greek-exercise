@@ -1,7 +1,7 @@
 import {describe, expect, it, vi} from 'vitest'
 import type {WordFormExerciseWithDefaults} from '@/entities/exercise'
 import {DEFAULT_EXERCISE_SETTINGS} from '@/entities/exercise'
-import {render, screen, waitFor} from '@/app/test'
+import {render, screen, waitFor} from '@/shared/test'
 import {LearnPage} from './LearnPage'
 
 // Mock all the dependencies
@@ -118,8 +118,8 @@ const mockTranslator = vi.fn((key: unknown) => {
 // Import mocked modules to set up implementations
 import {useNavigate, useParams} from 'react-router'
 import {useExercise} from '@/entities/exercise'
-import {useLayout} from '@/app/test'
 import {loadTranslations} from '@/shared/lib/i18n'
+import {useLayout} from '@/shared/test'
 
 // Test data
 const mockWordFormExercise: WordFormExerciseWithDefaults = {

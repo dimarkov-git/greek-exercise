@@ -29,9 +29,10 @@ async function loadHttpClient({
 	const defaultFallback: NonNullable<
 		LoadClientOptions['fallbackImplementation']
 	> = (): FallbackResult => undefined as FallbackResult
-	const resolveFallbackResponse = vi.fn(
-		fallbackImplementation ?? defaultFallback
-	)
+
+	// Create spy that wraps the implementation
+	const actualFallback = fallbackImplementation ?? defaultFallback
+	const resolveFallbackResponse = vi.fn(actualFallback)
 
 	vi.doMock('@/app/config/environment', () => ({
 		AppModeEnum: {
@@ -54,11 +55,18 @@ async function loadHttpClient({
 		}
 	}))
 
-	vi.doMock('./fallbacks', () => ({
+	vi.doMock('@/shared/test/fallbacks', () => ({
 		resolveFallbackResponse
 	}))
 
 	const module = await import('./httpClient')
+
+	// Configure the httpClient with the spy
+	module.configureHttpClient({
+		isDevelopment: true,
+		enableHTTPFallback,
+		resolveFallback: resolveFallbackResponse
+	})
 
 	return {
 		httpErrorConstructor: module.HttpError,

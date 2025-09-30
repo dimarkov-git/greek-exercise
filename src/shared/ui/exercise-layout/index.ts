@@ -1,1 +1,1 @@
-export {ExerciseLayout} from './components/ExerciseLayout'
+export * from './ExerciseLayout'

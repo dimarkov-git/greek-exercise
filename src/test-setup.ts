@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom/vitest'
-import {configureHttpClient} from '@/shared/api/httpClient'
+import {configureHttpClient} from '@/shared/api'
 import {useSettingsStore} from '@/shared/model'
-import {resolveFallbackResponse} from './app/test/fallbacks'
-import {server} from './app/test/msw/server'
+import {resolveFallbackResponse, server} from '@/shared/test'
 
 // Configure httpClient for tests
 configureHttpClient({

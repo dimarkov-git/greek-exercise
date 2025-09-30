@@ -1,12 +1,12 @@
 import {act, screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
-import {render} from '@/app/test'
 import {
 	DEFAULT_SETTINGS,
 	USER_LANGUAGES,
 	useSettingsStore
 } from '@/shared/model'
+import {render} from '@/shared/test'
 import {exerciseLibraryTranslations} from '../lib/translations'
 import {UserSettings} from './UserSettings'
 

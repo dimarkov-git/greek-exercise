@@ -351,7 +351,8 @@ export async function requestJson<
 		retryDelayMs
 	}
 
-	const fallbackEnabled = fallbackOverride ?? httpClientConfig.enableHTTPFallback
+	const fallbackEnabled =
+		fallbackOverride ?? httpClientConfig.enableHTTPFallback
 
 	const attemptRequest = async (attempt: number): Promise<TResponse> => {
 		try {

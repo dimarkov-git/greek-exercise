@@ -1,7 +1,7 @@
 export {
 	configureHttpClient,
-	HttpError,
 	type HttpClientConfig,
+	HttpError,
 	type JsonValue,
 	requestJson
 } from './httpClient'

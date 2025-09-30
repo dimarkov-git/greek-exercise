@@ -1,6 +1,6 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {Link, useLocation} from 'react-router'
-import {AppModeEnum, environment} from '@/app/config'
+import {shouldShowTestSection} from '@/shared/config'
 import {cn} from '@/shared/lib'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {LanguageDropdown} from '@/shared/ui/language-dropdown'
@@ -33,7 +33,7 @@ const createNavigationItems = (
 		}
 	]
 
-	if (environment.mode === AppModeEnum.development) {
+	if (shouldShowTestSection()) {
 		items.push({
 			path: '/test/i18n',
 			label: t(mobileMenuTranslations.testSection),

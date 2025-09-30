@@ -1,6 +1,6 @@
 import {describe, expect, it} from 'vitest'
-import {render, screen, within} from '@/app/test'
-import {VIEWPORT_SIZES} from '../tests/fixtures/test-data'
+import {render, screen, within} from '@/shared/test'
+import {VIEWPORT_SIZES} from '../../tests/fixtures/test-data'
 import {App} from './App'
 
 const viewports = [VIEWPORT_SIZES.mobile, VIEWPORT_SIZES.desktop]

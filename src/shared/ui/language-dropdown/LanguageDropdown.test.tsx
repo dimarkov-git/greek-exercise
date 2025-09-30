@@ -7,9 +7,13 @@ import {useSettingsStore} from '@/shared/model'
 import {LanguageDropdown} from './LanguageDropdown'
 
 // Mock settings store
-vi.mock('@/shared/model', () => ({
-	useSettingsStore: vi.fn()
-}))
+vi.mock('@/shared/model', async importOriginal => {
+	const actual = await importOriginal<typeof import('@/shared/model')>()
+	return {
+		...actual,
+		useSettingsStore: vi.fn()
+	}
+})
 
 const mockUseSettingsStore = vi.mocked(useSettingsStore)
 

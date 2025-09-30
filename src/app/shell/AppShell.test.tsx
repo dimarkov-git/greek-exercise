@@ -2,7 +2,7 @@ import {render, screen, waitFor} from '@testing-library/react'
 import {useEffect} from 'react'
 import {MemoryRouter, Route, Routes} from 'react-router'
 import {describe, expect, it, vi} from 'vitest'
-import {useLayout} from '@/app/test'
+import {useLayout} from '@/shared/test'
 
 const HEADER_TEST_ID = 'header-mock'
 const FOOTER_TEST_ID = 'footer-mock'

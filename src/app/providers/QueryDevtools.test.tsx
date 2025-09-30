@@ -1,5 +1,5 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
-import {render} from '@/app/test'
+import {render} from '@/shared/test'
 import {QueryDevtools} from './QueryDevtools'
 
 // Mock environment
