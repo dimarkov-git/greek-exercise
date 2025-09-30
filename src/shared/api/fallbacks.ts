@@ -4,8 +4,6 @@ import {
 	validateWordFormExercise
 } from '@/entities/exercise'
 import {extractExerciseMetadata} from '@/shared/lib/exercises'
-import type {TranslationRegistryKey} from '@/shared/lib/i18n'
-import {translationRegistry} from '@/shared/lib/i18n'
 import type {
 	SupportedLanguage,
 	TranslationsDatabase
@@ -33,20 +31,16 @@ for (const moduleExport of Object.values(exerciseModules)) {
 	exerciseRegistry.set(normalized.id, normalized)
 }
 
-function normalizeTranslationKeys(
-	keys: readonly string[]
-): TranslationRegistryKey[] {
-	return keys
-		.map(key => key.trim())
-		.filter((key): key is TranslationRegistryKey => key in translationRegistry)
+function normalizeTranslationKeys(keys: readonly string[]): string[] {
+	return keys.map(key => key.trim()).filter(key => key.length > 0)
 }
 
 function resolveTranslations(
 	language: SupportedLanguage,
-	keys: readonly TranslationRegistryKey[]
-): Partial<Record<TranslationRegistryKey, string>> {
+	keys: readonly string[]
+): Record<string, string> {
 	const languageTranslations = translations[language] ?? {}
-	const filtered: Partial<Record<TranslationRegistryKey, string>> = {}
+	const filtered: Record<string, string> = {}
 
 	for (const key of keys) {
 		const value = languageTranslations[key]

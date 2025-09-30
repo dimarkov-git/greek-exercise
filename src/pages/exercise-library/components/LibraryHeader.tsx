@@ -1,7 +1,6 @@
 import {motion} from 'framer-motion'
-import type {ExerciseLibraryTranslationKey, Translator} from '@/shared/lib/i18n'
 
-type LibraryTranslator = Translator<ExerciseLibraryTranslationKey>
+type LibraryTranslator = (entry: string) => string
 
 interface LibraryHeaderProps {
 	t: LibraryTranslator

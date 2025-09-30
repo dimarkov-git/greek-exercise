@@ -188,7 +188,9 @@ export function ExerciseHeader({
 				)}
 			</div>
 
-			{progress && <ProgressBar progress={progress} t={t as ExerciseTranslator} />}
+			{progress && (
+				<ProgressBar progress={progress} t={t as ExerciseTranslator} />
+			)}
 		</motion.div>
 	)
 }

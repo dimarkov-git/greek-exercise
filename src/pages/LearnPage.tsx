@@ -90,7 +90,10 @@ function UnsupportedExerciseNotice({
 					{t(learnPageTranslations['exercise.unsupportedType'])}
 				</h2>
 				<p className='mb-6 text-gray-600 dark:text-gray-400'>
-					{t(learnPageTranslations['exercise.notImplemented']).replace('{type}', exerciseType)}
+					{t(learnPageTranslations['exercise.notImplemented']).replace(
+						'{type}',
+						exerciseType
+					)}
 				</p>
 				<button
 					className='rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700'
@@ -123,7 +126,9 @@ function LearnPageContent({
 }: LearnPageContentProps) {
 	return (
 		<div className='min-h-screen bg-gray-50 pb-16 dark:bg-gray-950'>
-			<Head title={`${exercise.title} | ${t(learnPageTranslations.learnExercise)}`} />
+			<Head
+				title={`${exercise.title} | ${t(learnPageTranslations.learnExercise)}`}
+			/>
 			<main className='mx-auto max-w-6xl px-4 pt-10 sm:px-6 lg:px-8'>
 				<LearnPageHero exercise={exercise} onBack={onBack} t={t} />
 				<LearnPageActions
@@ -160,7 +165,9 @@ function LearnPageHero({exercise, onBack, t}: LearnPageHeroProps) {
 				onClick={onBack}
 				type='button'
 			>
-				<span aria-hidden='true'>{t(learnPageTranslations['ui.leftArrow'])}</span>
+				<span aria-hidden='true'>
+					{t(learnPageTranslations['ui.leftArrow'])}
+				</span>
 				{t(learnPageTranslations['exercise.backToLibrary'])}
 			</button>
 			<p className='mt-6 font-semibold text-sm text-white/70 uppercase tracking-[0.3em]'>
@@ -202,7 +209,10 @@ function ExerciseStats({exercise, t}: ExerciseStatsProps) {
 				label={t(learnPageTranslations['exercise.blocks'])}
 				value={`${exercise.blocks.length}`}
 			/>
-			<StatCard label={t(learnPageTranslations['exercise.cases'])} value={`${totalCases}`} />
+			<StatCard
+				label={t(learnPageTranslations['exercise.cases'])}
+				value={`${totalCases}`}
+			/>
 		</dl>
 	)
 }
@@ -244,7 +254,9 @@ function LearnPageActions({
 				onClick={onStart}
 				type='button'
 			>
-				<span aria-hidden='true'>{t(learnPageTranslations['ui.playIcon'])}</span>
+				<span aria-hidden='true'>
+					{t(learnPageTranslations['ui.playIcon'])}
+				</span>
 				{t(learnPageTranslations.startExercise)}
 			</button>
 		</div>
@@ -309,7 +321,11 @@ function CurrentSettings({t}: CurrentSettingsProps) {
 				/>
 				<SettingItem
 					label={t(learnPageTranslations.theme)}
-					value={theme === 'dark' ? t(learnPageTranslations.darkTheme) : t(learnPageTranslations.lightTheme)}
+					value={
+						theme === 'dark'
+							? t(learnPageTranslations.darkTheme)
+							: t(learnPageTranslations.lightTheme)
+					}
 				/>
 			</dl>
 		</div>

@@ -4,12 +4,7 @@ export const translations = {
 	copyright: 'footer.copyright',
 	github: 'footer.github',
 	madeWith: {
-		key: 'footer.madeWith',
-		translations: {
-			el: 'Από τον Ντένις με αγάπη'
-		},
-		defaultLanguage: 'el',
-		fallback: 'Made by Denis with love'
+		fallback: 'Από τον Ντένις με αγάπη'
 	}
 } as const satisfies AutonomousTranslationDictionary
 

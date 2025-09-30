@@ -28,6 +28,14 @@ vi.mock('@/entities/exercise', () => ({
 
 vi.mock('@/shared/lib/i18n', () => ({
 	useTranslations: vi.fn(),
+	loadTranslations: () => ({
+		t: mockT,
+		language: 'en' as const,
+		isLoading: false,
+		error: null,
+		missingKeys: [],
+		status: 'complete' as const
+	}),
 	exerciseLibraryTranslations: {
 		keys: [
 			'exerciseLibrary',
@@ -721,18 +729,10 @@ describe('ExerciseLibrary', () => {
 
 			render(<ExerciseLibrary />)
 
-			expect(useTranslations).toHaveBeenCalledWith(
-				expect.objectContaining({
-					keys: expect.arrayContaining([
-						'exerciseLibrary',
-						'exerciseLibraryDesc',
-						'settings',
-						'filters',
-						'noExercisesFound',
-						'clearFilters'
-					])
-				})
-			)
+			// With loadTranslations, we verify translations work through rendered content
+			expect(screen.getByText('Exercise Library')).toBeInTheDocument()
+			expect(screen.getByText('Settings')).toBeInTheDocument()
+			expect(screen.getByText('Filters')).toBeInTheDocument()
 		})
 	})
 })

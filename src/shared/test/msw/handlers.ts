@@ -1,7 +1,5 @@
 import {delay, HttpResponse, http} from 'msw'
 import {extractExerciseMetadata} from '@/shared/lib/exercises'
-import type {TranslationRegistryKey} from '@/shared/lib/i18n'
-import {translationRegistry} from '@/shared/lib/i18n'
 import type {
 	SupportedLanguage,
 	TranslationsDatabase
@@ -14,12 +12,8 @@ const translations = translationsDatabase as TranslationsDatabase
 // Exercise registry - loaded dynamically from JSON files
 const exerciseRegistry = loadExercises()
 
-function normalizeTranslationKeys(
-	keys: readonly string[]
-): TranslationRegistryKey[] {
-	return keys
-		.map(key => key.trim())
-		.filter((key): key is TranslationRegistryKey => key in translationRegistry)
+function normalizeTranslationKeys(keys: readonly string[]): string[] {
+	return keys.map(key => key.trim()).filter(key => key.length > 0)
 }
 
 export const handlers = [
@@ -48,9 +42,7 @@ export const handlers = [
 		}
 
 		// Filter only requested keys
-		const filteredTranslations: Partial<
-			Record<TranslationRegistryKey, string>
-		> = {}
+		const filteredTranslations: Record<string, string> = {}
 		for (const key of requestedKeys) {
 			const value = languageTranslations[key]
 
@@ -95,9 +87,7 @@ export const handlers = [
 
 		// Filter only requested keys
 		const normalizedKeys = normalizeTranslationKeys(keys)
-		const filteredTranslations: Partial<
-			Record<TranslationRegistryKey, string>
-		> = {}
+		const filteredTranslations: Record<string, string> = {}
 
 		for (const key of normalizedKeys) {
 			const value = languageTranslations[key]

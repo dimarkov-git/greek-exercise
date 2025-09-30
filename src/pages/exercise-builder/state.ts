@@ -8,11 +8,13 @@ import {
 	type WordFormExerciseJSON,
 	WordFormExerciseSchema
 } from '@/entities/exercise'
-import type {ExerciseBuilderTranslationKey, Translator} from '@/shared/lib/i18n'
 import type {CustomExerciseRecord} from '@/shared/model'
 import {selectCustomExerciseList, useCustomExercisesStore} from '@/shared/model'
+import type {exerciseBuilderPageTranslations} from '../translations'
 
-export type BuilderTranslator = Translator<ExerciseBuilderTranslationKey>
+export type BuilderTranslator = (
+	entry: (typeof exerciseBuilderPageTranslations)[keyof typeof exerciseBuilderPageTranslations]
+) => string
 export type BuilderSaveStatus = 'idle' | 'success' | 'error'
 
 const DEFAULT_WORD_FORM_TEMPLATE: WordFormExerciseJSON = {

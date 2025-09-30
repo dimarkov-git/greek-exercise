@@ -1,10 +1,9 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {useState} from 'react'
-import type {ExerciseLibraryTranslationKey, Translator} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
 import {UserLanguageSelector} from '@/shared/ui/user-language-selector'
 
-type LibraryTranslator = Translator<ExerciseLibraryTranslationKey>
+type LibraryTranslator = (entry: string) => string
 
 interface UserSettingsProps {
 	t: LibraryTranslator

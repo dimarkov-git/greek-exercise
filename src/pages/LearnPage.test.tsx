@@ -36,7 +36,8 @@ vi.mock('@/shared/lib/i18n', async () => {
 	const actual = await vi.importActual('@/shared/lib/i18n')
 	return {
 		...actual,
-		useTranslations: vi.fn()
+		useTranslations: vi.fn(),
+		loadTranslations: vi.fn()
 	}
 })
 
@@ -90,32 +91,36 @@ vi.mock('@/features/learn-view', () => ({
 // Create mock implementations
 const mockNavigate = vi.fn()
 const mockSetHeaderEnabled = vi.fn()
-const mockTranslator = vi.fn((key: string) => {
-	const translations: Record<string, string> = {
-		learnExercise: 'Learn Exercise',
-		jsonView: 'JSON View',
-		tableView: 'Table View',
-		exerciseStructure: 'Exercise Structure',
-		startExercise: 'Start Exercise',
-		'exercise.backToLibrary': 'Back to Library',
-		'exercise.unsupportedType': 'Unsupported Exercise Type',
-		'exercise.notImplemented': 'Exercise type "{type}" is not implemented yet.',
-		'exercise.difficulty': 'Difficulty',
-		'exercise.minutes': 'Minutes',
-		'exercise.blocks': 'Blocks',
-		'exercise.cases': 'Cases',
-		'ui.leftArrow': '←',
-		'ui.playIcon': '▶',
-		'ui.hashSymbol': '#'
+const mockTranslator = vi.fn((key: unknown) => {
+	if (typeof key === 'string') {
+		const translations: Record<string, string> = {
+			learnExercise: 'Learn Exercise',
+			jsonView: 'JSON View',
+			tableView: 'Table View',
+			exerciseStructure: 'Exercise Structure',
+			startExercise: 'Start Exercise',
+			'exercise.backToLibrary': 'Back to Library',
+			'exercise.unsupportedType': 'Unsupported Exercise Type',
+			'exercise.notImplemented':
+				'Exercise type "{type}" is not implemented yet.',
+			'exercise.difficulty': 'Difficulty',
+			'exercise.minutes': 'Minutes',
+			'exercise.blocks': 'Blocks',
+			'exercise.cases': 'Cases',
+			'ui.leftArrow': '←',
+			'ui.playIcon': '▶',
+			'ui.hashSymbol': '#'
+		}
+		return translations[key] || key
 	}
-	return translations[key] || key
+	return String(key)
 })
 
 // Import mocked modules to set up implementations
 import {useNavigate, useParams} from 'react-router'
 import {useExercise} from '@/entities/exercise'
 import {useLayout} from '@/shared/lib'
-import {useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations, useTranslations} from '@/shared/lib/i18n'
 
 // Test data
 const mockWordFormExercise: WordFormExerciseWithDefaults = {
@@ -202,6 +207,14 @@ describe('LearnPage', () => {
 			missingKeys: [],
 			status: 'complete'
 		} as unknown as ReturnType<typeof useTranslations>)
+		vi.mocked(loadTranslations).mockReturnValue({
+			t: mockTranslator,
+			language: 'en' as const,
+			isLoading: false,
+			error: null,
+			missingKeys: [],
+			status: 'complete' as const
+		})
 	})
 
 	describe('loading state', () => {
@@ -685,7 +698,7 @@ describe('LearnPage', () => {
 			expect(useExercise).toHaveBeenCalledWith('test-exercise-1')
 		})
 
-		it('calls useTranslations with correct dictionary', () => {
+		it('calls loadTranslations with correct dictionary', () => {
 			vi.mocked(useExercise).mockReturnValue(
 				mockUseExerciseResult({
 					data: mockWordFormExercise,
@@ -696,7 +709,7 @@ describe('LearnPage', () => {
 
 			render(<LearnPage />)
 
-			expect(useTranslations).toHaveBeenCalled()
+			expect(loadTranslations).toHaveBeenCalled()
 		})
 	})
 })

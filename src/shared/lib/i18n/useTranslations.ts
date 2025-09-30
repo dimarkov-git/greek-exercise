@@ -8,7 +8,7 @@
 export function useTranslations(): never {
 	throw new Error(
 		'useTranslations() is deprecated and has been removed. ' +
-		'Use loadTranslations() instead. ' +
-		'This function only exists as a stub for test mocking compatibility.'
+			'Use loadTranslations() instead. ' +
+			'This function only exists as a stub for test mocking compatibility.'
 	)
 }

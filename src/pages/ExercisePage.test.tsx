@@ -52,7 +52,15 @@ vi.mock('@/shared/lib/i18n', async () => {
 	const actual = await vi.importActual('@/shared/lib/i18n')
 	return {
 		...actual,
-		useTranslations: vi.fn()
+		useTranslations: vi.fn(),
+		loadTranslations: () => ({
+			t: mockT,
+			language: 'en' as const,
+			isLoading: false,
+			error: null,
+			missingKeys: [],
+			status: 'complete' as const
+		})
 	}
 })
 

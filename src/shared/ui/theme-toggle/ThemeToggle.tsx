@@ -20,7 +20,9 @@ export function ThemeToggle() {
 			initial={{opacity: 0, scale: 0.9}}
 			onClick={toggleTheme}
 			title={
-				theme === 'light' ? t(translations.darkTheme) : t(translations.lightTheme)
+				theme === 'light'
+					? t(translations.darkTheme)
+					: t(translations.lightTheme)
 			}
 			transition={{delay: 0.2}}
 			type='button'

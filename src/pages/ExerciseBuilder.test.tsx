@@ -44,19 +44,14 @@ const translations: Record<string, string> = {
 const translate = (key: string) => translations[key] ?? key
 
 vi.mock('@/shared/lib/i18n', () => ({
-	useTranslations: vi.fn(() => ({
+	loadTranslations: vi.fn(() => ({
 		t: translate,
-		translations: {},
-		currentLanguage: 'en',
+		language: 'en',
 		isLoading: false,
 		error: null,
 		missingKeys: [],
 		status: 'complete'
-	})),
-	exerciseBuilderTranslations: {
-		'builder.title': 'Exercise Builder',
-		'builder.description': 'Create custom exercises'
-	}
+	}))
 }))
 
 vi.mock('@/shared/ui/head', () => ({

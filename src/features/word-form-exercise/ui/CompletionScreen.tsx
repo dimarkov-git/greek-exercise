@@ -33,7 +33,9 @@ export function CompletionScreen({
 				className='space-y-6 p-8 text-center'
 				initial={{opacity: 0, scale: 0.9}}
 			>
-				<div className='mb-4 text-6xl'>{t(completionScreenTranslations['exercise.celebrationEmoji'])}</div>
+				<div className='mb-4 text-6xl'>
+					{t(completionScreenTranslations['exercise.celebrationEmoji'])}
+				</div>
 				<h2 className='font-bold text-2xl text-green-600 dark:text-green-400'>
 					{t(completionScreenTranslations['exercise.congratulations'])}
 				</h2>

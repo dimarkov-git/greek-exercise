@@ -1,5 +1,4 @@
 import {motion} from 'framer-motion'
-import type {TestShowcaseTranslationKey} from '@/shared/lib/i18n'
 import type {
 	SupportedLanguage,
 	TranslationStatus
@@ -11,7 +10,7 @@ interface LanguageControlsProps {
 	readonly status: TranslationStatus
 	readonly missingKeys: readonly string[]
 	readonly isLoading: boolean
-	readonly t: (key: TestShowcaseTranslationKey) => string
+	readonly t: (key: string) => string
 }
 
 const statusColors = {
@@ -67,9 +66,7 @@ export function LanguageControls({
 						<span
 							className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-medium text-xs ${statusBadgeColors[status]}`}
 						>
-							{t(
-								`testI18n.scenarios.status.${status}` as TestShowcaseTranslationKey
-							)}
+							{t(`testI18n.scenarios.status.${status}`)}
 						</span>
 					</dd>
 				</div>

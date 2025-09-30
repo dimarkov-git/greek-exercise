@@ -12,7 +12,38 @@ export const exercisePageTranslations = {
 } as const satisfies AutonomousTranslationDictionary
 
 export const exerciseBuilderPageTranslations = {
-	exerciseBuilder: 'exerciseBuilder'
+	exerciseBuilder: 'exerciseBuilder',
+	'ui.toolsEmoji': 'ui.toolsEmoji',
+	exerciseBuilderDesc: 'exerciseBuilderDesc',
+	'builder.libraryInfo': 'builder.libraryInfo',
+	'ui.backToHome': 'ui.backToHome',
+	'builder.openLibrary': 'builder.openLibrary',
+	'builder.typeSectionTitle': 'builder.typeSectionTitle',
+	'builder.typeHelp': 'builder.typeHelp',
+	'builder.wordFormType': 'builder.wordFormType',
+	'builder.jsonEditorHelp': 'builder.jsonEditorHelp',
+	'builder.jsonEditorTitle': 'builder.jsonEditorTitle',
+	'builder.formatJson': 'builder.formatJson',
+	'builder.resetTemplate': 'builder.resetTemplate',
+	'builder.saveToLibrary': 'builder.saveToLibrary',
+	'builder.saveSuccess': 'builder.saveSuccess',
+	'builder.saveError': 'builder.saveError',
+	'builder.validationTitle': 'builder.validationTitle',
+	'builder.validationError': 'builder.validationError',
+	'builder.validationSuccess': 'builder.validationSuccess',
+	'builder.validationHint': 'builder.validationHint',
+	'builder.previewTitle': 'builder.previewTitle',
+	'builder.previewUnavailable': 'builder.previewUnavailable',
+	'builder.previewUnavailableHint': 'builder.previewUnavailableHint',
+	'builder.savedExercisesTitle': 'builder.savedExercisesTitle',
+	'builder.noSavedExercises': 'builder.noSavedExercises',
+	'builder.lastUpdated': 'builder.lastUpdated',
+	'builder.loadButton': 'builder.loadButton',
+	'builder.deleteButton': 'builder.deleteButton',
+	'ui.hashSymbol': 'ui.hashSymbol',
+	'builder.validationEmpty': 'builder.validationEmpty',
+	'builder.parseError': 'builder.parseError',
+	'builder.validationUnknown': 'builder.validationUnknown'
 } as const satisfies AutonomousTranslationDictionary
 
 export const learnPageTranslations = {

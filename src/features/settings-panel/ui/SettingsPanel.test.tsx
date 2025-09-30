@@ -31,20 +31,23 @@ vi.mock('framer-motion', () => ({
 	}
 }))
 
-// Mock useTranslations hook
+// Mock loadTranslations hook
 vi.mock('@/shared/lib/i18n', async () => {
 	const actual = await vi.importActual('@/shared/lib/i18n')
 	return {
 		...actual,
-		useTranslations: () => ({
+		loadTranslations: () => ({
 			t: (key: string) => {
 				const translations: Record<string, string> = {
 					settings: 'Settings'
 				}
 				return translations[key] || key
 			},
-			status: 'complete' as const,
-			missingKeys: [] as string[]
+			language: 'en',
+			isLoading: false,
+			error: null,
+			missingKeys: [],
+			status: 'complete' as const
 		})
 	}
 })

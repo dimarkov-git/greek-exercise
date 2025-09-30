@@ -6,21 +6,18 @@ import {LanguageSelector} from './LanguageSelector'
 
 // Mock the translations
 vi.mock('@/shared/lib/i18n', () => ({
-	languageSelectorTranslations: {
-		keys: ['interfaceLanguage'],
-		getRequest: vi.fn(() => ({
-			key: 'interfaceLanguage',
-			fallback: 'Interface Language'
-		}))
-	},
-	useTranslations: vi.fn(() => ({
+	loadTranslations: vi.fn(() => ({
 		t: (key: string) => {
 			const translations: Record<string, string> = {
 				interfaceLanguage: 'Interface Language'
 			}
 			return translations[key] || key
 		},
-		isLoading: false
+		language: 'en',
+		isLoading: false,
+		error: null,
+		missingKeys: [],
+		status: 'complete' as const
 	}))
 }))
 

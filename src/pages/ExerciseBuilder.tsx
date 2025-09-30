@@ -1,7 +1,6 @@
 import {motion} from 'framer-motion'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {Head} from '@/shared/ui/head'
-import {exerciseBuilderPageTranslations} from './translations'
 import {
 	BuilderHero,
 	JsonEditorPanel,
@@ -16,6 +15,7 @@ import {
 	useExerciseBuilderState,
 	useFormattedSavedExercises
 } from './exercise-builder/state'
+import {exerciseBuilderPageTranslations} from './translations'
 
 interface ExerciseBuilderViewProps extends ExerciseBuilderState {
 	readonly t: BuilderTranslator
@@ -25,7 +25,9 @@ export function ExerciseBuilder() {
 	const {t} = loadTranslations(exerciseBuilderPageTranslations)
 	const state = useExerciseBuilderState(t as unknown as BuilderTranslator)
 
-	return <ExerciseBuilderView {...state} t={t as unknown as BuilderTranslator} />
+	return (
+		<ExerciseBuilderView {...state} t={t as unknown as BuilderTranslator} />
+	)
 }
 
 function ExerciseBuilderView({

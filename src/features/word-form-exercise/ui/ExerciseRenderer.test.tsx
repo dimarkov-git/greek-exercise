@@ -47,6 +47,14 @@ vi.mock('@/shared/lib/i18n', async () => {
 			t: (key: string) => key,
 			status: 'complete' as const,
 			missingKeys: [] as string[]
+		}),
+		loadTranslations: () => ({
+			t: (key: unknown) => String(key),
+			language: 'en' as const,
+			isLoading: false,
+			error: null,
+			missingKeys: [],
+			status: 'complete' as const
 		})
 	}
 })

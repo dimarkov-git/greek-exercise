@@ -19,7 +19,8 @@ export const wordFormInputTranslations = {
 	'exercise.enterKeyName': 'exercise.enterKeyName',
 	'exercise.enterKey': 'exercise.enterKey',
 	'exercise.pressEnterToContinue': 'exercise.pressEnterToContinue',
-	'exercise.enterCorrectAnswerToContinue': 'exercise.enterCorrectAnswerToContinue',
+	'exercise.enterCorrectAnswerToContinue':
+		'exercise.enterCorrectAnswerToContinue',
 	'exercise.skip': 'exercise.skip'
 } as const satisfies AutonomousTranslationDictionary
 

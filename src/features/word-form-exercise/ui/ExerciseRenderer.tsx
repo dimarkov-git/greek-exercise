@@ -152,7 +152,9 @@ export function ExerciseRenderer({
 	return (
 		<RendererContent
 			clearPulse={clearPulse}
-			errorMessage={t(exerciseRendererTranslations['error.couldNotLoadExercise'])}
+			errorMessage={t(
+				exerciseRendererTranslations['error.couldNotLoadExercise']
+			)}
 			errorTitle={t(exerciseRendererTranslations['error.title'])}
 			exerciseTitle={exerciseTitle}
 			onAnswerChange={handleAnswerChange}

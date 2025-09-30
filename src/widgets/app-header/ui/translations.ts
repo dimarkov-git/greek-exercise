@@ -7,6 +7,9 @@ export const headerNavigationTranslations = {
 } as const satisfies AutonomousTranslationDictionary
 
 export const headerLogoTranslations = {
-	logoInitials: 'app.logoInitials',
+	logoInitials: {
+		key: 'app.logoInitials',
+		fallback: 'ΜΕ'
+	},
 	title: 'app.title'
 } as const satisfies AutonomousTranslationDictionary

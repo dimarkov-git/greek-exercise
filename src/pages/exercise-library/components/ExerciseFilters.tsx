@@ -1,11 +1,10 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {useState} from 'react'
 import type {Difficulty} from '@/entities/exercise'
-import type {ExerciseLibraryTranslationKey, Translator} from '@/shared/lib/i18n'
 import type {Language} from '@/shared/model/settings'
 import {UI_LANGUAGES} from '@/shared/model/settings'
 
-type LibraryTranslator = Translator<ExerciseLibraryTranslationKey>
+type LibraryTranslator = (entry: string) => string
 
 const LANGUAGE_DISPLAY = new Map<Language, string>(
 	UI_LANGUAGES.map(option => [option.code, `${option.flag} ${option.name}`])

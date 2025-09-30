@@ -34,7 +34,8 @@ export function TableView({exercise}: TableViewProps) {
 						{t(translations.minutes)}
 					</span>
 					<span className='inline-flex items-center rounded-full bg-purple-100 px-3 py-1 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300'>
-						{t(translations.booksIcon)} {exercise.blocks.length} {t(translations.blocks)}
+						{t(translations.booksIcon)} {exercise.blocks.length}{' '}
+						{t(translations.blocks)}
 					</span>
 					<span className='inline-flex items-center rounded-full bg-orange-100 px-3 py-1 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300'>
 						{t(translations.notesIcon)}{' '}

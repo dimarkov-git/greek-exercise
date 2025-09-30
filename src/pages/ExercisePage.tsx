@@ -4,6 +4,7 @@ import type {ExerciseResult} from '@/entities/exercise'
 import {useExercise} from '@/entities/exercise'
 import {WordFormExercise} from '@/features/word-form-exercise'
 import {useLayout} from '@/shared/lib'
+import type {TranslationEntry} from '@/shared/lib/i18n'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {LoadingOrError} from '@/shared/ui/loading-or-error'
 import {exercisePageTranslations} from './translations'
@@ -51,14 +52,27 @@ export function ExercisePage() {
 		return <LoadingOrError {...errorProps} />
 	}
 
-	// Render exercise based on type
+	return renderExercise(
+		exercise,
+		handleComplete,
+		handleExit,
+		t as (entry: string | TranslationEntry) => string
+	)
+}
+
+function renderExercise(
+	exercise: NonNullable<ReturnType<typeof useExercise>['data']>,
+	onComplete: (_result: Omit<ExerciseResult, 'completedAt'>) => void,
+	onExit: () => void,
+	t: (entry: string | TranslationEntry) => string
+) {
 	switch (exercise.type) {
 		case 'word-form':
 			return (
 				<WordFormExercise
 					exercise={exercise}
-					onComplete={handleComplete}
-					onExit={handleExit}
+					onComplete={onComplete}
+					onExit={onExit}
 				/>
 			)
 		default:
@@ -69,11 +83,14 @@ export function ExercisePage() {
 							{t(exercisePageTranslations['exercise.unsupportedType'])}
 						</h2>
 						<p className='mb-6 text-gray-600 dark:text-gray-400'>
-							{t(exercisePageTranslations['exercise.notImplemented']).replace('{type}', exercise.type)}
+							{t(exercisePageTranslations['exercise.notImplemented']).replace(
+								'{type}',
+								exercise.type
+							)}
 						</p>
 						<button
 							className='rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700'
-							onClick={handleExit}
+							onClick={onExit}
 							type='button'
 						>
 							{t(exercisePageTranslations['exercise.backToLibrary'])}

@@ -91,7 +91,9 @@ function KeyboardHint({t}: {t: ExerciseTranslator}) {
 			<kbd className='rounded bg-gray-100 px-2 py-1 font-mono text-xs dark:bg-gray-700'>
 				{t(wordFormInputTranslations['exercise.enterKeyName'])}
 			</kbd>
-			<span className='ml-2'>{t(wordFormInputTranslations['exercise.enterKey'])}</span>
+			<span className='ml-2'>
+				{t(wordFormInputTranslations['exercise.enterKey'])}
+			</span>
 		</div>
 	)
 }
