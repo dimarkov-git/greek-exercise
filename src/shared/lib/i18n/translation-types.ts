@@ -1,16 +1,5 @@
 import type {SupportedLanguage} from '@/shared/model/translations'
 
-/**
- * Full translation entry with a fallback chain.
- *
- * Fallback chain:
- * 1. Service translation in-app language (if a key is provided)
- * 2. Inline translations[appLanguage]
- * 3. Inline translations[defaultLanguage] (if specified and different from app)
- * 4. Value of fallback itself
- * 5. Value of a key itself
- * 6. Value of a dictionary key itself
- */
 export interface TranslationEntry {
 	/**
 	 * Key for service request (optional)
@@ -41,7 +30,4 @@ export interface TranslationEntry {
  * - string: service key (requests from service, key as fallback)
  * - TranslationEntry: full entry with an optional service key and inline translations
  */
-export type AutonomousTranslationDictionary = Record<
-	string,
-	string | TranslationEntry
->
+export type TranslationDictionary = Record<string, string | TranslationEntry>

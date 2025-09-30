@@ -4,7 +4,6 @@ export type {
 } from './loadTranslations'
 export {loadTranslations} from './loadTranslations'
 export type {
-	AutonomousTranslationDictionary,
+	TranslationDictionary,
 	TranslationEntry
 } from './translation-types'
-export {useTranslations} from './useTranslations'

@@ -1,4 +1,4 @@
-import type {AutonomousTranslationDictionary} from '@/shared/lib/i18n'
+import type {TranslationDictionary} from '@/shared/lib/i18n'
 
 /**
  * Language dropdown translations
@@ -10,6 +10,6 @@ export const translations = {
 	selectLanguage: 'Select Language',
 	dropdownArrow: 'Dropdown arrow',
 	selectedLanguage: 'Selected language'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary
 
 export type TranslationKey = keyof typeof translations

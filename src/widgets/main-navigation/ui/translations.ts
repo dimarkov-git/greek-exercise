@@ -1,4 +1,4 @@
-import type {AutonomousTranslationDictionary} from '@/shared/lib/i18n'
+import type {TranslationDictionary} from '@/shared/lib/i18n'
 
 export const translations = {
 	exerciseLibrary: 'exerciseLibrary',
@@ -7,4 +7,4 @@ export const translations = {
 	exerciseBuilderDesc: 'exerciseBuilderDesc',
 	testSection: 'testSection',
 	testSectionDesc: 'testSectionDesc'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary

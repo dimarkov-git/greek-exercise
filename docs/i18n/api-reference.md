@@ -142,30 +142,33 @@ function Component() {
 - **Cache Time**: Infinite (translations rarely change)
 - **Background Refetch**: Enabled
 
-### `useTranslations(keys)`
+### `loadTranslations(options)`
 
-Advanced hook for requesting specific translation keys with status reporting.
+Function for loading translations with status reporting.
 
 ```typescript
-interface TranslationResult {
-  translations: Record<string, string>
-  status: 'success' | 'partial' | 'loading' | 'error'
-  missingKeys?: string[]
+interface LoadTranslationsResult {
+  t: (key: string) => string
+  language: Language
+  isLoading: boolean
+  error: Error | null
+  status: 'loading' | 'complete' | 'error'
+  missingKeys: string[]
 }
 
-function useTranslations(keys: TranslationRegistryKey[]): TranslationResult
+function loadTranslations(options: LoadTranslationsOptions): LoadTranslationsResult
 
 // Usage
 const Component = () => {
-  const { translations, status, missingKeys } = useTranslations([
-    'app.title',
-    'navigation.home'
-  ])
+  const { t, status, missingKeys } = loadTranslations({
+    dictionary: myDictionary,
+    language: 'en'
+  })
 
   if (status === 'loading') return <LoadingSpinner />
-  if (status === 'partial') console.warn('Missing:', missingKeys)
+  if (missingKeys.length > 0) console.warn('Missing:', missingKeys)
 
-  return <h1>{translations['app.title']}</h1>
+  return <h1>{t('app.title')}</h1>
 }
 ```
 
@@ -235,7 +238,10 @@ function createTranslationRequest(
 
 // Usage
 const request = createTranslationRequest(['app.title', 'welcome.message'])
-const { translations } = useTranslations(request.keys)
+const { t } = loadTranslations({
+  dictionary: myDictionary,
+  language: 'en'
+})
 ```
 
 ### `resolveTranslation(key, translations, policy)`

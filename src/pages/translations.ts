@@ -1,15 +1,15 @@
-import type {AutonomousTranslationDictionary} from '@/shared/lib/i18n'
+import type {TranslationDictionary} from '@/shared/lib/i18n'
 
 export const homePageTranslations = {
 	'app.title': 'app.title',
 	'app.subtitle': 'app.subtitle'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary
 
 export const exercisePageTranslations = {
 	'exercise.unsupportedType': 'exercise.unsupportedType',
 	'exercise.notImplemented': 'exercise.notImplemented',
 	'exercise.backToLibrary': 'exercise.backToLibrary'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary
 
 export const exerciseBuilderPageTranslations = {
 	exerciseBuilder: 'exerciseBuilder',
@@ -44,7 +44,7 @@ export const exerciseBuilderPageTranslations = {
 	'builder.validationEmpty': 'builder.validationEmpty',
 	'builder.parseError': 'builder.parseError',
 	'builder.validationUnknown': 'builder.validationUnknown'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary
 
 export const learnPageTranslations = {
 	learnExercise: 'learnExercise',
@@ -66,8 +66,8 @@ export const learnPageTranslations = {
 	'ui.playIcon': 'ui.playIcon',
 	'ui.hashSymbol': 'ui.hashSymbol',
 	startExercise: 'startExercise'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary
 
 export const exerciseLibraryPageTranslations = {
 	exerciseLibrary: 'exerciseLibrary'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary

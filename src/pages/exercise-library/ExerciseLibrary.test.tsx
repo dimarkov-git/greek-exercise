@@ -27,7 +27,6 @@ vi.mock('@/entities/exercise', () => ({
 }))
 
 vi.mock('@/shared/lib/i18n', () => ({
-	useTranslations: vi.fn(),
 	loadTranslations: () => ({
 		t: mockT,
 		language: 'en' as const,
@@ -213,7 +212,6 @@ vi.mock('./components/ExerciseGrid', () => ({
 
 // Import mocked modules to set up implementations
 import {useExercises} from '@/entities/exercise'
-import {useTranslations} from '@/shared/lib/i18n'
 import {useExerciseFiltering} from './hooks/useExerciseFiltering'
 
 // Test data
@@ -298,16 +296,6 @@ describe('ExerciseLibrary', () => {
 		vi.clearAllMocks()
 
 		// Default mock implementations
-		vi.mocked(useTranslations).mockReturnValue({
-			t: mockT,
-			translations: {},
-			currentLanguage: 'en',
-			isLoading: false,
-			error: null,
-			missingKeys: [],
-			status: 'complete'
-		} as unknown as ReturnType<typeof useTranslations>)
-
 		vi.mocked(useExerciseFiltering).mockReturnValue(
 			mockUseExerciseFilteringResult({
 				filteredExercises: mockExerciseLibrary.exercises,

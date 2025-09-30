@@ -1,10 +1,10 @@
-import type {AutonomousTranslationDictionary} from '@/shared/lib/i18n'
+import type {TranslationDictionary} from '@/shared/lib/i18n'
 
 export const translations = {
 	darkTheme: 'theme.darkTheme',
 	lightTheme: 'theme.lightTheme',
 	sunEmoji: '☀️',
 	moonEmoji: '🌙'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary
 
 export type TranslationKey = keyof typeof translations

@@ -1,10 +1,10 @@
-import type {AutonomousTranslationDictionary} from '@/shared/lib/i18n'
+import type {TranslationDictionary} from '@/shared/lib/i18n'
 
 export const headerNavigationTranslations = {
 	home: 'navigation.home',
 	library: 'navigation.library',
 	builder: 'navigation.builder'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary
 
 export const headerLogoTranslations = {
 	logoInitials: {
@@ -12,4 +12,4 @@ export const headerLogoTranslations = {
 		fallback: 'ΜΕ'
 	},
 	title: 'app.title'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary

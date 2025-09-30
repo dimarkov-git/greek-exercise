@@ -1,4 +1,4 @@
-import type {AutonomousTranslationDictionary} from '@/shared/lib/i18n'
+import type {TranslationDictionary} from '@/shared/lib/i18n'
 
 export const wordFormFeedbackTranslations = {
 	'exercise.correctIcon': 'exercise.correctIcon',
@@ -9,7 +9,7 @@ export const wordFormFeedbackTranslations = {
 	'exercise.incorrect': 'exercise.incorrect',
 	'exercise.yourAnswerIs': 'exercise.yourAnswerIs',
 	'exercise.enterCorrectToContinue': 'exercise.enterCorrectToContinue'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary
 
 export const wordFormInputTranslations = {
 	'exercise.checking': 'exercise.checking',
@@ -22,12 +22,12 @@ export const wordFormInputTranslations = {
 	'exercise.enterCorrectAnswerToContinue':
 		'exercise.enterCorrectAnswerToContinue',
 	'exercise.skip': 'exercise.skip'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary
 
 export const exerciseRendererTranslations = {
 	'error.couldNotLoadExercise': 'error.couldNotLoadExercise',
 	'error.title': 'error.title'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary
 
 export const completionScreenTranslations = {
 	'exercise.celebrationEmoji': 'exercise.celebrationEmoji',
@@ -40,4 +40,4 @@ export const completionScreenTranslations = {
 	'exercise.secondsSymbol': 'exercise.secondsSymbol',
 	'exercise.restartExercise': 'exercise.restartExercise',
 	'exercise.returnToLibrary': 'exercise.returnToLibrary'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary

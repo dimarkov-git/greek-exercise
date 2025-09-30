@@ -134,11 +134,11 @@ export const translationQueries = {
   }),
 }
 
-// Hook implementation
-function useTranslations(keys: TranslationRegistryKey[]) {
+// Implementation using loadTranslations
+function MyComponent() {
   const { uiLanguage } = useSettingsStore()
 
-  return useQuery({
+  const translations = loadTranslations({
     ...translationQueries.byLanguage(uiLanguage),
     select: (data) => filterTranslations(data, keys),
   })
@@ -204,10 +204,10 @@ interface TranslationResult {
 
 // Usage with status handling
 function Component() {
-  const { translations, status, missingKeys } = useTranslations([
-    'app.title',
-    'navigation.home'
-  ])
+  const { t, status, missingKeys } = loadTranslations({
+    dictionary: myDictionary,
+    language: uiLanguage
+  })
 
   if (status === 'loading') return <LoadingSpinner />
   if (status === 'error') return <ErrorBoundary />

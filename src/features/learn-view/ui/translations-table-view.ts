@@ -1,4 +1,4 @@
-import type {AutonomousTranslationDictionary} from '@/shared/lib/i18n'
+import type {TranslationDictionary} from '@/shared/lib/i18n'
 
 export const translations = {
 	exerciseStructure: 'exerciseStructure',
@@ -16,6 +16,6 @@ export const translations = {
 	booksIcon: 'ui.booksIcon',
 	notesIcon: 'ui.notesIcon',
 	colon: 'ui.colon'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary
 
 export type TranslationKey = keyof typeof translations

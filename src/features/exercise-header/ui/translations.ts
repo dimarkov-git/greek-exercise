@@ -1,4 +1,4 @@
-import type {AutonomousTranslationDictionary} from '@/shared/lib/i18n'
+import type {TranslationDictionary} from '@/shared/lib/i18n'
 
 export const translations = {
 	backArrow: 'exercise.backArrow',
@@ -10,6 +10,6 @@ export const translations = {
 	autoAdvance: 'exercise.autoAdvance',
 	progress: 'exercise.progress',
 	progressOf: 'exercise.progressOf'
-} as const satisfies AutonomousTranslationDictionary
+} as const satisfies TranslationDictionary
 
 export type TranslationKey = keyof typeof translations

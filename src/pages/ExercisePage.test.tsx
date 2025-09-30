@@ -52,7 +52,6 @@ vi.mock('@/shared/lib/i18n', async () => {
 	const actual = await vi.importActual('@/shared/lib/i18n')
 	return {
 		...actual,
-		useTranslations: vi.fn(),
 		loadTranslations: () => ({
 			t: mockT,
 			language: 'en' as const,
@@ -109,7 +108,6 @@ vi.mock('@/features/word-form-exercise', () => ({
 import {useNavigate, useParams} from 'react-router'
 import {useExercise} from '@/entities/exercise'
 import {useLayout} from '@/shared/lib'
-import {useTranslations} from '@/shared/lib/i18n'
 
 // Test data
 const mockWordFormExercise: WordFormExerciseWithDefaults = {
@@ -164,15 +162,6 @@ describe('ExercisePage', () => {
 			headerEnabled: true,
 			setHeaderEnabled: mockSetHeaderEnabled
 		})
-		vi.mocked(useTranslations).mockReturnValue({
-			t: mockT,
-			translations: {},
-			currentLanguage: 'en',
-			isLoading: false,
-			error: null,
-			missingKeys: [],
-			status: 'complete'
-		} as unknown as ReturnType<typeof useTranslations>)
 		vi.useFakeTimers()
 	})
 

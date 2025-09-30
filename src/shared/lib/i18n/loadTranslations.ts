@@ -6,10 +6,7 @@ import type {
 	SupportedLanguage,
 	TranslationStatus
 } from '@/shared/model/translations'
-import type {
-	AutonomousTranslationDictionary,
-	TranslationEntry
-} from './translation-types'
+import type {TranslationDictionary, TranslationEntry} from './translation-types'
 
 interface TranslationsResponse {
 	readonly translations: Record<string, string>
@@ -50,9 +47,7 @@ export interface LoadTranslationsOptions {
 	readonly language?: SupportedLanguage
 }
 
-export interface LoadTranslationsResult<
-	T extends AutonomousTranslationDictionary
-> {
+export interface LoadTranslationsResult<T extends TranslationDictionary> {
 	readonly t: (entry: T[keyof T]) => string
 	readonly language: SupportedLanguage
 	readonly isLoading: boolean
@@ -66,7 +61,7 @@ export interface LoadTranslationsResult<
  */
 function normalizeEntry(
 	dictKey: string,
-	value: string | AutonomousTranslationDictionary[string]
+	value: string | TranslationDictionary[string]
 ): TranslationEntry {
 	if (typeof value === 'string') {
 		return {key: value, fallback: value}
@@ -78,9 +73,7 @@ function normalizeEntry(
  * Collect service keys that need to be requested
  * Only includes entries with a key property
  */
-function collectServiceKeys(
-	dictionary: AutonomousTranslationDictionary
-): string[] {
+function collectServiceKeys(dictionary: TranslationDictionary): string[] {
 	return Object.entries(dictionary)
 		.filter(([_, value]) => {
 			if (typeof value === 'string') return true
@@ -93,14 +86,14 @@ function collectServiceKeys(
 }
 
 /**
- * Resolve translation using smart fallback chain
+ * Resolve translation using a smart fallback chain
  */
 function resolveTranslation(
 	entry: TranslationEntry,
 	appLanguage: SupportedLanguage,
 	serviceTranslations?: Record<string, string>
 ): string {
-	// 1. Try service translation in app language (if key provided)
+	// 1. Try service translation in-app language (if key provided)
 	if (entry.key) {
 		const serviceTranslation = serviceTranslations?.[entry.key]
 		if (serviceTranslation) {
@@ -126,9 +119,9 @@ function resolveTranslation(
 }
 
 /**
- * Calculate missing keys (entries with service key but no translation)
+ * Calculate missing keys (entries with a service key but no translation)
  */
-function calculateMissingKeys<T extends AutonomousTranslationDictionary>(
+function calculateMissingKeys<T extends TranslationDictionary>(
 	dictionary: T,
 	serviceTranslations?: Record<string, string>
 ): (keyof T)[] {
@@ -185,7 +178,7 @@ function calculateStatus(
  * <h1>{t(translations.pageTitle)}</h1>
  * ```
  */
-export function loadTranslations<T extends AutonomousTranslationDictionary>(
+export function loadTranslations<T extends TranslationDictionary>(
 	dictionary: T,
 	options?: LoadTranslationsOptions
 ): LoadTranslationsResult<T> {
