@@ -1,5 +1,5 @@
 import {motion} from 'framer-motion'
-import type {exerciseLibraryTranslations} from '../translations'
+import type {exerciseLibraryTranslations} from '../lib/translations'
 
 interface LibraryHeaderProps {
 	t: (

@@ -1,4 +1,4 @@
-import type {Language} from '@/shared/model/settings'
+import type {Language} from '@/shared/model'
 
 export interface UserPreferences {
 	language: Language

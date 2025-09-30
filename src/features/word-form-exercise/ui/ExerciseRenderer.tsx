@@ -1,8 +1,8 @@
 import type {ExerciseEvent} from '@/entities/exercise'
 import {CompletionScreen} from '@/features/word-form-exercise'
 import {loadTranslations} from '@/shared/lib/i18n'
+import type {Language} from '@/shared/model'
 import {useSettingsStore} from '@/shared/model'
-import type {Language} from '@/shared/model/settings'
 import {ExerciseLayout} from '@/widgets/exercise-layout'
 import type {WordFormViewState} from '../model/hooks/useWordFormExercise'
 import {ExerciseContent} from './ExerciseContent'
@@ -10,7 +10,7 @@ import {exerciseRendererTranslations} from './translations'
 
 interface ExerciseRendererProps {
 	state: WordFormViewState
-	pulseState: import('@/features/hint-system').PulseState
+	pulseState: import('../hint-system').PulseState
 	clearPulse: () => void
 	handleEvent: (event: ExerciseEvent) => void
 	handleSubmit: (answer: string) => void
@@ -66,7 +66,7 @@ function MissingCaseView({title, message}: MissingCaseViewProps) {
 
 interface RendererContentProps {
 	state: WordFormViewState
-	pulseState: import('@/features/hint-system').PulseState
+	pulseState: import('../hint-system').PulseState
 	clearPulse: () => void
 	exerciseTitle: string
 	userLanguage: Language

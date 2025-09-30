@@ -1,8 +1,8 @@
 import userEvent from '@testing-library/user-event'
 import type React from 'react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
+import {useCustomExercisesStore} from '@/entities/exercise'
 import {act, render, screen, waitFor} from '@/shared/lib'
-import {useCustomExercisesStore} from '@/shared/model'
 import {ExerciseBuilder} from './ExerciseBuilder'
 
 const translations: Record<string, string> = {

@@ -1,6 +1,6 @@
 import {act, renderHook} from '@testing-library/react'
 import {describe, expect, it} from 'vitest'
-import {useHintState} from '@/features/hint-system'
+import {useHintState} from '../index'
 
 describe('useHintState', () => {
 	it('toggles hint visibility state', () => {

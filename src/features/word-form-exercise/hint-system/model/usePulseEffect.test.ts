@@ -1,6 +1,6 @@
 import {act, renderHook} from '@testing-library/react'
 import {describe, expect, it} from 'vitest'
-import {usePulseEffect} from '@/features/hint-system'
+import {usePulseEffect} from '../index'
 
 describe('usePulseEffect', () => {
 	it('provides null as the initial pulse state', () => {

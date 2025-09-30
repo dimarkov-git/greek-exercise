@@ -1,8 +1,7 @@
 import {act, render, screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
-import {useSettingsStore} from '@/shared/model'
-import {DEFAULT_SETTINGS} from '@/shared/model/settings'
+import {DEFAULT_SETTINGS, useSettingsStore} from '@/shared/model'
 import {HintSystem, SimpleHint} from './HintSystem'
 
 const TEST_CONTENT = 'Κείμενο'

@@ -1,4 +1,4 @@
-import type {Language} from '@/shared/model/settings'
+import type {Language} from '@/shared/model'
 import type {ExerciseMetadata, WordFormExercise} from './types'
 
 export type ExerciseSource = 'builtin' | 'custom'

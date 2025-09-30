@@ -4,8 +4,7 @@ import {useEffect, useRef, useState} from 'react'
 import {cn} from '@/shared/lib'
 import type {TranslationEntry} from '@/shared/lib/i18n'
 import {loadTranslations} from '@/shared/lib/i18n'
-import {useSettingsStore} from '@/shared/model'
-import type {Language} from '@/shared/model/settings'
+import {type Language, useSettingsStore} from '@/shared/model'
 import {translations} from './translations'
 
 interface HintSystemProps {

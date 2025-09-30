@@ -1,11 +1,8 @@
 import {useQuery} from '@tanstack/react-query'
 import {useCallback, useMemo} from 'react'
 import {requestJson} from '@/shared/api'
+import type {SupportedLanguage, TranslationStatus} from '@/shared/model'
 import {useSettingsStore} from '@/shared/model'
-import type {
-	SupportedLanguage,
-	TranslationStatus
-} from '@/shared/model/translations'
 import type {TranslationDictionary, TranslationEntry} from './translation-types'
 
 interface TranslationsResponse {

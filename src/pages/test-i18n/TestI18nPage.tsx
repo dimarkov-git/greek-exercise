@@ -1,8 +1,8 @@
 import {motion} from 'framer-motion'
 import {useState} from 'react'
 import {loadTranslations} from '@/shared/lib/i18n'
+import type {SupportedLanguage} from '@/shared/model'
 import {useSettingsStore} from '@/shared/model'
-import type {SupportedLanguage} from '@/shared/model/translations'
 import {Head} from '@/shared/ui/head'
 import {translations} from './translations'
 

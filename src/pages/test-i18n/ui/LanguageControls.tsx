@@ -1,8 +1,5 @@
 import {motion} from 'framer-motion'
-import type {
-	SupportedLanguage,
-	TranslationStatus
-} from '@/shared/model/translations'
+import type {SupportedLanguage, TranslationStatus} from '@/shared/model'
 import {LanguageSelector} from '@/shared/ui/language-selector'
 
 interface LanguageControlsProps {

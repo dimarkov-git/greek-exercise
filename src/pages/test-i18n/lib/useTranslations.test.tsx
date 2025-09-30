@@ -5,8 +5,7 @@ import type {ReactNode} from 'react'
 import {afterEach, beforeEach, describe, expect, it} from 'vitest'
 import type {TranslationDictionary} from '@/shared/lib/i18n'
 import {loadTranslations} from '@/shared/lib/i18n'
-import {useSettingsStore} from '@/shared/model'
-import {DEFAULT_SETTINGS} from '@/shared/model/settings'
+import {DEFAULT_SETTINGS, useSettingsStore} from '@/shared/model'
 
 // Test dictionary with various entry types
 const testDict = {

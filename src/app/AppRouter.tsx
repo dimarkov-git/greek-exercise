@@ -1,6 +1,6 @@
 import type {PropsWithChildren, ReactElement} from 'react'
 import {BrowserRouter, HashRouter, MemoryRouter} from 'react-router'
-import {environment, type RouterMode} from '@/app/config/environment'
+import {environment, type RouterMode} from '@/app/config'
 
 type RouterComponent = (properties: PropsWithChildren) => ReactElement
 

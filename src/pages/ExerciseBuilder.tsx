@@ -2,19 +2,19 @@ import {motion} from 'framer-motion'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {Head} from '@/shared/ui/head'
 import {
+	type BuilderTranslator,
+	type ExerciseBuilderState,
+	useExerciseBuilderState,
+	useFormattedSavedExercises
+} from './exercise-builder/model/state'
+import {
 	BuilderHero,
 	JsonEditorPanel,
 	PreviewPanel,
 	SavedExercisesSection,
 	TypeSelectorPanel,
 	ValidationPanel
-} from './exercise-builder/components'
-import {
-	type BuilderTranslator,
-	type ExerciseBuilderState,
-	useExerciseBuilderState,
-	useFormattedSavedExercises
-} from './exercise-builder/state'
+} from './exercise-builder/ui/components'
 import {exerciseBuilderPageTranslations} from './translations'
 
 interface ExerciseBuilderViewProps extends ExerciseBuilderState {

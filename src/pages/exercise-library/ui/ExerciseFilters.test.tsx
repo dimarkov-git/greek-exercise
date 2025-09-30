@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
 import type {Difficulty} from '@/entities/exercise'
 import {render} from '@/shared/lib'
-import type {Language} from '@/shared/model/settings'
-import {exerciseLibraryTranslations} from '../translations'
+import type {Language} from '@/shared/model'
+import {exerciseLibraryTranslations} from '../lib/translations'
 import {ExerciseFilters} from './ExerciseFilters'
 
 // Mock framer-motion to avoid animation issues in tests

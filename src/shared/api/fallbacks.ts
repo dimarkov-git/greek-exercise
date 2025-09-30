@@ -1,13 +1,10 @@
 import type {WordFormExerciseDto} from '@/entities/exercise'
 import {
+	extractExerciseMetadata,
 	toWordFormExerciseWithDefaults,
 	validateWordFormExercise
 } from '@/entities/exercise'
-import {extractExerciseMetadata} from '@/shared/lib/exercises'
-import type {
-	SupportedLanguage,
-	TranslationsDatabase
-} from '@/shared/model/translations'
+import type {SupportedLanguage, TranslationsDatabase} from '@/shared/model'
 import translationsData from '@/shared/test/msw/data/translations.json' with {
 	type: 'json'
 }

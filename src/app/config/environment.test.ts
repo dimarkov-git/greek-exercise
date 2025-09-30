@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {AppModeEnum, RouterModeEnum} from '@/app/config/environment'
+import {AppModeEnum, RouterModeEnum} from '@/app/config'
 
 describe('environment configuration', () => {
 	it('respects explicit environment variable overrides in test mode', async () => {

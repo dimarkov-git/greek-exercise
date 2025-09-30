@@ -1,4 +1,4 @@
-import type {SupportedLanguage} from '@/shared/model/translations'
+import type {SupportedLanguage} from '@/shared/model'
 
 export interface TranslationEntry {
 	/**

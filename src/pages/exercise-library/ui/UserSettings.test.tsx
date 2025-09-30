@@ -2,9 +2,12 @@ import {act, screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
 import {render} from '@/shared/lib'
-import {useSettingsStore} from '@/shared/model'
-import {DEFAULT_SETTINGS, USER_LANGUAGES} from '@/shared/model/settings'
-import {exerciseLibraryTranslations} from '../translations'
+import {
+	DEFAULT_SETTINGS,
+	USER_LANGUAGES,
+	useSettingsStore
+} from '@/shared/model'
+import {exerciseLibraryTranslations} from '../lib/translations'
 import {UserSettings} from './UserSettings'
 
 // Mock framer-motion to avoid animation issues in tests

@@ -6,7 +6,7 @@ import {
 	selectLanguageOptions,
 	selectTagOptions
 } from '@/entities/exercise'
-import type {Language} from '@/shared/model/settings'
+import type {Language} from '@/shared/model'
 
 export function useExerciseFiltering(
 	viewModel: ExerciseLibraryViewModel | undefined

@@ -2,12 +2,12 @@ import {motion} from 'framer-motion'
 import type {ChangeEvent} from 'react'
 import {Link} from 'react-router'
 import type {
+	CustomExerciseRecord,
 	WordFormExerciseJSON,
 	WordFormExerciseWithDefaults
 } from '@/entities/exercise'
 import {TableView} from '@/features/learn-view'
-import type {CustomExerciseRecord} from '@/shared/model'
-import type {BuilderSaveStatus, BuilderTranslator} from './state'
+import type {BuilderSaveStatus, BuilderTranslator} from '../model/state'
 
 export function BuilderHero({t}: {readonly t: BuilderTranslator}) {
 	return (

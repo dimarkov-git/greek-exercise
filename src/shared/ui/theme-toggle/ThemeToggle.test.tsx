@@ -1,8 +1,7 @@
 import {act, render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {afterEach, describe, expect, it, vi} from 'vitest'
-import {useSettingsStore} from '@/shared/model'
-import {DEFAULT_SETTINGS} from '@/shared/model/settings'
+import {DEFAULT_SETTINGS, useSettingsStore} from '@/shared/model'
 import {ThemeToggle} from '@/shared/ui/theme-toggle'
 
 vi.mock('@/shared/lib/i18n', () => ({

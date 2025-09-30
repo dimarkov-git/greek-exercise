@@ -2,7 +2,7 @@ import {AnimatePresence, motion} from 'framer-motion'
 import {Link} from 'react-router'
 import type {ExerciseSummary} from '@/entities/exercise'
 import {useSettingsStore} from '@/shared/model'
-import type {exerciseLibraryTranslations} from '../translations'
+import type {exerciseLibraryTranslations} from '../lib/translations'
 
 interface ExerciseGridProps {
 	exercises: ExerciseSummary[]

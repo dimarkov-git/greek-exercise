@@ -2,7 +2,7 @@ import {AnimatePresence, motion} from 'framer-motion'
 import {useState} from 'react'
 import {useSettingsStore} from '@/shared/model'
 import {UserLanguageSelector} from '@/shared/ui/user-language-selector'
-import type {exerciseLibraryTranslations} from '../translations'
+import type {exerciseLibraryTranslations} from '../lib/translations'
 
 interface UserSettingsProps {
 	t: (

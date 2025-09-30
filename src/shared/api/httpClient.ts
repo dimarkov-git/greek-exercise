@@ -1,4 +1,4 @@
-import {AppModeEnum, environment} from '@/app/config/environment'
+import {AppModeEnum, environment} from '@/app/config'
 import {resolveFallbackResponse} from './fallbacks'
 
 const RETRYABLE_STATUS_CODES = new Set([408, 425, 429, 500, 502, 503, 504])

@@ -3,9 +3,8 @@ import {motion} from 'framer-motion'
 import {useForm} from 'react-hook-form'
 import {z} from 'zod'
 import {loadTranslations} from '@/shared/lib/i18n'
-import {useSettingsStore} from '@/shared/model'
-import type {Language} from '@/shared/model/settings'
-import {UI_LANGUAGES} from '@/shared/model/settings'
+import type {Language} from '@/shared/model'
+import {UI_LANGUAGES, useSettingsStore} from '@/shared/model'
 import {translations} from './translations'
 
 const LanguageSchema = z.object({

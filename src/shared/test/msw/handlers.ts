@@ -1,9 +1,6 @@
 import {delay, HttpResponse, http} from 'msw'
-import {extractExerciseMetadata} from '@/shared/lib/exercises'
-import type {
-	SupportedLanguage,
-	TranslationsDatabase
-} from '@/shared/model/translations'
+import {extractExerciseMetadata} from '@/entities/exercise'
+import type {SupportedLanguage, TranslationsDatabase} from '@/shared/model'
 import translationsDatabase from './data/translations.json' with {type: 'json'}
 import {loadExercises} from './utils/loadExercises'
 

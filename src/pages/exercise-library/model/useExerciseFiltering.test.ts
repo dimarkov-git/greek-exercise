@@ -5,7 +5,7 @@ import type {
 	ExerciseLibraryViewModel,
 	ExerciseSummary
 } from '@/entities/exercise'
-import type {Language} from '@/shared/model/settings'
+import type {Language} from '@/shared/model'
 
 // Mock the selectors module using vi.hoisted()
 const selectorsModule = vi.hoisted(() => ({

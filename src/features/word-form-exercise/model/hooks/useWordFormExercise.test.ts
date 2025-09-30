@@ -19,7 +19,7 @@ vi.mock('@/features/hint-system', () => ({
 	})
 }))
 
-import * as exerciseUtils from '@/shared/lib/exercises'
+import * as exerciseUtils from '@/entities/exercise'
 import {
 	useWordFormExercise,
 	WORD_FORM_TEST_CONTROL_KEY

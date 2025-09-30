@@ -1,16 +1,19 @@
 import type {ChangeEvent} from 'react'
 import {useCallback, useEffect, useMemo, useState} from 'react'
 import {type BaseIssue, safeParse} from 'valibot'
-import type {WordFormExerciseWithDefaults} from '@/entities/exercise'
+import type {
+	CustomExerciseRecord,
+	WordFormExerciseWithDefaults
+} from '@/entities/exercise'
 import {
 	exerciseToJSON,
+	selectCustomExerciseList,
 	toWordFormExerciseWithDefaults,
+	useCustomExercisesStore,
 	type WordFormExerciseJSON,
 	WordFormExerciseSchema
 } from '@/entities/exercise'
-import type {CustomExerciseRecord} from '@/shared/model'
-import {selectCustomExerciseList, useCustomExercisesStore} from '@/shared/model'
-import type {exerciseBuilderPageTranslations} from '../translations'
+import type {exerciseBuilderPageTranslations} from '../../translations'
 
 export type BuilderTranslator = (
 	entry: (typeof exerciseBuilderPageTranslations)[keyof typeof exerciseBuilderPageTranslations]

@@ -1,7 +1,7 @@
 import {screen} from '@testing-library/react'
 import {describe, expect, it, vi} from 'vitest'
 import {render} from '@/shared/lib'
-import {exerciseLibraryTranslations} from '../translations'
+import {exerciseLibraryTranslations} from '../lib/translations'
 import {LibraryHeader} from './LibraryHeader'
 
 // Mock framer-motion to avoid animation issues in tests

@@ -5,7 +5,7 @@ import type {
 	ExerciseSummary
 } from '@/entities/exercise'
 import {render, screen} from '@/shared/lib'
-import type {Language} from '@/shared/model/settings'
+import type {Language} from '@/shared/model'
 import {ExerciseLibrary} from './ExerciseLibrary'
 
 // Mock dependencies
@@ -212,7 +212,7 @@ vi.mock('./components/ExerciseGrid', () => ({
 
 // Import mocked modules to set up implementations
 import {useExercises} from '@/entities/exercise'
-import {useExerciseFiltering} from './hooks/useExerciseFiltering'
+import {useExerciseFiltering} from './model/useExerciseFiltering'
 
 // Test data
 const mockExerciseSummary1: ExerciseSummary = {

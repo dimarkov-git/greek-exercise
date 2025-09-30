@@ -2,12 +2,12 @@ import {useExercises} from '@/entities/exercise'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {Head} from '@/shared/ui/head'
 import {LoadingOrError} from '@/shared/ui/loading-or-error'
-import {ExerciseFilters} from './components/ExerciseFilters'
-import {ExerciseGrid} from './components/ExerciseGrid'
-import {LibraryHeader} from './components/LibraryHeader'
-import {UserSettings} from './components/UserSettings'
-import {useExerciseFiltering} from './hooks/useExerciseFiltering'
-import {exerciseLibraryTranslations} from './translations'
+import {exerciseLibraryTranslations} from './lib/translations'
+import {useExerciseFiltering} from './model/useExerciseFiltering'
+import {ExerciseFilters} from './ui/ExerciseFilters'
+import {ExerciseGrid} from './ui/ExerciseGrid'
+import {LibraryHeader} from './ui/LibraryHeader'
+import {UserSettings} from './ui/UserSettings'
 
 export function ExerciseLibrary() {
 	const {t} = loadTranslations(exerciseLibraryTranslations)
