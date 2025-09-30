@@ -17,50 +17,7 @@ function normalizeTranslationKeys(keys: readonly string[]): string[] {
 }
 
 export const handlers = [
-	// New translation endpoint with key filtering
-	http.get('/api/translations', async ({request}) => {
-		await delay('real')
-		const url = new URL(request.url)
-		const lang = url.searchParams.get('lang') as SupportedLanguage
-		const keysParam = url.searchParams.get('keys')
-
-		if (!(lang && keysParam)) {
-			return HttpResponse.json(
-				{error: 'Missing required parameters: lang and keys'},
-				{status: 400}
-			)
-		}
-
-		const requestedKeys = normalizeTranslationKeys(keysParam.split(','))
-		const languageTranslations = translations[lang]
-
-		if (!languageTranslations) {
-			return HttpResponse.json(
-				{error: `Translation for language '${lang}' not found`},
-				{status: 404}
-			)
-		}
-
-		// Filter only requested keys
-		const filteredTranslations: Record<string, string> = {}
-		for (const key of requestedKeys) {
-			const value = languageTranslations[key]
-
-			if (typeof value === 'string') {
-				filteredTranslations[key] = value
-			} else if (lang !== 'en') {
-				const fallbackValue = translations.en?.[key]
-
-				if (typeof fallbackValue === 'string') {
-					filteredTranslations[key] = fallbackValue
-				}
-			}
-		}
-
-		return HttpResponse.json({translations: filteredTranslations})
-	}),
-
-	// POST endpoint for large key lists
+	// Translation endpoint using POST method
 	http.post('/api/translations', async ({request}) => {
 		await delay('real')
 		const body = await request.json()

@@ -13,7 +13,7 @@ interface TranslationsResponse {
 }
 
 /**
- * Fetch translations from service
+ * Fetch translations from the translation service
  */
 async function fetchTranslations(
 	language: SupportedLanguage,
@@ -21,25 +21,16 @@ async function fetchTranslations(
 ): Promise<Record<string, string>> {
 	if (keys.length === 0) return {}
 
-	const keysParam = keys.join(',')
-	const url = `/api/translations?lang=${language}&keys=${encodeURIComponent(keysParam)}`
-
-	// Use POST for long key lists (avoid URL length limits)
-	if (url.length > 2000) {
-		const payload = {
-			language,
-			keys
-		}
-
-		const data = await requestJson<TranslationsResponse>('/api/translations', {
-			method: 'POST',
-			body: payload
-		})
-
-		return data.translations
+	const payload = {
+		language,
+		keys
 	}
 
-	const data = await requestJson<TranslationsResponse>(url)
+	const data = await requestJson<TranslationsResponse>('/api/translations', {
+		method: 'POST',
+		body: payload
+	})
+
 	return data.translations
 }
 
