@@ -5,6 +5,7 @@ import type {Difficulty, ExerciseSummary} from '@/entities/exercise'
 import {render} from '@/shared/lib'
 import {useSettingsStore} from '@/shared/model'
 import {DEFAULT_SETTINGS} from '@/shared/model/settings'
+import {exerciseLibraryTranslations} from '../translations'
 import {ExerciseGrid} from './ExerciseGrid'
 
 // Mock framer-motion to avoid animation issues in tests
@@ -73,7 +74,8 @@ const createMockExercise = (
 const defaultProps = {
 	exercises: [createMockExercise()],
 	onClearFilters: vi.fn(),
-	t: mockT
+	t: mockT,
+	translations: exerciseLibraryTranslations
 }
 
 describe('ExerciseGrid', () => {

@@ -2,19 +2,22 @@ import {AnimatePresence, motion} from 'framer-motion'
 import {Link} from 'react-router'
 import type {ExerciseSummary} from '@/entities/exercise'
 import {useSettingsStore} from '@/shared/model'
-
-type LibraryTranslator = (entry: string) => string
+import type {exerciseLibraryTranslations} from '../translations'
 
 interface ExerciseGridProps {
 	exercises: ExerciseSummary[]
 	onClearFilters: () => void
-	t: LibraryTranslator
+	t: (
+		entry: (typeof exerciseLibraryTranslations)[keyof typeof exerciseLibraryTranslations]
+	) => string
+	translations: typeof exerciseLibraryTranslations
 }
 
 export function ExerciseGrid({
 	exercises,
 	onClearFilters,
-	t
+	t,
+	translations
 }: ExerciseGridProps) {
 	return (
 		<>
@@ -24,7 +27,7 @@ export function ExerciseGrid({
 				initial={{opacity: 0}}
 				transition={{delay: 0.3}}
 			>
-				{t('exerciseCount').replace(
+				{t(translations.exerciseCount).replace(
 					'{filteredCount}',
 					exercises.length.toString()
 				)}
@@ -43,13 +46,18 @@ export function ExerciseGrid({
 							index={index}
 							key={exercise.id}
 							t={t}
+							translations={translations}
 						/>
 					))}
 				</AnimatePresence>
 			</motion.div>
 
 			{exercises.length === 0 && (
-				<EmptyState onClearFilters={onClearFilters} t={t} />
+				<EmptyState
+					onClearFilters={onClearFilters}
+					t={t}
+					translations={translations}
+				/>
 			)}
 		</>
 	)
@@ -58,10 +66,13 @@ export function ExerciseGrid({
 interface ExerciseCardProps {
 	exercise: ExerciseSummary
 	index: number
-	t: LibraryTranslator
+	t: (
+		entry: (typeof exerciseLibraryTranslations)[keyof typeof exerciseLibraryTranslations]
+	) => string
+	translations: typeof exerciseLibraryTranslations
 }
 
-function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
+function ExerciseCard({exercise, index, t, translations}: ExerciseCardProps) {
 	const {uiLanguage} = useSettingsStore()
 
 	return (
@@ -84,7 +95,7 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 					<div className='flex flex-col items-end gap-2'>
 						{exercise.source === 'custom' && (
 							<span className='rounded-full border border-purple-400 border-dashed px-3 py-1 text-purple-600 text-xs uppercase tracking-wide dark:border-purple-500 dark:text-purple-300'>
-								{t('builder.customBadge')}
+								{t(translations['builder.customBadge'])}
 							</span>
 						)}
 						<span
@@ -104,13 +115,13 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 								className='rounded bg-blue-50 px-2 py-1 text-blue-600 text-xs dark:bg-blue-900/30 dark:text-blue-400'
 								key={tag}
 							>
-								{t('ui.hashSymbol')}
+								{t(translations['ui.hashSymbol'])}
 								{tag}
 							</span>
 						))}
 						{exercise.tags.length > 3 && (
 							<span className='rounded bg-gray-50 px-2 py-1 text-gray-500 text-xs dark:bg-gray-700'>
-								{t('ui.plusSymbol')}
+								{t(translations['ui.plusSymbol'])}
 								{exercise.tags.length - 3}
 							</span>
 						)}
@@ -120,15 +131,16 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 				<div className='mb-4 flex items-center justify-between text-gray-500 text-sm dark:text-gray-400'>
 					<div className='flex items-center gap-4'>
 						<span>
-							{t('ui.documentEmoji')} {exercise.totalCases}{' '}
-							{t('exercise.cases')}
+							{t(translations['ui.documentEmoji'])} {exercise.totalCases}{' '}
+							{t(translations['exercise.cases'])}
 						</span>
 						<span>
-							{t('ui.booksEmoji')} {exercise.totalBlocks} {t('exercise.blocks')}
+							{t(translations['ui.booksEmoji'])} {exercise.totalBlocks}{' '}
+							{t(translations['exercise.blocks'])}
 						</span>
 						<span>
-							{t('ui.timerEmoji')} {exercise.estimatedTimeMinutes}{' '}
-							{t('exercise.minutes')}
+							{t(translations['ui.timerEmoji'])} {exercise.estimatedTimeMinutes}{' '}
+							{t(translations['exercise.minutes'])}
 						</span>
 					</div>
 				</div>
@@ -139,12 +151,12 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 						data-testid='start-exercise-button'
 						to={`/exercise/${exercise.id}`}
 					>
-						{t('startExercise')}
+						{t(translations.startExercise)}
 					</Link>
 					<Link
 						className='flex items-center justify-center rounded-lg border border-blue-600 bg-transparent px-3 py-2 text-blue-600 transition-colors hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/20'
 						data-testid='learn-exercise-button'
-						title={t('learn')}
+						title={t(translations.learn)}
 						to={`/learn/${exercise.id}`}
 					>
 						<svg
@@ -168,10 +180,13 @@ function ExerciseCard({exercise, index, t}: ExerciseCardProps) {
 
 interface EmptyStateProps {
 	onClearFilters: () => void
-	t: LibraryTranslator
+	t: (
+		entry: (typeof exerciseLibraryTranslations)[keyof typeof exerciseLibraryTranslations]
+	) => string
+	translations: typeof exerciseLibraryTranslations
 }
 
-function EmptyState({onClearFilters, t}: EmptyStateProps) {
+function EmptyState({onClearFilters, t, translations}: EmptyStateProps) {
 	return (
 		<motion.div
 			animate={{opacity: 1, y: 0}}
@@ -179,19 +194,19 @@ function EmptyState({onClearFilters, t}: EmptyStateProps) {
 			initial={{opacity: 0, y: 20}}
 			transition={{delay: 0.4}}
 		>
-			<div className='mb-4 text-6xl'>{t('ui.searchEmoji')}</div>
+			<div className='mb-4 text-6xl'>{t(translations['ui.searchEmoji'])}</div>
 			<h3 className='mb-2 font-semibold text-gray-900 text-xl dark:text-white'>
-				{t('noExercisesFound')}
+				{t(translations.noExercisesFound)}
 			</h3>
 			<p className='mb-6 text-gray-600 dark:text-gray-400'>
-				{t('noExercisesFoundDesc')}
+				{t(translations.noExercisesFoundDesc)}
 			</p>
 			<button
 				className='rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700'
 				onClick={onClearFilters}
 				type='button'
 			>
-				{t('clearFilters')}
+				{t(translations.clearFilters)}
 			</button>
 		</motion.div>
 	)

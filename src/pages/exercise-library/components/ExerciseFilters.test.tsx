@@ -4,6 +4,7 @@ import {beforeEach, describe, expect, it, vi} from 'vitest'
 import type {Difficulty} from '@/entities/exercise'
 import {render} from '@/shared/lib'
 import type {Language} from '@/shared/model/settings'
+import {exerciseLibraryTranslations} from '../translations'
 import {ExerciseFilters} from './ExerciseFilters'
 
 // Mock framer-motion to avoid animation issues in tests
@@ -52,7 +53,8 @@ const defaultProps = {
 	selectedTags: [] as string[],
 	setSelectedTags: vi.fn(),
 	tagOptions: ['grammar', 'verbs', 'nouns'],
-	t: mockT
+	t: mockT,
+	translations: exerciseLibraryTranslations
 }
 
 describe('ExerciseFilters', () => {

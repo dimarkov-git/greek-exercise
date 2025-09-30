@@ -1,6 +1,7 @@
 import {screen} from '@testing-library/react'
 import {describe, expect, it, vi} from 'vitest'
 import {render} from '@/shared/lib'
+import {exerciseLibraryTranslations} from '../translations'
 import {LibraryHeader} from './LibraryHeader'
 
 // Mock framer-motion to avoid animation issues in tests
@@ -23,7 +24,9 @@ const mockT = vi.fn((key: string) => {
 describe('LibraryHeader', () => {
 	describe('Rendering', () => {
 		it('renders the main heading', () => {
-			render(<LibraryHeader t={mockT} />)
+			render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			const heading = screen.getByRole('heading', {level: 1})
 			expect(heading).toBeInTheDocument()
@@ -31,7 +34,9 @@ describe('LibraryHeader', () => {
 		})
 
 		it('renders the description text', () => {
-			render(<LibraryHeader t={mockT} />)
+			render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			const description = screen.getByText(
 				'Practice Greek with interactive exercises tailored to your level'
@@ -40,7 +45,9 @@ describe('LibraryHeader', () => {
 		})
 
 		it('has proper semantic structure with h1 and p elements', () => {
-			render(<LibraryHeader t={mockT} />)
+			render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			const heading = screen.getByRole('heading', {level: 1})
 			const description = screen.getByText(
@@ -52,7 +59,9 @@ describe('LibraryHeader', () => {
 		})
 
 		it('renders with correct container structure', () => {
-			const {container} = render(<LibraryHeader t={mockT} />)
+			const {container} = render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			const outerDiv = container.firstChild as HTMLElement
 			expect(outerDiv).toHaveClass('mb-12', 'text-center')
@@ -61,7 +70,9 @@ describe('LibraryHeader', () => {
 
 	describe('Styling', () => {
 		it('applies correct CSS classes to heading', () => {
-			render(<LibraryHeader t={mockT} />)
+			render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			const heading = screen.getByRole('heading', {level: 1})
 			expect(heading).toHaveClass(
@@ -74,7 +85,9 @@ describe('LibraryHeader', () => {
 		})
 
 		it('applies correct CSS classes to description', () => {
-			render(<LibraryHeader t={mockT} />)
+			render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			const description = screen.getByText(
 				'Practice Greek with interactive exercises tailored to your level'
@@ -87,14 +100,18 @@ describe('LibraryHeader', () => {
 		})
 
 		it('centers content with text-center class', () => {
-			const {container} = render(<LibraryHeader t={mockT} />)
+			const {container} = render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			const outerDiv = container.firstChild as HTMLElement
 			expect(outerDiv).toHaveClass('text-center')
 		})
 
 		it('applies proper spacing with margin bottom', () => {
-			const {container} = render(<LibraryHeader t={mockT} />)
+			const {container} = render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			const outerDiv = container.firstChild as HTMLElement
 			expect(outerDiv).toHaveClass('mb-12')
@@ -103,14 +120,18 @@ describe('LibraryHeader', () => {
 
 	describe('Translation integration', () => {
 		it('calls translation function with correct keys', () => {
-			render(<LibraryHeader t={mockT} />)
+			render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			expect(mockT).toHaveBeenCalledWith('exerciseLibrary')
 			expect(mockT).toHaveBeenCalledWith('exerciseLibraryDesc')
 		})
 
 		it('displays translated text correctly', () => {
-			render(<LibraryHeader t={mockT} />)
+			render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			expect(screen.getByText('Exercise Library')).toBeInTheDocument()
 			expect(
@@ -122,7 +143,12 @@ describe('LibraryHeader', () => {
 
 		it('handles missing translations gracefully by showing translation keys', () => {
 			const fallbackT = vi.fn((key: string) => key)
-			render(<LibraryHeader t={fallbackT} />)
+			render(
+				<LibraryHeader
+					t={fallbackT}
+					translations={exerciseLibraryTranslations}
+				/>
+			)
 
 			expect(screen.getByText('exerciseLibrary')).toBeInTheDocument()
 			expect(screen.getByText('exerciseLibraryDesc')).toBeInTheDocument()
@@ -130,7 +156,9 @@ describe('LibraryHeader', () => {
 
 		it('handles empty translation values', () => {
 			const emptyT = vi.fn(() => '')
-			render(<LibraryHeader t={emptyT} />)
+			render(
+				<LibraryHeader t={emptyT} translations={exerciseLibraryTranslations} />
+			)
 
 			const heading = screen.getByRole('heading', {level: 1})
 			const description = heading.nextElementSibling
@@ -142,7 +170,9 @@ describe('LibraryHeader', () => {
 
 	describe('Accessibility', () => {
 		it('has proper heading hierarchy with h1 element', () => {
-			render(<LibraryHeader t={mockT} />)
+			render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			const heading = screen.getByRole('heading', {level: 1})
 			expect(heading).toBeInTheDocument()
@@ -150,7 +180,9 @@ describe('LibraryHeader', () => {
 		})
 
 		it('provides meaningful content for screen readers', () => {
-			render(<LibraryHeader t={mockT} />)
+			render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			const heading = screen.getByRole('heading', {
 				name: 'Exercise Library'
@@ -159,7 +191,9 @@ describe('LibraryHeader', () => {
 		})
 
 		it('maintains content structure for assistive technologies', () => {
-			render(<LibraryHeader t={mockT} />)
+			render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			const heading = screen.getByRole('heading', {level: 1})
 			const description = screen.getByText(
@@ -183,7 +217,9 @@ describe('LibraryHeader', () => {
 				return customTranslations[key] || key
 			})
 
-			render(<LibraryHeader t={customT} />)
+			render(
+				<LibraryHeader t={customT} translations={exerciseLibraryTranslations} />
+			)
 
 			expect(customT).toHaveBeenCalledWith('exerciseLibrary')
 			expect(customT).toHaveBeenCalledWith('exerciseLibraryDesc')
@@ -193,7 +229,12 @@ describe('LibraryHeader', () => {
 
 		it('works with translator that returns undefined', () => {
 			const undefinedT = vi.fn(() => undefined as unknown as string)
-			render(<LibraryHeader t={undefinedT} />)
+			render(
+				<LibraryHeader
+					t={undefinedT}
+					translations={exerciseLibraryTranslations}
+				/>
+			)
 
 			expect(undefinedT).toHaveBeenCalledWith('exerciseLibrary')
 			expect(undefinedT).toHaveBeenCalledWith('exerciseLibraryDesc')
@@ -202,7 +243,9 @@ describe('LibraryHeader', () => {
 
 	describe('Framer Motion integration', () => {
 		it('renders motion.div correctly when mocked', () => {
-			const {container} = render(<LibraryHeader t={mockT} />)
+			const {container} = render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			// With our mock, motion.div becomes a regular div
 			const outerDiv = container.firstChild as HTMLElement
@@ -210,7 +253,9 @@ describe('LibraryHeader', () => {
 		})
 
 		it('maintains expected class structure with motion wrapper', () => {
-			const {container} = render(<LibraryHeader t={mockT} />)
+			const {container} = render(
+				<LibraryHeader t={mockT} translations={exerciseLibraryTranslations} />
+			)
 
 			const outerDiv = container.firstChild as HTMLElement
 			expect(outerDiv).toHaveClass('mb-12', 'text-center')

@@ -2,15 +2,15 @@ import {useExercises} from '@/entities/exercise'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {Head} from '@/shared/ui/head'
 import {LoadingOrError} from '@/shared/ui/loading-or-error'
-import {exerciseLibraryPageTranslations} from '../translations'
 import {ExerciseFilters} from './components/ExerciseFilters'
 import {ExerciseGrid} from './components/ExerciseGrid'
 import {LibraryHeader} from './components/LibraryHeader'
 import {UserSettings} from './components/UserSettings'
 import {useExerciseFiltering} from './hooks/useExerciseFiltering'
+import {exerciseLibraryTranslations} from './translations'
 
 export function ExerciseLibrary() {
-	const {t} = loadTranslations(exerciseLibraryPageTranslations)
+	const {t} = loadTranslations(exerciseLibraryTranslations)
 	const {data: exerciseLibrary, isLoading, error} = useExercises()
 
 	const {
@@ -31,16 +31,16 @@ export function ExerciseLibrary() {
 
 	return (
 		<>
-			<Head title={t(exerciseLibraryPageTranslations.exerciseLibrary)} />
+			<Head title={t(exerciseLibraryTranslations.exerciseLibrary)} />
 			<div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
 				<div className='mx-auto max-w-6xl px-4 py-8'>
-					<LibraryHeader t={t as (entry: string) => string} />
+					<LibraryHeader t={t} translations={exerciseLibraryTranslations} />
 
 					{(isLoading || error) && <LoadingOrError {...errorProps} />}
 
 					{exerciseLibrary && (
 						<>
-							<UserSettings t={t as (entry: string) => string} />
+							<UserSettings t={t} translations={exerciseLibraryTranslations} />
 
 							<ExerciseFilters
 								difficultyOptions={difficultyOptions}
@@ -51,14 +51,16 @@ export function ExerciseLibrary() {
 								setSelectedDifficulties={setSelectedDifficulties}
 								setSelectedLanguages={setSelectedLanguages}
 								setSelectedTags={setSelectedTags}
-								t={t as (entry: string) => string}
+								t={t}
 								tagOptions={tagOptions}
+								translations={exerciseLibraryTranslations}
 							/>
 
 							<ExerciseGrid
 								exercises={filteredExercises}
 								onClearFilters={clearFilters}
-								t={t as (entry: string) => string}
+								t={t}
+								translations={exerciseLibraryTranslations}
 							/>
 						</>
 					)}

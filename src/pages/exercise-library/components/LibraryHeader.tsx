@@ -1,12 +1,14 @@
 import {motion} from 'framer-motion'
-
-type LibraryTranslator = (entry: string) => string
+import type {exerciseLibraryTranslations} from '../translations'
 
 interface LibraryHeaderProps {
-	t: LibraryTranslator
+	t: (
+		entry: (typeof exerciseLibraryTranslations)[keyof typeof exerciseLibraryTranslations]
+	) => string
+	translations: typeof exerciseLibraryTranslations
 }
 
-export function LibraryHeader({t}: LibraryHeaderProps) {
+export function LibraryHeader({t, translations}: LibraryHeaderProps) {
 	return (
 		<motion.div
 			animate={{opacity: 1, y: 0}}
@@ -14,10 +16,10 @@ export function LibraryHeader({t}: LibraryHeaderProps) {
 			initial={{opacity: 0, y: 20}}
 		>
 			<h1 className='mb-4 font-bold text-4xl text-gray-900 dark:text-white'>
-				{t('exerciseLibrary')}
+				{t(translations.exerciseLibrary)}
 			</h1>
 			<p className='text-gray-600 text-xl dark:text-gray-400'>
-				{t('exerciseLibraryDesc')}
+				{t(translations.exerciseLibraryDesc)}
 			</p>
 		</motion.div>
 	)

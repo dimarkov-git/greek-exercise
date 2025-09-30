@@ -2,14 +2,16 @@ import {AnimatePresence, motion} from 'framer-motion'
 import {useState} from 'react'
 import {useSettingsStore} from '@/shared/model'
 import {UserLanguageSelector} from '@/shared/ui/user-language-selector'
-
-type LibraryTranslator = (entry: string) => string
+import type {exerciseLibraryTranslations} from '../translations'
 
 interface UserSettingsProps {
-	t: LibraryTranslator
+	t: (
+		entry: (typeof exerciseLibraryTranslations)[keyof typeof exerciseLibraryTranslations]
+	) => string
+	translations: typeof exerciseLibraryTranslations
 }
 
-export function UserSettings({t}: UserSettingsProps) {
+export function UserSettings({t, translations}: UserSettingsProps) {
 	const [isCollapsed, setIsCollapsed] = useState(false)
 
 	return (
@@ -26,9 +28,11 @@ export function UserSettings({t}: UserSettingsProps) {
 			>
 				<div className='flex flex-1 items-baseline gap-3'>
 					<h3 className='font-semibold text-gray-900 dark:text-white'>
-						{t('settings')}
+						{t(translations.settings)}
 					</h3>
-					{isCollapsed && <SettingsSummaryInline t={t} />}
+					{isCollapsed && (
+						<SettingsSummaryInline t={t} translations={translations} />
+					)}
 				</div>
 				<motion.svg
 					animate={{rotate: isCollapsed ? 0 : 180}}
@@ -36,7 +40,11 @@ export function UserSettings({t}: UserSettingsProps) {
 					transition={{duration: 0.2}}
 					viewBox='0 0 12 12'
 				>
-					<title>{isCollapsed ? t('ui.expand') : t('ui.collapse')}</title>
+					<title>
+						{isCollapsed
+							? t(translations['ui.expand'])
+							: t(translations['ui.collapse'])}
+					</title>
 					<path d='M6 8L2 4h8l-4 4z' />
 				</motion.svg>
 			</motion.button>
@@ -52,7 +60,7 @@ export function UserSettings({t}: UserSettingsProps) {
 					>
 						<div className='px-6 pb-6'>
 							<p className='mb-3 text-gray-600 text-sm dark:text-gray-400'>
-								{t('userLanguageDescription')}
+								{t(translations.userLanguageDescription)}
 							</p>
 							<UserLanguageSelector />
 						</div>
@@ -64,10 +72,13 @@ export function UserSettings({t}: UserSettingsProps) {
 }
 
 interface SettingsSummaryInlineProps {
-	t: LibraryTranslator
+	t: (
+		entry: (typeof exerciseLibraryTranslations)[keyof typeof exerciseLibraryTranslations]
+	) => string
+	translations: typeof exerciseLibraryTranslations
 }
 
-function SettingsSummaryInline({t}: SettingsSummaryInlineProps) {
+function SettingsSummaryInline({t, translations}: SettingsSummaryInlineProps) {
 	const {userLanguage} = useSettingsStore()
 
 	const getLanguageFlag = (lang: string) => {
@@ -83,8 +94,8 @@ function SettingsSummaryInline({t}: SettingsSummaryInlineProps) {
 
 	return (
 		<span className='text-gray-600 text-sm dark:text-gray-400'>
-			{t('hintLanguage')}
-			{t('ui.colon')} {getLanguageFlag(userLanguage)}
+			{t(translations.hintLanguage)}
+			{t(translations['ui.colon'])} {getLanguageFlag(userLanguage)}
 		</span>
 	)
 }

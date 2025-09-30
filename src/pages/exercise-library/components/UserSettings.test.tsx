@@ -4,6 +4,7 @@ import {beforeEach, describe, expect, it, vi} from 'vitest'
 import {render} from '@/shared/lib'
 import {useSettingsStore} from '@/shared/model'
 import {DEFAULT_SETTINGS, USER_LANGUAGES} from '@/shared/model/settings'
+import {exerciseLibraryTranslations} from '../translations'
 import {UserSettings} from './UserSettings'
 
 // Mock framer-motion to avoid animation issues in tests
@@ -50,7 +51,8 @@ const mockT = vi.fn((key: string) => {
 })
 
 const defaultProps = {
-	t: mockT
+	t: mockT,
+	translations: exerciseLibraryTranslations
 }
 
 describe('UserSettings', () => {
@@ -360,7 +362,12 @@ describe('UserSettings', () => {
 
 		it('handles missing translations gracefully', () => {
 			const fallbackT = vi.fn((key: string) => key)
-			render(<UserSettings t={fallbackT} />)
+			render(
+				<UserSettings
+					t={fallbackT}
+					translations={exerciseLibraryTranslations}
+				/>
+			)
 
 			expect(screen.getByText('settings')).toBeInTheDocument()
 			expect(screen.getByText('userLanguageDescription')).toBeInTheDocument()
@@ -473,7 +480,12 @@ describe('UserSettings', () => {
 	describe('Edge cases and error handling', () => {
 		it('handles undefined translator gracefully', () => {
 			const undefinedT = vi.fn(() => '')
-			render(<UserSettings t={undefinedT} />)
+			render(
+				<UserSettings
+					t={undefinedT}
+					translations={exerciseLibraryTranslations}
+				/>
+			)
 
 			// Component should still render even with undefined translations
 			const toggleButton = document.querySelector(
