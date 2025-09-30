@@ -1,5 +1,5 @@
 import {describe, expect, it, vi} from 'vitest'
-import {render, screen} from '@/shared/lib'
+import {render, screen} from '@/app/test'
 import {PulseEffect, type PulseState, QuickPulse} from './PulseEffect'
 
 // Mock framer-motion

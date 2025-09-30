@@ -1,7 +1,7 @@
 import {screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {describe, expect, it, vi} from 'vitest'
-import {render} from '@/shared/lib'
+import {render} from '@/app/test'
 import {ExerciseHeader} from './ExerciseHeader'
 
 vi.mock('@/shared/lib/i18n', () => ({

@@ -3,7 +3,7 @@ import {
 	DEFAULT_EXERCISE_SETTINGS,
 	type WordFormExercise as WordFormExerciseType
 } from '@/entities/exercise'
-import {render, screen} from '@/shared/lib'
+import {render, screen} from '@/app/test'
 import {WordFormExercise} from './WordFormExercise'
 
 type WordFormExerciseWrapperProps = Parameters<

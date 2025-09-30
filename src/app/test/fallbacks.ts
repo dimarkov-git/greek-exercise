@@ -5,7 +5,7 @@ import {
 	validateWordFormExercise
 } from '@/entities/exercise'
 import type {SupportedLanguage, TranslationsDatabase} from '@/shared/model'
-import translationsData from '@/shared/test/msw/data/translations.json' with {
+import translationsData from '@/app/test/msw/data/translations.json' with {
 	type: 'json'
 }
 

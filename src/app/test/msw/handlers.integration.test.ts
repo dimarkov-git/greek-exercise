@@ -39,7 +39,7 @@ async function loadHttpClient() {
 		resolveFallbackResponse: fallbackSpy
 	}))
 
-	const module = await import('@/shared/api/httpClient')
+	const module = await import('@/shared/api')
 	return {httpClient: module, fallbackSpy}
 }
 

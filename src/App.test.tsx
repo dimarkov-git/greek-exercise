@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {render, screen, within} from '@/shared/lib'
+import {render, screen, within} from '@/app/test'
 import {VIEWPORT_SIZES} from '../tests/fixtures/test-data'
 import {App} from './App'
 

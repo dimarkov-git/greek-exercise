@@ -11,6 +11,7 @@ export * from './skeleton'
 export * from './spacing'
 export * from './text-skeleton'
 // Specialized UI components
+export * from './exercise-layout'
 export * from './theme-toggle'
 export * from './translated-text'
 export * from './typography'

@@ -4,7 +4,7 @@ type FallbackModule = typeof import('./fallbacks')
 
 afterEach(() => {
 	vi.resetModules()
-	vi.doUnmock('@/shared/test/msw/data/translations.json')
+	vi.doUnmock('@/app/test/msw/data/translations.json')
 	vi.doUnmock('@/entities/exercise')
 })
 
@@ -36,7 +36,7 @@ describe('resolveFallbackResponse', () => {
 		})
 
 		it('falls back to English translations when requested language lacks entries', async () => {
-			vi.doMock('@/shared/test/msw/data/translations.json', () => ({
+			vi.doMock('@/app/test/msw/data/translations.json', () => ({
 				default: {
 					en: {'app.title': 'English title'},
 					ru: {}

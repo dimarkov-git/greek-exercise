@@ -6,7 +6,7 @@ import {
 	type ExerciseBuilderState,
 	useExerciseBuilderState,
 	useFormattedSavedExercises
-} from './exercise-builder/model/state'
+} from './exercise-builder'
 import {
 	BuilderHero,
 	JsonEditorPanel,
@@ -14,7 +14,7 @@ import {
 	SavedExercisesSection,
 	TypeSelectorPanel,
 	ValidationPanel
-} from './exercise-builder/ui/components'
+} from './exercise-builder'
 import {exerciseBuilderPageTranslations} from './translations'
 
 interface ExerciseBuilderViewProps extends ExerciseBuilderState {

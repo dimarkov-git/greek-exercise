@@ -1,6 +1,6 @@
 import {motion} from 'framer-motion'
 import {loadTranslations} from '@/shared/lib/i18n'
-import {ExerciseLayout} from '@/widgets/exercise-layout'
+import {ExerciseLayout} from '@/shared/ui/exercise-layout'
 import {completionScreenTranslations} from './translations'
 
 interface CompletionScreenProps {

@@ -1,5 +1,29 @@
-import {AppModeEnum, environment} from '@/app/config'
-import {resolveFallbackResponse} from './fallbacks'
+// Fallback response types
+export type FallbackResponse =
+	| {type: 'success'; data: unknown}
+	| {type: 'error'; status: number; message: string}
+	| undefined
+
+// Configuration interface for httpClient
+export interface HttpClientConfig {
+	isDevelopment: boolean
+	enableHTTPFallback: boolean
+	resolveFallback?: (params: {
+		url: URL
+		method: string
+		body: unknown
+	}) => FallbackResponse
+}
+
+// Global configuration - can be set by app layer
+let httpClientConfig: HttpClientConfig = {
+	isDevelopment: false,
+	enableHTTPFallback: false
+}
+
+export function configureHttpClient(config: HttpClientConfig): void {
+	httpClientConfig = config
+}
 
 const RETRYABLE_STATUS_CODES = new Set([408, 425, 429, 500, 502, 503, 504])
 const DEFAULT_RETRY_COUNT = 2
@@ -246,14 +270,18 @@ function attemptFallback<TResponse, TBody extends JsonValue | undefined>({
 		throw error
 	}
 
-	if (environment.mode === AppModeEnum.development) {
+	if (httpClientConfig.isDevelopment) {
 		// biome-ignore lint/suspicious/noConsole: development diagnostics
 		console.warn('Attempt request failed, use fallback', error)
 	}
 
 	try {
+		if (!httpClientConfig.resolveFallback) {
+			throw error
+		}
+
 		const url = new URL(input, window.location.origin)
-		const fallbackResult = resolveFallbackResponse({
+		const fallbackResult = httpClientConfig.resolveFallback({
 			url,
 			method,
 			body
@@ -323,7 +351,7 @@ export async function requestJson<
 		retryDelayMs
 	}
 
-	const fallbackEnabled = fallbackOverride ?? environment.enableHTTPFallback
+	const fallbackEnabled = fallbackOverride ?? httpClientConfig.enableHTTPFallback
 
 	const attemptRequest = async (attempt: number): Promise<TResponse> => {
 		try {

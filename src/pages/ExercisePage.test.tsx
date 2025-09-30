@@ -4,7 +4,7 @@ import {
 	DEFAULT_EXERCISE_SETTINGS,
 	type ExerciseResult
 } from '@/entities/exercise'
-import {render, screen, waitFor} from '@/shared/lib'
+import {render, screen, waitFor} from '@/app/test'
 import {ExercisePage} from './ExercisePage'
 
 // Mock dependencies
@@ -107,7 +107,7 @@ vi.mock('@/features/word-form-exercise', () => ({
 // Import mocked modules to set up implementations
 import {useNavigate, useParams} from 'react-router'
 import {useExercise} from '@/entities/exercise'
-import {useLayout} from '@/shared/lib'
+import {useLayout} from '@/app/test'
 
 // Test data
 const mockWordFormExercise: WordFormExerciseWithDefaults = {

@@ -1,7 +1,5 @@
-// UI Components
-
-// Model/Hooks
-export {useHintState} from './model/useHintState'
-export {usePulseEffect} from './model/usePulseEffect'
-export {HintSystem} from './ui/HintSystem'
-export {PulseEffect, type PulseState} from './ui/PulseEffect'
+// Internal hint system for word-form-exercise
+export {useHintState} from './hooks/useHintState'
+export {usePulseEffect} from './hooks/usePulseEffect'
+export {HintSystem} from './components/HintSystem'
+export {PulseEffect, type PulseState} from './components/PulseEffect'

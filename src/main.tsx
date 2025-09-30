@@ -1,12 +1,21 @@
 import './global.css'
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
+import {configureHttpClient} from '@/shared/api/httpClient'
 import {detectAutomationEnvironment} from '@/shared/lib'
 import {App} from './App'
 import {AppErrorBoundary} from './app/AppErrorBoundary'
 import {AppRouter} from './app/AppRouter'
 import {AppModeEnum, environment} from './app/config/environment'
 import {AppProviders} from './app/providers/AppProviders'
+import {resolveFallbackResponse} from './app/test/fallbacks'
+
+// Configure httpClient with app-level dependencies
+configureHttpClient({
+	isDevelopment: environment.mode === AppModeEnum.development,
+	enableHTTPFallback: environment.enableHTTPFallback,
+	resolveFallback: resolveFallbackResponse
+})
 
 async function startMockServiceWorker() {
 	if (!environment.enableMockServiceWorker) {
@@ -19,7 +28,7 @@ async function startMockServiceWorker() {
 		return
 	}
 
-	const {worker} = await import('./shared/test/msw/browser')
+	const {worker} = await import('./app/test/msw/browser')
 
 	const startPromise = worker.start({
 		serviceWorker: {

@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import type {PulseState} from '../ui/PulseEffect'
+import type {PulseState} from '../components/PulseEffect'
 
 /**
  * Hook for managing pulse animation state

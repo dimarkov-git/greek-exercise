@@ -4,7 +4,7 @@ import type {
 	ExerciseLibraryViewModel,
 	ExerciseSummary
 } from '@/entities/exercise'
-import {render, screen} from '@/shared/lib'
+import {render, screen} from '@/app/test'
 import type {Language} from '@/shared/model'
 import {ExerciseLibrary} from './ExerciseLibrary'
 

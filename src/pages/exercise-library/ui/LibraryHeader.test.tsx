@@ -1,6 +1,6 @@
 import {screen} from '@testing-library/react'
 import {describe, expect, it, vi} from 'vitest'
-import {render} from '@/shared/lib'
+import {render} from '@/app/test'
 import {exerciseLibraryTranslations} from '../lib/translations'
 import {LibraryHeader} from './LibraryHeader'
 

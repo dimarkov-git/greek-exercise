@@ -1,2 +1,2 @@
-export {MobileMenu} from './ui/MobileMenu'
-export {MobileMenuButton} from './ui/MobileMenuButton'
+export {MobileMenu} from './components/MobileMenu'
+export {MobileMenuButton} from './components/MobileMenuButton'
