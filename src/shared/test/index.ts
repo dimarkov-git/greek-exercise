@@ -1,8 +1,8 @@
-// Export MSW server and handlers for tests (but not browser worker to avoid Node.js issues)
+/**
+ * Shared testing utilities
+ *
+ * @module shared/test
+ */
 
-// Export fallback resolver for test configuration
-export {resolveFallbackResponse} from './fallbacks'
-export {handlers} from './msw/handlers'
-export {server} from './msw/server'
-// Export test utilities
+export {createServer} from '../api/testing'
 export * from './render-utils'

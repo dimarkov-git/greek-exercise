@@ -1,7 +1,7 @@
 import {lazy} from 'react'
 import {Navigate, Route, Routes} from 'react-router'
 import {AppModeEnum, environment} from '@/app/config'
-import {HomePage} from '@/pages/HomePage'
+import {HomePage} from '@/pages/home'
 import {AppShell} from '../shell/AppShell'
 
 const ExerciseLibrary = lazy(async () =>
@@ -11,19 +11,19 @@ const ExerciseLibrary = lazy(async () =>
 )
 
 const ExerciseBuilder = lazy(async () =>
-	import('@/pages/ExerciseBuilder').then(module => ({
+	import('@/pages/exercise-builder').then(module => ({
 		default: module.ExerciseBuilder
 	}))
 )
 
 const ExercisePage = lazy(async () =>
-	import('@/pages/ExercisePage').then(module => ({
+	import('@/pages/exercise').then(module => ({
 		default: module.ExercisePage
 	}))
 )
 
 const LearnPage = lazy(async () =>
-	import('@/pages/LearnPage').then(module => ({default: module.LearnPage}))
+	import('@/pages/learn').then(module => ({default: module.LearnPage}))
 )
 
 const showTestSection = environment.mode === AppModeEnum.development

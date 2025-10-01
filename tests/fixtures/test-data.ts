@@ -2,11 +2,11 @@
  * Test data constants for stable, predictable testing
  */
 
-import verbsBeJson from '../../src/shared/test/msw/data/exercises/verbs-be.json' with {
+import verbsBeJson from '../../src/entities/exercise/model/data/exercises/verbs-be.json' with {
 	type: 'json'
 }
 
-import verbsHaveJson from '../../src/shared/test/msw/data/exercises/verbs-have.json' with {
+import verbsHaveJson from '../../src/entities/exercise/model/data/exercises/verbs-have.json' with {
 	type: 'json'
 }
 

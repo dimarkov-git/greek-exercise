@@ -1,20 +1,29 @@
 import '../global.css'
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
-import {configureHttpClient} from '@/shared/api'
-import {detectAutomationEnvironment} from '@/shared/lib'
-import {resolveFallbackResponse} from '@/shared/test/fallbacks'
+import {createExerciseFallbackResolver} from '@/entities/exercise'
+import {configureHttpClient, createFallbackRegistry} from '@/shared/api'
+import {
+	createTranslationsFallbackResolver,
+	detectAutomationEnvironment,
+	logger
+} from '@/shared/lib'
 import {App} from './App'
 import {AppErrorBoundary} from './AppErrorBoundary'
 import {AppRouter} from './AppRouter'
-import {AppModeEnum, environment} from './config/environment'
+import {environment} from './config/environment'
 import {AppProviders} from './providers/AppProviders'
 
-// Configure httpClient with app-level dependencies
+// Compose HTTP client fallback resolvers for offline-first strategy
+const resolveFallback = createFallbackRegistry([
+	createTranslationsFallbackResolver(),
+	createExerciseFallbackResolver()
+])
+
+// Configure the HTTP client with app-level dependencies
 configureHttpClient({
-	isDevelopment: environment.mode === AppModeEnum.development,
 	enableHTTPFallback: environment.enableHTTPFallback,
-	resolveFallback: resolveFallbackResponse
+	resolveFallback
 })
 
 async function startMockServiceWorker() {
@@ -28,15 +37,24 @@ async function startMockServiceWorker() {
 		return
 	}
 
-	// Import worker directly from msw/browser (not through shared/test to avoid Node.js test issues)
-	const {worker} = await import('@/shared/test/msw/browser')
+	// Import MSW handlers from their domains
+	const [{createWorker}, {exerciseMswHandlers}, {translationMswHandlers}] =
+		await Promise.all([
+			import('@/shared/api'),
+			import('@/entities/exercise'),
+			import('@/shared/lib/i18n')
+		])
+
+	const worker = createWorker([
+		...translationMswHandlers,
+		...exerciseMswHandlers
+	])
 
 	const startPromise = worker.start({
 		serviceWorker: {
 			url: `${environment.baseURL}mockServiceWorker.js`
 		},
-		onUnhandledRequest:
-			environment.mode === AppModeEnum.development ? 'warn' : 'bypass'
+		onUnhandledRequest: environment.isDevelopment ? 'warn' : 'bypass'
 	})
 
 	if (detectAutomationEnvironment()) {
@@ -78,18 +96,12 @@ async function bootstrap() {
 	try {
 		await startMockServiceWorker()
 	} catch (error) {
-		if (environment.mode === AppModeEnum.development) {
-			// biome-ignore lint/suspicious/noConsole: development diagnostics
-			console.warn('Failed to start Mock Service Worker', error)
-		}
+		logger.warn('Failed to start Mock Service Worker', error)
 	} finally {
 		renderApplication()
 	}
 }
 
 bootstrap().catch(error => {
-	if (environment.mode === AppModeEnum.development) {
-		// biome-ignore lint/suspicious/noConsole: development diagnostics
-		console.error('Application bootstrap failed', error)
-	}
+	logger.error('Application bootstrap failed', error)
 })

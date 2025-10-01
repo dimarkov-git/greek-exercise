@@ -1,5 +1,6 @@
 // Public API for exercise-builder page
 
+export {ExerciseBuilder} from './ExerciseBuilder'
 export {
 	type BuilderSaveStatus,
 	type BuilderTranslator,
@@ -10,6 +11,7 @@ export {
 	useFormattedSavedExercises,
 	type ValidationState
 } from './model/state'
+export {exerciseBuilderPageTranslations} from './translations'
 export {
 	BuilderHero,
 	JsonEditorPanel,

@@ -6,16 +6,31 @@ import {describe, expect, it, vi} from 'vitest'
 import {MobileMenuButton} from './MobileMenuButton'
 
 // Mock framer motion to avoid animation complexity in tests
-vi.mock('framer-motion', () => ({
-	motion: {
-		button: ({
-			children,
-			...props
-		}: React.ComponentProps<'button'> & {children: React.ReactNode}) => (
-			<button {...props}>{children}</button>
-		)
+vi.mock('framer-motion', () => {
+	const filterMotionProps = (props: Record<string, unknown>) => {
+		const {
+			whileHover: _whileHover,
+			whileTap: _whileTap,
+			whileFocus: _whileFocus,
+			whileDrag: _whileDrag,
+			initial: _initial,
+			animate: _animate,
+			exit: _exit,
+			transition: _transition,
+			variants: _variants,
+			...rest
+		} = props
+		return rest
 	}
-}))
+
+	return {
+		motion: {
+			button: ({children, ...props}: React.ComponentProps<'button'>) => (
+				<button {...filterMotionProps(props)}>{children}</button>
+			)
+		}
+	}
+})
 
 // Create QueryClient for tests
 let queryClient: QueryClient

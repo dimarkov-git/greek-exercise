@@ -30,7 +30,7 @@ async function loadHttpClient({
 		LoadClientOptions['fallbackImplementation']
 	> = (): FallbackResult => undefined as FallbackResult
 
-	// Create spy that wraps the implementation
+	// Create a spy that wraps the implementation
 	const actualFallback = fallbackImplementation ?? defaultFallback
 	const resolveFallbackResponse = vi.fn(actualFallback)
 
@@ -63,7 +63,6 @@ async function loadHttpClient({
 
 	// Configure the httpClient with the spy
 	module.configureHttpClient({
-		isDevelopment: true,
 		enableHTTPFallback,
 		resolveFallback: resolveFallbackResponse
 	})
@@ -119,6 +118,15 @@ it('returns network response when MSW is enabled even if fallback is disabled', 
 })
 
 it('uses fallback data when network fails and fallback is enabled', async () => {
+	// Suppress console warnings and errors for this test
+	// biome-ignore lint/suspicious/noConsole: intentionally suppressing console logs in tests
+	const originalError = console.error
+	// biome-ignore lint/suspicious/noConsole: intentionally suppressing console logs in tests
+	const originalWarn = console.warn
+
+	console.error = vi.fn()
+	console.warn = vi.fn()
+
 	const fetchMock = vi.fn().mockRejectedValue(new Error('Network unavailable'))
 
 	globalThis.fetch = fetchMock as typeof globalThis.fetch
@@ -145,6 +153,9 @@ it('uses fallback data when network fails and fallback is enabled', async () => 
 			url: expect.any(URL)
 		})
 	)
+
+	console.error = originalError
+	console.warn = originalWarn
 })
 
 it('prefers network response when both MSW and fallback are enabled', async () => {
@@ -272,6 +283,15 @@ it('serialises JSON bodies and sets headers when sending payloads', async () => 
 })
 
 it('propagates fallback HttpError results when fallback handlers fail', async () => {
+	// Suppress console warnings and errors for this test
+	// biome-ignore lint/suspicious/noConsole: intentionally suppressing console logs in tests
+	const originalError = console.error
+	// biome-ignore lint/suspicious/noConsole: intentionally suppressing console logs in tests
+	const originalWarn = console.warn
+
+	console.error = vi.fn()
+	console.warn = vi.fn()
+
 	const fetchMock = vi.fn().mockRejectedValue(new Error('Network unavailable'))
 	globalThis.fetch = fetchMock as typeof globalThis.fetch
 
@@ -288,6 +308,9 @@ it('propagates fallback HttpError results when fallback handlers fail', async ()
 	await expect(
 		requestJson('/api/fallback-error', {retry: 0})
 	).rejects.toBeInstanceOf(httpErrorConstructor)
+
+	console.error = originalError
+	console.warn = originalWarn
 })
 
 it('wraps unknown thrown values when retries are exhausted', async () => {

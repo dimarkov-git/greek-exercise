@@ -1,5 +1,10 @@
 export {detectAutomationEnvironment} from './automation'
 export * from './contexts'
+export {
+	createTranslationsFallbackResolver,
+	translationMswHandlers
+} from './i18n'
+export {logger} from './logger'
 export {useLayout} from './useLayout'
 export {
 	setDocumentLanguage,

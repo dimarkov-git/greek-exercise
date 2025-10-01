@@ -1,6 +1,8 @@
 // Base exercise types
 
 // API
+export {createExerciseFallbackResolver} from './api/fallback'
+export {exerciseMswHandlers} from './api/msw-handlers'
 export {
 	exerciseLibraryQueryOptions,
 	wordFormExerciseQueryOptions
@@ -105,3 +107,6 @@ export {
 	exerciseToJSON,
 	getExerciseSettings
 } from './model/types'
+
+// Testing utilities (not for production use)
+export * as testing from './testing'

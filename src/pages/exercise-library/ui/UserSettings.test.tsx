@@ -11,16 +11,40 @@ import {exerciseLibraryTranslations} from '../lib/translations'
 import {UserSettings} from './UserSettings'
 
 // Mock framer-motion to avoid animation issues in tests
-vi.mock('framer-motion', () => ({
-	motion: {
-		div: 'div',
-		button: 'button',
-		svg: 'svg'
-	},
-	AnimatePresence: ({children}: {children: React.ReactNode}) => (
-		<div>{children}</div>
-	)
-}))
+vi.mock('framer-motion', () => {
+	const filterMotionProps = (props: Record<string, unknown>) => {
+		const {
+			whileHover: _whileHover,
+			whileTap: _whileTap,
+			whileFocus: _whileFocus,
+			whileDrag: _whileDrag,
+			initial: _initial,
+			animate: _animate,
+			exit: _exit,
+			transition: _transition,
+			variants: _variants,
+			...rest
+		} = props
+		return rest
+	}
+
+	return {
+		motion: {
+			div: ({children, ...props}: React.ComponentProps<'div'>) => (
+				<div {...filterMotionProps(props)}>{children}</div>
+			),
+			button: ({children, ...props}: React.ComponentProps<'button'>) => (
+				<button {...filterMotionProps(props)}>{children}</button>
+			),
+			svg: ({children, ...props}: React.SVGProps<SVGSVGElement>) => (
+				<svg {...filterMotionProps(props)}>{children}</svg>
+			)
+		},
+		AnimatePresence: ({children}: {children: React.ReactNode}) => (
+			<div>{children}</div>
+		)
+	}
+})
 
 // Mock UserLanguageSelector component
 vi.mock('@/components/ui/UserLanguageSelector', () => ({
