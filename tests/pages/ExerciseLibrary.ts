@@ -14,25 +14,21 @@ export class ExerciseLibrary {
 	}
 
 	get firstExerciseCard(): Locator {
-		return this.page
-			.locator('.grid.gap-6 .bg-white.rounded-lg.shadow-sm')
-			.first()
+		return this.page.getByTestId('exercise-card').first()
 	}
 
 	get secondExerciseCard(): Locator {
-		return this.page
-			.locator('.grid.gap-6 .bg-white.rounded-lg.shadow-sm')
-			.nth(1)
+		return this.page.getByTestId('exercise-card').nth(1)
 	}
 
 	get exerciseCards(): Locator {
-		return this.page.locator('.grid.gap-6 .bg-white.rounded-lg.shadow-sm')
+		return this.page.getByTestId('exercise-card')
 	}
 
 	// Actions
 	async goto() {
 		await this.page.goto(ROUTES.exercises)
-		await this.exerciseCards.first().waitFor()
+		await this.exerciseCards.first().waitFor({state: 'visible', timeout: 10000})
 	}
 
 	async selectUserLanguage(language: string) {
