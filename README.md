@@ -5,8 +5,8 @@ modern React architecture, comprehensive testing, and multilingual support.
 
 ## Features
 
-- **📚 Exercise system** — Word-form exercises with real-time validation and hints
-- **🌍 Type-safe internationalization** — Generated translation registry supporting Greek, Russian, and English
+- **📚 Exercise system** — Exercises with real-time validation and hints
+- **🌍 Type-safe internationalization** — Translation registry supporting Greek, Russian, and English
 - **🎯 Advanced state management** — TanStack Query for server state, Zustand for client state with persistence
 - **🌓 Theme & accessibility** — Dark/light mode with WCAG AA compliance
 - **⚡ Performance optimized** — Bundle analysis, code splitting, and strict performance budgets
@@ -28,7 +28,7 @@ modern React architecture, comprehensive testing, and multilingual support.
 
 - **TanStack Query** — Server state with intelligent caching
 - **Zustand** — Client state with localStorage persistence
-- **Generated i18n registry** — Type-safe translations with deterministic fallbacks
+- **Provided i18n system** — Type-safe translations with deterministic fallbacks
 - **Valibot** — Runtime validation and schema definitions
 
 ### Testing & quality
@@ -100,21 +100,6 @@ pnpm audit        # Security audit
 pnpm build:analyze # Bundle analysis with visualizer
 ```
 
-## Project status
-
-**Current version:** MVP with word-form exercises
-**Architecture phases:** Completed 0-5 (foundation through testing governance)
-**Coverage:** 93%+ statements/lines/functions, 88%+ branches
-**Bundle size:** ~145KB gzipped main bundle
-
 ## Documentation
 
-- **[Documentation index](docs/README.md)** — Complete project documentation
-- **[Architecture guides](docs/architecture/)** — System design and patterns
-- **[Developer guides](docs/guides/)** — Setup, testing, and workflows
-- **[Technical specification](docs/TECHNICAL_SPEC.md)** — Detailed requirements
-- **[Development roadmap](docs/ROADMAP.md)** — Future features and improvements
-
-## Contributing
-
-See [CLAUDE.md](CLAUDE.md) for development guidelines and coding standards.
+- **[Documentation index](docs/README.md)** — Project documentation
