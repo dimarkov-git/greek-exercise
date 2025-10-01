@@ -1,8 +1,12 @@
-// Export MSW server and handlers for tests (but not browser worker to avoid Node.js issues)
+/**
+ * Shared testing utilities
+ *
+ * @module shared/test
+ */
 
-// Export fallback resolver for test configuration
-export {resolveFallbackResponse} from './fallbacks'
-export {handlers} from './msw/handlers'
-export {server} from './msw/server'
-// Export test utilities
+export * as msw from './msw'
+export * as mswData from './msw/data'
 export * from './render-utils'
+
+// Note: resolveFallbackResponse moved to entities/exercise/testing
+// Import it from there: import {testing} from '@/entities/exercise'

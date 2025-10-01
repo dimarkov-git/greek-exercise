@@ -147,6 +147,8 @@
 				"src/widgets/**/index.ts",
 				"src/pages/**/index.ts",
 				"src/shared/**/index.ts",
+				"src/entities/**/index.ts",
+				"src/entities/**/testing/index.ts",
 				"src/shared/test/render-utils.tsx"
 			],
 			"linter": {

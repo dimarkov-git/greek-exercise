@@ -5,14 +5,17 @@ import {
 	validateWordFormExercise
 } from '@/entities/exercise'
 import type {SupportedLanguage, TranslationsDatabase} from '@/shared/model'
-import translationsData from '@/shared/test/msw/data/translations.json' with {
-	type: 'json'
-}
+import {mswData} from '@/shared/test'
 
-const exerciseModules = import.meta.glob('../mocks/data/exercises/*.json', {
-	eager: true,
-	import: 'default'
-})
+const translationsData = mswData.translationsDatabase
+
+const exerciseModules = import.meta.glob(
+	'@/shared/test/msw/data/exercises/*.json',
+	{
+		eager: true,
+		import: 'default'
+	}
+)
 
 const translations = translationsData as TranslationsDatabase
 

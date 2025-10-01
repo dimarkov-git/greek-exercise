@@ -89,20 +89,6 @@ vi.mock('framer-motion', () => ({
 	)
 }))
 
-vi.mock('@/pages/exercise-builder', async () => {
-	const ui = await vi.importActual<
-		typeof import('@/pages/exercise-builder/ui')
-	>('@/pages/exercise-builder/ui')
-	const model = await vi.importActual<
-		typeof import('@/pages/exercise-builder/model/state')
-	>('@/pages/exercise-builder/model/state')
-
-	return {
-		...ui,
-		...model
-	}
-})
-
 describe('ExerciseBuilder', () => {
 	beforeEach(() => {
 		localStorage.clear()

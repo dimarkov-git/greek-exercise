@@ -1,3 +1,9 @@
-export * from './browser'
-export * from './handlers'
-export * from './server'
+/**
+ * Mock Service Worker setup and utilities
+ *
+ * @module shared/test/msw
+ */
+
+export {createWorker} from './browser'
+export {translationHandlers} from './handlers'
+export {createServer, server} from './server'

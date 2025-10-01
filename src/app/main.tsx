@@ -1,9 +1,9 @@
 import '../global.css'
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
+import {testing} from '@/entities/exercise'
 import {configureHttpClient} from '@/shared/api'
 import {detectAutomationEnvironment} from '@/shared/lib'
-import {resolveFallbackResponse} from '@/shared/test/fallbacks'
 import {App} from './App'
 import {AppErrorBoundary} from './AppErrorBoundary'
 import {AppRouter} from './AppRouter'
@@ -14,7 +14,7 @@ import {AppProviders} from './providers/AppProviders'
 configureHttpClient({
 	isDevelopment: environment.mode === AppModeEnum.development,
 	enableHTTPFallback: environment.enableHTTPFallback,
-	resolveFallback: resolveFallbackResponse
+	resolveFallback: testing.resolveFallbackResponse
 })
 
 async function startMockServiceWorker() {
@@ -28,8 +28,13 @@ async function startMockServiceWorker() {
 		return
 	}
 
-	// Import worker directly from msw/browser (not through shared/test to avoid Node.js test issues)
-	const {worker} = await import('@/shared/test/msw/browser')
+	// Import MSW utilities from shared and exercise testing
+	const [{msw}, exerciseTesting] = await Promise.all([
+		import('@/shared/test'),
+		import('@/entities/exercise').then(m => ({testing: m.testing}))
+	])
+
+	const worker = msw.createWorker(exerciseTesting.testing.exerciseHandlers)
 
 	const startPromise = worker.start({
 		serviceWorker: {

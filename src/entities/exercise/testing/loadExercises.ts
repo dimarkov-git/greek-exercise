@@ -56,10 +56,13 @@ export function loadExercises(): Map<string, WordFormExercise> {
 	const exerciseRegistry = new Map<string, WordFormExercise>()
 
 	// Dynamically import all JSON files from the exercises directory
-	const exerciseModules = import.meta.glob('../data/exercises/*.json', {
-		eager: true,
-		import: 'default'
-	})
+	const exerciseModules = import.meta.glob(
+		'@/shared/test/msw/data/exercises/*.json',
+		{
+			eager: true,
+			import: 'default'
+		}
+	)
 
 	// Process each exercise file
 	for (const [_path, exerciseData] of Object.entries(exerciseModules)) {

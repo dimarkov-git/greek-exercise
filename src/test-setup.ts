@@ -1,14 +1,18 @@
 import '@testing-library/jest-dom/vitest'
+import {testing} from '@/entities/exercise'
 import {configureHttpClient} from '@/shared/api'
 import {useSettingsStore} from '@/shared/model'
-import {resolveFallbackResponse, server} from '@/shared/test'
+import {msw} from '@/shared/test'
 
 // Configure httpClient for tests
 configureHttpClient({
 	isDevelopment: true,
 	enableHTTPFallback: true,
-	resolveFallback: resolveFallbackResponse
+	resolveFallback: testing.resolveFallbackResponse
 })
+
+// Setup MSW server with all handlers (translation + exercise)
+const server = msw.createServer(testing.exerciseHandlers)
 
 beforeAll(() => server.listen())
 

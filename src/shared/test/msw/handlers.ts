@@ -1,19 +1,14 @@
 import {delay, HttpResponse, http} from 'msw'
-import {extractExerciseMetadata} from '@/entities/exercise'
 import type {SupportedLanguage, TranslationsDatabase} from '@/shared/model'
-import translationsDatabase from './data/translations.json' with {type: 'json'}
-import {loadExercises} from './utils/loadExercises'
+import {translationsDatabase as translationsData} from './data'
 
-const translations = translationsDatabase as TranslationsDatabase
-
-// Exercise registry - loaded dynamically from JSON files
-const exerciseRegistry = loadExercises()
+const translations = translationsData as TranslationsDatabase
 
 function normalizeTranslationKeys(keys: readonly string[]): string[] {
 	return keys.map(key => key.trim()).filter(key => key.length > 0)
 }
 
-export const handlers = [
+export const translationHandlers = [
 	// Translation endpoint using POST method
 	http.post('/api/translations', async ({request}) => {
 		await delay('real')
@@ -58,41 +53,8 @@ export const handlers = [
 		}
 
 		return HttpResponse.json({translations: filteredTranslations})
-	}),
-
-	// Get list of exercises (metadata only)
-	http.get('/api/exercises', async () => {
-		await delay('real')
-
-		const exercises = Array.from(exerciseRegistry.values())
-			.filter(exercise => exercise.enabled)
-			.map(exercise => extractExerciseMetadata(exercise))
-			.sort((a, b) => a.title.localeCompare(b.title))
-
-		return HttpResponse.json(exercises)
-	}),
-
-	// Get specific exercise by ID
-	http.get('/api/exercises/:id', async ({params}) => {
-		await delay('real')
-		const {id} = params
-
-		const exercise = exerciseRegistry.get(id as string)
-
-		if (!exercise) {
-			return HttpResponse.json(
-				{error: `Exercise with id '${id}' not found`},
-				{status: 404}
-			)
-		}
-
-		if (!exercise.enabled) {
-			return HttpResponse.json(
-				{error: `Exercise '${id}' is not available`},
-				{status: 403}
-			)
-		}
-
-		return HttpResponse.json(exercise)
 	})
 ]
+
+// Default handlers export for backward compatibility
+export const handlers = translationHandlers
