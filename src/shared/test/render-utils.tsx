@@ -52,6 +52,3 @@ export {
 	waitFor,
 	within
 } from '@testing-library/react'
-
-// Export layout hook for tests that need it
-export {useLayout} from '@/shared/lib'

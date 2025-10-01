@@ -107,7 +107,7 @@ vi.mock('@/features/word-form-exercise', () => ({
 // Import mocked modules to set up implementations
 import {useNavigate, useParams} from 'react-router'
 import {useExercise} from '@/entities/exercise'
-import {useLayout} from '@/shared/test'
+import {useLayout} from '@/shared/lib'
 
 // Test data
 const mockWordFormExercise: WordFormExerciseWithDefaults = {

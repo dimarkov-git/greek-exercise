@@ -25,19 +25,7 @@ interface ExerciseFiltersProps {
 	translations: typeof exerciseLibraryTranslations
 }
 
-export function ExerciseFilters({
-	difficultyOptions,
-	languageOptions,
-	selectedDifficulties,
-	setSelectedDifficulties,
-	selectedLanguages,
-	setSelectedLanguages,
-	selectedTags,
-	setSelectedTags,
-	tagOptions,
-	t,
-	translations
-}: ExerciseFiltersProps) {
+export function ExerciseFilters(props: ExerciseFiltersProps) {
 	const [isCollapsed, setIsCollapsed] = useState(false)
 
 	return (
@@ -47,76 +35,121 @@ export function ExerciseFilters({
 			initial={{opacity: 0, y: 20}}
 			transition={{delay: 0.2}}
 		>
-			<motion.button
-				className='flex w-full cursor-pointer items-center justify-between p-6 text-left transition-all hover:bg-gray-50 hover:pb-7 dark:hover:bg-gray-700'
-				onClick={() => setIsCollapsed(!isCollapsed)}
-				type='button'
+			<FilterHeader
+				isCollapsed={isCollapsed}
+				setIsCollapsed={setIsCollapsed}
+				{...props}
+			/>
+			<FilterContent isCollapsed={isCollapsed} {...props} />
+		</motion.div>
+	)
+}
+
+interface FilterHeaderProps extends ExerciseFiltersProps {
+	isCollapsed: boolean
+	setIsCollapsed: (collapsed: boolean) => void
+}
+
+function FilterHeader({
+	isCollapsed,
+	selectedDifficulties,
+	selectedLanguages,
+	selectedTags,
+	setIsCollapsed,
+	t,
+	translations
+}: FilterHeaderProps) {
+	return (
+		<motion.button
+			className='flex w-full cursor-pointer items-center justify-between p-6 text-left transition-all hover:bg-gray-50 hover:pb-7 dark:hover:bg-gray-700'
+			onClick={() => setIsCollapsed(!isCollapsed)}
+			type='button'
+		>
+			<div className='flex flex-1 items-baseline gap-3'>
+				<h3 className='font-semibold text-gray-900 dark:text-white'>
+					{t(translations.filters)}
+				</h3>
+				{isCollapsed && (
+					<FilterSummaryInline
+						selectedDifficulties={selectedDifficulties}
+						selectedLanguages={selectedLanguages}
+						selectedTags={selectedTags}
+						t={t}
+						translations={translations}
+					/>
+				)}
+			</div>
+			<motion.svg
+				animate={{rotate: isCollapsed ? 0 : 180}}
+				className='h-4 w-4 fill-gray-500 transition-transform dark:fill-gray-400'
+				transition={{duration: 0.2}}
+				viewBox='0 0 12 12'
 			>
-				<div className='flex flex-1 items-baseline gap-3'>
-					<h3 className='font-semibold text-gray-900 dark:text-white'>
-						{t(translations.filters)}
-					</h3>
-					{isCollapsed && (
-						<FilterSummaryInline
+				<title>
+					{isCollapsed
+						? t(translations['ui.expand'])
+						: t(translations['ui.collapse'])}
+				</title>
+				<path d='M6 8L2 4h8l-4 4z' />
+			</motion.svg>
+		</motion.button>
+	)
+}
+
+interface FilterContentProps extends ExerciseFiltersProps {
+	isCollapsed: boolean
+}
+
+function FilterContent({
+	difficultyOptions,
+	isCollapsed,
+	languageOptions,
+	selectedDifficulties,
+	selectedLanguages,
+	selectedTags,
+	setSelectedDifficulties,
+	setSelectedLanguages,
+	setSelectedTags,
+	t,
+	tagOptions,
+	translations
+}: FilterContentProps) {
+	return (
+		<AnimatePresence>
+			{!isCollapsed && (
+				<motion.div
+					animate={{height: 'auto', opacity: 1}}
+					exit={{height: 0, opacity: 0}}
+					initial={{height: 0, opacity: 0}}
+					style={{overflow: 'hidden'}}
+					transition={{duration: 0.3}}
+				>
+					<div className='px-6 pb-6'>
+						<DifficultyFilter
+							options={difficultyOptions}
 							selectedDifficulties={selectedDifficulties}
-							selectedLanguages={selectedLanguages}
-							selectedTags={selectedTags}
+							setSelectedDifficulties={setSelectedDifficulties}
 							t={t}
 							translations={translations}
 						/>
-					)}
-				</div>
-				<motion.svg
-					animate={{rotate: isCollapsed ? 0 : 180}}
-					className='h-4 w-4 fill-gray-500 transition-transform dark:fill-gray-400'
-					transition={{duration: 0.2}}
-					viewBox='0 0 12 12'
-				>
-					<title>
-						{isCollapsed
-							? t(translations['ui.expand'])
-							: t(translations['ui.collapse'])}
-					</title>
-					<path d='M6 8L2 4h8l-4 4z' />
-				</motion.svg>
-			</motion.button>
-
-			<AnimatePresence>
-				{!isCollapsed && (
-					<motion.div
-						animate={{height: 'auto', opacity: 1}}
-						exit={{height: 0, opacity: 0}}
-						initial={{height: 0, opacity: 0}}
-						style={{overflow: 'hidden'}}
-						transition={{duration: 0.3}}
-					>
-						<div className='px-6 pb-6'>
-							<DifficultyFilter
-								options={difficultyOptions}
-								selectedDifficulties={selectedDifficulties}
-								setSelectedDifficulties={setSelectedDifficulties}
-								t={t}
-								translations={translations}
-							/>
-							<LanguageFilter
-								languageOptions={languageOptions}
-								selectedLanguages={selectedLanguages}
-								setSelectedLanguages={setSelectedLanguages}
-								t={t}
-								translations={translations}
-							/>
-							<TagsFilter
-								allTags={tagOptions}
-								selectedTags={selectedTags}
-								setSelectedTags={setSelectedTags}
-								t={t}
-								translations={translations}
-							/>
-						</div>
-					</motion.div>
-				)}
-			</AnimatePresence>
-		</motion.div>
+						<LanguageFilter
+							languageOptions={languageOptions}
+							selectedLanguages={selectedLanguages}
+							setSelectedLanguages={setSelectedLanguages}
+							t={t}
+							translations={translations}
+						/>
+						<TagsFilter
+							allTags={tagOptions}
+							selectedTags={selectedTags}
+							setSelectedTags={setSelectedTags}
+							t={t}
+							translations={translations}
+						/>
+					</div>
+				</motion.div>
+			)}
+		</AnimatePresence>
 	)
 }
 

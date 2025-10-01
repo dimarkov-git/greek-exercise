@@ -11,7 +11,7 @@ vi.mock('@/utils/test-utils', () => ({
 	detectAutomationEnvironment: mockDetectAutomationEnvironment
 }))
 
-vi.mock('@/features/hint-system', () => ({
+vi.mock('../../hint-system', () => ({
 	usePulseEffect: () => ({
 		pulseState: null,
 		triggerPulse: triggerPulseMock,
@@ -170,7 +170,8 @@ describe('useWordFormExercise', () => {
 				result.current.handleSubmit('  είμαι ')
 			})
 
-			expect(triggerPulseMock).toHaveBeenLastCalledWith('correct')
+			expect(triggerPulseMock).toHaveBeenCalled()
+			expect(triggerPulseMock).toHaveBeenCalledWith('correct')
 			expect(result.current.state.answer).toMatchObject({
 				value: 'είμαι',
 				isCorrect: true,

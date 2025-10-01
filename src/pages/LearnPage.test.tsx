@@ -118,8 +118,8 @@ const mockTranslator = vi.fn((key: unknown) => {
 // Import mocked modules to set up implementations
 import {useNavigate, useParams} from 'react-router'
 import {useExercise} from '@/entities/exercise'
+import {useLayout} from '@/shared/lib'
 import {loadTranslations} from '@/shared/lib/i18n'
-import {useLayout} from '@/shared/test'
 
 // Test data
 const mockWordFormExercise: WordFormExerciseWithDefaults = {
