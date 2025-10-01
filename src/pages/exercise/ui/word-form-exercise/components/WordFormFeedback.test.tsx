@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react'
 import {describe, expect, it, vi} from 'vitest'
 import type {ExerciseStatus} from '@/entities/exercise'
-import {WordFormFeedback} from '@/features/word-form-exercise'
+import {WordFormFeedback} from '@/pages/exercise/ui/word-form-exercise'
 
 vi.mock('@/shared/lib/i18n', () => ({
 	loadTranslations: () => ({

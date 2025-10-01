@@ -7,7 +7,7 @@
  * @module entities/exercise/api
  */
 
-import type {FallbackResolver} from '@/shared/api/fallback'
+import type {FallbackResolver} from '@/shared/api'
 import {extractExerciseMetadata} from '../lib/exercises'
 import {getAllExercises, getExerciseById} from '../model/data'
 

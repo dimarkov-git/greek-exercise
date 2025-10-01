@@ -2,7 +2,7 @@ import {motion} from 'framer-motion'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {Head} from '@/shared/ui/head'
 import {TranslatedText} from '@/shared/ui/translated-text'
-import {MainNavigation} from '@/widgets/main-navigation'
+import {MainNavigation} from './MainNavigation'
 import {homePageTranslations} from './translations'
 
 export function HomePage() {

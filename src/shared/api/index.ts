@@ -12,6 +12,7 @@ export {
 	requestJson
 } from './httpClient'
 export * as msw from './msw'
+export * as testing from './testing'
 export {
 	getTranslations,
 	type SupportedLanguage,

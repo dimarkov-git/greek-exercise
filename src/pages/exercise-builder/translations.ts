@@ -1,16 +1,5 @@
 import type {TranslationDictionary} from '@/shared/lib/i18n'
 
-export const homePageTranslations = {
-	'app.title': 'app.title',
-	'app.subtitle': 'app.subtitle'
-} as const satisfies TranslationDictionary
-
-export const exercisePageTranslations = {
-	'exercise.unsupportedType': 'exercise.unsupportedType',
-	'exercise.notImplemented': 'exercise.notImplemented',
-	'exercise.backToLibrary': 'exercise.backToLibrary'
-} as const satisfies TranslationDictionary
-
 export const exerciseBuilderPageTranslations = {
 	exerciseBuilder: 'exerciseBuilder',
 	'ui.toolsEmoji': 'ui.toolsEmoji',
@@ -44,30 +33,4 @@ export const exerciseBuilderPageTranslations = {
 	'builder.validationEmpty': 'builder.validationEmpty',
 	'builder.parseError': 'builder.parseError',
 	'builder.validationUnknown': 'builder.validationUnknown'
-} as const satisfies TranslationDictionary
-
-export const learnPageTranslations = {
-	learnExercise: 'learnExercise',
-	'exercise.unsupportedType': 'exercise.unsupportedType',
-	'exercise.notImplemented': 'exercise.notImplemented',
-	'exercise.backToLibrary': 'exercise.backToLibrary',
-	'exercise.difficulty': 'exercise.difficulty',
-	'exercise.minutes': 'exercise.minutes',
-	'exercise.blocks': 'exercise.blocks',
-	'exercise.cases': 'exercise.cases',
-	'exercise.currentSettings': 'exercise.currentSettings',
-	'exercise.settingsInfo': 'exercise.settingsInfo',
-	interfaceLanguage: 'interfaceLanguage',
-	userLanguage: 'userLanguage',
-	theme: 'theme',
-	lightTheme: 'lightTheme',
-	darkTheme: 'darkTheme',
-	'ui.leftArrow': 'ui.leftArrow',
-	'ui.playIcon': 'ui.playIcon',
-	'ui.hashSymbol': 'ui.hashSymbol',
-	startExercise: 'startExercise'
-} as const satisfies TranslationDictionary
-
-export const exerciseLibraryPageTranslations = {
-	exerciseLibrary: 'exerciseLibrary'
 } as const satisfies TranslationDictionary

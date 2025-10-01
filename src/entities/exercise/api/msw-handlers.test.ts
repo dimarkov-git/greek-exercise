@@ -5,10 +5,10 @@
  */
 
 import {afterAll, afterEach, beforeAll, describe, expect, it} from 'vitest'
-import {createServer} from '@/shared/api/msw/server'
+import {testing} from '@/shared/api'
 import {exerciseMswHandlers} from './msw-handlers'
 
-const server = createServer(exerciseMswHandlers)
+const server = testing.createServer(exerciseMswHandlers)
 
 beforeAll(() => {
 	server.listen({onUnhandledRequest: 'error'})

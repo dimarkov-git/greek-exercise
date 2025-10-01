@@ -10,10 +10,13 @@
 
 import {afterAll, afterEach, beforeAll, describe, expect, it, vi} from 'vitest'
 import {exerciseMswHandlers} from '@/entities/exercise'
+import {testing} from '@/shared/api'
 import {translationMswHandlers} from '@/shared/lib/i18n'
-import {createServer} from './server'
 
-const server = createServer([...translationMswHandlers, ...exerciseMswHandlers])
+const server = testing.createServer([
+	...translationMswHandlers,
+	...exerciseMswHandlers
+])
 
 beforeAll(() => {
 	server.listen({onUnhandledRequest: 'error'})

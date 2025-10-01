@@ -72,7 +72,7 @@ vi.mock('@/shared/ui/loading-or-error', () => ({
 	)
 }))
 
-vi.mock('@/features/word-form-exercise', () => ({
+vi.mock('./word-form-exercise', () => ({
 	WordFormExercise: ({
 		exercise,
 		onComplete,

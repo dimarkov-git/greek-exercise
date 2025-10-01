@@ -31,7 +31,7 @@ import {
 	type WordFormMachineState,
 	type WordFormStats,
 	wordFormReducer
-} from '../state/wordFormMachine'
+} from '../machine/wordFormMachine'
 
 interface UseWordFormExerciseProps {
 	exercise: WordFormExerciseType

@@ -13,7 +13,7 @@ import {
 	type WordFormExerciseJSON,
 	WordFormExerciseSchema
 } from '@/entities/exercise'
-import type {exerciseBuilderPageTranslations} from '../../translations'
+import type {exerciseBuilderPageTranslations} from '../translations'
 
 export type BuilderTranslator = (
 	entry: (typeof exerciseBuilderPageTranslations)[keyof typeof exerciseBuilderPageTranslations]

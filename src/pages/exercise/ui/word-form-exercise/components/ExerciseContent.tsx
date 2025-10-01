@@ -6,7 +6,10 @@ import type {
 	WordFormExercise
 } from '@/entities/exercise'
 import {getExerciseSettings} from '@/entities/exercise'
-import {WordFormFeedback, WordFormInput} from '@/features/word-form-exercise'
+import {
+	WordFormFeedback,
+	WordFormInput
+} from '@/pages/exercise/ui/word-form-exercise'
 import type {Language} from '@/shared/model'
 import {ExerciseHeader} from '../exercise-header'
 import {HintSystem, PulseEffect, type PulseState} from '../hint-system/index'

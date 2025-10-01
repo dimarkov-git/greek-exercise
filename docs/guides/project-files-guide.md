@@ -6,8 +6,6 @@ Complete documentation files in the project.
 
 ### `.editorconfig`
 
-**Path:** `.editorconfig`
-
 **Purpose:** Cross-editor code style configuration
 
 **Description:**
@@ -17,27 +15,7 @@ EditorConfig helps maintain consistent coding styles across different editors an
 
 ---
 
-### `.env.local`
-
-**Path:** `/.env.local`
-
-**Purpose:** Local environment variables (gitignored)
-
-**Description:**
-Contains environment variables for local development that override default settings. This file is ignored by Git to
-prevent sharing local configuration.
-
-**Contents:**
-
-- `VITE_ENABLE_MSW=true`: Enables Mock Service Worker for API mocking during development
-
-**Documentation:** [Vite Environment Variables](https://vitejs.dev/guide/env-and-mode.html)
-
----
-
 ### `.gitignore`
-
-**Path:** `/.gitignore`
 
 **Purpose:** Git-ignore patterns for excluding files from version control
 
@@ -49,8 +27,6 @@ Specifies which files and directories Git should ignore. Organized by categories
 ---
 
 ### `biome.json`
-
-**Path:** `/biome.json`
 
 **Purpose:** Biome code formatter and linter configuration
 
@@ -79,8 +55,6 @@ code analysis. Replaces ESLint and Prettier with better performance.
 
 ### `dependency-cruiser.config.cjs`
 
-**Path:** `/dependency-cruiser.config.cjs`
-
 **Purpose:** Architecture dependency validation for FSD layers
 
 **Description:**
@@ -107,22 +81,11 @@ inappropriate layers.
 
 ### `index.html`
 
-**Path:** `/index.html`
-
 **Purpose:** Main HTML entry point for the application
 
 **Description:**
 The root HTML file that serves as the entry point for the React application. Configured for modern web standards with
 PWA support.
-
-**Key Features:**
-
-- **HTML5 doctype** with semantic structure
-- **PWA Support:** Manifest, icons, and theme color
-- **SEO/Meta:** Description, viewport, favicon
-- **Accessibility:** No-JavaScript fallback message
-- **Dark Mode Ready:** CSS classes for theming
-- **Vite Integration:** Module script loading
 
 **Critical Elements:**
 
@@ -135,8 +98,6 @@ PWA support.
 ---
 
 ### `knip.ts`
-
-**Path:** `/knip.ts`
 
 **Purpose:** Dependency and export checker configuration file for `knip` tool
 
@@ -153,8 +114,6 @@ JavaScript/TypeScript projects. This JSON file specifies which dependencies shou
 ---
 
 ### `package.json`
-
-**Path:** `/package.json`
 
 **Purpose:** Project metadata, dependencies, and scripts
 
@@ -199,40 +158,7 @@ manager with strict version enforcement.
 
 ---
 
-### `.steiger.config.js`
-
-**Path:** `/.steiger.config.js`
-
-**Purpose:** FSD (Feature-Sliced Design) architecture linter configuration
-
-**Description:**
-Configuration for Steiger, the official FSD linter that enforces architectural boundaries in Feature-Sliced Design
-projects. Ensures proper layer separation and import restrictions.
-
-**Key Settings:**
-
-- `root: './src'`: Source directory to analyze
-- `plugins: ['@steiger/plugin-fsd']`: FSD-specific rules
-- **Rules:**
-    - `fsd/forbidden-imports: 'error'`: Prevents cross-layer imports
-    - `fsd/insignificant-slice: 'warn'`: Warns about unused slices
-    - `fsd/public-api: 'error'`: Enforces public API usage
-    - `fsd/file-structure: 'warn'`: Validates file organization
-
-**Ignore Patterns:**
-
-- Cross-imports allowed between `word-form-exercise` and `hint-system` features (business requirement)
-- Test files have flexible import rules
-- Shared test utilities can import from higher layers
-- Shared API layer can import app config
-
-**Documentation:** [Steiger FSD Linter](https://github.com/feature-sliced/steiger)
-
----
-
 ### `playwright.config.ts`
-
-**Path:** `/playwright.config.ts`
 
 **Purpose:** End-to-end testing configuration
 
@@ -266,8 +192,6 @@ environments.
 
 ### `pnpm-lock.yaml`
 
-**Path:** `/pnpm-lock.yaml`
-
 **Purpose:** Dependency lock file for reproducible installs
 
 **Description:**
@@ -291,9 +215,36 @@ dependency trees across environments.
 
 ---
 
-### `README.md`
+### `.steiger.config.js`
 
-**Path:** `/README.md`
+**Purpose:** FSD (Feature-Sliced Design) architecture linter configuration
+
+**Description:**
+Configuration for Steiger, the official FSD linter that enforces architectural boundaries in Feature-Sliced Design
+projects. Ensures proper layer separation and import restrictions.
+
+**Key Settings:**
+
+- `root: './src'`: Source directory to analyze
+- `plugins: ['@steiger/plugin-fsd']`: FSD-specific rules
+- **Rules:**
+    - `fsd/forbidden-imports: 'error'`: Prevents cross-layer imports
+    - `fsd/insignificant-slice: 'warn'`: Warns about unused slices
+    - `fsd/public-api: 'error'`: Enforces public API usage
+    - `fsd/file-structure: 'warn'`: Validates file organization
+
+**Ignore Patterns:**
+
+- Cross-imports allowed between `word-form-exercise` and `hint-system` features (business requirement)
+- Test files have flexible import rules
+- Shared test utilities can import from higher layers
+- Shared API layer can import app config
+
+**Documentation:** [Steiger FSD Linter](https://github.com/feature-sliced/steiger)
+
+---
+
+### `README.md`
 
 **Purpose:** Primary project documentation
 
@@ -322,8 +273,6 @@ point for contributors and users.
 
 ### `rollup-plugin-visualizer.d.ts`
 
-**Path:** `/rollup-plugin-visualizer.d.ts`
-
 **Purpose:** TypeScript type definitions for bundle analyzer
 
 **Description:**
@@ -348,8 +297,6 @@ for build-time bundle visualization.
 ---
 
 ### `tsconfig.app.json`
-
-**Path:** `/tsconfig.app.json`
 
 **Purpose:** TypeScript configuration for application code
 
@@ -377,8 +324,6 @@ TypeScript project configuration for the main application source code with stric
 
 ### `tsconfig.json`
 
-**Path:** `/tsconfig.json`
-
 **Purpose:** Root TypeScript configuration with project references
 
 **Description:**
@@ -402,8 +347,6 @@ Root TypeScript configuration using project references for better build performa
 ---
 
 ### `tsconfig.node.json`
-
-**Path:** `/tsconfig.node.json`
 
 **Purpose:** TypeScript configuration for Node.js tooling
 
@@ -429,8 +372,6 @@ requirements.
 ---
 
 ### `vite.config.ts`
-
-**Path:** `/vite.config.ts`
 
 **Purpose:** Vite build tool configuration
 

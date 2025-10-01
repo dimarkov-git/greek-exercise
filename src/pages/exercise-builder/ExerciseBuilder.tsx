@@ -6,7 +6,8 @@ import {
 	type ExerciseBuilderState,
 	useExerciseBuilderState,
 	useFormattedSavedExercises
-} from './exercise-builder/model/state'
+} from './model/state'
+import {exerciseBuilderPageTranslations} from './translations'
 import {
 	BuilderHero,
 	JsonEditorPanel,
@@ -14,8 +15,7 @@ import {
 	SavedExercisesSection,
 	TypeSelectorPanel,
 	ValidationPanel
-} from './exercise-builder/ui'
-import {exerciseBuilderPageTranslations} from './translations'
+} from './ui'
 
 interface ExerciseBuilderViewProps extends ExerciseBuilderState {
 	readonly t: BuilderTranslator
