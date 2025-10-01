@@ -7,6 +7,6 @@
  * @module shared/api/testing
  */
 
-import {createServer as createServerImpl} from './msw/server'
+import {createServer as createServerImpl} from './testing-server'
 
 export const createServer = createServerImpl

@@ -5,7 +5,7 @@ import {
 } from '@/entities/exercise'
 import {configureHttpClient, createFallbackRegistry} from '@/shared/api'
 // Import server directly to avoid browser build issues with msw/node
-import {createServer} from '@/shared/api/msw/server'
+import {createServer} from '@/shared/api/testing'
 import {
 	createTranslationsFallbackResolver,
 	translationMswHandlers

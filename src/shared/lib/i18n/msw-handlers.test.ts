@@ -5,7 +5,7 @@
  */
 
 import {afterAll, afterEach, beforeAll, describe, expect, it} from 'vitest'
-import {createServer} from '@/shared/api/msw/server'
+import {createServer} from '@/shared/api/testing'
 import {translationMswHandlers} from './msw-handlers'
 
 const server = createServer(translationMswHandlers)

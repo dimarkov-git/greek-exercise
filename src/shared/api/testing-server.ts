@@ -11,7 +11,7 @@ import type {RequestHandler} from 'msw'
 import {setupServer} from 'msw/node'
 
 /**
- * Create MSW server with provided handlers
+ * Create an MSW server with provided handlers
  *
  * @param handlers - Request handlers to register with the server
  * @returns MSW server instance

@@ -10,10 +10,10 @@
 
 import {afterAll, afterEach, beforeAll, describe, expect, it, vi} from 'vitest'
 import {exerciseMswHandlers} from '@/entities/exercise'
-import {testing} from '@/shared/api'
+import {createServer} from '@/shared/api/testing'
 import {translationMswHandlers} from '@/shared/lib/i18n'
 
-const server = testing.createServer([
+const server = createServer([
 	...translationMswHandlers,
 	...exerciseMswHandlers
 ])
