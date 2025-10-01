@@ -10,8 +10,8 @@
 
 import {afterAll, afterEach, beforeAll, describe, expect, it, vi} from 'vitest'
 import {exerciseMswHandlers} from '@/entities/exercise'
-import {createServer} from '@/shared/api'
 import {translationMswHandlers} from '@/shared/lib/i18n'
+import {createServer} from '@/shared/test'
 
 const server = createServer([...translationMswHandlers, ...exerciseMswHandlers])
 

@@ -12,7 +12,6 @@ export {
 	requestJson
 } from './httpClient'
 export {createWorker, type RequestHandler} from './msw-browser'
-export {createServer} from './testing'
 export {
 	getTranslations,
 	type SupportedLanguage,

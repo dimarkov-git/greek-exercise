@@ -3,16 +3,13 @@ import {
 	createExerciseFallbackResolver,
 	exerciseMswHandlers
 } from '@/entities/exercise'
-import {
-	configureHttpClient,
-	createFallbackRegistry,
-	createServer
-} from '@/shared/api'
+import {configureHttpClient, createFallbackRegistry} from '@/shared/api'
 import {
 	createTranslationsFallbackResolver,
 	translationMswHandlers
 } from '@/shared/lib'
 import {useSettingsStore} from '@/shared/model'
+import {createServer} from '@/shared/test'
 
 // Compose fallback resolvers for offline-first strategy
 const resolveFallback = createFallbackRegistry([
