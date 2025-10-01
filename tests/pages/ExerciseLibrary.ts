@@ -28,7 +28,9 @@ export class ExerciseLibrary {
 	// Actions
 	async goto() {
 		await this.page.goto(ROUTES.exercises)
-		await this.exerciseCards.first().waitFor({state: 'visible', timeout: 10000})
+		await this.exerciseCards
+			.first()
+			.waitFor({state: 'visible', timeout: 10_000})
 	}
 
 	async selectUserLanguage(language: string) {
