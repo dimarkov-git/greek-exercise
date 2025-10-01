@@ -2,7 +2,8 @@ import '@testing-library/jest-dom/vitest'
 import {testing} from '@/entities/exercise'
 import {configureHttpClient} from '@/shared/api'
 import {useSettingsStore} from '@/shared/model'
-import {msw} from '@/shared/test'
+// Import server directly to avoid browser build issues
+import {createServer} from '@/shared/test/msw/server'
 
 // Configure httpClient for tests
 configureHttpClient({
@@ -12,7 +13,7 @@ configureHttpClient({
 })
 
 // Setup MSW server with all handlers (translation + exercise)
-const server = msw.createServer(testing.exerciseHandlers)
+const server = createServer(testing.exerciseHandlers)
 
 beforeAll(() => server.listen())
 
