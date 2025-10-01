@@ -98,6 +98,7 @@ describe('Input', () => {
 				clearable={true}
 				onClear={handleClear}
 				placeholder='Type and clear'
+				readOnly={true}
 				value='Some text'
 			/>
 		)
@@ -110,7 +111,14 @@ describe('Input', () => {
 	})
 
 	it('does not render clear button when no value', () => {
-		render(<Input clearable={true} placeholder='Empty input' value='' />)
+		render(
+			<Input
+				clearable={true}
+				placeholder='Empty input'
+				readOnly={true}
+				value=''
+			/>
+		)
 		expect(screen.queryByRole('button')).not.toBeInTheDocument()
 	})
 

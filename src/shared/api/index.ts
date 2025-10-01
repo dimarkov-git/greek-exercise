@@ -11,7 +11,7 @@ export {
 	type JsonValue,
 	requestJson
 } from './httpClient'
-export * as msw from './msw'
+export {createWorker, type RequestHandler} from './msw'
 export * as testing from './testing'
 export {
 	getTranslations,

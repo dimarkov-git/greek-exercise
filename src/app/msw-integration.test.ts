@@ -63,7 +63,12 @@ describe('MSW integration with httpClient', () => {
 
 		const response = await httpClient.requestJson<{
 			translations: Record<string, string>
-		}>('/api/translations?lang=ru&keys=footer.copyright%2Cfooter.github', {
+		}>('/api/translations', {
+			method: 'POST',
+			body: {
+				language: 'ru',
+				keys: ['footer.copyright', 'footer.github']
+			},
 			retry: 0
 		})
 
