@@ -4,5 +4,5 @@
  * @module entities/exercise/testing
  */
 
-export {exerciseHandlers} from './handlers'
-export {loadExercises} from './loadExercises'
+// Re-export data loader for backward compatibility in tests
+export {loadExercises} from '../model/data'

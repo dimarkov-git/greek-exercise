@@ -63,7 +63,6 @@ async function loadHttpClient({
 
 	// Configure the httpClient with the spy
 	module.configureHttpClient({
-		isDevelopment: true,
 		enableHTTPFallback,
 		resolveFallback: resolveFallbackResponse
 	})

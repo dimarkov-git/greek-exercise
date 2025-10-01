@@ -1,8 +1,19 @@
-import {setupServer} from 'msw/node'
-import {afterAll, afterEach, beforeAll, describe, expect, it, vi} from 'vitest'
-import {handlers} from './handlers'
+/**
+ * Integration tests for MSW with httpClient
+ *
+ * Tests that MSW handlers work correctly with the httpClient,
+ * ensuring that requests are intercepted and responses are served
+ * without falling back to the offline resolver.
+ *
+ * @module shared/api/msw
+ */
 
-const server = setupServer(...handlers)
+import {afterAll, afterEach, beforeAll, describe, expect, it, vi} from 'vitest'
+import {exerciseMswHandlers} from '@/entities/exercise'
+import {translationMswHandlers} from '@/shared/lib/i18n'
+import {createServer} from './server'
+
+const server = createServer([...translationMswHandlers, ...exerciseMswHandlers])
 
 beforeAll(() => {
 	server.listen({onUnhandledRequest: 'error'})
@@ -43,7 +54,7 @@ async function loadHttpClient() {
 	return {httpClient: module, fallbackSpy}
 }
 
-describe('MSW handlers', () => {
+describe('MSW integration with httpClient', () => {
 	it('returns translations without relying on fallback', async () => {
 		const {httpClient, fallbackSpy} = await loadHttpClient()
 

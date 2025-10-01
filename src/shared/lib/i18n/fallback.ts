@@ -9,9 +9,9 @@
 
 import type {FallbackResolver} from '@/shared/api/fallback'
 import type {SupportedLanguage, TranslationsDatabase} from '@/shared/model'
-import {mswData} from '@/shared/test'
+import {translationsDatabase} from './data'
 
-const translationsData = mswData.translationsDatabase as TranslationsDatabase
+const translationsData = translationsDatabase as TranslationsDatabase
 
 function normalizeTranslationKeys(keys: readonly string[]): string[] {
 	return keys.map(key => key.trim()).filter(key => key.length > 0)

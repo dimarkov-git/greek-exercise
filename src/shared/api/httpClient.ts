@@ -1,4 +1,6 @@
 // Fallback response types
+import {logger} from '@/shared/lib'
+
 export type FallbackResponse =
 	| {type: 'success'; data: unknown}
 	| {type: 'error'; status: number; message: string}
@@ -6,7 +8,6 @@ export type FallbackResponse =
 
 // Configuration interface for httpClient
 export interface HttpClientConfig {
-	isDevelopment: boolean
 	enableHTTPFallback: boolean
 	resolveFallback?: (params: {
 		url: URL
@@ -17,7 +18,6 @@ export interface HttpClientConfig {
 
 // Global configuration - can be set by app layer
 let httpClientConfig: HttpClientConfig = {
-	isDevelopment: false,
 	enableHTTPFallback: false
 }
 
@@ -270,10 +270,7 @@ function attemptFallback<TResponse, TBody extends JsonValue | undefined>({
 		throw error
 	}
 
-	if (httpClientConfig.isDevelopment) {
-		// biome-ignore lint/suspicious/noConsole: development diagnostics
-		console.warn('Attempt request failed, use fallback', error)
-	}
+	logger.warn('Attempt request failed, use fallback', error)
 
 	try {
 		if (!httpClientConfig.resolveFallback) {

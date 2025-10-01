@@ -14,15 +14,14 @@ import {AppRouter} from './AppRouter'
 import {environment} from './config/environment'
 import {AppProviders} from './providers/AppProviders'
 
-// Compose fallback resolvers for offline-first strategy
+// Compose HTTP client fallback resolvers for offline-first strategy
 const resolveFallback = createFallbackRegistry([
 	createTranslationsFallbackResolver(),
 	createExerciseFallbackResolver()
 ])
 
-// Configure httpClient with app-level dependencies
+// Configure the HTTP client with app-level dependencies
 configureHttpClient({
-	isDevelopment: environment.isDevelopment,
 	enableHTTPFallback: environment.enableHTTPFallback,
 	resolveFallback
 })
@@ -38,13 +37,18 @@ async function startMockServiceWorker() {
 		return
 	}
 
-	// Import MSW utilities from shared and exercise testing
-	const [{msw}, exerciseTesting] = await Promise.all([
-		import('@/shared/test'),
-		import('@/entities/exercise').then(m => ({testing: m.testing}))
-	])
+	// Import MSW handlers from their domains
+	const [{msw}, {exerciseMswHandlers}, {translationMswHandlers}] =
+		await Promise.all([
+			import('@/shared/api'),
+			import('@/entities/exercise'),
+			import('@/shared/lib/i18n')
+		])
 
-	const worker = msw.createWorker(exerciseTesting.testing.exerciseHandlers)
+	const worker = msw.createWorker([
+		...translationMswHandlers,
+		...exerciseMswHandlers
+	])
 
 	const startPromise = worker.start({
 		serviceWorker: {

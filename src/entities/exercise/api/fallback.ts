@@ -9,40 +9,13 @@
 
 import type {FallbackResolver} from '@/shared/api/fallback'
 import {extractExerciseMetadata} from '../lib/exercises'
-import {toWordFormExerciseWithDefaults} from '../model/adapters'
-import type {WordFormExerciseDto} from '../model/schemas'
-import {validateWordFormExercise} from '../model/schemas'
-
-const exerciseModules = import.meta.glob(
-	'@/shared/test/msw/data/exercises/*.json',
-	{
-		eager: true,
-		import: 'default'
-	}
-)
-
-const exerciseRegistry = new Map<
-	string,
-	ReturnType<typeof toWordFormExerciseWithDefaults>
->()
-
-// Build exercise registry from JSON files
-for (const moduleExport of Object.values(exerciseModules)) {
-	const exerciseDto = moduleExport as WordFormExerciseDto
-	const validated = validateWordFormExercise(exerciseDto)
-	const normalized = toWordFormExerciseWithDefaults(validated)
-	exerciseRegistry.set(normalized.id, normalized)
-}
+import {getAllExercises, getExerciseById} from '../model/data'
 
 function listExercises() {
-	return Array.from(exerciseRegistry.values())
+	return getAllExercises()
 		.filter(exercise => exercise.enabled)
 		.map(exercise => extractExerciseMetadata(exercise))
 		.sort((a, b) => a.title.localeCompare(b.title))
-}
-
-function getExerciseById(id: string) {
-	return exerciseRegistry.get(id)
 }
 
 const EXERCISE_ID_PATTERN = /^\/api\/exercises\/(.+)$/

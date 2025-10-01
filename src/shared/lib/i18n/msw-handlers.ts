@@ -1,14 +1,23 @@
+/**
+ * MSW handlers for translation API endpoints
+ *
+ * Provides mock responses for translation-related HTTP requests.
+ * Can be used in development, testing, and production (offline mode).
+ *
+ * @module shared/lib/i18n
+ */
+
 import {delay, HttpResponse, http} from 'msw'
 import type {SupportedLanguage, TranslationsDatabase} from '@/shared/model'
-import {translationsDatabase as translationsData} from './data'
+import {translationsDatabase} from './data'
 
-const translations = translationsData as TranslationsDatabase
+const translations = translationsDatabase as TranslationsDatabase
 
 function normalizeTranslationKeys(keys: readonly string[]): string[] {
 	return keys.map(key => key.trim()).filter(key => key.length > 0)
 }
 
-export const translationHandlers = [
+export const translationMswHandlers = [
 	// Translation endpoint using POST method
 	http.post('/api/translations', async ({request}) => {
 		await delay('real')
@@ -55,6 +64,3 @@ export const translationHandlers = [
 		return HttpResponse.json({translations: filteredTranslations})
 	})
 ]
-
-// Default handlers export for backward compatibility
-export const handlers = translationHandlers

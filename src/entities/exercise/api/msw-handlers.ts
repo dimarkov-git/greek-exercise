@@ -1,22 +1,22 @@
-import {delay, HttpResponse, http} from 'msw'
-import {extractExerciseMetadata} from '../lib/exercises'
-import {loadExercises} from './loadExercises'
-
 /**
- * Exercise-related MSW handlers
+ * MSW handlers for exercise API endpoints
  *
- * @module entities/exercise/testing/handlers
+ * Provides mock responses for exercise-related HTTP requests.
+ * Can be used in development, testing, and production (offline mode).
+ *
+ * @module entities/exercise/api
  */
 
-// Exercise registry - loaded dynamically from JSON files
-const exerciseRegistry = loadExercises()
+import {delay, HttpResponse, http} from 'msw'
+import {extractExerciseMetadata} from '../lib/exercises'
+import {getAllExercises, getExerciseById} from '../model/data'
 
-export const exerciseHandlers = [
+export const exerciseMswHandlers = [
 	// Get list of exercises (metadata only)
 	http.get('/api/exercises', async () => {
 		await delay('real')
 
-		const exercises = Array.from(exerciseRegistry.values())
+		const exercises = getAllExercises()
 			.filter(exercise => exercise.enabled)
 			.map(exercise => extractExerciseMetadata(exercise))
 			.sort((a, b) => a.title.localeCompare(b.title))
@@ -29,7 +29,7 @@ export const exerciseHandlers = [
 		await delay('real')
 		const {id} = params
 
-		const exercise = exerciseRegistry.get(id as string)
+		const exercise = getExerciseById(id as string)
 
 		if (!exercise) {
 			return HttpResponse.json(
