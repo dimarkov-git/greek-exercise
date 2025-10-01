@@ -10,6 +10,8 @@
 import type {RequestHandler} from 'msw'
 import {setupWorker} from 'msw/browser'
 
+export type {RequestHandler} from 'msw'
+
 /**
  * Create MSW browser worker with provided handlers
  *

@@ -3,9 +3,11 @@ import {
 	createExerciseFallbackResolver,
 	exerciseMswHandlers
 } from '@/entities/exercise'
-import {configureHttpClient, createFallbackRegistry} from '@/shared/api'
-// Import server directly to avoid browser build issues with msw/node
-import {createServer} from '@/shared/api/testing'
+import {
+	configureHttpClient,
+	createFallbackRegistry,
+	createServer
+} from '@/shared/api'
 import {
 	createTranslationsFallbackResolver,
 	translationMswHandlers

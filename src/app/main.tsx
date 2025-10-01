@@ -38,14 +38,14 @@ async function startMockServiceWorker() {
 	}
 
 	// Import MSW handlers from their domains
-	const [{msw}, {exerciseMswHandlers}, {translationMswHandlers}] =
+	const [{createWorker}, {exerciseMswHandlers}, {translationMswHandlers}] =
 		await Promise.all([
 			import('@/shared/api'),
 			import('@/entities/exercise'),
 			import('@/shared/lib/i18n')
 		])
 
-	const worker = msw.createWorker([
+	const worker = createWorker([
 		...translationMswHandlers,
 		...exerciseMswHandlers
 	])
