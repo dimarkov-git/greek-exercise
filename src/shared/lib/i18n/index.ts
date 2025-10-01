@@ -1,3 +1,4 @@
+export {createTranslationsFallbackResolver} from './fallback'
 export type {
 	LoadTranslationsOptions,
 	LoadTranslationsResult

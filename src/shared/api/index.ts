@@ -1,4 +1,10 @@
 export {
+	createFallbackRegistry,
+	type FallbackRequestContext,
+	type FallbackResolver,
+	type FallbackResponse
+} from './fallback'
+export {
 	configureHttpClient,
 	type HttpClientConfig,
 	HttpError,

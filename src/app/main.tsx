@@ -1,20 +1,29 @@
 import '../global.css'
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
-import {testing} from '@/entities/exercise'
-import {configureHttpClient} from '@/shared/api'
-import {detectAutomationEnvironment} from '@/shared/lib'
+import {createExerciseFallbackResolver} from '@/entities/exercise'
+import {configureHttpClient, createFallbackRegistry} from '@/shared/api'
+import {
+	createTranslationsFallbackResolver,
+	detectAutomationEnvironment
+} from '@/shared/lib'
 import {App} from './App'
 import {AppErrorBoundary} from './AppErrorBoundary'
 import {AppRouter} from './AppRouter'
 import {AppModeEnum, environment} from './config/environment'
 import {AppProviders} from './providers/AppProviders'
 
+// Compose fallback resolvers for offline-first strategy
+const resolveFallback = createFallbackRegistry([
+	createTranslationsFallbackResolver(),
+	createExerciseFallbackResolver()
+])
+
 // Configure httpClient with app-level dependencies
 configureHttpClient({
 	isDevelopment: environment.mode === AppModeEnum.development,
 	enableHTTPFallback: environment.enableHTTPFallback,
-	resolveFallback: testing.resolveFallbackResponse
+	resolveFallback
 })
 
 async function startMockServiceWorker() {

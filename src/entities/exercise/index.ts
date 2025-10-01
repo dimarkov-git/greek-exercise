@@ -1,6 +1,7 @@
 // Base exercise types
 
 // API
+export {createExerciseFallbackResolver} from './api/fallback'
 export {
 	exerciseLibraryQueryOptions,
 	wordFormExerciseQueryOptions

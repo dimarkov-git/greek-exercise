@@ -4,42 +4,14 @@ Complete documentation files in the project.
 
 ## Configuration Files
 
-### `knip.ts`
-
-**Path:** `/knip.ts`
-
-**Purpose:** Dependency and export checker configuration file for `knip` tool
-
-**Description:**
-Configuration for the `knip` tool that identifies unused dependencies, exports, types, and files in
-JavaScript/TypeScript projects. This JSON file specifies which dependencies should be ignored during analysis.
-
-**Features:**
-
-- Detects unused dependencies, devDependencies, and exports
-
-**Documentation:** [Knip.dev](https://knip.dev)
-
----
-
 ### `.editorconfig`
 
-**Path:** `/.editorconfig`
+**Path:** `.editorconfig`
 
 **Purpose:** Cross-editor code style configuration
 
 **Description:**
-EditorConfig helps maintain consistent coding styles across different editors and IDEs. This configuration enforces
-UTF-8 encoding, LF line endings, and tab indentation for TypeScript/JSON files.
-
-**Key Settings:**
-
-- `root = true`: Stop searching for configs in parent directories
-- `charset = utf-8`: Use UTF-8 encoding
-- `end_of_line = lf`: Use LF line endings (Unix-style)
-- `trim_trailing_whitespace = true`: Remove trailing spaces
-- `insert_final_newline = true`: Add final newline
-- `indent_style = tab`: Use tabs for TypeScript, TSX, and JSON files
+EditorConfig helps maintain consistent coding styles across different editors and IDEs.
 
 **Documentation:** [EditorConfig.org](https://editorconfig.org/)
 
@@ -67,52 +39,12 @@ prevent sharing local configuration.
 
 **Path:** `/.gitignore`
 
-**Purpose:** Git ignore patterns for excluding files from version control
+**Purpose:** Git-ignore patterns for excluding files from version control
 
 **Description:**
 Specifies which files and directories Git should ignore. Organized by categories with clear comments.
 
-**Key Sections:**
-
-- OS-specific files (`.DS_Store`, `.AppleDouble`)
-- Environment files (`.env`)
-- IDE files (`.idea/`, `.vscode/`)
-- AI/LLM tooling (`.claude`, `CLAUDE.md`, `.playwright-mcp`)
-- Development artifacts (`node_modules`, `dist`, `coverage`)
-- Test results and reports (`/test-results/`, `/playwright-report/`)
-
 **Documentation:** [Git Documentation - gitignore](https://git-scm.com/docs/gitignore)
-
----
-
-### `.steiger.config.js`
-
-**Path:** `/.steiger.config.js`
-
-**Purpose:** FSD (Feature-Sliced Design) architecture linter configuration
-
-**Description:**
-Configuration for Steiger, the official FSD linter that enforces architectural boundaries in Feature-Sliced Design
-projects. Ensures proper layer separation and import restrictions.
-
-**Key Settings:**
-
-- `root: './src'`: Source directory to analyze
-- `plugins: ['@steiger/plugin-fsd']`: FSD-specific rules
-- **Rules:**
-    - `fsd/forbidden-imports: 'error'`: Prevents cross-layer imports
-    - `fsd/insignificant-slice: 'warn'`: Warns about unused slices
-    - `fsd/public-api: 'error'`: Enforces public API usage
-    - `fsd/file-structure: 'warn'`: Validates file organization
-
-**Ignore Patterns:**
-
-- Cross-imports allowed between `word-form-exercise` and `hint-system` features (business requirement)
-- Test files have flexible import rules
-- Shared test utilities can import from higher layers
-- Shared API layer can import app config
-
-**Documentation:** [Steiger FSD Linter](https://github.com/feature-sliced/steiger)
 
 ---
 
@@ -158,9 +90,9 @@ inappropriate layers.
 **Layer Restrictions:**
 
 - **Pages:** Can only import from widgets, features, entities, shared, app
-- **Widgets:** Can only import from features, entities, shared, app
-- **Features:** Can only import from entities, shared, app
-- **Entities:** Can only import from shared, app
+- **Widgets:** Can only import from folders: features, entities, shared, app
+- **Features:** Can only import from folders: entities, shared, app
+- **Entities:** Can only import from folders: shared, app
 - **Shared:** Can only import from app (most restrictive)
 
 **Settings:**
@@ -199,6 +131,24 @@ PWA support.
 - `antialiased` class for better font rendering
 
 **Documentation:** [Vite Guide](https://vitejs.dev/guide/)
+
+---
+
+### `knip.ts`
+
+**Path:** `/knip.ts`
+
+**Purpose:** Dependency and export checker configuration file for `knip` tool
+
+**Description:**
+Configuration for the `knip` tool that identifies unused dependencies, exports, types, and files in
+JavaScript/TypeScript projects. This JSON file specifies which dependencies should be ignored during analysis.
+
+**Features:**
+
+- Detects unused dependencies, devDependencies, and exports
+
+**Documentation:** [Knip.dev](https://knip.dev)
 
 ---
 
@@ -246,6 +196,37 @@ manager with strict version enforcement.
 - **Tailwind CSS 4.1:** Styling
 
 **Documentation:** [NPM package.json](https://docs.npmjs.com/cli/v10/configuring-npm/package-json)
+
+---
+
+### `.steiger.config.js`
+
+**Path:** `/.steiger.config.js`
+
+**Purpose:** FSD (Feature-Sliced Design) architecture linter configuration
+
+**Description:**
+Configuration for Steiger, the official FSD linter that enforces architectural boundaries in Feature-Sliced Design
+projects. Ensures proper layer separation and import restrictions.
+
+**Key Settings:**
+
+- `root: './src'`: Source directory to analyze
+- `plugins: ['@steiger/plugin-fsd']`: FSD-specific rules
+- **Rules:**
+    - `fsd/forbidden-imports: 'error'`: Prevents cross-layer imports
+    - `fsd/insignificant-slice: 'warn'`: Warns about unused slices
+    - `fsd/public-api: 'error'`: Enforces public API usage
+    - `fsd/file-structure: 'warn'`: Validates file organization
+
+**Ignore Patterns:**
+
+- Cross-imports allowed between `word-form-exercise` and `hint-system` features (business requirement)
+- Test files have flexible import rules
+- Shared test utilities can import from higher layers
+- Shared API layer can import app config
+
+**Documentation:** [Steiger FSD Linter](https://github.com/feature-sliced/steiger)
 
 ---
 

@@ -2,57 +2,87 @@
 /** @type {import('dependency-cruiser').IConfiguration} */
 module.exports = {
 	forbidden: [
+		// Cross-slice imports (slices cannot import from each other)
 		{
-			name: 'pages-layer-boundary',
+			name: 'no-cross-pages',
+			severity: 'warn',
+			comment:
+				'Pages should not import from other pages (cross-slice dependency)',
+			from: {path: '^src/pages/([^/]+)'},
+			to: {
+				path: '^src/pages/',
+				pathNot: '^src/pages/$1(/|$)'
+			}
+		},
+		{
+			name: 'no-cross-widgets',
+			severity: 'warn',
+			comment:
+				'Widgets should not import from other widgets (cross-slice dependency)',
+			from: {path: '^src/widgets/([^/]+)'},
+			to: {
+				path: '^src/widgets/',
+				pathNot: '^src/widgets/$1(/|$)'
+			}
+		},
+		{
+			name: 'no-cross-features',
+			severity: 'warn',
+			comment:
+				'Features should not import from other features (cross-slice dependency)',
+			from: {path: '^src/features/([^/]+)'},
+			to: {
+				path: '^src/features/',
+				pathNot: '^src/features/$1(/|$)'
+			}
+		},
+		{
+			name: 'no-cross-entities',
 			severity: 'error',
 			comment:
-				'Pages may touch widgets, features, entities, shared only (and node_modules)',
+				'Entities cannot import from other entities (cross-slice dependency)',
+			from: {path: '^src/entities/([^/]+)'},
+			to: {
+				path: '^src/entities/',
+				pathNot: '^src/entities/$1(/|$)'
+			}
+		},
+
+		// Upward imports (layers cannot import from upper layers)
+		{
+			name: 'no-pages-to-app',
+			severity: 'error',
+			comment: 'Pages cannot import from app layer',
 			from: {path: '^src/pages'},
-			to: {
-				path: '^src/',
-				pathNot: '^src/(pages|widgets|features|entities|shared|app)'
-			}
+			to: {path: '^src/app'}
 		},
 		{
-			name: 'widgets-layer-boundary',
+			name: 'no-widgets-to-upper',
 			severity: 'error',
-			comment:
-				'Widgets may touch features, entities, shared only (and node_modules)',
+			comment: 'Widgets cannot import from app or pages layers',
 			from: {path: '^src/widgets'},
-			to: {
-				path: '^src/',
-				pathNot: '^src/(widgets|features|entities|shared|app)'
-			}
+			to: {path: '^src/(app|pages)'}
 		},
 		{
-			name: 'features-layer-boundary',
+			name: 'no-features-to-upper',
 			severity: 'error',
-			comment: 'Features may touch entities, shared only (and node_modules)',
+			comment: 'Features cannot import from app, pages, or widgets layers',
 			from: {path: '^src/features'},
-			to: {
-				path: '^src/',
-				pathNot: '^src/(features|entities|shared|app)'
-			}
+			to: {path: '^src/(app|pages|widgets)'}
 		},
 		{
-			name: 'entities-layer-boundary',
+			name: 'no-entities-to-upper',
 			severity: 'error',
-			comment: 'Entities may touch shared only (and node_modules)',
+			comment: 'Entities cannot import from app, pages, widgets, or features',
 			from: {path: '^src/entities'},
-			to: {
-				path: '^src/',
-				pathNot: '^src/(entities|shared|app)'
-			}
+			to: {path: '^src/(app|pages|widgets|features)'}
 		},
 		{
-			name: 'shared-layer-boundary',
+			name: 'no-shared-to-layers',
 			severity: 'error',
-			comment: 'Shared may not import from upper layers',
+			comment: 'Shared cannot import from any FSD layers',
 			from: {path: '^src/shared'},
-			to: {
-				path: '^src/',
-				pathNot: '^src/(shared|app)'
-			}
+			to: {path: '^src/(app|pages|widgets|features|entities)'}
 		}
 	],
 	options: {

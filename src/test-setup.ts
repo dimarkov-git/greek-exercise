@@ -1,15 +1,22 @@
 import '@testing-library/jest-dom/vitest'
-import {testing} from '@/entities/exercise'
-import {configureHttpClient} from '@/shared/api'
+import {createExerciseFallbackResolver, testing} from '@/entities/exercise'
+import {configureHttpClient, createFallbackRegistry} from '@/shared/api'
+import {createTranslationsFallbackResolver} from '@/shared/lib'
 import {useSettingsStore} from '@/shared/model'
 // Import server directly to avoid browser build issues
 import {createServer} from '@/shared/test/msw/server'
+
+// Compose fallback resolvers for offline-first strategy
+const resolveFallback = createFallbackRegistry([
+	createTranslationsFallbackResolver(),
+	createExerciseFallbackResolver()
+])
 
 // Configure httpClient for tests
 configureHttpClient({
 	isDevelopment: true,
 	enableHTTPFallback: true,
-	resolveFallback: testing.resolveFallbackResponse
+	resolveFallback
 })
 
 // Setup MSW server with all handlers (translation + exercise)
