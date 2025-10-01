@@ -5,12 +5,13 @@ import {createExerciseFallbackResolver} from '@/entities/exercise'
 import {configureHttpClient, createFallbackRegistry} from '@/shared/api'
 import {
 	createTranslationsFallbackResolver,
-	detectAutomationEnvironment
+	detectAutomationEnvironment,
+	logger
 } from '@/shared/lib'
 import {App} from './App'
 import {AppErrorBoundary} from './AppErrorBoundary'
 import {AppRouter} from './AppRouter'
-import {AppModeEnum, environment} from './config/environment'
+import {environment} from './config/environment'
 import {AppProviders} from './providers/AppProviders'
 
 // Compose fallback resolvers for offline-first strategy
@@ -21,7 +22,7 @@ const resolveFallback = createFallbackRegistry([
 
 // Configure httpClient with app-level dependencies
 configureHttpClient({
-	isDevelopment: environment.mode === AppModeEnum.development,
+	isDevelopment: environment.isDevelopment,
 	enableHTTPFallback: environment.enableHTTPFallback,
 	resolveFallback
 })
@@ -49,8 +50,7 @@ async function startMockServiceWorker() {
 		serviceWorker: {
 			url: `${environment.baseURL}mockServiceWorker.js`
 		},
-		onUnhandledRequest:
-			environment.mode === AppModeEnum.development ? 'warn' : 'bypass'
+		onUnhandledRequest: environment.isDevelopment ? 'warn' : 'bypass'
 	})
 
 	if (detectAutomationEnvironment()) {
@@ -92,18 +92,12 @@ async function bootstrap() {
 	try {
 		await startMockServiceWorker()
 	} catch (error) {
-		if (environment.mode === AppModeEnum.development) {
-			// biome-ignore lint/suspicious/noConsole: development diagnostics
-			console.warn('Failed to start Mock Service Worker', error)
-		}
+		logger.warn('Failed to start Mock Service Worker', error)
 	} finally {
 		renderApplication()
 	}
 }
 
 bootstrap().catch(error => {
-	if (environment.mode === AppModeEnum.development) {
-		// biome-ignore lint/suspicious/noConsole: development diagnostics
-		console.error('Application bootstrap failed', error)
-	}
+	logger.error('Application bootstrap failed', error)
 })

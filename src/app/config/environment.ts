@@ -25,6 +25,7 @@ const env = import.meta.env as AppImportMetaEnv
 
 export interface Environment {
 	readonly mode: AppMode
+	readonly isDevelopment: boolean
 	readonly baseURL: string
 	readonly routerMode: RouterMode
 	readonly enableMockServiceWorker: boolean
@@ -34,6 +35,7 @@ export interface Environment {
 
 export const environment: Environment = {
 	mode: env.MODE as AppMode,
+	isDevelopment: env.MODE === AppModeEnum.development,
 	baseURL: env.BASE_URL || './',
 	routerMode: normalizeRouterMode(env.VITE_ROUTER_MODE, RouterModeEnum.hash),
 	enableMockServiceWorker: normalizeBoolean(env.VITE_ENABLE_MSW, false),
