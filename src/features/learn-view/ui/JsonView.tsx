@@ -1,10 +1,11 @@
 import {useCallback, useState} from 'react'
 import type {WordFormExercise} from '@/entities/exercise'
 import {exerciseToJSON} from '@/entities/exercise'
-import type {JsonViewTranslationKey, Translator} from '@/shared/lib/i18n'
-import {jsonViewTranslations, useTranslations} from '@/shared/lib/i18n'
+import type {TranslationEntry} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
+import {translations} from './translations-json-view'
 
-type JsonViewTranslator = Translator<JsonViewTranslationKey>
+type JsonViewTranslator = (entry: string | TranslationEntry) => string
 
 interface JsonViewProps {
 	readonly exercise: WordFormExercise
@@ -32,46 +33,46 @@ function renderButtonContent(
 			return (
 				<>
 					<svg className='h-4 w-4' fill='currentColor' viewBox='0 0 20 20'>
-						<title>{t('success')}</title>
+						<title>{t(translations.success)}</title>
 						<path
 							clipRule='evenodd'
 							d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
 							fillRule='evenodd'
 						/>
 					</svg>
-					{t('jsonCopied')}
+					{t(translations.jsonCopied)}
 				</>
 			)
 		case 'error':
 			return (
 				<>
 					<svg className='h-4 w-4' fill='currentColor' viewBox='0 0 20 20'>
-						<title>{t('error')}</title>
+						<title>{t(translations.error)}</title>
 						<path
 							clipRule='evenodd'
 							d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z'
 							fillRule='evenodd'
 						/>
 					</svg>
-					{t('copyFailed')}
+					{t(translations.copyFailed)}
 				</>
 			)
 		default:
 			return (
 				<>
 					<svg className='h-4 w-4' fill='currentColor' viewBox='0 0 20 20'>
-						<title>{t('copy')}</title>
+						<title>{t(translations.copy)}</title>
 						<path d='M8 2a1 1 0 000 2h2a1 1 0 100-2H8z' />
 						<path d='M3 5a2 2 0 012-2 3 3 0 003 3h6a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L13.414 15H18v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2v2h-2v-2z' />
 					</svg>
-					{t('copyJson')}
+					{t(translations.copyJson)}
 				</>
 			)
 	}
 }
 
 export function JsonView({exercise}: JsonViewProps) {
-	const {t} = useTranslations(jsonViewTranslations)
+	const {t} = loadTranslations(translations)
 	const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>(
 		'idle'
 	)
@@ -101,7 +102,7 @@ export function JsonView({exercise}: JsonViewProps) {
 					onClick={handleCopy}
 					type='button'
 				>
-					{renderButtonContent(copyStatus, t)}
+					{renderButtonContent(copyStatus, t as JsonViewTranslator)}
 				</button>
 			</div>
 

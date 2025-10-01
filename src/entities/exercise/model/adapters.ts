@@ -5,7 +5,7 @@ import type {
 	WordFormCaseDto,
 	WordFormExerciseDto
 } from '@/entities/exercise'
-import type {Language} from '@/shared/model/settings'
+import type {Language} from '@/shared/model'
 import type {
 	ExerciseLibraryViewModel,
 	ExerciseSource,

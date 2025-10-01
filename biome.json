@@ -143,7 +143,11 @@
 		{
 			"includes": [
 				"src/{app,entities,features,widgets,pages,shared}/*/index.ts",
-				"src/shared/**/index.ts"
+				"src/features/**/index.ts",
+				"src/widgets/**/index.ts",
+				"src/pages/**/index.ts",
+				"src/shared/**/index.ts",
+				"src/shared/test/render-utils.tsx"
 			],
 			"linter": {
 				"rules": {

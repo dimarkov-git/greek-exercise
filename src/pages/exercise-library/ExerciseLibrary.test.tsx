@@ -4,8 +4,8 @@ import type {
 	ExerciseLibraryViewModel,
 	ExerciseSummary
 } from '@/entities/exercise'
-import {render, screen} from '@/shared/lib'
-import type {Language} from '@/shared/model/settings'
+import type {Language} from '@/shared/model'
+import {render, screen} from '@/shared/test'
 import {ExerciseLibrary} from './ExerciseLibrary'
 
 // Mock dependencies
@@ -27,7 +27,14 @@ vi.mock('@/entities/exercise', () => ({
 }))
 
 vi.mock('@/shared/lib/i18n', () => ({
-	useTranslations: vi.fn(),
+	loadTranslations: () => ({
+		t: mockT,
+		language: 'en' as const,
+		isLoading: false,
+		error: null,
+		missingKeys: [],
+		status: 'complete' as const
+	}),
 	exerciseLibraryTranslations: {
 		keys: [
 			'exerciseLibrary',
@@ -76,7 +83,7 @@ vi.mock('@/shared/lib/i18n', () => ({
 	}
 }))
 
-vi.mock('./hooks/useExerciseFiltering', () => ({
+vi.mock('./model/useExerciseFiltering', () => ({
 	useExerciseFiltering: vi.fn()
 }))
 
@@ -97,7 +104,7 @@ vi.mock('@/shared/ui/loading-or-error', () => ({
 	)
 }))
 
-vi.mock('./components/LibraryHeader', () => ({
+vi.mock('./ui/LibraryHeader', () => ({
 	LibraryHeader: ({t}: {t: (key: string) => string}) => (
 		<header data-testid='library-header'>
 			<h1>{t('exerciseLibrary')}</h1>
@@ -106,7 +113,7 @@ vi.mock('./components/LibraryHeader', () => ({
 	)
 }))
 
-vi.mock('./components/UserSettings', () => ({
+vi.mock('./ui/UserSettings', () => ({
 	UserSettings: ({t}: {t: (key: string) => string}) => (
 		<div data-testid='user-settings'>
 			<h2>{t('settings')}</h2>
@@ -114,7 +121,7 @@ vi.mock('./components/UserSettings', () => ({
 	)
 }))
 
-vi.mock('./components/ExerciseFilters', () => ({
+vi.mock('./ui/ExerciseFilters', () => ({
 	ExerciseFilters: ({
 		t,
 		selectedTags,
@@ -172,7 +179,7 @@ vi.mock('./components/ExerciseFilters', () => ({
 	)
 }))
 
-vi.mock('./components/ExerciseGrid', () => ({
+vi.mock('./ui/ExerciseGrid', () => ({
 	ExerciseGrid: ({
 		exercises,
 		onClearFilters,
@@ -205,8 +212,7 @@ vi.mock('./components/ExerciseGrid', () => ({
 
 // Import mocked modules to set up implementations
 import {useExercises} from '@/entities/exercise'
-import {useTranslations} from '@/shared/lib/i18n'
-import {useExerciseFiltering} from './hooks/useExerciseFiltering'
+import {useExerciseFiltering} from './model/useExerciseFiltering'
 
 // Test data
 const mockExerciseSummary1: ExerciseSummary = {
@@ -290,16 +296,6 @@ describe('ExerciseLibrary', () => {
 		vi.clearAllMocks()
 
 		// Default mock implementations
-		vi.mocked(useTranslations).mockReturnValue({
-			t: mockT,
-			translations: {},
-			currentLanguage: 'en',
-			isLoading: false,
-			error: null,
-			missingKeys: [],
-			status: 'complete'
-		} as unknown as ReturnType<typeof useTranslations>)
-
 		vi.mocked(useExerciseFiltering).mockReturnValue(
 			mockUseExerciseFilteringResult({
 				filteredExercises: mockExerciseLibrary.exercises,
@@ -721,18 +717,10 @@ describe('ExerciseLibrary', () => {
 
 			render(<ExerciseLibrary />)
 
-			expect(useTranslations).toHaveBeenCalledWith(
-				expect.objectContaining({
-					keys: expect.arrayContaining([
-						'exerciseLibrary',
-						'exerciseLibraryDesc',
-						'settings',
-						'filters',
-						'noExercisesFound',
-						'clearFilters'
-					])
-				})
-			)
+			// With loadTranslations, we verify translations work through rendered content
+			expect(screen.getByText('Exercise Library')).toBeInTheDocument()
+			expect(screen.getByText('Settings')).toBeInTheDocument()
+			expect(screen.getByText('Filters')).toBeInTheDocument()
 		})
 	})
 })

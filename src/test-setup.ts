@@ -1,6 +1,14 @@
 import '@testing-library/jest-dom/vitest'
+import {configureHttpClient} from '@/shared/api'
 import {useSettingsStore} from '@/shared/model'
-import {server} from './shared/test/msw/server'
+import {resolveFallbackResponse, server} from '@/shared/test'
+
+// Configure httpClient for tests
+configureHttpClient({
+	isDevelopment: true,
+	enableHTTPFallback: true,
+	resolveFallback: resolveFallbackResponse
+})
 
 beforeAll(() => server.listen())
 

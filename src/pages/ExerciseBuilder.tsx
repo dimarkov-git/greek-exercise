@@ -1,30 +1,31 @@
 import {motion} from 'framer-motion'
-import {exerciseBuilderTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {Head} from '@/shared/ui/head'
 import {
 	BuilderHero,
+	type BuilderTranslator,
+	type ExerciseBuilderState,
 	JsonEditorPanel,
 	PreviewPanel,
 	SavedExercisesSection,
 	TypeSelectorPanel,
-	ValidationPanel
-} from './exercise-builder/components'
-import {
-	type BuilderTranslator,
-	type ExerciseBuilderState,
 	useExerciseBuilderState,
-	useFormattedSavedExercises
-} from './exercise-builder/state'
+	useFormattedSavedExercises,
+	ValidationPanel
+} from './exercise-builder'
+import {exerciseBuilderPageTranslations} from './translations'
 
 interface ExerciseBuilderViewProps extends ExerciseBuilderState {
 	readonly t: BuilderTranslator
 }
 
 export function ExerciseBuilder() {
-	const {t} = useTranslations(exerciseBuilderTranslations)
-	const state = useExerciseBuilderState(t)
+	const {t} = loadTranslations(exerciseBuilderPageTranslations)
+	const state = useExerciseBuilderState(t as unknown as BuilderTranslator)
 
-	return <ExerciseBuilderView {...state} t={t} />
+	return (
+		<ExerciseBuilderView {...state} t={t as unknown as BuilderTranslator} />
+	)
 }
 
 function ExerciseBuilderView({
@@ -48,7 +49,7 @@ function ExerciseBuilderView({
 
 	return (
 		<>
-			<Head title={t('exerciseBuilder')} />
+			<Head title={t(exerciseBuilderPageTranslations.exerciseBuilder)} />
 			<motion.div
 				animate={{opacity: 1}}
 				className='min-h-screen bg-gray-50 pb-16 dark:bg-gray-950'

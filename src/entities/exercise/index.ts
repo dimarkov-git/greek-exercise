@@ -6,6 +6,24 @@ export {
 	wordFormExerciseQueryOptions
 } from './api/queryOptions'
 export {useExercise, useExercises} from './api/useExercises'
+// Library utilities
+export {
+	calculateAccuracy,
+	checkAnswer,
+	extractExerciseMetadata,
+	filterExercisesByDifficulty,
+	filterExercisesByTags,
+	formatDuration,
+	generateId,
+	getAllTags,
+	getCaseByIndices,
+	getCompletedCasesCount,
+	getNextIndices,
+	getTotalCases,
+	normalizeGreekText,
+	normalizeGreekTextWithoutTones,
+	shuffleExerciseCases
+} from './lib/exercises'
 // Adapters
 export {
 	createExerciseLibraryViewModel,
@@ -17,6 +35,14 @@ export {
 	wordFormExerciseJsonToExercise,
 	wordFormExerciseJsonToMetadata
 } from './model/custom'
+// Custom exercises store
+export {
+	type CustomExerciseRecord,
+	type CustomExercisesState,
+	selectCustomExerciseList,
+	selectCustomExercises,
+	useCustomExercisesStore
+} from './model/custom-exercises-store'
 // Domain types
 export type {
 	ExerciseFilterSelection,

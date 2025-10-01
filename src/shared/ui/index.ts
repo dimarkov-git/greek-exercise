@@ -1,6 +1,8 @@
 // Basic UI components
 export * from './button'
 export * from './card'
+// Specialized UI components
+export * from './exercise-layout'
 export * from './head'
 export * from './input'
 export * from './language-dropdown'
@@ -10,7 +12,6 @@ export * from './navigation-card'
 export * from './skeleton'
 export * from './spacing'
 export * from './text-skeleton'
-// Specialized UI components
 export * from './theme-toggle'
 export * from './translated-text'
 export * from './typography'

@@ -11,10 +11,13 @@ import type {
 	ExerciseEvent,
 	WordFormExercise as WordFormExerciseType
 } from '@/entities/exercise'
-import {type ExerciseStatus, getExerciseSettings} from '@/entities/exercise'
-import {usePulseEffect} from '@/features/hint-system'
+import {
+	checkAnswer,
+	type ExerciseStatus,
+	getExerciseSettings
+} from '@/entities/exercise'
 import {detectAutomationEnvironment} from '@/shared/lib'
-import {checkAnswer} from '@/shared/lib/exercises'
+import {usePulseEffect} from '../../hint-system'
 import {
 	initializeWordFormState,
 	selectCurrentBlock,

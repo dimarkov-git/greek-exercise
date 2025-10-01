@@ -1,15 +1,17 @@
 import {motion} from 'framer-motion'
-import {homePageTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {Head} from '@/shared/ui/head'
 import {TranslatedText} from '@/shared/ui/translated-text'
 import {MainNavigation} from '@/widgets/main-navigation'
+import {homePageTranslations} from './translations'
 
 export function HomePage() {
-	const {t, isLoading} = useTranslations(homePageTranslations)
+	const {t} = loadTranslations(homePageTranslations)
+	const isLoading = false
 
 	return (
 		<>
-			<Head title={t('app.title')} />
+			<Head title={t(homePageTranslations['app.title'])} />
 			<div className='bg-gray-50 transition-colors dark:bg-gray-900'>
 				{/* Hero Section */}
 				<div className='px-4 py-16'>
@@ -35,7 +37,7 @@ export function HomePage() {
 										isLoading={isLoading}
 										skeletonHeight='4rem'
 										skeletonWidth='280px'
-										text={t('app.title')}
+										text={t(homePageTranslations['app.title'])}
 									/>
 								</motion.div>
 
@@ -50,7 +52,7 @@ export function HomePage() {
 										isLoading={isLoading}
 										skeletonHeight='1.5rem'
 										skeletonWidth='500px'
-										text={t('app.subtitle')}
+										text={t(homePageTranslations['app.subtitle'])}
 									/>
 								</motion.div>
 							</div>

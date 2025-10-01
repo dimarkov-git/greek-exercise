@@ -4,66 +4,14 @@ import type {ExerciseStatus} from '@/entities/exercise'
 import {WordFormFeedback} from '@/features/word-form-exercise'
 
 vi.mock('@/shared/lib/i18n', () => ({
-	useTranslations: () => ({
+	loadTranslations: () => ({
 		t: (key: string) => key,
-		status: 'complete' as const,
-		missingKeys: [] as string[]
-	}),
-	exerciseUiTranslations: {
-		keys: [
-			'exercise.accuracy',
-			'exercise.autoAdvance',
-			'exercise.autoAdvanceDisabled',
-			'exercise.autoAdvanceDisabledIcon',
-			'exercise.autoAdvanceEnabled',
-			'exercise.autoAdvanceEnabledIcon',
-			'exercise.backArrow',
-			'exercise.backToLibrary',
-			'exercise.blocks',
-			'exercise.cases',
-			'exercise.celebrationEmoji',
-			'exercise.checking',
-			'exercise.congratulations',
-			'exercise.continue',
-			'exercise.correct',
-			'exercise.correctAnswerIs',
-			'exercise.correctAnswers',
-			'exercise.correctIcon',
-			'exercise.difficulty',
-			'exercise.enterCorrectAnswer',
-			'exercise.enterCorrectAnswerToContinue',
-			'exercise.enterCorrectToContinue',
-			'exercise.enterKey',
-			'exercise.enterKeyName',
-			'exercise.exclamationMark',
-			'exercise.hintIcon',
-			'exercise.incorrect',
-			'exercise.incorrectAnswers',
-			'exercise.incorrectIcon',
-			'exercise.minutes',
-			'exercise.notImplemented',
-			'exercise.percentSymbol',
-			'exercise.pressEnterToContinue',
-			'exercise.progress',
-			'exercise.progressOf',
-			'exercise.restartExercise',
-			'exercise.returnToLibrary',
-			'exercise.secondsSymbol',
-			'exercise.skip',
-			'exercise.submit',
-			'exercise.time',
-			'exercise.unsupportedType',
-			'exercise.yourAnswerIs',
-			'error.couldNotLoadExercise',
-			'error.title'
-		],
-		lookupKeys: [],
-		requests: [],
-		cacheKey: 'mock-cache-key',
-		fixedLanguageKeys: {},
-		getRequest: vi.fn(),
-		getFixedLanguage: vi.fn()
-	}
+		language: 'en',
+		isLoading: false,
+		error: null,
+		missingKeys: [],
+		status: 'complete' as const
+	})
 }))
 
 const baseProps = {

@@ -1,11 +1,6 @@
 import {delay, HttpResponse, http} from 'msw'
-import {extractExerciseMetadata} from '@/shared/lib/exercises'
-import type {TranslationRegistryKey} from '@/shared/lib/i18n'
-import {translationRegistry} from '@/shared/lib/i18n'
-import type {
-	SupportedLanguage,
-	TranslationsDatabase
-} from '@/shared/model/translations'
+import {extractExerciseMetadata} from '@/entities/exercise'
+import type {SupportedLanguage, TranslationsDatabase} from '@/shared/model'
 import translationsDatabase from './data/translations.json' with {type: 'json'}
 import {loadExercises} from './utils/loadExercises'
 
@@ -14,61 +9,12 @@ const translations = translationsDatabase as TranslationsDatabase
 // Exercise registry - loaded dynamically from JSON files
 const exerciseRegistry = loadExercises()
 
-function normalizeTranslationKeys(
-	keys: readonly string[]
-): TranslationRegistryKey[] {
-	return keys
-		.map(key => key.trim())
-		.filter((key): key is TranslationRegistryKey => key in translationRegistry)
+function normalizeTranslationKeys(keys: readonly string[]): string[] {
+	return keys.map(key => key.trim()).filter(key => key.length > 0)
 }
 
 export const handlers = [
-	// New translation endpoint with key filtering
-	http.get('/api/translations', async ({request}) => {
-		await delay('real')
-		const url = new URL(request.url)
-		const lang = url.searchParams.get('lang') as SupportedLanguage
-		const keysParam = url.searchParams.get('keys')
-
-		if (!(lang && keysParam)) {
-			return HttpResponse.json(
-				{error: 'Missing required parameters: lang and keys'},
-				{status: 400}
-			)
-		}
-
-		const requestedKeys = normalizeTranslationKeys(keysParam.split(','))
-		const languageTranslations = translations[lang]
-
-		if (!languageTranslations) {
-			return HttpResponse.json(
-				{error: `Translation for language '${lang}' not found`},
-				{status: 404}
-			)
-		}
-
-		// Filter only requested keys
-		const filteredTranslations: Partial<
-			Record<TranslationRegistryKey, string>
-		> = {}
-		for (const key of requestedKeys) {
-			const value = languageTranslations[key]
-
-			if (typeof value === 'string') {
-				filteredTranslations[key] = value
-			} else if (lang !== 'en') {
-				const fallbackValue = translations.en?.[key]
-
-				if (typeof fallbackValue === 'string') {
-					filteredTranslations[key] = fallbackValue
-				}
-			}
-		}
-
-		return HttpResponse.json({translations: filteredTranslations})
-	}),
-
-	// POST endpoint for large key lists
+	// Translation endpoint using POST method
 	http.post('/api/translations', async ({request}) => {
 		await delay('real')
 		const body = await request.json()
@@ -95,9 +41,7 @@ export const handlers = [
 
 		// Filter only requested keys
 		const normalizedKeys = normalizeTranslationKeys(keys)
-		const filteredTranslations: Partial<
-			Record<TranslationRegistryKey, string>
-		> = {}
+		const filteredTranslations: Record<string, string> = {}
 
 		for (const key of normalizedKeys) {
 			const value = languageTranslations[key]

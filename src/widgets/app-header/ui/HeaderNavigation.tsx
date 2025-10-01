@@ -1,14 +1,11 @@
 import {motion} from 'framer-motion'
 import {Link, useLocation} from 'react-router'
-import {headerNavigationTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {TranslatedText} from '@/shared/ui/translated-text'
-
-const homeKey = 'navigation.home'
-const libraryKey = 'navigation.library'
-const builderKey = 'navigation.builder'
+import {headerNavigationTranslations} from './translations'
 
 export function HeaderNavigation() {
-	const {t, isLoading} = useTranslations(headerNavigationTranslations)
+	const {t, isLoading} = loadTranslations(headerNavigationTranslations)
 	const location = useLocation()
 
 	const isActive = (path: string) => {
@@ -19,17 +16,17 @@ export function HeaderNavigation() {
 	const navigationItems = [
 		{
 			path: '/',
-			label: t(homeKey),
+			label: t(headerNavigationTranslations.home),
 			icon: '🏠'
 		},
 		{
 			path: '/exercises',
-			label: t(libraryKey),
+			label: t(headerNavigationTranslations.library),
 			icon: '📚'
 		},
 		{
 			path: '/builder',
-			label: t(builderKey),
+			label: t(headerNavigationTranslations.builder),
 			icon: '🔧'
 		}
 	]

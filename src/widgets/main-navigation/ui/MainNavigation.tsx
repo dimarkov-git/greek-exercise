@@ -1,9 +1,13 @@
 import {motion} from 'framer-motion'
-import {mainNavigationTranslations, useTranslations} from '@/shared/lib/i18n'
+import {shouldShowTestSection} from '@/shared/config'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {NavigationCard} from '@/shared/ui/navigation-card'
+import {translations} from './translations'
 
 export function MainNavigation() {
-	const {t} = useTranslations(mainNavigationTranslations)
+	const {t} = loadTranslations(translations)
+
+	const showTestSection = shouldShowTestSection()
 
 	return (
 		<motion.div
@@ -21,9 +25,9 @@ export function MainNavigation() {
 				>
 					<NavigationCard
 						color='blue'
-						description={t('exerciseLibraryDesc')}
+						description={t(translations.exerciseLibraryDesc)}
 						icon='📚'
-						title={t('exerciseLibrary')}
+						title={t(translations.exerciseLibrary)}
 						to='/exercises'
 					/>
 				</motion.div>
@@ -35,13 +39,31 @@ export function MainNavigation() {
 				>
 					<NavigationCard
 						color='purple'
-						description={t('exerciseBuilderDesc')}
+						description={t(translations.exerciseBuilderDesc)}
 						icon='🔧'
-						title={t('exerciseBuilder')}
+						title={t(translations.exerciseBuilder)}
 						to='/builder'
 					/>
 				</motion.div>
 			</div>
+
+			{showTestSection && (
+				<div className='grid md:grid-cols-2'>
+					<motion.div
+						animate={{opacity: 1, x: 0}}
+						initial={{opacity: 0, x: 50}}
+						transition={{delay: 0.6}}
+					>
+						<NavigationCard
+							color='orange'
+							description={t(translations.testSectionDesc)}
+							icon='🧪'
+							title={t(translations.testSection)}
+							to='/test/i18n'
+						/>
+					</motion.div>
+				</div>
+			)}
 		</motion.div>
 	)
 }

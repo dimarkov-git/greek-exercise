@@ -1,10 +1,11 @@
 import {motion} from 'framer-motion'
-import {themeToggleTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {useSettingsStore} from '@/shared/model'
+import {translations} from './translations'
 
 export function ThemeToggle() {
 	const {theme, setTheme} = useSettingsStore()
-	const {t} = useTranslations(themeToggleTranslations)
+	const {t} = loadTranslations(translations)
 
 	const toggleTheme = () => {
 		setTheme(theme === 'light' ? 'dark' : 'light')
@@ -18,7 +19,11 @@ export function ThemeToggle() {
 			data-testid='theme-toggle'
 			initial={{opacity: 0, scale: 0.9}}
 			onClick={toggleTheme}
-			title={theme === 'light' ? t('darkTheme') : t('lightTheme')}
+			title={
+				theme === 'light'
+					? t(translations.darkTheme)
+					: t(translations.lightTheme)
+			}
 			transition={{delay: 0.2}}
 			type='button'
 			whileHover={{scale: 1.05}}
@@ -42,7 +47,7 @@ export function ThemeToggle() {
 						mass: 0.8
 					}}
 				>
-					{t('ui.sunEmoji')}
+					{t(translations.sunEmoji)}
 				</motion.span>
 				<motion.span
 					animate={{
@@ -58,7 +63,7 @@ export function ThemeToggle() {
 						mass: 0.8
 					}}
 				>
-					{t('ui.moonEmoji')}
+					{t(translations.moonEmoji)}
 				</motion.span>
 			</div>
 		</motion.button>

@@ -110,7 +110,7 @@
 
 - **API Endpoints**:
     - `GET /api/exercises` - Fetch available exercises
-    - `GET /api/translations` - Localized content
+    - `POST /api/translations` - Localized content
 - **Exercise Data Structure**: Complex exercise objects with metadata, blocks, and cases
 
 #### States
@@ -185,7 +185,7 @@
 
 - **API Endpoints**:
     - `GET /api/exercises/:id` - Fetch specific exercise data
-    - `GET /api/translations` - Localized hints and content
+    - `POST /api/translations` - Localized hints and content
 - **Exercise Engine**: Complex state machine handling exercise progression
 
 #### States
@@ -281,7 +281,7 @@
 
 - **API Endpoints**:
     - `GET /api/exercises/:id` - Fetch complete exercise data
-    - `GET /api/translations` - Localized content for interface and hints
+    - `POST /api/translations` - Localized content for interface and hints
 - **Clipboard API**: Copy JSON functionality
 - **Exercise Engine Integration**: Same data structure as practice mode
 
@@ -445,7 +445,7 @@
 
 - `GET /api/exercises` - Fetch all available exercises
 - `GET /api/exercises/:id` - Fetch specific exercise
-- `GET /api/translations` - Fetch localized content
+- `POST /api/translations` - Fetch localized content
 
 ### External Services
 

@@ -1,6 +1,5 @@
 export {detectAutomationEnvironment} from './automation'
-export * from './exercises'
-export * from './test-utils'
+export * from './contexts'
 export {useLayout} from './useLayout'
 export {
 	setDocumentLanguage,

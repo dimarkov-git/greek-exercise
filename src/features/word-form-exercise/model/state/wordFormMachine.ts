@@ -1,17 +1,15 @@
 import {
 	type ExerciseStatus,
+	getCaseByIndices,
+	getCompletedCasesCount,
 	getExerciseSettings,
+	getNextIndices,
+	getTotalCases,
+	shuffleExerciseCases,
 	type WordFormBlock,
 	type WordFormCase,
 	type WordFormExercise
 } from '@/entities/exercise'
-import {
-	getCaseByIndices,
-	getCompletedCasesCount,
-	getNextIndices,
-	getTotalCases,
-	shuffleExerciseCases
-} from '@/shared/lib/exercises'
 
 export interface WordFormStats {
 	correct: number

@@ -1,13 +1,9 @@
 import {motion} from 'framer-motion'
 import type {ExerciseStatus} from '@/entities/exercise'
-import type {Translator} from '@/shared/lib/i18n'
-import {
-	type ExerciseUiTranslationKey,
-	exerciseUiTranslations,
-	useTranslations
-} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
+import {wordFormFeedbackTranslations} from './translations'
 
-type ExerciseTranslator = Translator<ExerciseUiTranslationKey>
+type ExerciseTranslator = (entry: string) => string
 
 interface WordFormFeedbackProps {
 	isCorrect: boolean | null
@@ -34,7 +30,9 @@ function SuccessFeedback({userAnswer, translator}: SuccessFeedbackProps) {
 		<div className='rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20'>
 			<div className='flex items-center justify-center space-x-2 text-green-700 dark:text-green-300'>
 				<svg className='h-6 w-6' fill='currentColor' viewBox='0 0 20 20'>
-					<title>{t('exercise.correctIcon')}</title>
+					<title>
+						{t(wordFormFeedbackTranslations['exercise.correctIcon'])}
+					</title>
 					<path
 						clipRule='evenodd'
 						d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
@@ -42,12 +40,13 @@ function SuccessFeedback({userAnswer, translator}: SuccessFeedbackProps) {
 					/>
 				</svg>
 				<span className='font-semibold text-lg'>
-					{t('exercise.correct')}
-					{t('exercise.exclamationMark')}
+					{t(wordFormFeedbackTranslations['exercise.correct'])}
+					{t(wordFormFeedbackTranslations['exercise.exclamationMark'])}
 				</span>
 			</div>
 			<p className='mt-2 text-green-600 dark:text-green-400'>
-				{userAnswer} {t('exercise.correctAnswerIs')}
+				{userAnswer}{' '}
+				{t(wordFormFeedbackTranslations['exercise.correctAnswerIs'])}
 			</p>
 		</div>
 	)
@@ -88,19 +87,24 @@ function ErrorFeedback({
 		<div className='rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20'>
 			<div className='flex items-center justify-center space-x-2 text-red-700 dark:text-red-300'>
 				<svg className='h-6 w-6' fill='currentColor' viewBox='0 0 20 20'>
-					<title>{t('exercise.incorrectIcon')}</title>
+					<title>
+						{t(wordFormFeedbackTranslations['exercise.incorrectIcon'])}
+					</title>
 					<path
 						clipRule='evenodd'
 						d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'
 						fillRule='evenodd'
 					/>
 				</svg>
-				<span className='font-semibold text-lg'>{t('exercise.incorrect')}</span>
+				<span className='font-semibold text-lg'>
+					{t(wordFormFeedbackTranslations['exercise.incorrect'])}
+				</span>
 			</div>
 
 			{userAnswer && (
 				<p className='mt-2 text-red-600 dark:text-red-400'>
-					{t('exercise.yourAnswerIs')} {userAnswer}
+					{t(wordFormFeedbackTranslations['exercise.yourAnswerIs'])}{' '}
+					{userAnswer}
 				</p>
 			)}
 
@@ -113,7 +117,7 @@ function ErrorFeedback({
 					initial={{opacity: 0}}
 					transition={{delay: 0.5}}
 				>
-					{t('exercise.enterCorrectToContinue')}
+					{t(wordFormFeedbackTranslations['exercise.enterCorrectToContinue'])}
 				</motion.p>
 			)}
 		</div>
@@ -130,7 +134,7 @@ export function WordFormFeedback({
 	userAnswer,
 	status
 }: WordFormFeedbackProps) {
-	const {t} = useTranslations(exerciseUiTranslations)
+	const {t} = loadTranslations(wordFormFeedbackTranslations)
 	// Don't render if no feedback needed
 	if (
 		isCorrect === null ||
@@ -148,13 +152,18 @@ export function WordFormFeedback({
 			initial={{opacity: 0, y: 20, scale: 0.95}}
 			transition={{duration: 0.3, ease: 'easeOut'}}
 		>
-			{isCorrect && <SuccessFeedback translator={t} userAnswer={userAnswer} />}
+			{isCorrect && (
+				<SuccessFeedback
+					translator={t as (entry: string) => string}
+					userAnswer={userAnswer}
+				/>
+			)}
 
 			{!isCorrect && (
 				<ErrorFeedback
 					correctAnswers={correctAnswers}
 					status={status}
-					translator={t}
+					translator={t as (entry: string) => string}
 					userAnswer={userAnswer}
 				/>
 			)}

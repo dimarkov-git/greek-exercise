@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react'
 import {describe, expect, it, vi} from 'vitest'
-import type {RouterMode} from '@/app/config/environment'
+import type {RouterMode} from '@/app/config'
 import {AppRouter} from './AppRouter'
 
 // Mock the environment module

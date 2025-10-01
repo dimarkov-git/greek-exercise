@@ -6,10 +6,10 @@ import type {
 	WordFormExercise
 } from '@/entities/exercise'
 import {getExerciseSettings} from '@/entities/exercise'
-import {ExerciseHeader} from '@/features/exercise-header'
-import {HintSystem, PulseEffect, type PulseState} from '@/features/hint-system'
 import {WordFormFeedback, WordFormInput} from '@/features/word-form-exercise'
-import type {Language} from '@/shared/model/settings'
+import type {Language} from '@/shared/model'
+import {ExerciseHeader} from '../exercise-header'
+import {HintSystem, PulseEffect, type PulseState} from '../hint-system/index'
 
 function PromptWithHint({currentCase}: {currentCase: WordFormCase}) {
 	return (

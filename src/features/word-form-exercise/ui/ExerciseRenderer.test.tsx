@@ -3,9 +3,8 @@ import type React from 'react'
 import {act} from 'react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
 import type {ExerciseEvent, WordFormExercise} from '@/entities/exercise'
-import type {PulseState} from '@/features/hint-system'
-import {useSettingsStore} from '@/shared/model'
-import {DEFAULT_SETTINGS} from '@/shared/model/settings'
+import {DEFAULT_SETTINGS, useSettingsStore} from '@/shared/model'
+import type {PulseState} from '../hint-system/index'
 import type {WordFormViewState} from '../model/hooks/useWordFormExercise'
 import {ExerciseRenderer} from './ExerciseRenderer'
 
@@ -43,10 +42,13 @@ vi.mock('@/shared/lib/i18n', async () => {
 	const actual = await vi.importActual('@/shared/lib/i18n')
 	return {
 		...actual,
-		useTranslations: () => ({
-			t: (key: string) => key,
-			status: 'complete' as const,
-			missingKeys: [] as string[]
+		loadTranslations: () => ({
+			t: (key: unknown) => String(key),
+			language: 'en' as const,
+			isLoading: false,
+			error: null,
+			missingKeys: [],
+			status: 'complete' as const
 		})
 	}
 })

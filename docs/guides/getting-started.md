@@ -150,7 +150,7 @@ learn-greek/
 │   ├── api/             # API utilities (HTTP client, translation helpers)
 │   ├── components/      # React components (UI, layout)
 │   ├── config/          # Environment feature flags
-│   ├── hooks/           # Custom hooks (useTranslations, useExercises)
+│   ├── hooks/           # Custom hooks (useExercises, etc.)
 │   ├── pages/           # Page components (HomePage, ExerciseLibrary, ExerciseBuilder)
 │   ├── stores/          # Zustand stores (settings)
 │   ├── types/           # TypeScript definitions

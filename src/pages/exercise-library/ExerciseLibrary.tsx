@@ -1,15 +1,16 @@
 import {useExercises} from '@/entities/exercise'
-import {exerciseLibraryTranslations, useTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
 import {Head} from '@/shared/ui/head'
 import {LoadingOrError} from '@/shared/ui/loading-or-error'
-import {ExerciseFilters} from './components/ExerciseFilters'
-import {ExerciseGrid} from './components/ExerciseGrid'
-import {LibraryHeader} from './components/LibraryHeader'
-import {UserSettings} from './components/UserSettings'
-import {useExerciseFiltering} from './hooks/useExerciseFiltering'
+import {exerciseLibraryTranslations} from './lib/translations'
+import {useExerciseFiltering} from './model/useExerciseFiltering'
+import {ExerciseFilters} from './ui/ExerciseFilters'
+import {ExerciseGrid} from './ui/ExerciseGrid'
+import {LibraryHeader} from './ui/LibraryHeader'
+import {UserSettings} from './ui/UserSettings'
 
 export function ExerciseLibrary() {
-	const {t} = useTranslations(exerciseLibraryTranslations)
+	const {t} = loadTranslations(exerciseLibraryTranslations)
 	const {data: exerciseLibrary, isLoading, error} = useExercises()
 
 	const {
@@ -30,16 +31,16 @@ export function ExerciseLibrary() {
 
 	return (
 		<>
-			<Head title={t('exerciseLibrary')} />
+			<Head title={t(exerciseLibraryTranslations.exerciseLibrary)} />
 			<div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
 				<div className='mx-auto max-w-6xl px-4 py-8'>
-					<LibraryHeader t={t} />
+					<LibraryHeader t={t} translations={exerciseLibraryTranslations} />
 
 					{(isLoading || error) && <LoadingOrError {...errorProps} />}
 
 					{exerciseLibrary && (
 						<>
-							<UserSettings t={t} />
+							<UserSettings t={t} translations={exerciseLibraryTranslations} />
 
 							<ExerciseFilters
 								difficultyOptions={difficultyOptions}
@@ -52,12 +53,14 @@ export function ExerciseLibrary() {
 								setSelectedTags={setSelectedTags}
 								t={t}
 								tagOptions={tagOptions}
+								translations={exerciseLibraryTranslations}
 							/>
 
 							<ExerciseGrid
 								exercises={filteredExercises}
 								onClearFilters={clearFilters}
 								t={t}
+								translations={exerciseLibraryTranslations}
 							/>
 						</>
 					)}

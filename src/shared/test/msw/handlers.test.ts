@@ -25,175 +25,6 @@ async function fetchJson<T>(
 }
 
 describe('MSW handlers', () => {
-	describe('GET /api/translations', () => {
-		it('should return translations for valid language and keys', async () => {
-			const response = await fetchJson<{
-				translations: Record<string, string>
-			}>('/api/translations?lang=en&keys=footer.copyright,footer.github')
-
-			expect(response.status).toBe(200)
-			expect(response.data.translations).toMatchObject({
-				'footer.copyright': expect.any(String),
-				'footer.github': expect.any(String)
-			})
-		})
-
-		it('should return Russian translations when available', async () => {
-			const response = await fetchJson<{
-				translations: Record<string, string>
-			}>('/api/translations?lang=ru&keys=footer.copyright')
-
-			expect(response.status).toBe(200)
-			expect(response.data.translations).toHaveProperty('footer.copyright')
-			expect(typeof response.data.translations['footer.copyright']).toBe(
-				'string'
-			)
-		})
-
-		it('should return Greek translations when available', async () => {
-			const response = await fetchJson<{
-				translations: Record<string, string>
-			}>('/api/translations?lang=el&keys=footer.copyright')
-
-			expect(response.status).toBe(200)
-			expect(response.data.translations).toHaveProperty('footer.copyright')
-		})
-
-		it('should return 400 when lang parameter is missing', async () => {
-			const response = await fetchJson(
-				'/api/translations?keys=footer.copyright'
-			)
-
-			expect(response.status).toBe(400)
-			expect(response.data).toEqual({
-				error: 'Missing required parameters: lang and keys'
-			})
-		})
-
-		it('should return 400 when keys parameter is missing', async () => {
-			const response = await fetchJson('/api/translations?lang=en')
-
-			expect(response.status).toBe(400)
-			expect(response.data).toEqual({
-				error: 'Missing required parameters: lang and keys'
-			})
-		})
-
-		it('should return 400 when both parameters are missing', async () => {
-			const response = await fetchJson('/api/translations')
-
-			expect(response.status).toBe(400)
-			expect(response.data).toEqual({
-				error: 'Missing required parameters: lang and keys'
-			})
-		})
-
-		it('should return 404 for unsupported language', async () => {
-			const response = await fetchJson(
-				'/api/translations?lang=fr&keys=footer.copyright'
-			)
-
-			expect(response.status).toBe(404)
-			expect(response.data).toEqual({
-				error: "Translation for language 'fr' not found"
-			})
-		})
-
-		it('should return 400 for empty keys parameter', async () => {
-			const response = await fetchJson('/api/translations?lang=en&keys=')
-
-			expect(response.status).toBe(400)
-			expect(response.data).toEqual({
-				error: 'Missing required parameters: lang and keys'
-			})
-		})
-
-		it('should handle keys that become empty after normalization', async () => {
-			// Test with keys that are all whitespace or invalid
-			const response = await fetchJson<{
-				translations: Record<string, string>
-			}>('/api/translations?lang=en&keys=%20%20,%20%20')
-
-			expect(response.status).toBe(200)
-			expect(response.data.translations).toEqual({})
-		})
-
-		it('should filter out invalid keys (not in translation registry)', async () => {
-			const response = await fetchJson<{
-				translations: Record<string, string>
-			}>('/api/translations?lang=en&keys=invalid.key,footer.copyright')
-
-			expect(response.status).toBe(200)
-			// Should only contain valid keys
-			expect(response.data.translations).not.toHaveProperty('invalid.key')
-			expect(response.data.translations).toHaveProperty('footer.copyright')
-		})
-
-		it('should trim whitespace from keys', async () => {
-			const response = await fetchJson<{
-				translations: Record<string, string>
-			}>(
-				'/api/translations?lang=en&keys=%20footer.copyright%20,%20footer.github%20'
-			)
-
-			expect(response.status).toBe(200)
-			expect(response.data.translations).toHaveProperty('footer.copyright')
-			expect(response.data.translations).toHaveProperty('footer.github')
-		})
-
-		it('should fallback to English when translation is missing for non-English language', async () => {
-			// Test with a key that might exist in English but not in other languages
-			const response = await fetchJson<{
-				translations: Record<string, string>
-			}>('/api/translations?lang=ru&keys=footer.copyright')
-
-			expect(response.status).toBe(200)
-			expect(response.data.translations).toHaveProperty('footer.copyright')
-			// Should have some translation (either Russian or English fallback)
-			expect(response.data.translations['footer.copyright']).toBeTruthy()
-		})
-
-		it('should use English fallback when key missing in non-English language', async () => {
-			// Test with a specific scenario: use a key that's in English but not in el
-			// If the key doesn't exist in el, it should fallback to English
-			const response = await fetchJson<{
-				translations: Record<string, string>
-			}>('/api/translations?lang=el&keys=settings,app.title,buttons.start')
-
-			expect(response.status).toBe(200)
-			// Should have at least some translations (either direct or fallback)
-			expect(Object.keys(response.data.translations).length).toBeGreaterThan(0)
-			// Check that we get meaningful responses
-			const translations = response.data.translations
-			const settingsKey = 'settings'
-			if (settingsKey in translations) {
-				expect(typeof translations[settingsKey]).toBe('string')
-			}
-		})
-
-		it('should not provide fallback for English language', async () => {
-			// When lang=en, no fallback should be attempted even if key is missing
-			const response = await fetchJson<{
-				translations: Record<string, string>
-			}>('/api/translations?lang=en&keys=nonexistent.key')
-
-			expect(response.status).toBe(200)
-			expect(response.data.translations).toEqual({})
-		})
-
-		it('should handle multiple comma-separated keys', async () => {
-			const response = await fetchJson<{
-				translations: Record<string, string>
-			}>(
-				'/api/translations?lang=en&keys=footer.copyright,footer.github,app.title'
-			)
-
-			expect(response.status).toBe(200)
-			const translations = response.data.translations
-			expect(Object.keys(translations).length).toBeGreaterThanOrEqual(2)
-		})
-	})
-
 	describe('POST /api/translations', () => {
 		it('should return translations for valid language and keys', async () => {
 			const response = await fetchJson<{
@@ -604,12 +435,19 @@ describe('MSW handlers', () => {
 
 	describe('normalizeTranslationKeys function (indirect testing)', () => {
 		it('should normalize keys by trimming whitespace and filtering invalid keys', async () => {
-			// Test via GET endpoint which uses normalizeTranslationKeys
+			// Test via POST endpoint which uses normalizeTranslationKeys
 			const response = await fetchJson<{
 				translations: Record<string, string>
-			}>(
-				'/api/translations?lang=en&keys=%20footer.copyright%20,invalid.key,%20footer.github%20'
-			)
+			}>('/api/translations', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					language: 'en',
+					keys: [' footer.copyright ', 'invalid.key', ' footer.github ']
+				})
+			})
 
 			expect(response.status).toBe(200)
 			// Should have valid keys but not invalid ones
@@ -621,19 +459,35 @@ describe('MSW handlers', () => {
 		it('should filter empty strings after trimming', async () => {
 			const response = await fetchJson<{
 				translations: Record<string, string>
-			}>(
-				'/api/translations?lang=en&keys=footer.copyright,,%20%20,footer.github'
-			)
+			}>('/api/translations', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					language: 'en',
+					keys: ['footer.copyright', '', '  ', 'footer.github']
+				})
+			})
 
 			expect(response.status).toBe(200)
 			expect(response.data.translations).toHaveProperty('footer.copyright')
 			expect(response.data.translations).toHaveProperty('footer.github')
 		})
 
-		it('should handle comma-only keys parameter', async () => {
+		it('should handle empty keys after filtering', async () => {
 			const response = await fetchJson<{
 				translations: Record<string, string>
-			}>('/api/translations?lang=en&keys=,,,')
+			}>('/api/translations', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					language: 'en',
+					keys: ['', '', '']
+				})
+			})
 
 			expect(response.status).toBe(200)
 			expect(response.data.translations).toEqual({})
@@ -693,10 +547,19 @@ describe('MSW handlers', () => {
 			])
 		})
 
-		it('should handle URL encoding in GET parameters', async () => {
+		it('should handle special characters in keys', async () => {
 			const response = await fetchJson<{
 				translations: Record<string, string>
-			}>('/api/translations?lang=en&keys=footer%2Ecopyright%2Cfooter%2Egithub')
+			}>('/api/translations', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					language: 'en',
+					keys: ['footer.copyright', 'footer.github']
+				})
+			})
 
 			expect(response.status).toBe(200)
 			expect(response.data.translations).toHaveProperty('footer.copyright')

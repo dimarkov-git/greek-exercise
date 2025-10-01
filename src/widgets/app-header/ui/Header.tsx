@@ -1,7 +1,7 @@
 import {motion} from 'framer-motion'
 import {useId, useState} from 'react'
 import {cn, useLayout} from '@/shared/lib'
-import {MobileMenu, MobileMenuButton} from '@/widgets/mobile-menu'
+import {MobileMenu, MobileMenuButton} from '../mobile-menu'
 import {HeaderLogo} from './HeaderLogo'
 import {HeaderNavigation} from './HeaderNavigation'
 import {HeaderSettings} from './HeaderSettings'

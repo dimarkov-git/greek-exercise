@@ -1,5 +1,10 @@
-export {resolveFallbackResponse} from './fallbacks'
-export {HttpError, type JsonValue, requestJson} from './httpClient'
+export {
+	configureHttpClient,
+	type HttpClientConfig,
+	HttpError,
+	type JsonValue,
+	requestJson
+} from './httpClient'
 export {
 	getTranslations,
 	type SupportedLanguage,

@@ -12,21 +12,21 @@ The application supports three interface languages:
 
 ## 🏗️ System Architecture
 
-The i18n system uses a modern, type-safe approach with generated registries and feature-based dictionaries:
+The i18n system uses a modern, autonomous approach with component-level translations and smart fallback chains:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     Translation Registry                        │
+│                 Component Translation Files                     │
 ├─────────────────────────────────────────────────────────────────┤
-│  Generated TypeScript types from English source strings        │
-│  Compile-time safety • Centralized key definitions             │
+│  Co-located translations • Simple API • Type-safe              │
+│  Example: features/exercise-header/ui/translations.ts          │
 └─────────────────────────────────────────────────────────────────┘
                                   │
                                   ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                  Feature-based Dictionaries                    │
+│                  loadTranslations() Hook                        │
 ├─────────────────────────────────────────────────────────────────┤
-│  Scoped to components • Typed translators • Tree-shakeable     │
+│  Smart fallback chain • Works offline • Status reporting       │
 └─────────────────────────────────────────────────────────────────┘
                                   │
                                   ▼
@@ -39,51 +39,110 @@ The i18n system uses a modern, type-safe approach with generated registries and 
 
 ## ✨ Key Features
 
-### 1. **Generated Translation Registry**
-- **File**: `src/i18n/generated/translation-registry.ts`
-- **Purpose**: Compile-time type safety for all translation keys
-- **Auto-generated**: Created by `scripts/generate-translation-registry.mjs`
+### 1. **Autonomous Translation System**
+- **No code generation**: No build-time registry generation needed
+- **Component-level**: Translations co-located with components
+- **Simple API**: String keys or full translation entries
 
-### 2. **Feature-based Dictionaries**
-- **Location**: `src/i18n/dictionaries/`
-- **Purpose**: Scoped translation dictionaries for specific components
-- **Examples**: `home.ts`, `exercise.ts`, `navigation.ts`
+### 2. **Smart Fallback Chain**
+The system provides a 4-level fallback resolution:
+1. **Service translation** in app language (from API)
+2. **Inline translations** in app language (from component file)
+3. **Inline translations** in default language (if specified)
+4. **Fallback value** (ultimate fallback)
 
-### 3. **SSR-Safe Settings**
-- **Store**: `src/stores/settings.ts`
-- **Hook**: `src/hooks/useSettingsSync.ts`
+### 3. **Flexible Translation Entries**
+Two ways to define translations:
+```typescript
+{
+  // Simple: service key only
+  backButton: 'ui.back',
+
+  // Full: with inline translations and fallback
+  greeting: {
+    key: 'app.greeting',           // Optional service key
+    translations: {                 // Inline translations
+      en: 'Hello',
+      el: 'Γεια',
+      ru: 'Привет'
+    },
+    fallback: 'Hello',             // Ultimate fallback
+    defaultLanguage: 'en'          // Preferred language
+  }
+}
+```
+
+### 4. **Offline-First Design**
+- **Inline translations**: Work without network connection
+- **Service enhancement**: API translations enhance inline ones
+- **Graceful degradation**: Falls back when service unavailable
+
+### 5. **SSR-Safe Settings**
+- **Store**: `src/shared/model/settings.ts` (Zustand)
+- **Persistence**: localStorage with SSR safety checks
 - **Purpose**: DOM-safe language and theme management
-
-### 4. **MSW Integration**
-- **Development**: Mock translation API for realistic testing
-- **Testing**: Deterministic translation responses
-- **Production**: Ready for real translation service integration
 
 ## 🎯 Usage Patterns
 
-### Basic Translation
+### Basic Translation with Service Keys
+
 ```typescript
-import { useDictionary } from '@/i18n/dictionary'
+import { loadTranslations } from '@/shared/lib/i18n'
+
+const translations = {
+  title: 'page.title',
+  subtitle: 'page.subtitle'
+} as const satisfies TranslationDictionary
 
 function Component() {
-  const t = useDictionary()
-  return <h1>{t('app.title')}</h1>  // Type-safe!
+  const { t } = loadTranslations(translations)
+  return <h1>{t(translations.title)}</h1>
 }
 ```
 
-### Feature Dictionary
-```typescript
-import { homeDictionary } from '@/i18n/dictionaries/home'
+### Translation with Inline Fallbacks
 
-function HomePage() {
-  const t = homeDictionary.useTranslator()
-  return <span>{t('home.welcome')}</span>  // Scoped & typed!
+```typescript
+const translations = {
+  greeting: {
+    key: 'app.greeting',
+    translations: {
+      en: 'Hello and welcome!',
+      el: 'Γεια σας και καλώς ήρθατε!',
+      ru: 'Здравствуйте и добро пожаловать!'
+    }
+  }
+} as const satisfies TranslationDictionary
+
+function Component() {
+  const { t, status } = loadTranslations(translations)
+
+  // Works immediately with inline translations
+  // Enhanced by service when available
+  return <h1>{t(translations.greeting)}</h1>
 }
+```
+
+### Pure Inline Translations (No Service)
+
+```typescript
+const translations = {
+  // No service key - uses only inline translations
+  label: {
+    translations: {
+      en: 'Settings',
+      el: 'Ρυθμίσεις',
+      ru: 'Настройки'
+    },
+    fallback: 'Settings'
+  }
+} as const satisfies TranslationDictionary
 ```
 
 ### Language Switching
+
 ```typescript
-import { useSettingsStore } from '@/stores/settings'
+import { useSettingsStore } from '@/shared/model'
 
 function LanguageSwitcher() {
   const { setUiLanguage } = useSettingsStore()
@@ -99,37 +158,66 @@ function LanguageSwitcher() {
 
 ## 📊 System Benefits
 
+### Simplicity
+- **No build step**: No registry generation required
+- **Direct usage**: Import and use translations immediately
+- **Minimal boilerplate**: Simple object definitions
+
 ### Type Safety
-- **Compile-time validation** of translation keys
-- **Autocomplete support** in IDEs
-- **Refactoring safety** with TypeScript
+- **Compile-time validation**: TypeScript ensures correct keys
+- **Autocomplete support**: Full IDE integration
+- **Refactoring safety**: Type errors on key changes
 
 ### Performance
-- **Tree-shaking**: Only used translations loaded
-- **Caching**: TanStack Query handles translation caching
-- **Lazy loading**: Feature dictionaries loaded on demand
+- **Efficient caching**: TanStack Query handles caching
+- **Lazy loading**: Translations loaded on component mount
+- **Offline-ready**: Inline translations work without network
 
 ### Developer Experience
-- **Generated types** prevent typos
-- **Feature scoping** reduces cognitive overhead
-- **MSW mocking** enables offline development
+- **Co-location**: Translations near component code
+- **Flexible API**: Choose simple or full format per need
+- **Status reporting**: Track loading, errors, missing keys
 
 ### Testing
-- **Deterministic fallbacks** replace random text
-- **Mock API** provides consistent test data
-- **SSR compatibility** with happy-dom testing
+- **Inline fallbacks**: Predictable test output
+- **No mocking needed**: Inline translations work in tests
+- **Status tracking**: Test loading and error states
+
+## 🔄 Fallback Resolution
+
+The system resolves translations using this priority chain:
+
+```typescript
+// Given this entry:
+const entry = {
+  key: 'app.greeting',
+  translations: {
+    en: 'Hello',
+    el: 'Γεια',
+    ru: 'Привет'
+  },
+  fallback: 'Hi',
+  defaultLanguage: 'en'
+}
+
+// Resolution (app language = 'ru'):
+// 1. Service translation for 'app.greeting' in 'ru' → if available
+// 2. Inline translations['ru'] → 'Привет' ✓
+// 3. Inline translations['en'] → 'Hello' (if ru missing)
+// 4. fallback → 'Hi' (if all else fails)
+```
 
 ## 🔗 Related Documentation
 
-- **[Implementation Guide](implementation.md)** - Detailed implementation patterns
+- **[Implementation Guide](implementation.md)** - Detailed patterns and examples
 - **[API Reference](api-reference.md)** - Complete API documentation
 - **[Technical Overview](../technical/overview.md)** - System architecture
 - **[Development Guide](../guides/getting-started.md)** - Development setup
 
 ## 🚀 Quick Start
 
-1. **Add new translation key**: Update English source strings
-2. **Generate registry**: Run `pnpm generate:i18n`
-3. **Create dictionary**: Add to appropriate feature dictionary
-4. **Use in component**: Import dictionary and call translator
-5. **Test**: Verify type safety and fallback behavior
+1. **Create translation file**: `translations.ts` in component folder
+2. **Define translations**: Use string keys or full entries
+3. **Use in component**: Call `loadTranslations()` hook
+4. **Render translations**: Use `t()` function with type safety
+5. **Test**: Verify inline translations work without service

@@ -1,8 +1,8 @@
 import userEvent from '@testing-library/user-event'
 import type React from 'react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
-import {act, render, screen, waitFor} from '@/shared/lib'
-import {useCustomExercisesStore} from '@/shared/model'
+import {useCustomExercisesStore} from '@/entities/exercise'
+import {act, render, screen, waitFor} from '@/shared/test'
 import {ExerciseBuilder} from './ExerciseBuilder'
 
 const translations: Record<string, string> = {
@@ -44,19 +44,14 @@ const translations: Record<string, string> = {
 const translate = (key: string) => translations[key] ?? key
 
 vi.mock('@/shared/lib/i18n', () => ({
-	useTranslations: vi.fn(() => ({
+	loadTranslations: vi.fn(() => ({
 		t: translate,
-		translations: {},
-		currentLanguage: 'en',
+		language: 'en',
 		isLoading: false,
 		error: null,
 		missingKeys: [],
 		status: 'complete'
-	})),
-	exerciseBuilderTranslations: {
-		'builder.title': 'Exercise Builder',
-		'builder.description': 'Create custom exercises'
-	}
+	}))
 }))
 
 vi.mock('@/shared/ui/head', () => ({
@@ -93,6 +88,20 @@ vi.mock('framer-motion', () => ({
 		}
 	)
 }))
+
+vi.mock('@/pages/exercise-builder', async () => {
+	const ui = await vi.importActual<
+		typeof import('@/pages/exercise-builder/ui')
+	>('@/pages/exercise-builder/ui')
+	const model = await vi.importActual<
+		typeof import('@/pages/exercise-builder/model/state')
+	>('@/pages/exercise-builder/model/state')
+
+	return {
+		...ui,
+		...model
+	}
+})
 
 describe('ExerciseBuilder', () => {
 	beforeEach(() => {

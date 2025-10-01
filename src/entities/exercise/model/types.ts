@@ -2,10 +2,10 @@ import type {
 	Difficulty,
 	ExerciseSettings,
 	ExerciseType,
+	Language,
 	PartialExerciseSettings
 } from '@/shared/model'
 import {DEFAULT_EXERCISE_SETTINGS} from '@/shared/model'
-import type {Language} from '@/shared/model/settings'
 
 // Re-export shared types for backwards compatibility
 export type {

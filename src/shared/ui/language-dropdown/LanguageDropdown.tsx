@@ -1,9 +1,9 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {useState} from 'react'
-import {languageDropdownTranslations, useTranslations} from '@/shared/lib/i18n'
-import {useSettingsStore} from '@/shared/model'
-import type {Language} from '@/shared/model/settings'
-import {UI_LANGUAGES} from '@/shared/model/settings'
+import {loadTranslations} from '@/shared/lib/i18n'
+import type {Language} from '@/shared/model'
+import {UI_LANGUAGES, useSettingsStore} from '@/shared/model'
+import {translations} from './translations'
 
 interface DropdownButtonProps {
 	currentLanguage: {flag: string; name: string} | undefined
@@ -129,7 +129,7 @@ function DropdownMenu({
 
 export function LanguageDropdown() {
 	const {uiLanguage, setUiLanguage} = useSettingsStore()
-	const {t} = useTranslations(languageDropdownTranslations)
+	const {t} = loadTranslations(translations)
 	const [isOpen, setIsOpen] = useState(false)
 
 	const currentLanguage = UI_LANGUAGES.find(lang => lang.code === uiLanguage)
@@ -144,10 +144,10 @@ export function LanguageDropdown() {
 		<div className='relative'>
 			<DropdownButton
 				currentLanguage={currentLanguage}
-				dropdownArrowTitle={t('ui.dropdownArrow')}
+				dropdownArrowTitle={t(translations.dropdownArrow)}
 				isOpen={isOpen}
 				onToggle={() => setIsOpen(!isOpen)}
-				title={t('header.selectLanguage')}
+				title={t(translations.selectLanguage)}
 				uiLanguage={uiLanguage}
 			/>
 			<AnimatePresence>
@@ -157,7 +157,7 @@ export function LanguageDropdown() {
 						currentLanguage={uiLanguage}
 						onClose={() => setIsOpen(false)}
 						onLanguageChange={handleLanguageChange}
-						selectedLanguageTitle={t('ui.selectedLanguage')}
+						selectedLanguageTitle={t(translations.selectedLanguage)}
 					/>
 				)}
 			</AnimatePresence>

@@ -1,5 +1,6 @@
 import {motion} from 'framer-motion'
-import {useTranslations, viewToggleTranslations} from '@/shared/lib/i18n'
+import {loadTranslations} from '@/shared/lib/i18n'
+import {translations} from './translations-view-toggle'
 
 type ViewMode = 'json' | 'table'
 
@@ -9,7 +10,7 @@ interface ViewToggleProps {
 }
 
 export function ViewToggle({viewMode, onViewModeChange}: ViewToggleProps) {
-	const {t} = useTranslations(viewToggleTranslations)
+	const {t} = loadTranslations(translations)
 
 	return (
 		<div className='flex rounded-lg border border-gray-200 bg-white p-1 shadow-sm dark:border-gray-600 dark:bg-gray-800'>
@@ -29,7 +30,7 @@ export function ViewToggle({viewMode, onViewModeChange}: ViewToggleProps) {
 						transition={{type: 'spring', stiffness: 500, damping: 30}}
 					/>
 				)}
-				<span className='relative z-10'>{t('tableView')}</span>
+				<span className='relative z-10'>{t(translations.tableView)}</span>
 			</button>
 			<button
 				className={`relative flex-1 cursor-pointer rounded-md px-4 py-2 font-medium text-sm transition-colors ${
@@ -47,7 +48,7 @@ export function ViewToggle({viewMode, onViewModeChange}: ViewToggleProps) {
 						transition={{type: 'spring', stiffness: 500, damping: 30}}
 					/>
 				)}
-				<span className='relative z-10'>{t('jsonView')}</span>
+				<span className='relative z-10'>{t(translations.jsonView)}</span>
 			</button>
 		</div>
 	)

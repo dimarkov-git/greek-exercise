@@ -1,25 +1,18 @@
 import {act, render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {afterEach, describe, expect, it, vi} from 'vitest'
-import {useSettingsStore} from '@/shared/model'
-import {DEFAULT_SETTINGS} from '@/shared/model/settings'
+import {DEFAULT_SETTINGS, useSettingsStore} from '@/shared/model'
 import {ThemeToggle} from '@/shared/ui/theme-toggle'
 
 vi.mock('@/shared/lib/i18n', () => ({
-	useTranslations: () => ({
-		t: (key: string) => key,
-		status: 'complete' as const,
-		missingKeys: [] as string[]
-	}),
-	themeToggleTranslations: {
-		keys: ['lightTheme', 'darkTheme', 'ui.sunEmoji', 'ui.moonEmoji'],
-		lookupKeys: [],
-		requests: [],
-		cacheKey: 'mock-cache-key',
-		fixedLanguageKeys: {},
-		getRequest: vi.fn(),
-		getFixedLanguage: vi.fn()
-	}
+	loadTranslations: () => ({
+		t: (key: unknown) => String(key),
+		language: 'en' as const,
+		isLoading: false,
+		error: null,
+		missingKeys: [],
+		status: 'complete' as const
+	})
 }))
 
 describe('ThemeToggle', () => {

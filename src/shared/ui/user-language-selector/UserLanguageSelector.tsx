@@ -1,15 +1,12 @@
 import {motion} from 'framer-motion'
-import {
-	userLanguageSelectorTranslations,
-	useTranslations
-} from '@/shared/lib/i18n'
-import {useSettingsStore} from '@/shared/model'
-import type {Language} from '@/shared/model/settings'
-import {USER_LANGUAGES} from '@/shared/model/settings'
+import {loadTranslations} from '@/shared/lib/i18n'
+import type {Language} from '@/shared/model'
+import {USER_LANGUAGES, useSettingsStore} from '@/shared/model'
+import {translations} from './translations'
 
 export function UserLanguageSelector() {
 	const {userLanguage, setUserLanguage} = useSettingsStore()
-	const {t} = useTranslations(userLanguageSelectorTranslations)
+	const {t} = loadTranslations(translations)
 
 	const onLanguageChange = (language: Language) => {
 		setUserLanguage(language)
@@ -24,7 +21,7 @@ export function UserLanguageSelector() {
 			transition={{delay: 0.1}}
 		>
 			<div className='block font-medium text-gray-700 text-sm dark:text-gray-300'>
-				{t('userLanguageLabel')}
+				{t(translations.userLanguageLabel)}
 			</div>
 			<div className='flex gap-1.5' data-current-user-language={userLanguage}>
 				{USER_LANGUAGES.map(language => (
