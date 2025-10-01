@@ -22,9 +22,14 @@ vi.mock('@/shared/lib/i18n', () => ({
 }))
 
 // Mock settings store
-vi.mock('@/shared/model', () => ({
-	useSettingsStore: vi.fn()
-}))
+vi.mock('@/shared/model', async () => {
+	const actual =
+		await vi.importActual<typeof import('@/shared/model')>('@/shared/model')
+	return {
+		...actual,
+		useSettingsStore: vi.fn()
+	}
+})
 
 // Mock react-hook-form
 vi.mock('react-hook-form', () => ({

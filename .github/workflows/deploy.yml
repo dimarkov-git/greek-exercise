@@ -2,9 +2,9 @@ name: Deploy to GitHub Pages
 
 on:
   workflow_run:
-    workflows: ["Test"]
-    branches: [main]
-    types: [completed]
+    workflows: [ "Test" ]
+    branches: [ main ]
+    types: [ completed ]
   workflow_dispatch:
 
 permissions:

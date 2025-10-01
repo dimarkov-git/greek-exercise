@@ -83,7 +83,7 @@ vi.mock('@/shared/lib/i18n', () => ({
 	}
 }))
 
-vi.mock('./hooks/useExerciseFiltering', () => ({
+vi.mock('./model/useExerciseFiltering', () => ({
 	useExerciseFiltering: vi.fn()
 }))
 
@@ -104,7 +104,7 @@ vi.mock('@/shared/ui/loading-or-error', () => ({
 	)
 }))
 
-vi.mock('./components/LibraryHeader', () => ({
+vi.mock('./ui/LibraryHeader', () => ({
 	LibraryHeader: ({t}: {t: (key: string) => string}) => (
 		<header data-testid='library-header'>
 			<h1>{t('exerciseLibrary')}</h1>
@@ -113,7 +113,7 @@ vi.mock('./components/LibraryHeader', () => ({
 	)
 }))
 
-vi.mock('./components/UserSettings', () => ({
+vi.mock('./ui/UserSettings', () => ({
 	UserSettings: ({t}: {t: (key: string) => string}) => (
 		<div data-testid='user-settings'>
 			<h2>{t('settings')}</h2>
@@ -121,7 +121,7 @@ vi.mock('./components/UserSettings', () => ({
 	)
 }))
 
-vi.mock('./components/ExerciseFilters', () => ({
+vi.mock('./ui/ExerciseFilters', () => ({
 	ExerciseFilters: ({
 		t,
 		selectedTags,
@@ -179,7 +179,7 @@ vi.mock('./components/ExerciseFilters', () => ({
 	)
 }))
 
-vi.mock('./components/ExerciseGrid', () => ({
+vi.mock('./ui/ExerciseGrid', () => ({
 	ExerciseGrid: ({
 		exercises,
 		onClearFilters,
