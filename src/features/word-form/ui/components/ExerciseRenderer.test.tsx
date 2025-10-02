@@ -18,7 +18,7 @@ type CompletionScreenProps = React.ComponentProps<
 
 const completionScreenMock = vi.fn<(props: CompletionScreenProps) => void>()
 
-vi.mock('@/pages/exercise/ui/word-form-exercise', () => ({
+vi.mock('@/features/word-form', () => ({
 	CompletionScreen: (props: CompletionScreenProps) => {
 		completionScreenMock(props)
 		return <div data-testid='completion-screen'>{props.exerciseTitle}</div>
@@ -112,6 +112,7 @@ const baseState: WordFormViewState = {
 const pulseState: PulseState = 'correct'
 
 function resetTestEnvironment() {
+	// biome-ignore lint/nursery/noFloatingPromises: act is synchronous in test environment
 	act(() => {
 		useSettingsStore.setState(() => ({...DEFAULT_SETTINGS}))
 	})
@@ -158,6 +159,7 @@ describe('ExerciseRenderer completion screen', () => {
 	})
 
 	it('prefers translated exercise title based on user language', () => {
+		// biome-ignore lint/nursery/noFloatingPromises: act is synchronous in test environment
 		act(() => {
 			useSettingsStore.getState().setUserLanguage('ru')
 		})
