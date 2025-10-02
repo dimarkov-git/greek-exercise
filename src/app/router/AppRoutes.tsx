@@ -1,6 +1,6 @@
 import {lazy} from 'react'
 import {Navigate, Route, Routes} from 'react-router'
-import {AppModeEnum, environment} from '@/app/config'
+import {environment} from '@/app/config'
 import {HomePage} from '@/pages/home'
 import {AppShell} from '../shell/AppShell'
 
@@ -26,9 +26,7 @@ const LearnPage = lazy(async () =>
 	import('@/pages/learn').then(module => ({default: module.LearnPage}))
 )
 
-const showTestSection = environment.mode === AppModeEnum.development
-
-const TestI18nPage = showTestSection
+const TestI18nPage = environment.isDevelopment
 	? lazy(async () =>
 			import('@/pages/test-i18n').then(module => ({
 				default: module.TestI18nPage
@@ -45,7 +43,7 @@ export function AppRoutes() {
 				<Route element={<ExercisePage />} path='exercise/:exerciseId' />
 				<Route element={<LearnPage />} path='learn/:exerciseId' />
 				<Route element={<ExerciseBuilder />} path='builder' />
-				{showTestSection && TestI18nPage && (
+				{environment.isDevelopment && TestI18nPage && (
 					<Route element={<TestI18nPage />} path='test/i18n' />
 				)}
 				<Route element={<Navigate replace={true} to='/' />} path='*' />
