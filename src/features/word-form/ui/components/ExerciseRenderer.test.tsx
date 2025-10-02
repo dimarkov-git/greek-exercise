@@ -112,7 +112,6 @@ const baseState: WordFormViewState = {
 const pulseState: PulseState = 'correct'
 
 function resetTestEnvironment() {
-	// biome-ignore lint/nursery/noFloatingPromises: React act is synchronous in this usage
 	act(() => {
 		useSettingsStore.setState(() => ({...DEFAULT_SETTINGS}))
 	})
@@ -159,7 +158,6 @@ describe('ExerciseRenderer completion screen', () => {
 	})
 
 	it('prefers translated exercise title based on user language', () => {
-		// biome-ignore lint/nursery/noFloatingPromises: React act is synchronous in this usage
 		act(() => {
 			useSettingsStore.getState().setUserLanguage('ru')
 		})
