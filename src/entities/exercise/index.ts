@@ -95,7 +95,8 @@ export {
 	getSupportedExerciseTypes,
 	isExerciseTypeSupported
 } from './model/exercise-type-registry'
-// Flashcard types
+// Flashcard types (kept in entities for backwards compatibility with FSD rules)
+// TODO: Gradually migrate consumers to import from features
 export type {
 	CardState,
 	FlashCard,
@@ -145,6 +146,8 @@ export {
 	selectLanguageOptions,
 	selectTagOptions
 } from './model/selectors'
+// Word-form types (kept in entities for backwards compatibility with FSD rules)
+// TODO: Gradually migrate consumers to import from features
 export type {
 	Difficulty,
 	ExerciseEvent,

@@ -28,7 +28,10 @@ import type {ExerciseTypeComponents} from './exercise-renderer-contract'
  * Provides type-safe registration and retrieval of exercise components.
  */
 export class ExerciseTypeRegistry {
-	private readonly registry = new Map<ExerciseType, ExerciseTypeComponents>()
+	private readonly registry = new Map<
+		ExerciseType,
+		ExerciseTypeComponents<unknown>
+	>()
 
 	/**
 	 * Register components for an exercise type
@@ -45,14 +48,17 @@ export class ExerciseTypeRegistry {
 	 * })
 	 * ```
 	 */
-	register(type: ExerciseType, components: ExerciseTypeComponents): void {
+	register<TExercise = unknown>(
+		type: ExerciseType,
+		components: ExerciseTypeComponents<TExercise>
+	): void {
 		if (this.registry.has(type)) {
 			throw new Error(
 				`Exercise type "${type}" is already registered. Use unregister() first if you need to replace it.`
 			)
 		}
 
-		this.registry.set(type, components)
+		this.registry.set(type, components as ExerciseTypeComponents<unknown>)
 	}
 
 	/**
@@ -84,7 +90,7 @@ export class ExerciseTypeRegistry {
 	 * }
 	 * ```
 	 */
-	get(type: ExerciseType): ExerciseTypeComponents | undefined {
+	get(type: ExerciseType): ExerciseTypeComponents<unknown> | undefined {
 		return this.registry.get(type)
 	}
 
@@ -152,7 +158,7 @@ export class ExerciseTypeRegistry {
  *
  * @example
  * ```typescript
- * // In a feature module (e.g., features/word-form-exercise/index.ts)
+ * // In a feature module (e.g., features/word-form/index.ts)
  * import { exerciseTypeRegistry } from '@/entities/exercise'
  *
  * exerciseTypeRegistry.register('word-form', {

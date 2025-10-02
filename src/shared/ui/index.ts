@@ -4,6 +4,7 @@ export * from './card'
 // Specialized UI components
 export * from './exercise-layout'
 export * from './head'
+export * from './hint-system'
 export * from './input'
 export * from './language-dropdown'
 export * from './language-selector'

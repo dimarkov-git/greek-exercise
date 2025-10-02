@@ -172,11 +172,11 @@ export interface ExerciseLibraryCardProps {
 /**
  * Complete set of components for an exercise type
  */
-export interface ExerciseTypeComponents {
+export interface ExerciseTypeComponents<TExercise = unknown> {
 	/** Component for executing the exercise */
-	renderer: ComponentType<ExerciseRendererProps>
+	renderer: ComponentType<ExerciseRendererProps<TExercise>>
 	/** Component for learning/studying the exercise */
-	learnView: ComponentType<ExerciseLearnViewProps>
+	learnView: ComponentType<ExerciseLearnViewProps<TExercise>>
 	/** Optional custom library card component */
 	libraryCard?: ComponentType<ExerciseLibraryCardProps>
 }

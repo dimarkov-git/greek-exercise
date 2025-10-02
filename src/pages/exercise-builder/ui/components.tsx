@@ -6,7 +6,7 @@ import type {
 	WordFormExerciseJSON,
 	WordFormExerciseWithDefaults
 } from '@/entities/exercise'
-import {TableView} from '@/features/learn-view'
+import {TableView} from '@/features/word-form'
 import type {BuilderSaveStatus, BuilderTranslator} from '../model/state'
 
 export function BuilderHero({t}: {readonly t: BuilderTranslator}) {

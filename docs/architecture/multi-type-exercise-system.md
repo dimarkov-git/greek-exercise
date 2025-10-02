@@ -122,7 +122,7 @@ export function getExerciseTypeAvailability(type: ExerciseType): {...}
 ```mermaid
 graph LR
     A[App starts] --> B[Import ExercisePage]
-    B --> C[Import @/features/word-form-exercise]
+    B --> C[Import @/features/word-form]
     C --> D[Module evaluates]
     D --> E[exerciseTypeRegistry.register]
     E --> F[Type registered]
@@ -247,7 +247,7 @@ That's it! The pages will automatically support the new exercise type.
 
 ### 1. Word-form exercises ✅ Implemented
 
-**Location**: `src/features/word-form-exercise/`
+**Location**: `src/features/word-form/`
 
 **Purpose**: Greek word conjugation and declension practice
 
@@ -259,7 +259,7 @@ That's it! The pages will automatically support the new exercise type.
 
 ### 2. Flashcard exercises 🚧 Stub
 
-**Location**: `src/features/flashcard-exercise/`
+**Location**: `src/features/flashcard/`
 
 **Purpose**: Vocabulary memorization with spaced repetition (SM-2 algorithm)
 
@@ -271,7 +271,7 @@ That's it! The pages will automatically support the new exercise type.
 
 ### 3. Multiple-choice exercises 🚧 Stub
 
-**Location**: `src/features/multiple-choice-exercise/`
+**Location**: `src/features/multiple-choice/`
 
 **Purpose**: Grammar and comprehension tests
 
@@ -355,7 +355,7 @@ Each exercise type is in a separate feature module and can be lazy-loaded:
 ```typescript
 // Future optimization (not yet implemented)
 const WordFormExercise = lazy(() =>
-  import('@/features/word-form-exercise')
+  import('@/features/word-form')
 )
 ```
 
@@ -441,8 +441,8 @@ Benefits:
 
 ```typescript
 const exerciseModules = {
-  'word-form': () => import('@/features/word-form-exercise'),
-  'flashcard': () => import('@/features/flashcard-exercise'),
+  'word-form': () => import('@/features/word-form'),
+  'flashcard': () => import('@/features/flashcard'),
 }
 
 async function loadExerciseType(type: ExerciseType) {

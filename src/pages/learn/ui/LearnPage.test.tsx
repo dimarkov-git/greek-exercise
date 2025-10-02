@@ -14,34 +14,34 @@ vi.mock('react-router', async () => {
 	}
 })
 
-// Mock exercise type registry
-const mockRegistry = new Map()
-const mockExerciseTypeRegistry = {
-	register: vi.fn((type: string, components: unknown) => {
-		mockRegistry.set(type, components)
-	}),
-	get: vi.fn((type: string) => mockRegistry.get(type)),
-	has: vi.fn((type: string) => mockRegistry.has(type)),
-	unregister: vi.fn(),
-	clear: vi.fn(),
-	getRegisteredTypes: vi.fn(() => Array.from(mockRegistry.keys())),
-	size: 0
-}
-
-vi.mock('@/entities/exercise', () => ({
-	useExercise: vi.fn(),
-	exerciseTypeRegistry: mockExerciseTypeRegistry,
-	getExerciseLearnView: vi.fn((type: string) => {
-		const components = mockRegistry.get(type)
-		return components?.learnView || null
-	}),
-	DEFAULT_EXERCISE_SETTINGS: {
-		autoAdvance: true,
-		autoAdvanceDelayMs: 1500,
-		allowSkip: false,
-		shuffleCases: false
+// Mock exercise type registry - define inline to avoid hoisting issues
+vi.mock('@/entities/exercise', () => {
+	const mockRegistry = new Map()
+	return {
+		useExercise: vi.fn(),
+		exerciseTypeRegistry: {
+			register: vi.fn((type: string, components: unknown) => {
+				mockRegistry.set(type, components)
+			}),
+			get: vi.fn((type: string) => mockRegistry.get(type)),
+			has: vi.fn((type: string) => mockRegistry.has(type)),
+			unregister: vi.fn(),
+			clear: vi.fn(),
+			getRegisteredTypes: vi.fn(() => Array.from(mockRegistry.keys())),
+			size: 0
+		},
+		getExerciseLearnView: vi.fn((type: string) => {
+			const components = mockRegistry.get(type)
+			return components?.learnView || null
+		}),
+		DEFAULT_EXERCISE_SETTINGS: {
+			autoAdvance: true,
+			autoAdvanceDelayMs: 1500,
+			allowSkip: false,
+			shuffleCases: false
+		}
 	}
-}))
+})
 
 vi.mock('@/shared/lib', async () => {
 	const actual = await vi.importActual('@/shared/lib')
@@ -69,39 +69,6 @@ vi.mock('@/shared/ui/loading-or-error', () => ({
 			<div data-testid='loading-error'>Error: {error.message}</div>
 		) : (
 			<div data-testid='loading-error'>Loading...</div>
-		)
-	)
-}))
-
-vi.mock('@/features/learn-view', () => ({
-	JsonView: vi.fn(({exercise}: {exercise: WordFormExerciseWithDefaults}) => (
-		<div data-testid='json-view'>JsonView: {exercise.title}</div>
-	)),
-	TableView: vi.fn(({exercise}: {exercise: WordFormExerciseWithDefaults}) => (
-		<div data-testid='table-view'>TableView: {exercise.title}</div>
-	)),
-	ViewToggle: vi.fn(
-		({
-			viewMode,
-			onViewModeChange
-		}: {
-			viewMode: string
-			onViewModeChange: (mode: string) => void
-		}) => (
-			<div data-testid='view-toggle'>
-				<button
-					data-testid='table-mode-btn'
-					onClick={() => onViewModeChange('table')}
-				>
-					Table ({viewMode})
-				</button>
-				<button
-					data-testid='json-mode-btn'
-					onClick={() => onViewModeChange('json')}
-				>
-					JSON ({viewMode})
-				</button>
-			</div>
 		)
 	)
 }))
