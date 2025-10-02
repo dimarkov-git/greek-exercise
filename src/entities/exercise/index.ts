@@ -95,6 +95,25 @@ export {
 	getSupportedExerciseTypes,
 	isExerciseTypeSupported
 } from './model/exercise-type-registry'
+// Flashcard types
+export type {
+	CardState,
+	FlashCard,
+	FlashcardExercise,
+	FlashcardExerciseResult,
+	FlashcardExerciseStats,
+	FlashcardReviewResult,
+	FlashcardState,
+	FlashcardStatus,
+	QualityRating,
+	SRSData,
+	SRSSettings
+} from './model/flashcard-types'
+export {
+	DEFAULT_SRS_SETTINGS,
+	getSRSSettings,
+	QUALITY_LABELS
+} from './model/flashcard-types'
 // Schema DTO types
 export type {
 	ExerciseMetadataDto,
