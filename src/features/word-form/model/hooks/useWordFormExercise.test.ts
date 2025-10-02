@@ -11,7 +11,7 @@ vi.mock('@/utils/test-utils', () => ({
 	detectAutomationEnvironment: mockDetectAutomationEnvironment
 }))
 
-vi.mock('../../hint-system', () => ({
+vi.mock('@/shared/ui/hint-system', () => ({
 	usePulseEffect: () => ({
 		pulseState: null,
 		triggerPulse: triggerPulseMock,
