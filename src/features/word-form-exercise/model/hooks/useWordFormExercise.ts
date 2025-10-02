@@ -17,7 +17,7 @@ import {
 	getExerciseSettings
 } from '@/entities/exercise'
 import {detectAutomationEnvironment} from '@/shared/lib'
-import {usePulseEffect} from '../../hint-system'
+import {usePulseEffect} from '../../ui/hint-system/hooks/usePulseEffect'
 import {
 	initializeWordFormState,
 	selectCurrentBlock,

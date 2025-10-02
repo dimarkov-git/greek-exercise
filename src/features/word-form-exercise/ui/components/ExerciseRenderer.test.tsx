@@ -5,7 +5,7 @@ import {beforeEach, describe, expect, it, vi} from 'vitest'
 import type {ExerciseEvent, WordFormExercise} from '@/entities/exercise'
 import {DEFAULT_SETTINGS, useSettingsStore} from '@/shared/model'
 import type {PulseState} from '../hint-system/index'
-import type {WordFormViewState} from '../state/hooks/useWordFormExercise'
+import type {WordFormViewState} from '../../model/hooks/useWordFormExercise'
 import {ExerciseRenderer} from './ExerciseRenderer'
 
 vi.mock('@/shared/ui/head', () => ({
@@ -13,7 +13,7 @@ vi.mock('@/shared/ui/head', () => ({
 }))
 
 type CompletionScreenProps = React.ComponentProps<
-	typeof import('@/pages/exercise/ui/word-form-exercise')['CompletionScreen']
+	typeof import('@/features/word-form-exercise')['CompletionScreen']
 >
 
 const completionScreenMock = vi.fn<(props: CompletionScreenProps) => void>()

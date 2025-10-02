@@ -61,12 +61,7 @@ export const WordFormExerciseSchema = v.object({
 // Exercise metadata schema (for list display)
 export const ExerciseMetadataSchema = v.object({
 	id: v.string(),
-	type: v.picklist([
-		'word-form',
-		'translation',
-		'flashcard',
-		'multiple-choice'
-	]),
+	type: v.picklist(['word-form', 'flashcard', 'multiple-choice']),
 	language: LanguageSchema,
 	title: v.string(),
 	titleI18n: v.optional(I18nStringSchema),

@@ -174,11 +174,11 @@ export interface ExerciseLibraryCardProps {
  */
 export interface ExerciseTypeComponents {
 	/** Component for executing the exercise */
-	Renderer: ComponentType<ExerciseRendererProps>
+	renderer: ComponentType<ExerciseRendererProps>
 	/** Component for learning/studying the exercise */
-	LearnView: ComponentType<ExerciseLearnViewProps>
+	learnView: ComponentType<ExerciseLearnViewProps>
 	/** Optional custom library card component */
-	LibraryCard?: ComponentType<ExerciseLibraryCardProps>
+	libraryCard?: ComponentType<ExerciseLibraryCardProps>
 }
 
 /**
@@ -218,7 +218,7 @@ export function calculateAccuracy(
 	correct: number,
 	total: number
 ): number | undefined {
-	if (total === 0) return undefined
+	if (total === 0) return
 	return Math.round((correct / total) * 100)
 }
 

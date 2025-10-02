@@ -1,9 +1,5 @@
 // Basic exercise types that are truly shared across the application
-export type ExerciseType =
-	| 'word-form'
-	| 'translation'
-	| 'flashcard'
-	| 'multiple-choice'
+export type ExerciseType = 'word-form' | 'flashcard' | 'multiple-choice'
 
 export type Difficulty = 'a0' | 'a1' | 'a2' | 'b1' | 'b2' | 'c1' | 'c2'
 

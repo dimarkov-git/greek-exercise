@@ -28,7 +28,7 @@ import type {ExerciseTypeComponents} from './exercise-renderer-contract'
  * Provides type-safe registration and retrieval of exercise components.
  */
 export class ExerciseTypeRegistry {
-	private registry = new Map<ExerciseType, ExerciseTypeComponents>()
+	private readonly registry = new Map<ExerciseType, ExerciseTypeComponents>()
 
 	/**
 	 * Register components for an exercise type
@@ -53,15 +53,6 @@ export class ExerciseTypeRegistry {
 		}
 
 		this.registry.set(type, components)
-
-		// Log registration in development for debugging
-		if (process.env.NODE_ENV === 'development') {
-			console.debug(`[ExerciseTypeRegistry] Registered type: ${type}`, {
-				hasRenderer: Boolean(components.Renderer),
-				hasLearnView: Boolean(components.LearnView),
-				hasLibraryCard: Boolean(components.LibraryCard)
-			})
-		}
 	}
 
 	/**
@@ -76,13 +67,7 @@ export class ExerciseTypeRegistry {
 	 * ```
 	 */
 	unregister(type: ExerciseType): boolean {
-		const result = this.registry.delete(type)
-
-		if (result && process.env.NODE_ENV === 'development') {
-			console.debug(`[ExerciseTypeRegistry] Unregistered type: ${type}`)
-		}
-
-		return result
+		return this.registry.delete(type)
 	}
 
 	/**
@@ -147,10 +132,6 @@ export class ExerciseTypeRegistry {
 	 */
 	clear(): void {
 		this.registry.clear()
-
-		if (process.env.NODE_ENV === 'development') {
-			console.debug('[ExerciseTypeRegistry] Cleared all registrations')
-		}
 	}
 
 	/**

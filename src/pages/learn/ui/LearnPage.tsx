@@ -1,8 +1,9 @@
 import {useCallback, useEffect, useState} from 'react'
 import {useNavigate, useParams} from 'react-router'
 import type {WordFormExercise} from '@/entities/exercise'
-import {useExercise} from '@/entities/exercise'
-import {JsonView, TableView, ViewToggle} from '@/features/learn-view'
+import {getExerciseLearnView, useExercise} from '@/entities/exercise'
+import '@/features/word-form-exercise' // Import to trigger registry
+import {ViewToggle} from '@/features/learn-view'
 import {useLayout} from '@/shared/lib'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {UI_LANGUAGES, USER_LANGUAGES, useSettingsStore} from '@/shared/model'
@@ -48,7 +49,10 @@ export function LearnPage() {
 		return <LoadingOrError {...errorProps} />
 	}
 
-	if (exercise.type !== 'word-form') {
+	// Get learn view component from factory
+	const LearnView = getExerciseLearnView(exercise.type)
+
+	if (!LearnView) {
 		return (
 			<UnsupportedExerciseNotice
 				exerciseType={exercise.type}
@@ -61,6 +65,7 @@ export function LearnPage() {
 	return (
 		<LearnPageContent
 			exercise={exercise}
+			learnViewComponent={LearnView}
 			onBack={handleBack}
 			onStart={handleStartExercise}
 			onViewModeChange={setViewMode}
@@ -108,6 +113,10 @@ function UnsupportedExerciseNotice({
 
 interface LearnPageContentProps {
 	readonly exercise: WordFormExercise
+	readonly learnViewComponent: React.ComponentType<{
+		exercise: WordFormExercise
+		viewMode: ViewMode
+	}>
 	readonly onBack: () => void
 	readonly onStart: () => void
 	readonly onViewModeChange: (mode: ViewMode) => void
@@ -117,6 +126,7 @@ interface LearnPageContentProps {
 
 function LearnPageContent({
 	exercise,
+	learnViewComponent: LearnViewComponent,
 	onBack,
 	onStart,
 	onViewModeChange,
@@ -139,11 +149,7 @@ function LearnPageContent({
 				<ExerciseTags t={t} tags={exercise.tags ?? []} />
 				<CurrentSettings t={t} />
 				<section className='mt-10 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-xl dark:border-gray-800 dark:bg-gray-900'>
-					{viewMode === 'table' ? (
-						<TableView exercise={exercise} />
-					) : (
-						<JsonView exercise={exercise} />
-					)}
+					<LearnViewComponent exercise={exercise} viewMode={viewMode} />
 				</section>
 			</main>
 		</div>

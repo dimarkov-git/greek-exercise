@@ -1,13 +1,13 @@
 import {useCallback, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router'
 import type {ExerciseResult} from '@/entities/exercise'
-import {useExercise} from '@/entities/exercise'
+import {getExerciseRenderer, useExercise} from '@/entities/exercise'
+import '@/features/word-form-exercise' // Import to trigger registry
 import {useLayout} from '@/shared/lib'
 import type {TranslationEntry} from '@/shared/lib/i18n'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {LoadingOrError} from '@/shared/ui/loading-or-error'
 import {exercisePageTranslations} from './translations'
-import {WordFormExercise} from './word-form-exercise'
 
 /**
  * Page for running individual exercises
@@ -66,37 +66,37 @@ function renderExercise(
 	onExit: () => void,
 	t: (entry: string | TranslationEntry) => string
 ) {
-	switch (exercise.type) {
-		case 'word-form':
-			return (
-				<WordFormExercise
-					exercise={exercise}
-					onComplete={onComplete}
-					onExit={onExit}
-				/>
-			)
-		default:
-			return (
-				<div className='flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900'>
-					<div className='text-center'>
-						<h2 className='mb-4 font-semibold text-red-600 text-xl'>
-							{t(exercisePageTranslations['exercise.unsupportedType'])}
-						</h2>
-						<p className='mb-6 text-gray-600 dark:text-gray-400'>
-							{t(exercisePageTranslations['exercise.notImplemented']).replace(
-								'{type}',
-								exercise.type
-							)}
-						</p>
-						<button
-							className='rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700'
-							onClick={onExit}
-							type='button'
-						>
-							{t(exercisePageTranslations['exercise.backToLibrary'])}
-						</button>
-					</div>
+	// Get renderer component from factory
+	const Renderer = getExerciseRenderer(exercise.type)
+
+	if (!Renderer) {
+		// Exercise type not registered - show unsupported message
+		return (
+			<div className='flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900'>
+				<div className='text-center'>
+					<h2 className='mb-4 font-semibold text-red-600 text-xl'>
+						{t(exercisePageTranslations['exercise.unsupportedType'])}
+					</h2>
+					<p className='mb-6 text-gray-600 dark:text-gray-400'>
+						{t(exercisePageTranslations['exercise.notImplemented']).replace(
+							'{type}',
+							exercise.type
+						)}
+					</p>
+					<button
+						className='rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700'
+						onClick={onExit}
+						type='button'
+					>
+						{t(exercisePageTranslations['exercise.backToLibrary'])}
+					</button>
 				</div>
-			)
+			</div>
+		)
 	}
+
+	// Render the exercise using the factory-retrieved component
+	return (
+		<Renderer exercise={exercise} onComplete={onComplete} onExit={onExit} />
+	)
 }

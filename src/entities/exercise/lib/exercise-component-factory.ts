@@ -46,16 +46,10 @@ export function getExerciseRenderer(
 	const components = exerciseTypeRegistry.get(type)
 
 	if (!components) {
-		if (process.env.NODE_ENV === 'development') {
-			console.warn(
-				`[ExerciseComponentFactory] No renderer found for exercise type: ${type}. ` +
-					`Make sure the exercise type is registered.`
-			)
-		}
 		return null
 	}
 
-	return components.Renderer
+	return components.renderer
 }
 
 /**
@@ -81,16 +75,10 @@ export function getExerciseLearnView(
 	const components = exerciseTypeRegistry.get(type)
 
 	if (!components) {
-		if (process.env.NODE_ENV === 'development') {
-			console.warn(
-				`[ExerciseComponentFactory] No learn view found for exercise type: ${type}. ` +
-					`Make sure the exercise type is registered.`
-			)
-		}
 		return null
 	}
 
-	return components.LearnView
+	return components.learnView
 }
 
 /**
@@ -121,7 +109,7 @@ export function getExerciseLibraryCard(
 	}
 
 	// LibraryCard is optional - return null if not provided
-	return components.LibraryCard ?? null
+	return components.libraryCard ?? null
 }
 
 /**
@@ -157,9 +145,9 @@ export function getExerciseTypeAvailability(type: ExerciseType): {
 
 	return {
 		isRegistered: true,
-		hasRenderer: Boolean(components.Renderer),
-		hasLearnView: Boolean(components.LearnView),
-		hasLibraryCard: Boolean(components.LibraryCard)
+		hasRenderer: Boolean(components.renderer),
+		hasLearnView: Boolean(components.learnView),
+		hasLibraryCard: Boolean(components.libraryCard)
 	}
 }
 
@@ -217,11 +205,15 @@ export function canLearnExercise(type: ExerciseType): boolean {
  * }
  * ```
  */
-export function getExerciseComponents(type: ExerciseType): {
-	Renderer: ComponentType<ExerciseRendererProps>
-	LearnView: ComponentType<ExerciseLearnViewProps>
-	LibraryCard: ComponentType<ExerciseLibraryCardProps> | null
-} | null {
+export interface ExerciseComponentSet {
+	renderer: ComponentType<ExerciseRendererProps>
+	learnView: ComponentType<ExerciseLearnViewProps>
+	libraryCard: ComponentType<ExerciseLibraryCardProps> | null
+}
+
+export function getExerciseComponents(
+	type: ExerciseType
+): ExerciseComponentSet | null {
 	const components = exerciseTypeRegistry.get(type)
 
 	if (!components) {
@@ -229,8 +221,8 @@ export function getExerciseComponents(type: ExerciseType): {
 	}
 
 	return {
-		Renderer: components.Renderer,
-		LearnView: components.LearnView,
-		LibraryCard: components.LibraryCard ?? null
+		renderer: components.renderer,
+		learnView: components.learnView,
+		libraryCard: components.libraryCard ?? null
 	}
 }

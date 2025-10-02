@@ -250,22 +250,6 @@ src/mocks/data/exercises/
 
 ### Future exercise types
 
-#### Translation exercises
-
-```typescript
-interface TranslationExercise {
-    type: 'translation'
-    direction: 'greek-to-english' | 'english-to-greek'
-    content: TranslationCase[]
-}
-
-interface TranslationCase {
-    source: string
-    targets: string[]
-    context?: string
-}
-```
-
 #### Flashcard exercises
 
 ```typescript

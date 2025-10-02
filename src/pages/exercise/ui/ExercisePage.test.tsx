@@ -29,9 +29,28 @@ vi.mock('react-router', async () => {
 	}
 })
 
+// Mock exercise type registry
+const mockRegistry = new Map()
+const mockExerciseTypeRegistry = {
+	register: vi.fn((type: string, components: unknown) => {
+		mockRegistry.set(type, components)
+	}),
+	get: vi.fn((type: string) => mockRegistry.get(type)),
+	has: vi.fn((type: string) => mockRegistry.has(type)),
+	unregister: vi.fn(),
+	clear: vi.fn(),
+	getRegisteredTypes: vi.fn(() => Array.from(mockRegistry.keys())),
+	size: 0
+}
+
 // Mock hooks
 vi.mock('@/entities/exercise', () => ({
 	useExercise: vi.fn(),
+	exerciseTypeRegistry: mockExerciseTypeRegistry,
+	getExerciseRenderer: vi.fn((type: string) => {
+		const components = mockRegistry.get(type)
+		return components?.renderer || null
+	}),
 	DEFAULT_EXERCISE_SETTINGS: {
 		autoAdvance: true,
 		autoAdvanceDelayMs: 1500,

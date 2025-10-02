@@ -1,37 +1,15 @@
 // Base exercise types
 
-// Exercise renderer contracts (multi-type architecture)
-export type {
-	ExerciseLearnViewProps,
-	ExerciseLibraryCardProps,
-	ExerciseProgress,
-	ExerciseRendererProps,
-	ExerciseResult as ExerciseResultContract,
-	ExerciseState as ExerciseStateContract,
-	ExerciseStatistics,
-	ExerciseStatus as ExerciseStatusContract,
-	ExerciseSummary as ExerciseSummaryContract,
-	ExerciseTypeComponents,
-	ExerciseViewMode,
-	TranslationFunction
-} from './model/exercise-renderer-contract'
+// API
+export {createExerciseFallbackResolver} from './api/fallback'
+export {exerciseMswHandlers} from './api/msw-handlers'
 export {
-	calculateAccuracy as calculateExerciseAccuracy,
-	calculateProgress as calculateExerciseProgress,
-	getLocalizedDescription,
-	getLocalizedTitle,
-	hasI18nSupport
-} from './model/exercise-renderer-contract'
-
-// Exercise type registry
-export {
-	type ExerciseTypeRegistry,
-	exerciseTypeRegistry,
-	getSupportedExerciseTypes,
-	isExerciseTypeSupported
-} from './model/exercise-type-registry'
-
+	exerciseLibraryQueryOptions,
+	wordFormExerciseQueryOptions
+} from './api/queryOptions'
+export {useExercise, useExercises} from './api/useExercises'
 // Exercise component factory
+export type {ExerciseComponentSet} from './lib/exercise-component-factory'
 export {
 	canExecuteExercise,
 	canLearnExercise,
@@ -41,15 +19,6 @@ export {
 	getExerciseRenderer,
 	getExerciseTypeAvailability
 } from './lib/exercise-component-factory'
-
-// API
-export {createExerciseFallbackResolver} from './api/fallback'
-export {exerciseMswHandlers} from './api/msw-handlers'
-export {
-	exerciseLibraryQueryOptions,
-	wordFormExerciseQueryOptions
-} from './api/queryOptions'
-export {useExercise, useExercises} from './api/useExercises'
 // Library utilities
 export {
 	calculateAccuracy,
@@ -97,6 +66,35 @@ export type {
 	ExerciseSummary,
 	WordFormExerciseWithDefaults
 } from './model/domain-types'
+// Exercise renderer contracts (multi-type architecture)
+export type {
+	ExerciseLearnViewProps,
+	ExerciseLibraryCardProps,
+	ExerciseProgress,
+	ExerciseRendererProps,
+	ExerciseResult as ExerciseResultContract,
+	ExerciseState as ExerciseStateContract,
+	ExerciseStatistics,
+	ExerciseStatus as ExerciseStatusContract,
+	ExerciseSummary as ExerciseSummaryContract,
+	ExerciseTypeComponents,
+	ExerciseViewMode,
+	TranslationFunction
+} from './model/exercise-renderer-contract'
+export {
+	calculateAccuracy as calculateExerciseAccuracy,
+	calculateProgress as calculateExerciseProgress,
+	getLocalizedDescription,
+	getLocalizedTitle,
+	hasI18nSupport
+} from './model/exercise-renderer-contract'
+// Exercise type registry
+export {
+	type ExerciseTypeRegistry,
+	exerciseTypeRegistry,
+	getSupportedExerciseTypes,
+	isExerciseTypeSupported
+} from './model/exercise-type-registry'
 // Schema DTO types
 export type {
 	ExerciseMetadataDto,
