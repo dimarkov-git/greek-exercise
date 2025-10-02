@@ -21,8 +21,6 @@ interface AppImportMetaEnv extends ImportMetaEnv {
 	readonly VITE_ENABLE_QUERY_DEVTOOLS?: string
 }
 
-const env = import.meta.env as AppImportMetaEnv
-
 export interface Environment {
 	readonly mode: AppMode
 	readonly isDevelopment: boolean
@@ -33,17 +31,7 @@ export interface Environment {
 	readonly enableQueryDevtools: boolean
 }
 
-export const environment: Environment = {
-	mode: env.MODE as AppMode,
-	isDevelopment: env.MODE === AppModeEnum.development,
-	baseURL: env.BASE_URL || './',
-	routerMode: normalizeRouterMode(env.VITE_ROUTER_MODE, RouterModeEnum.hash),
-	enableMockServiceWorker: normalizeBoolean(env.VITE_ENABLE_MSW, false),
-	enableHTTPFallback: normalizeBoolean(env.VITE_ENABLE_HTTP_FALLBACK, true),
-	enableQueryDevtools: normalizeBoolean(env.VITE_ENABLE_QUERY_DEVTOOLS, false)
-}
-
-function normalizeRouterMode(
+export function normalizeRouterMode(
 	value: string | undefined,
 	defaultValue: RouterMode
 ): RouterMode {
@@ -54,7 +42,7 @@ function normalizeRouterMode(
 	return defaultValue
 }
 
-function normalizeBoolean(
+export function normalizeBoolean(
 	value: string | undefined,
 	defaultValue: boolean
 ): boolean {
@@ -63,3 +51,27 @@ function normalizeBoolean(
 	}
 	return defaultValue
 }
+
+export function createEnvironment(env: ImportMetaEnv): Environment {
+	const appEnv = env as AppImportMetaEnv
+	return {
+		mode: appEnv.MODE as AppMode,
+		isDevelopment: appEnv.MODE === AppModeEnum.development,
+		baseURL: appEnv.BASE_URL || './',
+		routerMode: normalizeRouterMode(
+			appEnv.VITE_ROUTER_MODE,
+			RouterModeEnum.hash
+		),
+		enableMockServiceWorker: normalizeBoolean(appEnv.VITE_ENABLE_MSW, false),
+		enableHTTPFallback: normalizeBoolean(
+			appEnv.VITE_ENABLE_HTTP_FALLBACK,
+			true
+		),
+		enableQueryDevtools: normalizeBoolean(
+			appEnv.VITE_ENABLE_QUERY_DEVTOOLS,
+			false
+		)
+	}
+}
+
+export const environment: Environment = createEnvironment(import.meta.env)
