@@ -4,8 +4,8 @@ import {act} from 'react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
 import type {ExerciseEvent, WordFormExercise} from '@/entities/exercise'
 import {DEFAULT_SETTINGS, useSettingsStore} from '@/shared/model'
-import type {PulseState} from '../hint-system/index'
 import type {WordFormViewState} from '../../model/hooks/useWordFormExercise'
+import type {PulseState} from '../hint-system/index'
 import {ExerciseRenderer} from './ExerciseRenderer'
 
 vi.mock('@/shared/ui/head', () => ({

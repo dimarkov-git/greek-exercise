@@ -2,7 +2,10 @@ import {useCallback, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router'
 import type {ExerciseResult} from '@/entities/exercise'
 import {getExerciseRenderer, useExercise} from '@/entities/exercise'
-import '@/features/word-form-exercise' // Import to trigger registry
+// Import exercise types to trigger auto-registration
+import '@/features/word-form-exercise'
+import '@/features/flashcard-exercise'
+import '@/features/multiple-choice-exercise'
 import {useLayout} from '@/shared/lib'
 import type {TranslationEntry} from '@/shared/lib/i18n'
 import {loadTranslations} from '@/shared/lib/i18n'

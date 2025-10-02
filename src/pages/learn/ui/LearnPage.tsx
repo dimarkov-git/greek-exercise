@@ -2,7 +2,10 @@ import {useCallback, useEffect, useState} from 'react'
 import {useNavigate, useParams} from 'react-router'
 import type {WordFormExercise} from '@/entities/exercise'
 import {getExerciseLearnView, useExercise} from '@/entities/exercise'
-import '@/features/word-form-exercise' // Import to trigger registry
+// Import exercise types to trigger auto-registration
+import '@/features/word-form-exercise'
+import '@/features/flashcard-exercise'
+import '@/features/multiple-choice-exercise'
 import {ViewToggle} from '@/features/learn-view'
 import {useLayout} from '@/shared/lib'
 import {loadTranslations} from '@/shared/lib/i18n'
