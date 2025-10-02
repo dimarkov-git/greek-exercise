@@ -60,6 +60,16 @@ vi.mock('@/shared/ui/head', () => ({
 	)
 }))
 
+vi.mock('@/features/word-form', async () => {
+	const actual = await vi.importActual('@/features/word-form')
+	return {
+		...actual,
+		TableView: ({exercise}: {exercise: {title: string}}) => (
+			<div data-testid='table-view'>Preview: {exercise.title}</div>
+		)
+	}
+})
+
 type MockMotionDivProps = {
 	children: React.ReactNode
 	className?: string
