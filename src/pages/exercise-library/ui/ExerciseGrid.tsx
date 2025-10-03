@@ -79,6 +79,7 @@ function ExerciseCard({exercise, index, t, translations}: ExerciseCardProps) {
 		<motion.div
 			animate={{opacity: 1, y: 0}}
 			className='rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800'
+			data-exercise-id={exercise.id}
 			data-testid='exercise-card'
 			initial={{opacity: 0, y: 20}}
 			transition={{delay: index * 0.1, duration: 0.4}}

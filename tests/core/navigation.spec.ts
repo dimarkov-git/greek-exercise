@@ -31,14 +31,14 @@ test.describe('Navigation - Advanced', () => {
 
 		await exerciseLibrary.goto()
 
-		// Test first exercise (verbs-be)
-		await exerciseLibrary.startFirstExercise()
+		// Test verbs-be exercise
+		await exerciseLibrary.startExerciseById('verbs-be')
 		await expect(page).toHaveURL(ROUTES.exerciseVerbsBe)
 		await exercisePage.expectPageLoaded()
 
-		// Go back and test second exercise
+		// Go back and test verbs-have exercise
 		await exercisePage.clickBackButton()
-		await exerciseLibrary.startSecondExercise()
+		await exerciseLibrary.startExerciseById('verbs-have')
 		await expect(page).toHaveURL(ROUTES.exerciseVerbsHave)
 		await exercisePage.expectPageLoaded()
 	})
@@ -62,7 +62,7 @@ test.describe('Navigation - Exercises', () => {
 		const exercisePage = new ExercisePage(page)
 
 		await exerciseLibrary.goto()
-		await exerciseLibrary.startFirstExercise()
+		await exerciseLibrary.startExerciseById('verbs-be')
 
 		await expect(page).toHaveURL(ROUTES.exerciseVerbsBe)
 		await exercisePage.expectPageLoaded()
@@ -73,7 +73,7 @@ test.describe('Navigation - Exercises', () => {
 		const exercisePage = new ExercisePage(page)
 
 		await exerciseLibrary.goto()
-		await exerciseLibrary.startFirstExercise()
+		await exerciseLibrary.startExerciseById('verbs-be')
 		await exercisePage.expectPageLoaded()
 
 		await exercisePage.clickBackButton()
