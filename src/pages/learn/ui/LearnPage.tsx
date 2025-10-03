@@ -202,11 +202,69 @@ interface ExerciseStatsProps {
 	readonly t: LearnPageTranslator
 }
 
+/**
+ * Helper to detect exercise structure and extract stats
+ */
+function getExerciseStats(exercise: {
+	type: string
+	blocks?: {cases: unknown[]}[]
+	cards?: unknown[]
+}): {
+	primaryCount: number
+	primaryLabel: 'blocks' | 'cases' | 'cards' | 'items'
+	secondaryCount: number | null
+	secondaryLabel: 'blocks' | 'cases' | 'cards' | 'items' | null
+} {
+	// Word-form exercises have blocks with cases
+	if (exercise.type === 'word-form' && exercise.blocks) {
+		const totalCases = exercise.blocks.reduce(
+			(total: number, block) => total + block.cases.length,
+			0
+		)
+		return {
+			primaryCount: exercise.blocks.length,
+			primaryLabel: 'blocks',
+			secondaryCount: totalCases,
+			secondaryLabel: 'cases'
+		}
+	}
+
+	// Flashcard exercises have cards
+	if (exercise.type === 'flashcard' && exercise.cards) {
+		return {
+			primaryCount: exercise.cards.length,
+			primaryLabel: 'cards',
+			secondaryCount: null,
+			secondaryLabel: null
+		}
+	}
+
+	// Fallback for unknown types
+	return {
+		primaryCount: 0,
+		primaryLabel: 'items',
+		secondaryCount: null,
+		secondaryLabel: null
+	}
+}
+
+/**
+ * Map stats label to translation key
+ */
+function getTranslationKey(
+	label: 'blocks' | 'cases' | 'cards' | 'items' | null
+): string | null {
+	if (label === 'blocks') return learnPageTranslations['exercise.blocks']
+	if (label === 'cases') return learnPageTranslations['exercise.cases']
+	if (label === 'cards') return learnPageTranslations['exercise.cards']
+	if (label === 'items') return learnPageTranslations['exercise.items']
+	return null
+}
+
 function ExerciseStats({exercise, t}: ExerciseStatsProps) {
-	const totalCases = exercise.blocks.reduce(
-		(total: number, block: {cases: unknown[]}) => total + block.cases.length,
-		0
-	)
+	const stats = getExerciseStats(exercise)
+	const primaryKey = getTranslationKey(stats.primaryLabel)
+	const secondaryKey = getTranslationKey(stats.secondaryLabel)
 
 	return (
 		<dl className='mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
@@ -218,14 +276,12 @@ function ExerciseStats({exercise, t}: ExerciseStatsProps) {
 				label={t(learnPageTranslations['exercise.minutes'])}
 				value={`${exercise.estimatedTimeMinutes}`}
 			/>
-			<StatCard
-				label={t(learnPageTranslations['exercise.blocks'])}
-				value={`${exercise.blocks.length}`}
-			/>
-			<StatCard
-				label={t(learnPageTranslations['exercise.cases'])}
-				value={`${totalCases}`}
-			/>
+			{primaryKey && (
+				<StatCard label={t(primaryKey)} value={`${stats.primaryCount}`} />
+			)}
+			{stats.secondaryCount !== null && secondaryKey && (
+				<StatCard label={t(secondaryKey)} value={`${stats.secondaryCount}`} />
+			)}
 		</dl>
 	)
 }

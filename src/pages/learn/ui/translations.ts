@@ -9,6 +9,8 @@ export const learnPageTranslations = {
 	'exercise.minutes': 'exercise.minutes',
 	'exercise.blocks': 'exercise.blocks',
 	'exercise.cases': 'exercise.cases',
+	'exercise.cards': 'exercise.cards',
+	'exercise.items': 'exercise.items',
 	'exercise.currentSettings': 'exercise.currentSettings',
 	'exercise.settingsInfo': 'exercise.settingsInfo',
 	interfaceLanguage: 'interfaceLanguage',
