@@ -1,6 +1,8 @@
 import type {
 	ExerciseMetadataDto,
 	ExercisesListDto,
+	FlashCardDto,
+	FlashcardExerciseDto,
 	WordFormBlockDto,
 	WordFormCaseDto,
 	WordFormExerciseDto
@@ -10,8 +12,11 @@ import type {
 	ExerciseLibraryViewModel,
 	ExerciseSource,
 	ExerciseSummary,
+	FlashcardExerciseWithDefaults,
 	WordFormExerciseWithDefaults
 } from './domain-types'
+import type {FlashCard, SRSSettings} from './flashcard-types'
+import {DEFAULT_SRS_SETTINGS} from './flashcard-types'
 import type {
 	ExerciseMetadata,
 	ExerciseSettings,
@@ -229,6 +234,78 @@ export function toWordFormExerciseWithDefaults(
 		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
 		settings,
 		blocks: exercise.blocks.map(normalizeWordFormBlock),
+		...(titleI18n ? {titleI18n} : {}),
+		...(descriptionI18n ? {descriptionI18n} : {})
+	}
+
+	return normalizedExercise
+}
+
+function normalizeFlashCard(cardDto: FlashCardDto): FlashCard {
+	const frontHintI18n = normalizeI18nRecord(cardDto.frontHintI18n)
+	const backHintI18n = normalizeI18nRecord(cardDto.backHintI18n)
+	const additionalHintI18n = normalizeI18nRecord(cardDto.additionalHintI18n)
+
+	return {
+		id: cardDto.id,
+		front: cardDto.front,
+		back: cardDto.back,
+		...(frontHintI18n ? {frontHintI18n} : {}),
+		...(backHintI18n ? {backHintI18n} : {}),
+		...(cardDto.additionalHint ? {additionalHint: cardDto.additionalHint} : {}),
+		...(additionalHintI18n ? {additionalHintI18n} : {}),
+		...(cardDto.tags ? {tags: sortTags(cardDto.tags)} : {})
+	}
+}
+
+export function toFlashcardExerciseWithDefaults(
+	exercise: FlashcardExerciseDto
+): FlashcardExerciseWithDefaults {
+	const normalizedTags = Array.isArray(exercise.tags)
+		? sortTags(exercise.tags)
+		: []
+
+	const settings: ExerciseSettings = {
+		autoAdvance:
+			exercise.settings?.autoAdvance ?? DEFAULT_EXERCISE_SETTINGS.autoAdvance,
+		autoAdvanceDelayMs:
+			exercise.settings?.autoAdvanceDelayMs ??
+			DEFAULT_EXERCISE_SETTINGS.autoAdvanceDelayMs,
+		allowSkip:
+			exercise.settings?.allowSkip ?? DEFAULT_EXERCISE_SETTINGS.allowSkip,
+		shuffleCases:
+			exercise.settings?.shuffleCases ?? DEFAULT_EXERCISE_SETTINGS.shuffleCases
+	}
+
+	const srsSettings: SRSSettings = {
+		newCardsPerDay:
+			exercise.srsSettings?.newCardsPerDay ??
+			DEFAULT_SRS_SETTINGS.newCardsPerDay,
+		reviewsPerDay:
+			exercise.srsSettings?.reviewsPerDay ?? DEFAULT_SRS_SETTINGS.reviewsPerDay,
+		graduatingInterval:
+			exercise.srsSettings?.graduatingInterval ??
+			DEFAULT_SRS_SETTINGS.graduatingInterval,
+		easyInterval:
+			exercise.srsSettings?.easyInterval ?? DEFAULT_SRS_SETTINGS.easyInterval
+	}
+
+	const titleI18n = normalizeI18nRecord(exercise.titleI18n)
+	const descriptionI18n = normalizeI18nRecord(exercise.descriptionI18n)
+
+	const normalizedExercise: FlashcardExerciseWithDefaults = {
+		enabled: exercise.enabled,
+		id: exercise.id,
+		type: exercise.type,
+		language: exercise.language,
+		title: exercise.title,
+		description: exercise.description,
+		tags: normalizedTags,
+		difficulty: exercise.difficulty,
+		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
+		settings,
+		srsSettings,
+		cards: exercise.cards.map(normalizeFlashCard),
 		...(titleI18n ? {titleI18n} : {}),
 		...(descriptionI18n ? {descriptionI18n} : {})
 	}

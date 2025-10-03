@@ -13,17 +13,7 @@ This roadmap outlines the development priorities for the project.
 - ✅ **Phase 4**: Testing expansion and HTTP fallback policies
 - ✅ **Phase 5**: Coverage governance (93%+ statements/lines/functions)
 - ✅ **Phase 6**: Feature-Sliced Design Migration & Developer Experience
-
-## Phase 7: Enhanced exercise system with Flashcards and Multiple Choice
-
-### Goals
-
-Expand beyond word-form exercises with new interactive exercise types.
-
-### Deliverables
-
-- **Flashcard system**: Spaced repetition for vocabulary memorization
-- **Multiple choice tests**: Grammar and vocabulary with randomized options
+- ✅ **Phase 7**: Enhanced exercise system with Flashcards
 
 ## Phase 8: Performance & PWA foundation
 
@@ -55,10 +45,3 @@ Optimize performance and lay groundwork for Progressive Web App features.
 - Web Push API integration
 - Touch gesture handling improvements
 - App store optimization and metadata
-
-## Long-term vision
-
-### Platform expansion
-
-- **Multi-language support**: Extend beyond Greek to other languages
-- **Additional exercises**: More exercise types and content

@@ -41,6 +41,7 @@ export {
 export {
 	createExerciseLibraryViewModel,
 	toExerciseSummary,
+	toFlashcardExerciseWithDefaults,
 	toWordFormExerciseWithDefaults
 } from './model/adapters'
 // Custom exercise utilities
@@ -64,6 +65,7 @@ export type {
 	ExerciseLibraryViewModel,
 	ExerciseSource,
 	ExerciseSummary,
+	FlashcardExerciseWithDefaults,
 	WordFormExerciseWithDefaults
 } from './model/domain-types'
 // Exercise renderer contracts (multi-type architecture)
@@ -120,6 +122,9 @@ export type {
 	ExerciseMetadataDto,
 	ExerciseSettingsDto,
 	ExercisesListDto,
+	FlashCardDto,
+	FlashcardExerciseDto,
+	SRSSettingsDto,
 	WordFormBlockDto,
 	WordFormCaseDto,
 	WordFormExerciseDto
@@ -129,7 +134,11 @@ export {
 	ExerciseMetadataSchema,
 	ExerciseSettingsSchema,
 	ExercisesListSchema,
+	FlashCardSchema,
+	FlashcardExerciseSchema,
+	SRSSettingsSchema,
 	validateExercisesList,
+	validateFlashcardExercise,
 	validateWordFormExercise,
 	WordFormBlockSchema,
 	WordFormCaseSchema,

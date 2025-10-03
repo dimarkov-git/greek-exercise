@@ -41,7 +41,7 @@ export const WordFormBlockSchema = v.object({
 	cases: v.pipe(v.array(WordFormCaseSchema), v.minLength(1))
 })
 
-// Complete exercise schema
+// Complete word-form exercise schema
 export const WordFormExerciseSchema = v.object({
 	enabled: v.boolean(),
 	id: v.string(),
@@ -56,6 +56,44 @@ export const WordFormExerciseSchema = v.object({
 	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
 	settings: v.optional(ExerciseSettingsSchema),
 	blocks: v.pipe(v.array(WordFormBlockSchema), v.minLength(1))
+})
+
+// Flashcard schema
+export const FlashCardSchema = v.object({
+	id: v.string(),
+	front: v.string(),
+	frontHintI18n: v.optional(I18nStringSchema),
+	back: v.string(),
+	backHintI18n: v.optional(I18nStringSchema),
+	additionalHint: v.optional(v.string()),
+	additionalHintI18n: v.optional(I18nStringSchema),
+	tags: v.optional(v.array(v.string()), [])
+})
+
+// SRS settings schema
+export const SRSSettingsSchema = v.object({
+	newCardsPerDay: v.optional(v.pipe(v.number(), v.minValue(1))),
+	reviewsPerDay: v.optional(v.pipe(v.number(), v.minValue(1))),
+	graduatingInterval: v.optional(v.pipe(v.number(), v.minValue(1))),
+	easyInterval: v.optional(v.pipe(v.number(), v.minValue(1)))
+})
+
+// Complete flashcard exercise schema
+export const FlashcardExerciseSchema = v.object({
+	enabled: v.boolean(),
+	id: v.string(),
+	type: v.literal('flashcard'),
+	language: LanguageSchema,
+	title: v.string(),
+	titleI18n: v.optional(I18nStringSchema),
+	description: v.string(),
+	descriptionI18n: v.optional(I18nStringSchema),
+	tags: v.optional(v.array(v.string()), []),
+	difficulty: DifficultySchema,
+	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
+	settings: v.optional(ExerciseSettingsSchema),
+	cards: v.pipe(v.array(FlashCardSchema), v.minLength(1)),
+	srsSettings: v.optional(SRSSettingsSchema)
 })
 
 // Exercise metadata schema (for list display)
@@ -82,12 +120,19 @@ export type ExerciseSettingsDto = v.InferOutput<typeof ExerciseSettingsSchema>
 export type WordFormCaseDto = v.InferOutput<typeof WordFormCaseSchema>
 export type WordFormBlockDto = v.InferOutput<typeof WordFormBlockSchema>
 export type WordFormExerciseDto = v.InferOutput<typeof WordFormExerciseSchema>
+export type FlashCardDto = v.InferOutput<typeof FlashCardSchema>
+export type SRSSettingsDto = v.InferOutput<typeof SRSSettingsSchema>
+export type FlashcardExerciseDto = v.InferOutput<typeof FlashcardExerciseSchema>
 export type ExerciseMetadataDto = v.InferOutput<typeof ExerciseMetadataSchema>
 export type ExercisesListDto = v.InferOutput<typeof ExercisesListSchema>
 
 // Validation utility functions
 export function validateWordFormExercise(data: unknown): WordFormExerciseDto {
 	return v.parse(WordFormExerciseSchema, data)
+}
+
+export function validateFlashcardExercise(data: unknown): FlashcardExerciseDto {
+	return v.parse(FlashcardExerciseSchema, data)
 }
 
 export function validateExercisesList(data: unknown): ExercisesListDto {

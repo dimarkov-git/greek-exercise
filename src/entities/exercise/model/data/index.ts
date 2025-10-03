@@ -3,13 +3,23 @@
  *
  * Centralized exercise data loading from JSON files.
  * Provides both full registry and individual exercise access.
+ * Supports multiple exercise types (word-form, flashcard, multiple-choice).
  *
  * @module entities/exercise/model/data
  */
 
-import {toWordFormExerciseWithDefaults} from '../adapters'
-import {validateWordFormExercise} from '../schemas'
+import {
+	toFlashcardExerciseWithDefaults,
+	toWordFormExerciseWithDefaults
+} from '../adapters'
+import type {FlashcardExercise} from '../flashcard-types'
+import {validateFlashcardExercise, validateWordFormExercise} from '../schemas'
 import type {WordFormBlock, WordFormExercise} from '../types'
+
+/**
+ * Union type for all supported exercise types
+ */
+export type AnyExercise = WordFormExercise | FlashcardExercise
 
 const EXERCISE_CASE_LIMIT_KEY = '__EXERCISE_CASE_LIMIT__' as const
 
@@ -60,10 +70,59 @@ function limitExerciseCases(
 }
 
 /**
+ * Validate and normalize an exercise based on its type
+ *
+ * @param exerciseData - Raw exercise data from JSON
+ * @param path - File path for error reporting
+ * @returns Normalized exercise or null if invalid
+ */
+function loadAndValidateExercise(
+	exerciseData: unknown,
+	path: string
+): AnyExercise | null {
+	// Type guard to check if data has a type field
+	if (
+		!exerciseData ||
+		typeof exerciseData !== 'object' ||
+		!('type' in exerciseData)
+	) {
+		// biome-ignore lint/suspicious/noConsole: Intentional debug logging
+		console.error(`Failed to load exercise from ${path}: missing type field`)
+		return null
+	}
+
+	const type = (exerciseData as {type: unknown}).type
+
+	try {
+		switch (type) {
+			case 'word-form': {
+				const validated = validateWordFormExercise(exerciseData)
+				const normalized = toWordFormExerciseWithDefaults(validated)
+				return limitExerciseCases(normalized, caseLimit)
+			}
+			case 'flashcard': {
+				const validated = validateFlashcardExercise(exerciseData)
+				return toFlashcardExerciseWithDefaults(validated)
+			}
+			default:
+				// biome-ignore lint/suspicious/noConsole: Intentional debug logging
+				console.error(
+					`Failed to load exercise from ${path}: unsupported type "${String(type)}"`
+				)
+				return null
+		}
+	} catch (error) {
+		// biome-ignore lint/suspicious/noConsole: Intentional debug logging
+		console.error(`Failed to load exercise from ${path}:`, error)
+		return null
+	}
+}
+
+/**
  * Load all exercises from JSON files
  *
  * Dynamically imports all JSON files from the exercises directory,
- * validates them, applies defaults, and optionally limits cases.
+ * validates them based on their type, applies defaults, and optionally limits cases.
  *
  * @returns Map of exercise ID to exercise data
  *
@@ -73,8 +132,8 @@ function limitExerciseCases(
  * const exercise = exercises.get('verbs-present-tense')
  * ```
  */
-export function loadExercises(): Map<string, WordFormExercise> {
-	const exerciseRegistry = new Map<string, WordFormExercise>()
+export function loadExercises(): Map<string, AnyExercise> {
+	const exerciseRegistry = new Map<string, AnyExercise>()
 
 	// Dynamically import all JSON files from the exercises directory
 	const exerciseModules = import.meta.glob<unknown>('./exercises/*.json', {
@@ -83,16 +142,10 @@ export function loadExercises(): Map<string, WordFormExercise> {
 	})
 
 	// Process each exercise file
-	for (const [_path, exerciseData] of Object.entries(exerciseModules)) {
-		try {
-			const validatedExercise = toWordFormExerciseWithDefaults(
-				validateWordFormExercise(exerciseData)
-			)
-			const limitedExercise = limitExerciseCases(validatedExercise, caseLimit)
-			exerciseRegistry.set(limitedExercise.id, limitedExercise)
-		} catch (error) {
-			// biome-ignore lint/suspicious/noConsole: This is intentional debug logging for exercise loading
-			console.error(`Failed to load exercise from ${_path}:`, error)
+	for (const [path, exerciseData] of Object.entries(exerciseModules)) {
+		const exercise = loadAndValidateExercise(exerciseData, path)
+		if (exercise) {
+			exerciseRegistry.set(exercise.id, exercise)
 		}
 	}
 
@@ -105,7 +158,7 @@ export function loadExercises(): Map<string, WordFormExercise> {
  * @param id - Exercise ID
  * @returns Exercise data or undefined if not found
  */
-export function getExerciseById(id: string): WordFormExercise | undefined {
+export function getExerciseById(id: string): AnyExercise | undefined {
 	return exerciseRegistry.get(id)
 }
 
@@ -114,7 +167,7 @@ export function getExerciseById(id: string): WordFormExercise | undefined {
  *
  * @returns Array of all exercises
  */
-export function getAllExercises(): WordFormExercise[] {
+export function getAllExercises(): AnyExercise[] {
 	return Array.from(exerciseRegistry.values())
 }
 

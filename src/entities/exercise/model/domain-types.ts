@@ -1,4 +1,5 @@
 import type {Language} from '@/shared/model'
+import type {FlashcardExercise} from './flashcard-types'
 import type {ExerciseMetadata, WordFormExercise} from './types'
 
 export type ExerciseSource = 'builtin' | 'custom'
@@ -39,4 +40,10 @@ export interface ExerciseFilterSelection {
 export type WordFormExerciseWithDefaults = WordFormExercise & {
 	tags: string[]
 	settings: import('@/entities/exercise').ExerciseSettings
+}
+
+export type FlashcardExerciseWithDefaults = FlashcardExercise & {
+	tags: string[]
+	settings: import('@/entities/exercise').ExerciseSettings
+	srsSettings: import('@/entities/exercise').SRSSettings
 }
