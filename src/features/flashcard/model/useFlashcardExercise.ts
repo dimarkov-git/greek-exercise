@@ -167,7 +167,13 @@ export function useFlashcardExercise(
 	useEffect(() => {
 		const status = getFlashcardStatus(context)
 
-		if (status === 'COMPLETED' && !completionHandledRef.current) {
+		// Only call onComplete if user actually reviewed cards
+		// Don't call it if there were no cards due to begin with
+		if (
+			status === 'COMPLETED' &&
+			!completionHandledRef.current &&
+			context.reviewedCards.size > 0
+		) {
 			completionHandledRef.current = true
 
 			const result: Omit<FlashcardExerciseResult, 'completedAt'> = {

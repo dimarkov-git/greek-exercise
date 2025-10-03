@@ -5,6 +5,7 @@ export {createExerciseFallbackResolver} from './api/fallback'
 export {exerciseMswHandlers} from './api/msw-handlers'
 export {
 	exerciseLibraryQueryOptions,
+	exerciseQueryOptions,
 	wordFormExerciseQueryOptions
 } from './api/queryOptions'
 export {useExercise, useExercises} from './api/useExercises'
