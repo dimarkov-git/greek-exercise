@@ -52,7 +52,7 @@ function TableView({exercise}: {exercise: FlashcardExercise}) {
 								{stats.total}
 							</div>
 							<div className='text-gray-600 text-sm dark:text-gray-400'>
-								Total
+								{t('flashcard.total')}
 							</div>
 						</div>
 						<div className='text-center'>
@@ -60,7 +60,7 @@ function TableView({exercise}: {exercise: FlashcardExercise}) {
 								{stats.new}
 							</div>
 							<div className='text-gray-600 text-sm dark:text-gray-400'>
-								New
+								{t('flashcard.new')}
 							</div>
 						</div>
 						<div className='text-center'>
@@ -68,7 +68,7 @@ function TableView({exercise}: {exercise: FlashcardExercise}) {
 								{stats.learning}
 							</div>
 							<div className='text-gray-600 text-sm dark:text-gray-400'>
-								Learning
+								{t('flashcard.learning')}
 							</div>
 						</div>
 						<div className='text-center'>
@@ -76,7 +76,7 @@ function TableView({exercise}: {exercise: FlashcardExercise}) {
 								{stats.review}
 							</div>
 							<div className='text-gray-600 text-sm dark:text-gray-400'>
-								Review
+								{t('flashcard.review')}
 							</div>
 						</div>
 						<div className='text-center'>
@@ -84,7 +84,7 @@ function TableView({exercise}: {exercise: FlashcardExercise}) {
 								{stats.dueToday}
 							</div>
 							<div className='text-gray-600 text-sm dark:text-gray-400'>
-								Due Today
+								{t('flashcard.dueToday')}
 							</div>
 						</div>
 					</div>

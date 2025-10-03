@@ -26,5 +26,10 @@ export const flashcardLearnViewTranslations = {
 	'flashcard.front': 'flashcard.front',
 	'flashcard.back': 'flashcard.back',
 	'flashcard.hint': 'flashcard.hint',
-	'flashcard.srsStatistics': 'flashcard.srsStatistics'
+	'flashcard.srsStatistics': 'flashcard.srsStatistics',
+	'flashcard.total': 'flashcard.total',
+	'flashcard.new': 'flashcard.new',
+	'flashcard.learning': 'flashcard.learning',
+	'flashcard.review': 'flashcard.review',
+	'flashcard.dueToday': 'flashcard.dueToday'
 } as const satisfies TranslationDictionary
