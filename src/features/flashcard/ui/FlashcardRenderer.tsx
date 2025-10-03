@@ -142,9 +142,10 @@ export function FlashcardRenderer({
 				card={state.currentCard}
 				isFlipped={state.isFlipped}
 				onFlip={handleFlip}
+				{...(state.isFlipped && {onRate: handleRate})}
 			/>
 
-			{/* Rating buttons (only show when flipped) */}
+			{/* Rating buttons (desktop only, only show when flipped) */}
 			{state.isFlipped && <FlashcardRating onRate={handleRate} />}
 
 			{/* Exit button */}

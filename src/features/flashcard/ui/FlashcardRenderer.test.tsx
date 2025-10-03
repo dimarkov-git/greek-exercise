@@ -159,7 +159,7 @@ describe('FlashcardRenderer', () => {
 
 		// Should show back side
 		await waitFor(() => {
-			expect(screen.getByText('Click to flip back')).toBeInTheDocument()
+			expect(screen.getByText(/click to flip back/i)).toBeInTheDocument()
 		})
 	})
 
@@ -175,7 +175,7 @@ describe('FlashcardRenderer', () => {
 
 		// Rating buttons should not be visible initially
 		expect(
-			screen.queryByRole('button', {name: /again/i})
+			screen.queryByRole('button', {name: /don't know/i})
 		).not.toBeInTheDocument()
 
 		// Flip the card
@@ -185,13 +185,15 @@ describe('FlashcardRenderer', () => {
 			await user.click(card)
 		}
 
-		// Rating buttons should appear
+		// Rating buttons should appear (2 simplified buttons)
 		await waitFor(() => {
-			expect(screen.getByRole('button', {name: /again/i})).toBeInTheDocument()
+			expect(
+				screen.getByRole('button', {name: /mark as don't know/i})
+			).toBeInTheDocument()
 		})
-		expect(screen.getByRole('button', {name: /hard/i})).toBeInTheDocument()
-		expect(screen.getByRole('button', {name: /good/i})).toBeInTheDocument()
-		expect(screen.getByRole('button', {name: /easy/i})).toBeInTheDocument()
+		expect(
+			screen.getByRole('button', {name: /mark as know/i})
+		).toBeInTheDocument()
 	})
 
 	it('displays progress bar', async () => {

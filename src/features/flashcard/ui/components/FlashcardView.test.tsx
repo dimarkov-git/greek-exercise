@@ -56,7 +56,8 @@ describe('FlashcardView', () => {
 		)
 
 		expect(screen.getByText('το νερό (neuter)')).toBeInTheDocument()
-		expect(screen.getByText('Click to flip back')).toBeInTheDocument()
+		// Text changes based on onRate prop
+		expect(screen.getByText(/click to flip back/i)).toBeInTheDocument()
 	})
 
 	it('calls onFlip when card is clicked', async () => {

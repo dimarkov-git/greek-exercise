@@ -29,13 +29,16 @@ describe('FlashcardRating', () => {
 			)
 		}
 	}
-	it('renders all four rating buttons', () => {
+
+	it('renders two rating buttons', () => {
 		render(<FlashcardRating onRate={vi.fn()} />, {wrapper: createWrapper()})
 
-		expect(screen.getByRole('button', {name: /again/i})).toBeInTheDocument()
-		expect(screen.getByRole('button', {name: /hard/i})).toBeInTheDocument()
-		expect(screen.getByRole('button', {name: /good/i})).toBeInTheDocument()
-		expect(screen.getByRole('button', {name: /easy/i})).toBeInTheDocument()
+		expect(
+			screen.getByRole('button', {name: /mark as don't know/i})
+		).toBeInTheDocument()
+		expect(
+			screen.getByRole('button', {name: /mark as know/i})
+		).toBeInTheDocument()
 	})
 
 	it('displays quality rating prompt', () => {
@@ -45,49 +48,28 @@ describe('FlashcardRating', () => {
 		expect(screen.getByText(/flashcard\.rateQuality/i)).toBeInTheDocument()
 	})
 
-	it('calls onRate with quality 1 when Again is clicked', async () => {
+	it("calls onRate with quality 2 when Don't Know is clicked", async () => {
 		const user = userEvent.setup()
 		const onRate = vi.fn()
 
 		render(<FlashcardRating onRate={onRate} />, {wrapper: createWrapper()})
 
-		await user.click(screen.getByRole('button', {name: /again/i}))
+		await user.click(screen.getByRole('button', {name: /don't know/i}))
 
-		expect(onRate).toHaveBeenCalledWith(1 as QualityRating)
+		expect(onRate).toHaveBeenCalledWith(2 as QualityRating)
 		expect(onRate).toHaveBeenCalledOnce()
 	})
 
-	it('calls onRate with quality 2 when Hard is clicked', async () => {
+	it('calls onRate with quality 4 when Know is clicked', async () => {
 		const user = userEvent.setup()
 		const onRate = vi.fn()
 
 		render(<FlashcardRating onRate={onRate} />, {wrapper: createWrapper()})
 
-		await user.click(screen.getByRole('button', {name: /hard/i}))
-
-		expect(onRate).toHaveBeenCalledWith(2 as QualityRating)
-	})
-
-	it('calls onRate with quality 3 when Good is clicked', async () => {
-		const user = userEvent.setup()
-		const onRate = vi.fn()
-
-		render(<FlashcardRating onRate={onRate} />, {wrapper: createWrapper()})
-
-		await user.click(screen.getByRole('button', {name: /good/i}))
-
-		expect(onRate).toHaveBeenCalledWith(3 as QualityRating)
-	})
-
-	it('calls onRate with quality 4 when Easy is clicked', async () => {
-		const user = userEvent.setup()
-		const onRate = vi.fn()
-
-		render(<FlashcardRating onRate={onRate} />, {wrapper: createWrapper()})
-
-		await user.click(screen.getByRole('button', {name: /easy/i}))
+		await user.click(screen.getByRole('button', {name: /mark as know/i}))
 
 		expect(onRate).toHaveBeenCalledWith(4 as QualityRating)
+		expect(onRate).toHaveBeenCalledOnce()
 	})
 
 	it('disables all buttons when disabled prop is true', () => {
@@ -95,15 +77,13 @@ describe('FlashcardRating', () => {
 			wrapper: createWrapper()
 		})
 
-		const againButton = screen.getByRole('button', {name: /again/i})
-		const hardButton = screen.getByRole('button', {name: /hard/i})
-		const goodButton = screen.getByRole('button', {name: /good/i})
-		const easyButton = screen.getByRole('button', {name: /easy/i})
+		const dontKnowButton = screen.getByRole('button', {
+			name: /mark as don't know/i
+		})
+		const knowButton = screen.getByRole('button', {name: /mark as know/i})
 
-		expect(againButton).toBeDisabled()
-		expect(hardButton).toBeDisabled()
-		expect(goodButton).toBeDisabled()
-		expect(easyButton).toBeDisabled()
+		expect(dontKnowButton).toBeDisabled()
+		expect(knowButton).toBeDisabled()
 	})
 
 	it('does not call onRate when disabled button is clicked', async () => {
@@ -114,7 +94,7 @@ describe('FlashcardRating', () => {
 			wrapper: createWrapper()
 		})
 
-		await user.click(screen.getByRole('button', {name: /good/i}))
+		await user.click(screen.getByRole('button', {name: /mark as know/i}))
 
 		expect(onRate).not.toHaveBeenCalled()
 	})
@@ -122,18 +102,16 @@ describe('FlashcardRating', () => {
 	it('applies correct color classes to buttons', () => {
 		render(<FlashcardRating onRate={vi.fn()} />, {wrapper: createWrapper()})
 
-		const againButton = screen.getByRole('button', {name: /again/i})
-		const hardButton = screen.getByRole('button', {name: /hard/i})
-		const goodButton = screen.getByRole('button', {name: /good/i})
-		const easyButton = screen.getByRole('button', {name: /easy/i})
+		const dontKnowButton = screen.getByRole('button', {
+			name: /mark as don't know/i
+		})
+		const knowButton = screen.getByRole('button', {name: /mark as know/i})
 
-		expect(againButton).toHaveClass('bg-red-600')
-		expect(hardButton).toHaveClass('bg-orange-600')
-		expect(goodButton).toHaveClass('bg-green-600')
-		expect(easyButton).toHaveClass('bg-blue-600')
+		expect(dontKnowButton).toHaveClass('bg-orange-600')
+		expect(knowButton).toHaveClass('bg-green-600')
 	})
 
-	it('renders in grid layout', () => {
+	it('renders in grid layout with 2 columns', () => {
 		const {container} = render(<FlashcardRating onRate={vi.fn()} />, {
 			wrapper: createWrapper()
 		})
@@ -141,6 +119,15 @@ describe('FlashcardRating', () => {
 		const grid = container.querySelector('.grid')
 		expect(grid).toBeInTheDocument()
 		expect(grid).toHaveClass('grid-cols-2')
-		expect(grid).toHaveClass('sm:grid-cols-4')
+	})
+
+	it('is hidden on mobile (has md:block class)', () => {
+		const {container} = render(<FlashcardRating onRate={vi.fn()} />, {
+			wrapper: createWrapper()
+		})
+
+		const ratingDiv = container.querySelector('.md\\:block')
+		expect(ratingDiv).toBeInTheDocument()
+		expect(ratingDiv).toHaveClass('hidden')
 	})
 })

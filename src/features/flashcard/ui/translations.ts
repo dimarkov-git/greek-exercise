@@ -9,6 +9,8 @@ export const flashcardRatingTranslations = {
 	'flashcard.hard': 'flashcard.hard',
 	'flashcard.good': 'flashcard.good',
 	'flashcard.easy': 'flashcard.easy',
+	'flashcard.dontKnow': 'flashcard.dontKnow',
+	'flashcard.know': 'flashcard.know',
 	'flashcard.rateQuality': 'flashcard.rateQuality'
 } as const satisfies TranslationDictionary
 
