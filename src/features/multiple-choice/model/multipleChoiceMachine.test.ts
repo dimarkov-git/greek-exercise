@@ -235,11 +235,11 @@ describe('multipleChoiceMachine', () => {
 			const progress = selectProgress(state)
 
 			expect(progress).toEqual({
-			current: 1,
-			total: 2,
-			completed: 0,
-			percentage: 0
-		})
+				current: 1,
+				total: 2,
+				completed: 0,
+				percentage: 0
+			})
 		})
 
 		it('selectStats returns stats', () => {

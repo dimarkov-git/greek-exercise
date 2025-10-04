@@ -248,7 +248,8 @@ const mockExerciseLibrary: ExerciseLibraryViewModel = {
 	filterOptions: {
 		tags: ['nouns', 'verbs', 'grammar'],
 		difficulties: ['a1', 'a2'],
-		languages: ['el']
+		languages: ['el'],
+		types: ['word-form']
 	},
 	totals: {
 		total: 2,

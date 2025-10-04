@@ -160,6 +160,23 @@ function collectUniqueLanguages(exercises: ExerciseSummary[]): Language[] {
 	return LANGUAGE_ORDER.filter(language => languages.has(language))
 }
 
+function collectUniqueTypes(
+	exercises: ExerciseSummary[]
+): ExerciseMetadata['type'][] {
+	const types = new Set<ExerciseMetadata['type']>()
+
+	for (const exercise of exercises) {
+		types.add(exercise.type)
+	}
+
+	const TypeOrder: ExerciseMetadata['type'][] = [
+		'word-form',
+		'multiple-choice',
+		'flashcard'
+	]
+	return TypeOrder.filter(type => types.has(type))
+}
+
 export function createExerciseLibraryViewModel(
 	metadataList: ExercisesListDto
 ): ExerciseLibraryViewModel {
@@ -171,7 +188,8 @@ export function createExerciseLibraryViewModel(
 		filterOptions: {
 			tags: collectUniqueTags(exercises),
 			difficulties: collectUniqueDifficulties(exercises),
-			languages: collectUniqueLanguages(exercises)
+			languages: collectUniqueLanguages(exercises),
+			types: collectUniqueTypes(exercises)
 		},
 		totals: {
 			total: exercises.length,

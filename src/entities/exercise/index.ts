@@ -179,7 +179,8 @@ export {
 	selectFilterOptions,
 	selectHasEnabledExercises,
 	selectLanguageOptions,
-	selectTagOptions
+	selectTagOptions,
+	selectTypeOptions
 } from './model/selectors'
 // Word-form types (kept in entities for backwards compatibility with FSD rules)
 // TODO: Gradually migrate consumers to import from features

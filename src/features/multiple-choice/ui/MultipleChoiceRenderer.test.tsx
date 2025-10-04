@@ -19,9 +19,7 @@ function createWrapper() {
 
 	return function Wrapper({children}: {children: ReactNode}) {
 		return (
-			<QueryClientProvider client={queryClient}>
-				{children}
-			</QueryClientProvider>
+			<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 		)
 	}
 }
@@ -143,9 +141,7 @@ describe('MultipleChoiceRenderer', () => {
 
 		// Should show correct feedback
 		await waitFor(() => {
-			expect(
-				screen.getByText(/multipleChoice\.correct/i)
-			).toBeInTheDocument()
+			expect(screen.getByText(/multipleChoice\.correct/i)).toBeInTheDocument()
 		})
 	})
 
@@ -198,9 +194,7 @@ describe('MultipleChoiceRenderer', () => {
 
 		// Should show completion screen
 		await waitFor(() => {
-			expect(
-				screen.getByText(/multipleChoice\.completed/i)
-			).toBeInTheDocument()
+			expect(screen.getByText(/multipleChoice\.completed/i)).toBeInTheDocument()
 		})
 	})
 
@@ -208,7 +202,10 @@ describe('MultipleChoiceRenderer', () => {
 		const user = userEvent.setup()
 		const onComplete = vi.fn()
 		render(
-			<MultipleChoiceRenderer exercise={mockExercise} onComplete={onComplete} />,
+			<MultipleChoiceRenderer
+				exercise={mockExercise}
+				onComplete={onComplete}
+			/>,
 			{wrapper: createWrapper()}
 		)
 
@@ -276,7 +273,9 @@ describe('MultipleChoiceRenderer', () => {
 			wrapper: createWrapper()
 		})
 
-		expect(screen.queryByRole('button', {name: /back/i})).not.toBeInTheDocument()
+		expect(
+			screen.queryByRole('button', {name: /back/i})
+		).not.toBeInTheDocument()
 	})
 
 	it('shows progress information', () => {

@@ -1,6 +1,6 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {useState} from 'react'
-import type {Difficulty} from '@/entities/exercise'
+import type {Difficulty, ExerciseType} from '@/entities/exercise'
 import type {Language} from '@/shared/model'
 import {UI_LANGUAGES} from '@/shared/model'
 import type {exerciseLibraryTranslations} from '../lib/translations'
@@ -18,7 +18,10 @@ interface ExerciseFiltersProps {
 	setSelectedLanguages: (languages: Language[]) => void
 	selectedTags: string[]
 	setSelectedTags: (tags: string[]) => void
+	selectedTypes: ExerciseType[]
+	setSelectedTypes: (types: ExerciseType[]) => void
 	tagOptions: string[]
+	typeOptions: ExerciseType[]
 	t: (
 		entry: (typeof exerciseLibraryTranslations)[keyof typeof exerciseLibraryTranslations]
 	) => string
@@ -26,7 +29,7 @@ interface ExerciseFiltersProps {
 }
 
 export function ExerciseFilters(props: ExerciseFiltersProps) {
-	const [isCollapsed, setIsCollapsed] = useState(false)
+	const [isCollapsed, setIsCollapsed] = useState(true)
 
 	return (
 		<motion.div
@@ -55,6 +58,7 @@ function FilterHeader({
 	selectedDifficulties,
 	selectedLanguages,
 	selectedTags,
+	selectedTypes,
 	setIsCollapsed,
 	t,
 	translations
@@ -74,6 +78,7 @@ function FilterHeader({
 						selectedDifficulties={selectedDifficulties}
 						selectedLanguages={selectedLanguages}
 						selectedTags={selectedTags}
+						selectedTypes={selectedTypes}
 						t={t}
 						translations={translations}
 					/>
@@ -107,12 +112,15 @@ function FilterContent({
 	selectedDifficulties,
 	selectedLanguages,
 	selectedTags,
+	selectedTypes,
 	setSelectedDifficulties,
 	setSelectedLanguages,
 	setSelectedTags,
+	setSelectedTypes,
 	t,
 	tagOptions,
-	translations
+	translations,
+	typeOptions
 }: FilterContentProps) {
 	return (
 		<AnimatePresence>
@@ -125,6 +133,13 @@ function FilterContent({
 					transition={{duration: 0.3}}
 				>
 					<div className='px-6 pb-6'>
+						<TypeFilter
+							options={typeOptions}
+							selectedTypes={selectedTypes}
+							setSelectedTypes={setSelectedTypes}
+							t={t}
+							translations={translations}
+						/>
 						<DifficultyFilter
 							options={difficultyOptions}
 							selectedDifficulties={selectedDifficulties}
@@ -150,6 +165,74 @@ function FilterContent({
 				</motion.div>
 			)}
 		</AnimatePresence>
+	)
+}
+
+interface TypeFilterProps {
+	options: ExerciseType[]
+	selectedTypes: ExerciseType[]
+	setSelectedTypes: (types: ExerciseType[]) => void
+	t: (
+		entry: (typeof exerciseLibraryTranslations)[keyof typeof exerciseLibraryTranslations]
+	) => string
+	translations: typeof exerciseLibraryTranslations
+}
+
+function TypeFilter({
+	options,
+	selectedTypes,
+	setSelectedTypes,
+	t,
+	translations
+}: TypeFilterProps) {
+	if (options.length === 0) {
+		return null
+	}
+
+	const toggleType = (type: ExerciseType) => {
+		if (selectedTypes.includes(type)) {
+			setSelectedTypes(selectedTypes.filter(existing => existing !== type))
+			return
+		}
+
+		setSelectedTypes([...selectedTypes, type])
+	}
+
+	return (
+		<div className='mb-4'>
+			<div className='mb-2 block font-medium text-gray-700 text-sm dark:text-gray-300'>
+				{t(translations.type)}
+			</div>
+			<div className='flex flex-wrap gap-2'>
+				<button
+					className={`cursor-pointer rounded-full px-3 py-1 font-medium text-sm transition-colors ${
+						selectedTypes.length === 0
+							? 'bg-blue-600 text-white'
+							: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
+					}`}
+					onClick={() => setSelectedTypes([])}
+					type='button'
+				>
+					{t(translations.all)}
+				</button>
+				{options.map(type => (
+					<button
+						className={`cursor-pointer rounded-full px-3 py-1 font-medium text-sm transition-colors ${
+							selectedTypes.includes(type)
+								? 'bg-blue-600 text-white'
+								: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'
+						}`}
+						key={type}
+						onClick={() => toggleType(type)}
+						type='button'
+					>
+						{t(
+							translations[`exerciseType.${type}` as keyof typeof translations]
+						)}
+					</button>
+				))}
+			</div>
+		</div>
 	)
 }
 
@@ -347,6 +430,7 @@ interface FilterSummaryInlineProps {
 	selectedDifficulties: Difficulty[]
 	selectedLanguages: Language[]
 	selectedTags: string[]
+	selectedTypes: ExerciseType[]
 	t: (
 		entry: (typeof exerciseLibraryTranslations)[keyof typeof exerciseLibraryTranslations]
 	) => string
@@ -357,23 +441,56 @@ function FilterSummaryInline({
 	selectedDifficulties,
 	selectedLanguages,
 	selectedTags,
+	selectedTypes,
 	t,
 	translations
 }: FilterSummaryInlineProps) {
+	const hasFilters =
+		selectedTypes.length > 0 ||
+		selectedDifficulties.length > 0 ||
+		selectedLanguages.length > 0 ||
+		selectedTags.length > 0
+
+	if (!hasFilters) {
+		return (
+			<span className='text-gray-500 text-sm dark:text-gray-400'>
+				{t(translations.all)}
+			</span>
+		)
+	}
+
 	return (
 		<div className='flex items-center gap-2 text-sm'>
-			<div className='flex items-center gap-1'>
-				<span className='text-gray-600 dark:text-gray-400'>
-					{t(translations.difficulty)}
-					{t(translations['ui.colon'])}
-				</span>
-				<div className='flex gap-1'>
-					{selectedDifficulties.length === 0 ? (
-						<span className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'>
-							{t(translations.all)}
-						</span>
-					) : (
-						selectedDifficulties.map(difficulty => (
+			{selectedTypes.length > 0 && (
+				<div className='flex items-center gap-1'>
+					<span className='text-gray-600 dark:text-gray-400'>
+						{t(translations.type)}
+						{t(translations['ui.colon'])}
+					</span>
+					<div className='flex gap-1'>
+						{selectedTypes.map(type => (
+							<span
+								className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'
+								key={type}
+							>
+								{t(
+									translations[
+										`exerciseType.${type}` as keyof typeof translations
+									]
+								)}
+							</span>
+						))}
+					</div>
+				</div>
+			)}
+			{selectedDifficulties.length > 0 && (
+				<div className='flex items-center gap-1'>
+					<span className='text-gray-600 dark:text-gray-400'>
+						{t(translations.difficulty)}
+						{t(translations['ui.colon'])}
+					</span>
+					<div className='flex gap-1'>
+						{selectedDifficulties.map(difficulty => (
 							<span
 								className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'
 								key={difficulty}
@@ -384,32 +501,28 @@ function FilterSummaryInline({
 									]
 								)}
 							</span>
-						))
-					)}
+						))}
+					</div>
 				</div>
-			</div>
-			<div className='flex items-center gap-1'>
-				<span className='text-gray-600 dark:text-gray-400'>
-					{t(translations.language)}
-					{t(translations['ui.colon'])}
-				</span>
-				<div className='flex gap-1'>
-					{selectedLanguages.length === 0 ? (
-						<span className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'>
-							{t(translations.all)}
-						</span>
-					) : (
-						selectedLanguages.map(language => (
+			)}
+			{selectedLanguages.length > 0 && (
+				<div className='flex items-center gap-1'>
+					<span className='text-gray-600 dark:text-gray-400'>
+						{t(translations.language)}
+						{t(translations['ui.colon'])}
+					</span>
+					<div className='flex gap-1'>
+						{selectedLanguages.map(language => (
 							<span
 								className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'
 								key={language}
 							>
 								{LANGUAGE_DISPLAY.get(language) ?? language.toUpperCase()}
 							</span>
-						))
-					)}
+						))}
+					</div>
 				</div>
-			</div>
+			)}
 			{selectedTags.length > 0 && (
 				<div className='flex items-center gap-1'>
 					<span className='text-gray-600 dark:text-gray-400'>

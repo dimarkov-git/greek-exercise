@@ -290,7 +290,8 @@ describe('selectFilteredExercises', () => {
 		const filtered = selectFilteredExercises(summaries, {
 			tags: [],
 			difficulties: [],
-			languages: []
+			languages: [],
+			types: []
 		})
 
 		expect(filtered).toBe(summaries)
@@ -301,7 +302,8 @@ describe('selectFilteredExercises', () => {
 		const filtered = selectFilteredExercises(summaries, {
 			tags: ['verbs'],
 			difficulties: ['c1'],
-			languages: ['en']
+			languages: ['en'],
+			types: []
 		})
 
 		expect(filtered.map(exercise => exercise.id)).toEqual(['verbs-advanced'])
@@ -312,7 +314,8 @@ describe('selectFilteredExercises', () => {
 		const filtered = selectFilteredExercises(summaries, {
 			tags: [],
 			difficulties: [],
-			languages: ['ru', 'en']
+			languages: ['ru', 'en'],
+			types: []
 		})
 
 		expect(filtered.map(exercise => exercise.id)).toEqual([
@@ -322,7 +325,8 @@ describe('selectFilteredExercises', () => {
 		const noRussianSupport = selectFilteredExercises([advancedSummary], {
 			tags: [],
 			difficulties: [],
-			languages: ['ru']
+			languages: ['ru'],
+			types: []
 		})
 
 		expect(noRussianSupport).toHaveLength(0)

@@ -84,13 +84,13 @@ function ExerciseCard({exercise, index, t, translations}: ExerciseCardProps) {
 			initial={{opacity: 0, y: 20}}
 			transition={{delay: index * 0.1, duration: 0.4}}
 		>
-			<div className='p-6'>
+			<div className='flex flex-col p-6'>
 				<div className='mb-4 flex items-start justify-between gap-4'>
 					<div className='flex-1'>
 						<h3 className='mb-2 font-semibold text-gray-900 text-lg dark:text-white'>
 							{exercise.titleI18n?.[uiLanguage] || exercise.title}
 						</h3>
-						<p className='line-clamp-2 text-gray-600 text-sm dark:text-gray-400'>
+						<p className='line-clamp-3 text-gray-600 text-sm dark:text-gray-400'>
 							{exercise.descriptionI18n?.[uiLanguage] || exercise.description}
 						</p>
 					</div>
@@ -132,14 +132,30 @@ function ExerciseCard({exercise, index, t, translations}: ExerciseCardProps) {
 
 				<div className='mb-4 flex items-center justify-between text-gray-500 text-sm dark:text-gray-400'>
 					<div className='flex items-center gap-4'>
-						<span>
-							{t(translations['ui.documentEmoji'])} {exercise.totalCases}{' '}
-							{t(translations['exercise.cases'])}
-						</span>
-						<span>
-							{t(translations['ui.booksEmoji'])} {exercise.totalBlocks}{' '}
-							{t(translations['exercise.blocks'])}
-						</span>
+						{exercise.type === 'word-form' && (
+							<>
+								<span>
+									{t(translations['ui.booksEmoji'])} {exercise.totalBlocks}{' '}
+									{t(translations['exercise.blocks'])}
+								</span>
+								<span>
+									{t(translations['ui.documentEmoji'])} {exercise.totalCases}{' '}
+									{t(translations['exercise.cases'])}
+								</span>
+							</>
+						)}
+						{exercise.type === 'multiple-choice' && (
+							<span>
+								{t(translations['ui.questionEmoji'])} {exercise.totalCases}{' '}
+								{t(translations['exercise.questions'])}
+							</span>
+						)}
+						{exercise.type === 'flashcard' && (
+							<span>
+								{t(translations['ui.cardEmoji'])} {exercise.totalCases}{' '}
+								{t(translations['exercise.cards'])}
+							</span>
+						)}
 					</div>
 				</div>
 
@@ -231,6 +247,11 @@ function getDifficultyLabel(difficulty: string, userLanguage: string): string {
 	const labels = {
 		a0: {en: 'A0', ru: 'А0', el: 'Α0'},
 		a1: {en: 'A1', ru: 'А1', el: 'Α1'},
+		a2: {en: 'A2', ru: 'А2', el: 'Α2'},
+		b1: {en: 'B1', ru: 'В1', el: 'Β1'},
+		b2: {en: 'B2', ru: 'В2', el: 'Β2'},
+		c1: {en: 'C1', ru: 'С1', el: 'Γ1'},
+		c2: {en: 'C2', ru: 'С2', el: 'Γ2'},
 		intermediate: {en: 'Intermediate', ru: 'Средний', el: 'Μεσαίος'},
 		advanced: {en: 'Advanced', ru: 'Продвинутый', el: 'Προχωρημένος'}
 	}

@@ -1,10 +1,15 @@
 import {useCallback, useMemo, useState} from 'react'
-import type {Difficulty, ExerciseLibraryViewModel} from '@/entities/exercise'
+import type {
+	Difficulty,
+	ExerciseLibraryViewModel,
+	ExerciseType
+} from '@/entities/exercise'
 import {
 	selectDifficultyOptions,
 	selectFilteredExercises,
 	selectLanguageOptions,
-	selectTagOptions
+	selectTagOptions,
+	selectTypeOptions
 } from '@/entities/exercise'
 import type {Language} from '@/shared/model'
 
@@ -16,6 +21,7 @@ export function useExerciseFiltering(
 		Difficulty[]
 	>([])
 	const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([])
+	const [selectedTypes, setSelectedTypes] = useState<ExerciseType[]>([])
 
 	const filteredExercises = useMemo(() => {
 		if (!viewModel) {
@@ -25,30 +31,41 @@ export function useExerciseFiltering(
 		return selectFilteredExercises(viewModel.exercises, {
 			tags: selectedTags,
 			difficulties: selectedDifficulties,
-			languages: selectedLanguages
+			languages: selectedLanguages,
+			types: selectedTypes
 		})
-	}, [selectedDifficulties, selectedLanguages, selectedTags, viewModel])
+	}, [
+		selectedDifficulties,
+		selectedLanguages,
+		selectedTags,
+		selectedTypes,
+		viewModel
+	])
 
-	const {tagOptions, difficultyOptions, languageOptions} = useMemo(() => {
-		if (!viewModel) {
-			return {
-				tagOptions: [],
-				difficultyOptions: [] as Difficulty[],
-				languageOptions: [] as Language[]
+	const {tagOptions, difficultyOptions, languageOptions, typeOptions} =
+		useMemo(() => {
+			if (!viewModel) {
+				return {
+					tagOptions: [],
+					difficultyOptions: [] as Difficulty[],
+					languageOptions: [] as Language[],
+					typeOptions: [] as ExerciseType[]
+				}
 			}
-		}
 
-		return {
-			tagOptions: selectTagOptions(viewModel),
-			difficultyOptions: selectDifficultyOptions(viewModel),
-			languageOptions: selectLanguageOptions(viewModel)
-		}
-	}, [viewModel])
+			return {
+				tagOptions: selectTagOptions(viewModel),
+				difficultyOptions: selectDifficultyOptions(viewModel),
+				languageOptions: selectLanguageOptions(viewModel),
+				typeOptions: selectTypeOptions(viewModel)
+			}
+		}, [viewModel])
 
 	const clearFilters = useCallback(() => {
 		setSelectedTags([])
 		setSelectedDifficulties([])
 		setSelectedLanguages([])
+		setSelectedTypes([])
 	}, [])
 
 	return {
@@ -59,9 +76,12 @@ export function useExerciseFiltering(
 		setSelectedDifficulties,
 		selectedLanguages,
 		setSelectedLanguages,
+		selectedTypes,
+		setSelectedTypes,
 		tagOptions,
 		difficultyOptions,
 		languageOptions,
+		typeOptions,
 		clearFilters
 	}
 }

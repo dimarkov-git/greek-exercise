@@ -19,6 +19,7 @@ export interface ExerciseLibraryFilterOptions {
 	tags: string[]
 	difficulties: ExerciseMetadata['difficulty'][]
 	languages: Language[]
+	types: ExerciseMetadata['type'][]
 }
 
 export interface ExerciseLibraryTotals {
@@ -36,6 +37,7 @@ export interface ExerciseFilterSelection {
 	tags: string[]
 	difficulties: ExerciseMetadata['difficulty'][]
 	languages: Language[]
+	types: ExerciseMetadata['type'][]
 }
 
 export type WordFormExerciseWithDefaults = WordFormExercise & {

@@ -52,7 +52,14 @@ const defaultProps = {
 	setSelectedLanguages: vi.fn(),
 	selectedTags: [] as string[],
 	setSelectedTags: vi.fn(),
+	selectedTypes: [] as import('@/entities/exercise').ExerciseType[],
+	setSelectedTypes: vi.fn(),
 	tagOptions: ['grammar', 'verbs', 'nouns'],
+	typeOptions: [
+		'word-form',
+		'flashcard',
+		'multiple-choice'
+	] as import('@/entities/exercise').ExerciseType[],
 	t: mockT,
 	translations: exerciseLibraryTranslations
 }

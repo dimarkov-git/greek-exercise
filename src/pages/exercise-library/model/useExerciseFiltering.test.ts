@@ -57,7 +57,8 @@ function createViewModel(
 		filterOptions: {
 			tags: ['verbs', 'present', 'nouns'],
 			difficulties: ['a1', 'b1'],
-			languages: ['el', 'en', 'ru']
+			languages: ['el', 'en', 'ru'],
+			types: ['word-form']
 		},
 		totals: {
 			total: 2,
@@ -261,7 +262,8 @@ describe('useExerciseFiltering', () => {
 				filterOptions: {
 					tags: ['different'],
 					difficulties: ['c1'],
-					languages: ['ru']
+					languages: ['ru'],
+					types: []
 				}
 			})
 

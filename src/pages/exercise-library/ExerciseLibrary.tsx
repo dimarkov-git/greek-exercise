@@ -21,9 +21,12 @@ export function ExerciseLibrary() {
 		setSelectedDifficulties,
 		selectedLanguages,
 		setSelectedLanguages,
+		selectedTypes,
+		setSelectedTypes,
 		tagOptions,
 		difficultyOptions,
 		languageOptions,
+		typeOptions,
 		clearFilters
 	} = useExerciseFiltering(exerciseLibrary)
 
@@ -48,12 +51,15 @@ export function ExerciseLibrary() {
 								selectedDifficulties={selectedDifficulties}
 								selectedLanguages={selectedLanguages}
 								selectedTags={selectedTags}
+								selectedTypes={selectedTypes}
 								setSelectedDifficulties={setSelectedDifficulties}
 								setSelectedLanguages={setSelectedLanguages}
 								setSelectedTags={setSelectedTags}
+								setSelectedTypes={setSelectedTypes}
 								t={t}
 								tagOptions={tagOptions}
 								translations={exerciseLibraryTranslations}
+								typeOptions={typeOptions}
 							/>
 
 							<ExerciseGrid

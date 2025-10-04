@@ -7,7 +7,7 @@
 import type {
 	Difficulty,
 	Language,
-	PartialExerciseSettings
+	PartialMultipleChoiceSettings
 } from '@/shared/model'
 
 /**
@@ -67,7 +67,7 @@ export interface MultipleChoiceExercise {
 	/** Difficulty level */
 	difficulty: Difficulty
 	/** Exercise settings */
-	settings?: PartialExerciseSettings
+	settings?: PartialMultipleChoiceSettings
 	/** List of questions */
 	questions: MultipleChoiceQuestion[]
 }
