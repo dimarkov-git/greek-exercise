@@ -559,6 +559,7 @@ function useWordFormViewModel({
 	)
 }
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Complex state machine hook
 export function useWordFormExercise({
 	exercise: rawExercise,
 	onComplete

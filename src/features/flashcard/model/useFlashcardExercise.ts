@@ -220,7 +220,7 @@ export function useFlashcardExercise(
 			}
 			dispatch({type: 'RESTART_WITH_SETTINGS', exercise: updatedExercise})
 		},
-		[dispatch, exercise]
+		[exercise]
 	)
 
 	return {

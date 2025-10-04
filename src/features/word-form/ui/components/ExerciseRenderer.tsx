@@ -16,7 +16,9 @@ interface ExerciseRendererProps {
 	handleSubmit: (answer: string) => void
 	handleAutoAdvanceToggle: () => void
 	handleAnswerChange: (value: string) => void
-	handleSettingsChange: (newSettings: Partial<import('@/shared/model').WordFormSettings>) => void
+	handleSettingsChange: (
+		newSettings: Partial<import('@/shared/model').WordFormSettings>
+	) => void
 	onExit?: () => void
 }
 
@@ -75,7 +77,9 @@ interface RendererContentProps {
 	onSubmit: (answer: string) => void
 	onToggleAutoAdvance: () => void
 	onAnswerChange: (value: string) => void
-	onSettingsChange: (newSettings: Partial<import('@/shared/model').WordFormSettings>) => void
+	onSettingsChange: (
+		newSettings: Partial<import('@/shared/model').WordFormSettings>
+	) => void
 	errorTitle: string
 	errorMessage: string
 }

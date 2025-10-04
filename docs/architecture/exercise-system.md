@@ -42,7 +42,6 @@ interface WordFormExercise {
     // Classification
     tags: string[]
     difficulty: 'beginner' | 'intermediate' | 'advanced'
-    estimatedTimeMinutes: number
 
     // Exercise configuration
     settings: ExerciseSettings
@@ -194,7 +193,6 @@ ExerciseMetadata[] = [{
     titleI18n: Record<Language, string>
     tags: string[]
     difficulty: string
-    estimatedTimeMinutes: number
     totalBlocks: number
     totalCases: number
 }]

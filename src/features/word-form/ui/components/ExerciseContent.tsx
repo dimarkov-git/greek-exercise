@@ -68,7 +68,9 @@ interface ExerciseContentProps {
 	onAnswerChange: (value: string) => void
 	onPulseComplete: () => void
 	onSkip: () => void
-	onSettingsChange: (newSettings: Partial<import('@/shared/model').WordFormSettings>) => void
+	onSettingsChange: (
+		newSettings: Partial<import('@/shared/model').WordFormSettings>
+	) => void
 }
 
 export function ExerciseContent({

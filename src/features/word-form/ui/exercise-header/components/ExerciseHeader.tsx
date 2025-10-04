@@ -6,9 +6,9 @@ import {
 	DEFAULT_WORD_FORM_SETTINGS,
 	getExerciseSettings
 } from '@/entities/exercise'
-import type {WordFormSettings} from '@/shared/model'
 import type {TranslationEntry} from '@/shared/lib/i18n'
 import {loadTranslations} from '@/shared/lib/i18n'
+import type {WordFormSettings} from '@/shared/model'
 import {
 	ExerciseSettingsPanel,
 	exerciseSettingsTranslations,
@@ -160,6 +160,7 @@ function ProgressBar({
 /**
  * Exercise header with progress and controls
  */
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Complex header with settings panel
 export function ExerciseHeader({
 	title,
 	blockName,
@@ -174,18 +175,29 @@ export function ExerciseHeader({
 	const {t: tSettings} = loadTranslations(exerciseSettingsTranslations)
 
 	const settingsFields: SettingField[] = useMemo(
+		// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Settings fields configuration array
 		() => [
 			{
 				key: 'autoAdvance',
 				type: 'boolean',
-				label: tSettings('exerciseSettings.autoAdvance'),
-				description: tSettings('exerciseSettings.autoAdvanceDesc')
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.autoAdvance']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.autoAdvanceDesc']
+				)
 			},
 			{
 				key: 'autoAdvanceDelayMs',
 				type: 'number',
-				label: tSettings('exerciseSettings.autoAdvanceDelayMs'),
-				description: tSettings('exerciseSettings.autoAdvanceDelayMsDesc'),
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.autoAdvanceDelayMs']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations[
+						'exerciseSettings.autoAdvanceDelayMsDesc'
+					]
+				),
 				min: 0,
 				max: 5000,
 				step: 100
@@ -193,33 +205,52 @@ export function ExerciseHeader({
 			{
 				key: 'allowSkip',
 				type: 'boolean',
-				label: tSettings('exerciseSettings.allowSkip'),
-				description: tSettings('exerciseSettings.allowSkipDesc')
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.allowSkip']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.allowSkipDesc']
+				)
 			},
 			{
 				key: 'shuffleCases',
 				type: 'boolean',
-				label: tSettings('exerciseSettings.shuffleCases'),
-				description: tSettings('exerciseSettings.shuffleCasesDesc')
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.shuffleCases']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.shuffleCasesDesc']
+				)
 			},
 			{
 				key: 'shuffleBlocks',
 				type: 'boolean',
-				label: tSettings('exerciseSettings.shuffleBlocks'),
-				description: tSettings('exerciseSettings.shuffleBlocksDesc')
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.shuffleBlocks']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.shuffleBlocksDesc']
+				)
 			},
 			{
 				key: 'allowSkipTone',
 				type: 'boolean',
-				label: tSettings('exerciseSettings.allowSkipTone'),
-				description: tSettings('exerciseSettings.allowSkipToneDesc')
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.allowSkipTone']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.allowSkipToneDesc']
+				)
 			}
 		],
 		[tSettings]
 	)
 
 	const currentSettings = useMemo(
-		() => (exercise ? getExerciseSettings(exercise) as unknown as WordFormSettings : DEFAULT_WORD_FORM_SETTINGS),
+		() =>
+			exercise
+				? (getExerciseSettings(exercise) as unknown as WordFormSettings)
+				: DEFAULT_WORD_FORM_SETTINGS,
 		[exercise]
 	)
 

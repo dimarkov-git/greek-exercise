@@ -7,13 +7,16 @@
 import {useMemo} from 'react'
 import type {ExerciseRendererProps} from '@/entities/exercise'
 import {loadTranslations} from '@/shared/lib/i18n'
-import {DEFAULT_MULTIPLE_CHOICE_SETTINGS, useSettingsStore} from '@/shared/model'
-import {ExerciseLayout} from '@/shared/ui/exercise-layout'
+import {
+	DEFAULT_MULTIPLE_CHOICE_SETTINGS,
+	useSettingsStore
+} from '@/shared/model'
 import {
 	ExerciseSettingsPanel,
 	exerciseSettingsTranslations,
 	type SettingField
 } from '@/shared/ui'
+import {ExerciseLayout} from '@/shared/ui/exercise-layout'
 import type {MultipleChoiceExercise} from '../model/types'
 import type {MultipleChoiceViewState} from '../model/useMultipleChoiceExercise'
 import {useMultipleChoiceExercise} from '../model/useMultipleChoiceExercise'
@@ -28,9 +31,12 @@ interface ExerciseHeaderProps {
 	progress: MultipleChoiceViewState['progress']
 	stats: MultipleChoiceViewState['stats']
 	exercise: MultipleChoiceExercise
-	onSettingsChange: (newSettings: Partial<import('@/shared/model').MultipleChoiceSettings>) => void
+	onSettingsChange: (
+		newSettings: Partial<import('@/shared/model').MultipleChoiceSettings>
+	) => void
 }
 
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Complex header with settings panel
 function ExerciseHeader({
 	onExit,
 	progress,
@@ -45,14 +51,24 @@ function ExerciseHeader({
 			{
 				key: 'autoAdvance',
 				type: 'boolean',
-				label: tSettings('exerciseSettings.autoAdvance'),
-				description: tSettings('exerciseSettings.autoAdvanceDesc')
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.autoAdvance']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.autoAdvanceDesc']
+				)
 			},
 			{
 				key: 'autoAdvanceDelayMs',
 				type: 'number',
-				label: tSettings('exerciseSettings.autoAdvanceDelayMs'),
-				description: tSettings('exerciseSettings.autoAdvanceDelayMsDesc'),
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.autoAdvanceDelayMs']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations[
+						'exerciseSettings.autoAdvanceDelayMsDesc'
+					]
+				),
 				min: 0,
 				max: 5000,
 				step: 100
@@ -60,20 +76,32 @@ function ExerciseHeader({
 			{
 				key: 'allowSkip',
 				type: 'boolean',
-				label: tSettings('exerciseSettings.allowSkip'),
-				description: tSettings('exerciseSettings.allowSkipDesc')
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.allowSkip']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.allowSkipDesc']
+				)
 			},
 			{
 				key: 'shuffleQuestions',
 				type: 'boolean',
-				label: tSettings('exerciseSettings.shuffleQuestions'),
-				description: tSettings('exerciseSettings.shuffleQuestionsDesc')
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.shuffleQuestions']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.shuffleQuestionsDesc']
+				)
 			},
 			{
 				key: 'shuffleAnswers',
 				type: 'boolean',
-				label: tSettings('exerciseSettings.shuffleAnswers'),
-				description: tSettings('exerciseSettings.shuffleAnswersDesc')
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.shuffleAnswers']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.shuffleAnswersDesc']
+				)
 			}
 		],
 		[tSettings]

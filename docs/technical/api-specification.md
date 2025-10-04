@@ -19,7 +19,6 @@ interface ExerciseMetadata {
     titleI18n: Record<Language, string>
     tags: string[]
     difficulty: string
-    estimatedTimeMinutes: number
     totalBlocks: number
     totalCases: number
 }
@@ -45,7 +44,6 @@ type ExercisesResponse = ExerciseMetadata[]
       "grammar"
     ],
     "difficulty": "beginner",
-    "estimatedTimeMinutes": 15,
     "totalBlocks": 6,
     "totalCases": 18
   }

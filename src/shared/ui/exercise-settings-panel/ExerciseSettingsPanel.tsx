@@ -35,6 +35,7 @@ export interface ExerciseSettingsPanelProps<T extends Record<string, unknown>> {
  * Generic panel for displaying and editing exercise settings.
  * Can be used with any exercise type by providing appropriate fields.
  */
+// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Complex modal component with form
 export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 	currentSettings,
 	fields,
@@ -50,7 +51,8 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 
 	// Use controlled or uncontrolled state
 	const isOpen = controlledIsOpen ?? uncontrolledIsOpen
-	const handleToggle = controlledOnToggle ?? (() => setUncontrolledIsOpen(!uncontrolledIsOpen))
+	const handleToggle =
+		controlledOnToggle ?? (() => setUncontrolledIsOpen(!uncontrolledIsOpen))
 
 	const handleFieldChange = (key: string, value: boolean | number) => {
 		setLocalSettings(prev => ({...prev, [key]: value}))
@@ -80,19 +82,21 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 			{/* Settings trigger button */}
 			<GhostButton
 				aria-expanded={isOpen}
-				aria-label={t('exerciseSettings.title')}
+				aria-label={t(exerciseSettingsTranslations['exerciseSettings.title'])}
 				className='gap-2'
 				onClick={handleToggle}
 				size='sm'
 				type='button'
 			>
 				<svg
+					aria-hidden='true'
 					className='size-5'
 					fill='none'
 					stroke='currentColor'
 					strokeWidth={2}
 					viewBox='0 0 24 24'
 				>
+					<title>Settings icon</title>
 					<path
 						d='M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z'
 						strokeLinecap='round'
@@ -104,7 +108,7 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 						strokeLinejoin='round'
 					/>
 				</svg>
-				{t('exerciseSettings.title')}
+				{t(exerciseSettingsTranslations['exerciseSettings.title'])}
 			</GhostButton>
 
 			{/* Settings panel */}
@@ -113,21 +117,25 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 					<div className='my-8 w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl dark:bg-gray-800'>
 						<div className='mb-4 flex items-center justify-between'>
 							<h2 className='font-semibold text-gray-900 text-xl dark:text-white'>
-								{t('exerciseSettings.title')}
+								{t(exerciseSettingsTranslations['exerciseSettings.title'])}
 							</h2>
 							<button
-								aria-label={t('exerciseSettings.close')}
+								aria-label={t(
+									exerciseSettingsTranslations['exerciseSettings.close']
+								)}
 								className='rounded-lg p-1 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
 								onClick={handleCancel}
 								type='button'
 							>
 								<svg
+									aria-hidden='true'
 									className='size-6'
 									fill='none'
 									stroke='currentColor'
 									strokeWidth={2}
 									viewBox='0 0 24 24'
 								>
+									<title>Close icon</title>
 									<path
 										d='M6 18L18 6M6 6l12 12'
 										strokeLinecap='round'
@@ -138,13 +146,13 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 						</div>
 
 						<p className='mb-6 text-gray-600 text-sm dark:text-gray-400'>
-							{t('exerciseSettings.description')}
+							{t(exerciseSettingsTranslations['exerciseSettings.description'])}
 						</p>
 
 						{/* Settings fields */}
 						<div className='space-y-4'>
 							{fields.map(field => (
-								<div key={field.key} className='space-y-2'>
+								<div className='space-y-2' key={field.key}>
 									<label
 										className='flex items-start justify-between gap-3'
 										htmlFor={`setting-${field.key}`}
@@ -164,7 +172,9 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 												checked={localSettings[field.key] as boolean}
 												className='mt-1 size-5 cursor-pointer rounded border-gray-300 text-blue-600 transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600'
 												id={`setting-${field.key}`}
-												onChange={e => handleFieldChange(field.key, e.target.checked)}
+												onChange={e =>
+													handleFieldChange(field.key, e.target.checked)
+												}
 												type='checkbox'
 											/>
 										) : (
@@ -196,7 +206,7 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 								type='button'
 								variant='primary'
 							>
-								{t('exerciseSettings.apply')}
+								{t(exerciseSettingsTranslations['exerciseSettings.apply'])}
 							</Button>
 							<OutlineButton
 								className='flex-1'
@@ -204,7 +214,7 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 								size='default'
 								type='button'
 							>
-								{t('exerciseSettings.reset')}
+								{t(exerciseSettingsTranslations['exerciseSettings.reset'])}
 							</OutlineButton>
 						</div>
 
@@ -215,7 +225,7 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 								size='default'
 								type='button'
 							>
-								{t('exerciseSettings.cancel')}
+								{t(exerciseSettingsTranslations['exerciseSettings.cancel'])}
 							</OutlineButton>
 						</div>
 					</div>

@@ -178,7 +178,7 @@ export function useMultipleChoiceExercise(
 			completionHandledRef.current = false
 			dispatch({type: 'RESTART_WITH_SETTINGS', exercise: updatedExercise})
 		},
-		[dispatch, exercise]
+		[exercise]
 	)
 
 	return {

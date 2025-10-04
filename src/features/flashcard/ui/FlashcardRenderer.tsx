@@ -9,9 +9,8 @@ import type {
 	ExerciseRendererProps,
 	FlashcardExercise
 } from '@/entities/exercise'
-import {DEFAULT_FLASHCARD_SETTINGS} from '@/shared/model'
-import {useSettingsStore} from '@/shared/model'
 import {loadTranslations} from '@/shared/lib/i18n'
+import {DEFAULT_FLASHCARD_SETTINGS, useSettingsStore} from '@/shared/model'
 import {
 	ExerciseSettingsPanel,
 	exerciseSettingsTranslations,
@@ -62,6 +61,55 @@ export function FlashcardRenderer({
 
 	const {state, handleFlip, handleRate, handleRestart, handleSettingsChange} =
 		useFlashcardExercise(exercise, handleComplete)
+
+	// Settings configuration (hooks must be at top level before any returns)
+	const {t: tSettings} = loadTranslations(exerciseSettingsTranslations)
+
+	const settingsFields: SettingField[] = useMemo(
+		() => [
+			{
+				key: 'autoAdvance',
+				type: 'boolean',
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.autoAdvance']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.autoAdvanceDesc']
+				)
+			},
+			{
+				key: 'autoAdvanceDelayMs',
+				type: 'number',
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.autoAdvanceDelayMs']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations[
+						'exerciseSettings.autoAdvanceDelayMsDesc'
+					]
+				),
+				min: 0,
+				max: 5000,
+				step: 100
+			},
+			{
+				key: 'shuffleCards',
+				type: 'boolean',
+				label: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.shuffleCards']
+				),
+				description: tSettings(
+					exerciseSettingsTranslations['exerciseSettings.shuffleCardsDesc']
+				)
+			}
+		],
+		[tSettings]
+	)
+
+	const currentSettings = useMemo(
+		() => ({...DEFAULT_FLASHCARD_SETTINGS, ...exercise.settings}),
+		[exercise.settings]
+	)
 
 	// Show loading state
 	if (state.isLoading) {
@@ -121,40 +169,6 @@ export function FlashcardRenderer({
 			</div>
 		)
 	}
-
-	const {t: tSettings} = loadTranslations(exerciseSettingsTranslations)
-
-	const settingsFields: SettingField[] = useMemo(
-		() => [
-			{
-				key: 'autoAdvance',
-				type: 'boolean',
-				label: tSettings('exerciseSettings.autoAdvance'),
-				description: tSettings('exerciseSettings.autoAdvanceDesc')
-			},
-			{
-				key: 'autoAdvanceDelayMs',
-				type: 'number',
-				label: tSettings('exerciseSettings.autoAdvanceDelayMs'),
-				description: tSettings('exerciseSettings.autoAdvanceDelayMsDesc'),
-				min: 0,
-				max: 5000,
-				step: 100
-			},
-			{
-				key: 'shuffleCards',
-				type: 'boolean',
-				label: tSettings('exerciseSettings.shuffleCards'),
-				description: tSettings('exerciseSettings.shuffleCardsDesc')
-			}
-		],
-		[tSettings]
-	)
-
-	const currentSettings = useMemo(
-		() => ({...DEFAULT_FLASHCARD_SETTINGS, ...exercise.settings}),
-		[exercise.settings]
-	)
 
 	// Show flashcard review interface
 	return (
