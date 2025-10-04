@@ -68,6 +68,7 @@ interface ExerciseContentProps {
 	onAnswerChange: (value: string) => void
 	onPulseComplete: () => void
 	onSkip: () => void
+	onSettingsChange: (newSettings: Partial<import('@/shared/model').WordFormSettings>) => void
 }
 
 export function ExerciseContent({
@@ -87,13 +88,16 @@ export function ExerciseContent({
 	onSubmit,
 	onAnswerChange,
 	onPulseComplete,
-	onSkip
+	onSkip,
+	onSettingsChange
 }: ExerciseContentProps) {
 	return (
 		<>
 			<ExerciseHeader
 				autoAdvanceEnabled={autoAdvanceEnabled}
 				blockName={currentBlock.name}
+				exercise={exercise}
+				onSettingsChange={onSettingsChange}
 				onToggleAutoAdvance={onToggleAutoAdvance}
 				progress={{
 					current: progress.current,

@@ -31,13 +31,9 @@ export function ExercisePage() {
 
 	const handleComplete = useCallback(
 		(_result: Omit<ExerciseResult, 'completedAt'>) => {
-			// Show completion stats briefly, then return to library
-			setTimeout(() => {
-				// biome-ignore lint/nursery/noFloatingPromises: navigate is synchronous
-				navigate('/exercises', {replace: true})
-			}, 3000)
+			// Completion screen will remain until user explicitly exits or restarts
 		},
-		[navigate]
+		[]
 	)
 
 	const handleExit = useCallback(() => {

@@ -23,6 +23,7 @@ export type FlashcardEvent =
 	| {type: 'NEXT'}
 	| {type: 'SKIP'}
 	| {type: 'RESTART'}
+	| {type: 'RESTART_WITH_SETTINGS'; exercise: FlashcardExercise}
 
 /**
  * Internal state machine context
@@ -127,6 +128,18 @@ export function flashcardReducer(
 		case 'RESTART':
 			return {
 				...context,
+				currentCardIndex: 0,
+				reviewedCards: new Set(),
+				correctCards: new Set(),
+				qualityRatings: new Map(),
+				isFlipped: false,
+				startedAt: Date.now()
+			}
+
+		case 'RESTART_WITH_SETTINGS':
+			return {
+				...context,
+				exercise: event.exercise,
 				currentCardIndex: 0,
 				reviewedCards: new Set(),
 				correctCards: new Set(),

@@ -34,6 +34,7 @@ export type MultipleChoiceMachineAction =
 	| {type: 'SKIP'}
 	| {type: 'COMPLETE'}
 	| {type: 'RESTART'; exercise: MultipleChoiceExercise}
+	| {type: 'RESTART_WITH_SETTINGS'; exercise: MultipleChoiceExercise}
 	| {type: 'TOGGLE_AUTO_ADVANCE'}
 	| {type: 'TOGGLE_HINT'}
 
@@ -209,6 +210,7 @@ export function multipleChoiceReducer(
 			}
 
 		case 'RESTART':
+		case 'RESTART_WITH_SETTINGS':
 			return createInitialState(action.exercise)
 
 		case 'TOGGLE_AUTO_ADVANCE':

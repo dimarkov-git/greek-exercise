@@ -166,6 +166,21 @@ export function useMultipleChoiceExercise(
 		startedAt: state.startedAt
 	}
 
+	const handleSettingsChange = useCallback(
+		(newSettings: Partial<import('@/shared/model').MultipleChoiceSettings>) => {
+			const updatedExercise = {
+				...exercise,
+				settings: {
+					...exercise.settings,
+					...newSettings
+				}
+			}
+			completionHandledRef.current = false
+			dispatch({type: 'RESTART_WITH_SETTINGS', exercise: updatedExercise})
+		},
+		[dispatch, exercise]
+	)
+
 	return {
 		state: viewState,
 		handleSelectOption,
@@ -174,6 +189,7 @@ export function useMultipleChoiceExercise(
 		handleSkip,
 		handleRestart,
 		handleToggleAutoAdvance,
-		handleToggleHint
+		handleToggleHint,
+		handleSettingsChange
 	}
 }

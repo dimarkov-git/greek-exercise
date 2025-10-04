@@ -4,10 +4,16 @@
  * Main component for multiple-choice question exercises.
  */
 
+import {useMemo} from 'react'
 import type {ExerciseRendererProps} from '@/entities/exercise'
 import {loadTranslations} from '@/shared/lib/i18n'
-import {useSettingsStore} from '@/shared/model'
+import {DEFAULT_MULTIPLE_CHOICE_SETTINGS, useSettingsStore} from '@/shared/model'
 import {ExerciseLayout} from '@/shared/ui/exercise-layout'
+import {
+	ExerciseSettingsPanel,
+	exerciseSettingsTranslations,
+	type SettingField
+} from '@/shared/ui'
 import type {MultipleChoiceExercise} from '../model/types'
 import type {MultipleChoiceViewState} from '../model/useMultipleChoiceExercise'
 import {useMultipleChoiceExercise} from '../model/useMultipleChoiceExercise'
@@ -21,9 +27,63 @@ interface ExerciseHeaderProps {
 	onExit: (() => void) | undefined
 	progress: MultipleChoiceViewState['progress']
 	stats: MultipleChoiceViewState['stats']
+	exercise: MultipleChoiceExercise
+	onSettingsChange: (newSettings: Partial<import('@/shared/model').MultipleChoiceSettings>) => void
 }
 
-function ExerciseHeader({onExit, progress, stats}: ExerciseHeaderProps) {
+function ExerciseHeader({
+	onExit,
+	progress,
+	stats,
+	exercise,
+	onSettingsChange
+}: ExerciseHeaderProps) {
+	const {t: tSettings} = loadTranslations(exerciseSettingsTranslations)
+
+	const settingsFields: SettingField[] = useMemo(
+		() => [
+			{
+				key: 'autoAdvance',
+				type: 'boolean',
+				label: tSettings('exerciseSettings.autoAdvance'),
+				description: tSettings('exerciseSettings.autoAdvanceDesc')
+			},
+			{
+				key: 'autoAdvanceDelayMs',
+				type: 'number',
+				label: tSettings('exerciseSettings.autoAdvanceDelayMs'),
+				description: tSettings('exerciseSettings.autoAdvanceDelayMsDesc'),
+				min: 0,
+				max: 5000,
+				step: 100
+			},
+			{
+				key: 'allowSkip',
+				type: 'boolean',
+				label: tSettings('exerciseSettings.allowSkip'),
+				description: tSettings('exerciseSettings.allowSkipDesc')
+			},
+			{
+				key: 'shuffleQuestions',
+				type: 'boolean',
+				label: tSettings('exerciseSettings.shuffleQuestions'),
+				description: tSettings('exerciseSettings.shuffleQuestionsDesc')
+			},
+			{
+				key: 'shuffleAnswers',
+				type: 'boolean',
+				label: tSettings('exerciseSettings.shuffleAnswers'),
+				description: tSettings('exerciseSettings.shuffleAnswersDesc')
+			}
+		],
+		[tSettings]
+	)
+
+	const currentSettings = useMemo(
+		() => ({...DEFAULT_MULTIPLE_CHOICE_SETTINGS, ...exercise.settings}),
+		[exercise.settings]
+	)
+
 	return (
 		<div className='mb-4 flex items-center justify-between'>
 			{onExit && (
@@ -35,9 +95,17 @@ function ExerciseHeader({onExit, progress, stats}: ExerciseHeaderProps) {
 					← Back
 				</button>
 			)}
-			<div className='ml-auto text-gray-600 text-sm dark:text-gray-400'>
-				Question {progress.current} of {progress.total} | ✓ {stats.correct} / ✗{' '}
-				{stats.incorrect}
+			<div className='ml-auto flex items-center gap-2'>
+				<div className='text-gray-600 text-sm dark:text-gray-400'>
+					Question {progress.current} of {progress.total} | ✓ {stats.correct} /{' '}
+					✗ {stats.incorrect}
+				</div>
+				<ExerciseSettingsPanel
+					currentSettings={currentSettings}
+					fields={settingsFields}
+					onApply={onSettingsChange}
+					onReset={() => onSettingsChange(DEFAULT_MULTIPLE_CHOICE_SETTINGS)}
+				/>
 			</div>
 		</div>
 	)
@@ -248,7 +316,8 @@ export function MultipleChoiceRenderer({
 		handleCheckAnswer,
 		handleAdvance,
 		handleSkip,
-		handleRestart
+		handleRestart,
+		handleSettingsChange
 	} = useMultipleChoiceExercise(exercise, onComplete)
 
 	// Show completion screen
@@ -289,7 +358,9 @@ export function MultipleChoiceRenderer({
 	return (
 		<ExerciseLayout title={exerciseTitle}>
 			<ExerciseHeader
+				exercise={exercise}
 				onExit={onExit}
+				onSettingsChange={handleSettingsChange}
 				progress={state.progress}
 				stats={state.stats}
 			/>

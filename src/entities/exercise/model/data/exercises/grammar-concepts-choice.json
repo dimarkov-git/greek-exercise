@@ -13,7 +13,7 @@
 		"en": "Practice Greek grammar concepts with multiple choice questions",
 		"ru": "Практика греческой грамматики с вопросами множественного выбора"
 	},
-	"tags": ["grammar", "multiple-choice", "a2"],
+	"tags": ["grammar"],
 	"difficulty": "a2",
 	"estimatedTimeMinutes": 8,
 	"settings": {

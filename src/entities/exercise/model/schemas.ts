@@ -15,12 +15,41 @@ const DifficultySchema = v.picklist([
 // Schema for multilingual strings (Record<Language, string>)
 const I18nStringSchema = v.record(LanguageSchema, v.string())
 
-// Exercise settings schema (all fields optional for partial overrides)
+// Base exercise settings schema (all fields optional for partial overrides)
 export const ExerciseSettingsSchema = v.object({
 	autoAdvance: v.optional(v.boolean()),
 	autoAdvanceDelayMs: v.optional(v.pipe(v.number(), v.minValue(0))),
 	allowSkip: v.optional(v.boolean()),
 	shuffleCases: v.optional(v.boolean())
+})
+
+// Word-form settings schema
+export const WordFormSettingsSchema = v.object({
+	autoAdvance: v.optional(v.boolean()),
+	autoAdvanceDelayMs: v.optional(v.pipe(v.number(), v.minValue(0))),
+	allowSkip: v.optional(v.boolean()),
+	shuffleCases: v.optional(v.boolean()),
+	shuffleBlocks: v.optional(v.boolean()),
+	allowSkipTone: v.optional(v.boolean())
+})
+
+// Flashcard settings schema
+export const FlashcardSettingsSchema = v.object({
+	autoAdvance: v.optional(v.boolean()),
+	autoAdvanceDelayMs: v.optional(v.pipe(v.number(), v.minValue(0))),
+	allowSkip: v.optional(v.boolean()),
+	shuffleCases: v.optional(v.boolean()),
+	shuffleCards: v.optional(v.boolean())
+})
+
+// Multiple-choice settings schema
+export const MultipleChoiceSettingsSchema = v.object({
+	autoAdvance: v.optional(v.boolean()),
+	autoAdvanceDelayMs: v.optional(v.pipe(v.number(), v.minValue(0))),
+	allowSkip: v.optional(v.boolean()),
+	shuffleCases: v.optional(v.boolean()),
+	shuffleQuestions: v.optional(v.boolean()),
+	shuffleAnswers: v.optional(v.boolean())
 })
 
 // Individual case schema
@@ -54,7 +83,7 @@ export const WordFormExerciseSchema = v.object({
 	tags: v.optional(v.array(v.string()), []),
 	difficulty: DifficultySchema,
 	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
-	settings: v.optional(ExerciseSettingsSchema),
+	settings: v.optional(WordFormSettingsSchema),
 	blocks: v.pipe(v.array(WordFormBlockSchema), v.minLength(1))
 })
 
@@ -91,7 +120,7 @@ export const FlashcardExerciseSchema = v.object({
 	tags: v.optional(v.array(v.string()), []),
 	difficulty: DifficultySchema,
 	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
-	settings: v.optional(ExerciseSettingsSchema),
+	settings: v.optional(FlashcardSettingsSchema),
 	cards: v.pipe(v.array(FlashCardSchema), v.minLength(1)),
 	srsSettings: v.optional(SRSSettingsSchema)
 })
@@ -180,7 +209,7 @@ export const MultipleChoiceExerciseSchema = v.object({
 	tags: v.optional(v.array(v.string()), []),
 	difficulty: DifficultySchema,
 	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
-	settings: v.optional(ExerciseSettingsSchema),
+	settings: v.optional(MultipleChoiceSettingsSchema),
 	questions: v.pipe(v.array(MultipleChoiceQuestionSchema), v.minLength(1))
 })
 

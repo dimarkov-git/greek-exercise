@@ -1,7 +1,19 @@
 import {motion} from 'framer-motion'
+import {useMemo} from 'react'
 import {Link} from 'react-router'
+import type {WordFormExercise} from '@/entities/exercise'
+import {
+	DEFAULT_WORD_FORM_SETTINGS,
+	getExerciseSettings
+} from '@/entities/exercise'
+import type {WordFormSettings} from '@/shared/model'
 import type {TranslationEntry} from '@/shared/lib/i18n'
 import {loadTranslations} from '@/shared/lib/i18n'
+import {
+	ExerciseSettingsPanel,
+	exerciseSettingsTranslations,
+	type SettingField
+} from '@/shared/ui'
 import {translations} from './translations'
 
 interface ExerciseHeaderProps {
@@ -14,6 +26,8 @@ interface ExerciseHeaderProps {
 	onToggleAutoAdvance?: () => void
 	autoAdvanceEnabled?: boolean
 	showBackButton?: boolean
+	exercise?: WordFormExercise
+	onSettingsChange?: (newSettings: Partial<WordFormSettings>) => void
 }
 
 type ExerciseTranslator = (entry: string | TranslationEntry) => string
@@ -144,7 +158,7 @@ function ProgressBar({
 }
 
 /**
- * Заголовок упражнения с прогрессом и элементами управления
+ * Exercise header with progress and controls
  */
 export function ExerciseHeader({
 	title,
@@ -152,9 +166,62 @@ export function ExerciseHeader({
 	progress,
 	onToggleAutoAdvance,
 	autoAdvanceEnabled = true,
-	showBackButton = true
+	showBackButton = true,
+	exercise,
+	onSettingsChange
 }: ExerciseHeaderProps) {
 	const {t} = loadTranslations(translations)
+	const {t: tSettings} = loadTranslations(exerciseSettingsTranslations)
+
+	const settingsFields: SettingField[] = useMemo(
+		() => [
+			{
+				key: 'autoAdvance',
+				type: 'boolean',
+				label: tSettings('exerciseSettings.autoAdvance'),
+				description: tSettings('exerciseSettings.autoAdvanceDesc')
+			},
+			{
+				key: 'autoAdvanceDelayMs',
+				type: 'number',
+				label: tSettings('exerciseSettings.autoAdvanceDelayMs'),
+				description: tSettings('exerciseSettings.autoAdvanceDelayMsDesc'),
+				min: 0,
+				max: 5000,
+				step: 100
+			},
+			{
+				key: 'allowSkip',
+				type: 'boolean',
+				label: tSettings('exerciseSettings.allowSkip'),
+				description: tSettings('exerciseSettings.allowSkipDesc')
+			},
+			{
+				key: 'shuffleCases',
+				type: 'boolean',
+				label: tSettings('exerciseSettings.shuffleCases'),
+				description: tSettings('exerciseSettings.shuffleCasesDesc')
+			},
+			{
+				key: 'shuffleBlocks',
+				type: 'boolean',
+				label: tSettings('exerciseSettings.shuffleBlocks'),
+				description: tSettings('exerciseSettings.shuffleBlocksDesc')
+			},
+			{
+				key: 'allowSkipTone',
+				type: 'boolean',
+				label: tSettings('exerciseSettings.allowSkipTone'),
+				description: tSettings('exerciseSettings.allowSkipToneDesc')
+			}
+		],
+		[tSettings]
+	)
+
+	const currentSettings = useMemo(
+		() => (exercise ? getExerciseSettings(exercise) as unknown as WordFormSettings : DEFAULT_WORD_FORM_SETTINGS),
+		[exercise]
+	)
 
 	return (
 		<motion.div
@@ -162,17 +229,27 @@ export function ExerciseHeader({
 			className='mb-8'
 			initial={{opacity: 0, y: -20}}
 		>
-			{/* Верхняя строка с кнопкой назад и заголовком */}
+			{/* Top row with back button and controls */}
 			<div className='mb-4 flex items-center justify-between'>
 				{showBackButton && <BackButton t={t as ExerciseTranslator} />}
 
-				{onToggleAutoAdvance && (
-					<AutoAdvanceToggle
-						autoAdvanceEnabled={autoAdvanceEnabled}
-						onToggleAutoAdvance={onToggleAutoAdvance}
-						t={t as ExerciseTranslator}
-					/>
-				)}
+				<div className='flex items-center gap-2'>
+					{onToggleAutoAdvance && (
+						<AutoAdvanceToggle
+							autoAdvanceEnabled={autoAdvanceEnabled}
+							onToggleAutoAdvance={onToggleAutoAdvance}
+							t={t as ExerciseTranslator}
+						/>
+					)}
+					{onSettingsChange && exercise && (
+						<ExerciseSettingsPanel
+							currentSettings={currentSettings}
+							fields={settingsFields}
+							onApply={onSettingsChange}
+							onReset={() => onSettingsChange(DEFAULT_WORD_FORM_SETTINGS)}
+						/>
+					)}
+				</div>
 			</div>
 
 			{/* Заголовок упражнения */}

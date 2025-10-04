@@ -209,11 +209,26 @@ export function useFlashcardExercise(
 		isLoading: isLoadingRef.current
 	}
 
+	const handleSettingsChange = useCallback(
+		(newSettings: Partial<import('@/shared/model').FlashcardSettings>) => {
+			const updatedExercise = {
+				...exercise,
+				settings: {
+					...exercise.settings,
+					...newSettings
+				}
+			}
+			dispatch({type: 'RESTART_WITH_SETTINGS', exercise: updatedExercise})
+		},
+		[dispatch, exercise]
+	)
+
 	return {
 		state: viewState,
 		handleFlip,
 		handleRate,
 		handleSkip,
-		handleRestart
+		handleRestart,
+		handleSettingsChange
 	}
 }

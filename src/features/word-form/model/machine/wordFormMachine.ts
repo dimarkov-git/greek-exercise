@@ -47,6 +47,7 @@ export type WordFormMachineAction =
 	| {type: 'ADVANCE'; next: {blockIndex: number; caseIndex: number}}
 	| {type: 'COMPLETE'}
 	| {type: 'RESTART'; exercise: WordFormExercise}
+	| {type: 'RESTART_WITH_SETTINGS'; exercise: WordFormExercise}
 	| {type: 'RESET_FROM_PROPS'; exercise: WordFormExercise}
 	| {type: 'TOGGLE_AUTO_ADVANCE'}
 	| {type: 'TOGGLE_HINT'; hintType: 'name' | 'prompt' | 'additional'}
@@ -175,6 +176,7 @@ export function wordFormReducer(
 				status: 'COMPLETED'
 			}
 		case 'RESTART':
+		case 'RESTART_WITH_SETTINGS':
 		case 'RESET_FROM_PROPS':
 			return createInitialState(action.exercise)
 		case 'TOGGLE_AUTO_ADVANCE':

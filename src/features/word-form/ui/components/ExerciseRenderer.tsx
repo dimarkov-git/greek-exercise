@@ -16,6 +16,7 @@ interface ExerciseRendererProps {
 	handleSubmit: (answer: string) => void
 	handleAutoAdvanceToggle: () => void
 	handleAnswerChange: (value: string) => void
+	handleSettingsChange: (newSettings: Partial<import('@/shared/model').WordFormSettings>) => void
 	onExit?: () => void
 }
 
@@ -74,6 +75,7 @@ interface RendererContentProps {
 	onSubmit: (answer: string) => void
 	onToggleAutoAdvance: () => void
 	onAnswerChange: (value: string) => void
+	onSettingsChange: (newSettings: Partial<import('@/shared/model').WordFormSettings>) => void
 	errorTitle: string
 	errorMessage: string
 }
@@ -88,6 +90,7 @@ function RendererContent({
 	onSubmit,
 	onToggleAutoAdvance,
 	onAnswerChange,
+	onSettingsChange,
 	errorTitle,
 	errorMessage
 }: RendererContentProps) {
@@ -107,6 +110,7 @@ function RendererContent({
 				isCorrect={state.answer.isCorrect}
 				onAnswerChange={onAnswerChange}
 				onPulseComplete={clearPulse}
+				onSettingsChange={onSettingsChange}
 				onSkip={onSkip}
 				onSubmit={onSubmit}
 				onToggleAutoAdvance={onToggleAutoAdvance}
@@ -130,6 +134,7 @@ export function ExerciseRenderer({
 	handleSubmit,
 	handleAutoAdvanceToggle,
 	handleAnswerChange,
+	handleSettingsChange,
 	onExit
 }: ExerciseRendererProps) {
 	const {userLanguage} = useSettingsStore()
@@ -158,6 +163,7 @@ export function ExerciseRenderer({
 			errorTitle={t(exerciseRendererTranslations['error.title'])}
 			exerciseTitle={exerciseTitle}
 			onAnswerChange={handleAnswerChange}
+			onSettingsChange={handleSettingsChange}
 			onSkip={() => handleEvent({type: 'SKIP'})}
 			onSubmit={handleSubmit}
 			onToggleAutoAdvance={handleAutoAdvanceToggle}

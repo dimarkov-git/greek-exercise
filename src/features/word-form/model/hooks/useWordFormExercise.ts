@@ -608,6 +608,20 @@ export function useWordFormExercise({
 		onComplete
 	})
 
+	const handleSettingsChange = useCallback(
+		(newSettings: Partial<import('@/shared/model').WordFormSettings>) => {
+			const updatedExercise = {
+				...latestExerciseRef.current,
+				settings: {
+					...latestExerciseRef.current.settings,
+					...newSettings
+				}
+			}
+			dispatch({type: 'RESTART_WITH_SETTINGS', exercise: updatedExercise})
+		},
+		[dispatch, latestExerciseRef]
+	)
+
 	return {
 		state: viewState,
 		pulseState,
@@ -615,6 +629,7 @@ export function useWordFormExercise({
 		handleEvent,
 		handleSubmit,
 		handleAutoAdvanceToggle,
-		handleAnswerChange
+		handleAnswerChange,
+		handleSettingsChange
 	}
 }

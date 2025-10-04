@@ -4,11 +4,19 @@
  * Main component for flashcard review sessions with flip animations and SRS.
  */
 
+import {useMemo} from 'react'
 import type {
 	ExerciseRendererProps,
 	FlashcardExercise
 } from '@/entities/exercise'
+import {DEFAULT_FLASHCARD_SETTINGS} from '@/shared/model'
 import {useSettingsStore} from '@/shared/model'
+import {loadTranslations} from '@/shared/lib/i18n'
+import {
+	ExerciseSettingsPanel,
+	exerciseSettingsTranslations,
+	type SettingField
+} from '@/shared/ui'
 import {useFlashcardExercise} from '../model/useFlashcardExercise'
 import {CompletionScreen} from './components/CompletionScreen'
 import {FlashcardRating} from './components/FlashcardRating'
@@ -52,10 +60,8 @@ export function FlashcardRenderer({
 			}
 		: undefined
 
-	const {state, handleFlip, handleRate, handleRestart} = useFlashcardExercise(
-		exercise,
-		handleComplete
-	)
+	const {state, handleFlip, handleRate, handleRestart, handleSettingsChange} =
+		useFlashcardExercise(exercise, handleComplete)
 
 	// Show loading state
 	if (state.isLoading) {
@@ -116,9 +122,53 @@ export function FlashcardRenderer({
 		)
 	}
 
+	const {t: tSettings} = loadTranslations(exerciseSettingsTranslations)
+
+	const settingsFields: SettingField[] = useMemo(
+		() => [
+			{
+				key: 'autoAdvance',
+				type: 'boolean',
+				label: tSettings('exerciseSettings.autoAdvance'),
+				description: tSettings('exerciseSettings.autoAdvanceDesc')
+			},
+			{
+				key: 'autoAdvanceDelayMs',
+				type: 'number',
+				label: tSettings('exerciseSettings.autoAdvanceDelayMs'),
+				description: tSettings('exerciseSettings.autoAdvanceDelayMsDesc'),
+				min: 0,
+				max: 5000,
+				step: 100
+			},
+			{
+				key: 'shuffleCards',
+				type: 'boolean',
+				label: tSettings('exerciseSettings.shuffleCards'),
+				description: tSettings('exerciseSettings.shuffleCardsDesc')
+			}
+		],
+		[tSettings]
+	)
+
+	const currentSettings = useMemo(
+		() => ({...DEFAULT_FLASHCARD_SETTINGS, ...exercise.settings}),
+		[exercise.settings]
+	)
+
 	// Show flashcard review interface
 	return (
 		<div className='flex min-h-screen flex-col items-center justify-center bg-gray-50 p-4 dark:bg-gray-900'>
+			{/* Settings button (top right) */}
+			<div className='absolute top-4 right-4'>
+				<ExerciseSettingsPanel
+					currentSettings={currentSettings}
+					fields={settingsFields}
+					onApply={handleSettingsChange}
+					onReset={() => handleSettingsChange(DEFAULT_FLASHCARD_SETTINGS)}
+				/>
+			</div>
+
 			{/* Header with progress */}
 			<div className='mb-8 w-full max-w-2xl'>
 				<div className='mb-2 flex justify-between text-gray-600 text-sm dark:text-gray-400'>

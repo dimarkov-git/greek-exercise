@@ -13,7 +13,7 @@
 		"en": "Practice basic Greek words with multiple choice questions",
 		"ru": "Практика базовых греческих слов с вопросами множественного выбора"
 	},
-	"tags": ["vocabulary", "multiple-choice", "a1"],
+	"tags": ["vocabulary"],
 	"difficulty": "a1",
 	"estimatedTimeMinutes": 5,
 	"settings": {

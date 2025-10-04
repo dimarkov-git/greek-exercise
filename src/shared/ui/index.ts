@@ -3,6 +3,7 @@ export * from './button'
 export * from './card'
 // Specialized UI components
 export * from './exercise-layout'
+export * from './exercise-settings-panel'
 export * from './head'
 export * from './hint-system'
 export * from './input'

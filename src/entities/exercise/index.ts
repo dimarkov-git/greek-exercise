@@ -199,6 +199,11 @@ export {
 	exerciseToJSON,
 	getExerciseSettings
 } from './model/types'
+export {
+	DEFAULT_WORD_FORM_SETTINGS,
+	DEFAULT_FLASHCARD_SETTINGS,
+	DEFAULT_MULTIPLE_CHOICE_SETTINGS
+} from '@/shared/model'
 
 // Testing utilities (not for production use)
 export * as testing from './testing'
