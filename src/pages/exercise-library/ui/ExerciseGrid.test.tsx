@@ -34,8 +34,7 @@ const mockT = vi.fn((key: string) => {
 		'ui.hashSymbol': '#',
 		'ui.plusSymbol': '+',
 		'exercise.cases': 'cases',
-		'exercise.blocks': 'blocks',
-		'exercise.minutes': 'min'
+		'exercise.blocks': 'blocks'
 	}
 	return translations[key] || key
 })
@@ -332,7 +331,6 @@ describe('ExerciseGrid', () => {
 
 				expect(screen.getByText('📄 12 cases')).toBeInTheDocument()
 				expect(screen.getByText('📚 3 blocks')).toBeInTheDocument()
-				expect(screen.getByText('⏱️ 15 min')).toBeInTheDocument()
 			})
 
 			it('calls translation functions for statistics', () => {
@@ -340,10 +338,8 @@ describe('ExerciseGrid', () => {
 
 				expect(mockT).toHaveBeenCalledWith('ui.documentEmoji')
 				expect(mockT).toHaveBeenCalledWith('ui.booksEmoji')
-				expect(mockT).toHaveBeenCalledWith('ui.timerEmoji')
 				expect(mockT).toHaveBeenCalledWith('exercise.cases')
 				expect(mockT).toHaveBeenCalledWith('exercise.blocks')
-				expect(mockT).toHaveBeenCalledWith('exercise.minutes')
 			})
 		})
 
@@ -526,7 +522,6 @@ describe('ExerciseGrid', () => {
 			expect(mockT).toHaveBeenCalledWith('ui.hashSymbol')
 			expect(mockT).toHaveBeenCalledWith('ui.documentEmoji')
 			expect(mockT).toHaveBeenCalledWith('ui.booksEmoji')
-			expect(mockT).toHaveBeenCalledWith('ui.timerEmoji')
 		})
 
 		it('handles translation function returning keys when translation missing', () => {
@@ -588,7 +583,6 @@ describe('ExerciseGrid', () => {
 
 			expect(screen.getByText('📄 0 cases')).toBeInTheDocument()
 			expect(screen.getByText('📚 0 blocks')).toBeInTheDocument()
-			expect(screen.getByText('⏱️ 0 min')).toBeInTheDocument()
 		})
 
 		it('handles very large numbers in statistics', () => {
@@ -603,7 +597,6 @@ describe('ExerciseGrid', () => {
 
 			expect(screen.getByText('📄 9999 cases')).toBeInTheDocument()
 			expect(screen.getByText('📚 999 blocks')).toBeInTheDocument()
-			expect(screen.getByText('⏱️ 999 min')).toBeInTheDocument()
 		})
 	})
 })

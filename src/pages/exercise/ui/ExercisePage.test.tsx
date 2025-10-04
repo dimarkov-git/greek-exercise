@@ -7,12 +7,20 @@ import {ExercisePage} from './ExercisePage'
 // Mock dependencies
 const mockNavigate = vi.fn()
 const mockSetHeaderEnabled = vi.fn()
-const mockT = vi.fn((key: string) => {
+const mockT = vi.fn((entry: string | {key?: string; fallback?: string}) => {
 	const translations: Record<string, string> = {
 		'exercise.unsupportedType': 'Unsupported Exercise Type',
 		'exercise.notImplemented': 'Exercise type "{type}" is not implemented yet.',
 		'exercise.backToLibrary': 'Back to Library'
 	}
+
+	// Handle string entries
+	if (typeof entry === 'string') {
+		return translations[entry] || entry
+	}
+
+	// Handle TranslationEntry objects
+	const key = entry.key || entry.fallback || ''
 	return translations[key] || key
 })
 
@@ -69,14 +77,14 @@ vi.mock('@/shared/lib/i18n', async () => {
 	const actual = await vi.importActual('@/shared/lib/i18n')
 	return {
 		...actual,
-		loadTranslations: () => ({
+		loadTranslations: vi.fn(() => ({
 			t: mockT,
 			language: 'en' as const,
 			isLoading: false,
 			error: null,
 			missingKeys: [],
 			status: 'complete' as const
-		})
+		}))
 	}
 })
 

@@ -360,7 +360,6 @@ describe('LearnPage', () => {
 
 			// Stats appear in both header and table view
 			expect(screen.getAllByText('A1').length).toBeGreaterThan(0) // difficulty uppercase
-			expect(screen.getAllByText('15').length).toBeGreaterThan(0) // minutes
 			expect(screen.getAllByText('2').length).toBeGreaterThan(0) // blocks count
 			expect(screen.getAllByText('3').length).toBeGreaterThan(0) // total cases count
 		})
@@ -511,7 +510,6 @@ describe('LearnPage', () => {
 				render(<LearnPage />)
 
 				expect(screen.getByText('Difficulty')).toBeInTheDocument()
-				expect(screen.getByText('Minutes')).toBeInTheDocument()
 				expect(screen.getByText('Blocks')).toBeInTheDocument()
 				expect(screen.getByText('Cases')).toBeInTheDocument()
 			})
