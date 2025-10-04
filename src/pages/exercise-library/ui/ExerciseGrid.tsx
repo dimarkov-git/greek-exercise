@@ -135,25 +135,27 @@ function ExerciseCard({exercise, index, t, translations}: ExerciseCardProps) {
 						{exercise.type === 'word-form' && (
 							<>
 								<span>
-									{t(translations['ui.booksEmoji'])} {exercise.totalBlocks}{' '}
-									{t(translations['exercise.blocks'])}
+									{t(translations['ui.booksEmoji'])} {t(translations['exercise.blocks'])}
+									{t(translations['ui.colon'])} {exercise.totalBlocks}
 								</span>
 								<span>
-									{t(translations['ui.documentEmoji'])} {exercise.totalCases}{' '}
+									{t(translations['ui.documentEmoji'])}{' '}
 									{t(translations['exercise.cases'])}
+									{t(translations['ui.colon'])} {exercise.totalCases}
 								</span>
 							</>
 						)}
 						{exercise.type === 'multiple-choice' && (
 							<span>
-								{t(translations['ui.questionEmoji'])} {exercise.totalCases}{' '}
+								{t(translations['ui.questionEmoji'])}{' '}
 								{t(translations['exercise.questions'])}
+								{t(translations['ui.colon'])} {exercise.totalCases}
 							</span>
 						)}
 						{exercise.type === 'flashcard' && (
 							<span>
-								{t(translations['ui.cardEmoji'])} {exercise.totalCases}{' '}
-								{t(translations['exercise.cards'])}
+								{t(translations['ui.cardEmoji'])} {t(translations['exercise.cards'])}
+								{t(translations['ui.colon'])} {exercise.totalCases}
 							</span>
 						)}
 					</div>
