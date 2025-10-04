@@ -1,13 +1,10 @@
 import {motion} from 'framer-motion'
-import {shouldShowTestSection} from '@/shared/config'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {NavigationCard} from '@/shared/ui/navigation-card'
 import {translations} from './main-navigation-translations'
 
 export function MainNavigation() {
 	const {t} = loadTranslations(translations)
-
-	const showTestSection = shouldShowTestSection()
 
 	return (
 		<motion.div
@@ -46,24 +43,6 @@ export function MainNavigation() {
 					/>
 				</motion.div>
 			</div>
-
-			{showTestSection && (
-				<div className='grid md:grid-cols-2'>
-					<motion.div
-						animate={{opacity: 1, x: 0}}
-						initial={{opacity: 0, x: 50}}
-						transition={{delay: 0.6}}
-					>
-						<NavigationCard
-							color='orange'
-							description={t(translations.testSectionDesc)}
-							icon='🧪'
-							title={t(translations.testSection)}
-							to='/test/i18n'
-						/>
-					</motion.div>
-				</div>
-			)}
 		</motion.div>
 	)
 }

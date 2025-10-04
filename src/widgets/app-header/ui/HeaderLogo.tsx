@@ -14,7 +14,7 @@ export function HeaderLogo() {
 			initial={{opacity: 0, x: -20}}
 			transition={{delay: 0.1}}
 		>
-			<Link className='flex items-center gap-3' to='/'>
+			<Link className='flex cursor-pointer items-center gap-3' to='/'>
 				<div className='flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-white'>
 					<span className='font-bold text-sm'>
 						{t(headerLogoTranslations.logoInitials)}
