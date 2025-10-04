@@ -111,7 +111,6 @@ export function extractExerciseMetadata(
 		description: exercise.description,
 		tags: exercise.tags || [],
 		difficulty: exercise.difficulty,
-		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
 		totalBlocks,
 		totalCases,
 		enabled: exercise.enabled

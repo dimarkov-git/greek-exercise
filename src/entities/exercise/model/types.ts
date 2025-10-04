@@ -48,7 +48,6 @@ export interface WordFormExercise {
 	descriptionI18n?: I18nText // description in interface languages (optional)
 	tags?: string[] // filtering tags (optional, defaults to empty array)
 	difficulty: Difficulty
-	estimatedTimeMinutes: number // estimated completion time
 	settings?: PartialExerciseSettings // optional settings, defaults will be applied
 	blocks: WordFormBlock[]
 }
@@ -81,7 +80,6 @@ export interface ExerciseMetadata {
 	descriptionI18n?: I18nText
 	tags: string[]
 	difficulty: Difficulty
-	estimatedTimeMinutes: number
 	totalBlocks: number
 	totalCases: number
 	enabled: boolean
@@ -138,7 +136,6 @@ export interface WordFormExerciseJSON {
 	descriptionI18n?: I18nText
 	tags: string[]
 	difficulty: Difficulty
-	estimatedTimeMinutes: number
 	settings: ExerciseSettings
 	blocks: WordFormBlock[]
 }
@@ -174,7 +171,6 @@ export function exerciseToJSON(
 		description: exercise.description,
 		tags: exercise.tags || [],
 		difficulty: exercise.difficulty,
-		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
 		settings: getExerciseSettings(exercise),
 		blocks: exercise.blocks
 	}

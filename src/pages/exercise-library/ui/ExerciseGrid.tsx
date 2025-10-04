@@ -140,10 +140,6 @@ function ExerciseCard({exercise, index, t, translations}: ExerciseCardProps) {
 							{t(translations['ui.booksEmoji'])} {exercise.totalBlocks}{' '}
 							{t(translations['exercise.blocks'])}
 						</span>
-						<span>
-							{t(translations['ui.timerEmoji'])} {exercise.estimatedTimeMinutes}{' '}
-							{t(translations['exercise.minutes'])}
-						</span>
 					</div>
 				</div>
 

@@ -55,7 +55,6 @@ const mockExercise: FlashcardExercise = {
 	},
 	tags: ['test'],
 	difficulty: 'a1',
-	estimatedTimeMinutes: 5,
 	settings: {
 		autoAdvance: false,
 		autoAdvanceDelayMs: 0,

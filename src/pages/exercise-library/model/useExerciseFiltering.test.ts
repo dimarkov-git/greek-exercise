@@ -33,7 +33,6 @@ function createExerciseSummary(
 		description: 'Test Description',
 		tags: ['verbs'],
 		difficulty: 'a1',
-		estimatedTimeMinutes: 10,
 		totalBlocks: 2,
 		totalCases: 8,
 		enabled: true,

@@ -91,8 +91,6 @@ export interface FlashcardExercise {
 	tags?: string[]
 	/** Difficulty level */
 	difficulty: Difficulty
-	/** Estimated completion time in minutes */
-	estimatedTimeMinutes: number
 	/** Exercise settings (auto-advance, etc.) */
 	settings?: PartialExerciseSettings
 	/** All flashcards in the exercise */
@@ -261,7 +259,6 @@ export interface FlashcardExerciseJSON {
 	descriptionI18n?: I18nText
 	tags: string[]
 	difficulty: Difficulty
-	estimatedTimeMinutes: number
 	settings: import('@/shared/model').ExerciseSettings
 	cards: FlashCard[]
 	srsSettings: Required<SRSSettings>
@@ -300,7 +297,6 @@ export function flashcardExerciseToJSON(
 		description: exercise.description,
 		tags: exercise.tags || [],
 		difficulty: exercise.difficulty,
-		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
 		settings: {
 			autoAdvance: exercise.settings?.autoAdvance ?? true,
 			autoAdvanceDelayMs: exercise.settings?.autoAdvanceDelayMs ?? 1500,

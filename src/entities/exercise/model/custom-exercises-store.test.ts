@@ -15,7 +15,6 @@ const baseExercise: WordFormExerciseJSON = {
 	description: 'Description',
 	tags: ['custom'],
 	difficulty: 'a1',
-	estimatedTimeMinutes: 5,
 	settings: {
 		autoAdvance: true,
 		autoAdvanceDelayMs: 1500,

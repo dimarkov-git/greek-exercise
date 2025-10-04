@@ -18,7 +18,6 @@ const baseExercise: WordFormExercise = {
 	description: 'Κλίση του ρήματος είμαι',
 	tags: ['verbs', 'a1'],
 	difficulty: 'a1',
-	estimatedTimeMinutes: 5,
 	settings: {
 		autoAdvance: true,
 		autoAdvanceDelayMs: 500,

@@ -100,7 +100,6 @@ describe('wordFormExerciseQueryOptions query function', () => {
 			blocks: [],
 			tags: [],
 			difficulty: 'a1',
-			estimatedTimeMinutes: 5,
 			settings: {
 				allowSkip: true,
 				autoAdvance: true,

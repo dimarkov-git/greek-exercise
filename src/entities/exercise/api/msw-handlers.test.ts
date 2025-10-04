@@ -87,7 +87,6 @@ describe('Exercise MSW handlers', () => {
 						description: string
 						tags: string[]
 						difficulty: string
-						estimatedTimeMinutes: number
 						totalBlocks: number
 						totalCases: number
 						enabled: boolean
@@ -105,7 +104,6 @@ describe('Exercise MSW handlers', () => {
 				description: expect.any(String),
 				tags: expect.any(Array),
 				difficulty: expect.any(String),
-				estimatedTimeMinutes: expect.any(Number),
 				totalBlocks: expect.any(Number),
 				totalCases: expect.any(Number),
 				enabled: true

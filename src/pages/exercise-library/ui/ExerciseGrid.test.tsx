@@ -61,7 +61,6 @@ const createMockExercise = (
 	},
 	tags: ['verbs', 'beginner', 'grammar'],
 	difficulty: 'a1',
-	estimatedTimeMinutes: 15,
 	totalBlocks: 3,
 	totalCases: 12,
 	enabled: true,
@@ -580,8 +579,7 @@ describe('ExerciseGrid', () => {
 		it('handles exercises with zero statistics', () => {
 			const exerciseWithZeroStats = createMockExercise({
 				totalBlocks: 0,
-				totalCases: 0,
-				estimatedTimeMinutes: 0
+				totalCases: 0
 			})
 
 			render(
@@ -596,8 +594,7 @@ describe('ExerciseGrid', () => {
 		it('handles very large numbers in statistics', () => {
 			const exerciseWithLargeStats = createMockExercise({
 				totalBlocks: 999,
-				totalCases: 9999,
-				estimatedTimeMinutes: 999
+				totalCases: 9999
 			})
 
 			render(

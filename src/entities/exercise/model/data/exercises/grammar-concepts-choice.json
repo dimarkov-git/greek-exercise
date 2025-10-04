@@ -15,7 +15,6 @@
 	},
 	"tags": ["grammar"],
 	"difficulty": "a2",
-	"estimatedTimeMinutes": 8,
 	"settings": {
 		"autoAdvance": true,
 		"autoAdvanceDelayMs": 2000,

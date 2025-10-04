@@ -64,7 +64,6 @@ const exercise: WordFormExercise = {
 	descriptionI18n: {en: 'Description', ru: 'Описание'},
 	tags: ['verbs'],
 	difficulty: 'a1',
-	estimatedTimeMinutes: 5,
 	settings: {
 		autoAdvance: true,
 		autoAdvanceDelayMs: 500,

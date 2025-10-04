@@ -120,7 +120,6 @@ const mockWordFormExercise: WordFormExerciseWithDefaults = {
 		'Learn the present tense forms of the verb "to be" in Ancient Greek',
 	tags: ['verbs', 'present-tense', 'essential'],
 	difficulty: 'a1',
-	estimatedTimeMinutes: 15,
 	blocks: [
 		{
 			id: 'block-1',
@@ -161,7 +160,6 @@ const mockUnsupportedExercise = {
 	description: 'A matching pairs exercise',
 	tags: [],
 	difficulty: 'a1' as const,
-	estimatedTimeMinutes: 10,
 	blocks: []
 } as unknown as WordFormExerciseWithDefaults
 

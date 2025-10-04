@@ -66,8 +66,6 @@ export interface MultipleChoiceExercise {
 	tags: string[]
 	/** Difficulty level */
 	difficulty: Difficulty
-	/** Estimated time in minutes */
-	estimatedTimeMinutes: number
 	/** Exercise settings */
 	settings?: PartialExerciseSettings
 	/** List of questions */

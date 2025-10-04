@@ -30,7 +30,6 @@ export function wordFormExerciseJsonToMetadata(
 		descriptionI18n: exercise.descriptionI18n,
 		tags: normalizeTags(exercise.tags),
 		difficulty: exercise.difficulty,
-		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
 		totalBlocks,
 		totalCases,
 		enabled: exercise.enabled
@@ -63,7 +62,6 @@ export function flashcardExerciseJsonToMetadata(
 		descriptionI18n: exercise.descriptionI18n,
 		tags: normalizeTags(exercise.tags),
 		difficulty: exercise.difficulty,
-		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
 		totalBlocks,
 		totalCases,
 		enabled: exercise.enabled

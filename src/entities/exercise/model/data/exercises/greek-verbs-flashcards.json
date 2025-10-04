@@ -15,7 +15,6 @@
 	},
 	"tags": ["verbs"],
 	"difficulty": "a1",
-	"estimatedTimeMinutes": 10,
 	"settings": {
 		"autoAdvance": false,
 		"allowSkip": true

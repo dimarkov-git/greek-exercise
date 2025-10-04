@@ -15,7 +15,6 @@
 	},
 	"tags": ["countries", "nationalities"],
 	"difficulty": "a1",
-	"estimatedTimeMinutes": 15,
 	"blocks": [
 		{
 			"id": "america",

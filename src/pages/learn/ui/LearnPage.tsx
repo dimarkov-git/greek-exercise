@@ -272,10 +272,6 @@ function ExerciseStats({exercise, t}: ExerciseStatsProps) {
 				label={t(learnPageTranslations['exercise.difficulty'])}
 				value={exercise.difficulty.toUpperCase()}
 			/>
-			<StatCard
-				label={t(learnPageTranslations['exercise.minutes'])}
-				value={`${exercise.estimatedTimeMinutes}`}
-			/>
 			{primaryKey && (
 				<StatCard label={t(primaryKey)} value={`${stats.primaryCount}`} />
 			)}

@@ -28,7 +28,6 @@ const baseMetadata: ExerciseMetadataDto = {
 	descriptionI18n: {en: 'Description', ru: 'Описание'},
 	tags: ['verbs', 'present', 'verbs'],
 	difficulty: 'a1',
-	estimatedTimeMinutes: 10,
 	totalBlocks: 2,
 	totalCases: 12,
 	enabled: true
@@ -74,7 +73,6 @@ describe('exercise domain adapters', () => {
 			description: 'Άσκηση',
 			tags: ['verbs', 'a1', 'verbs'],
 			difficulty: 'a0',
-			estimatedTimeMinutes: 5,
 			blocks: [
 				{
 					id: 'block-1',
@@ -109,7 +107,6 @@ describe('exercise domain adapters', () => {
 			description: 'Άσκηση με ρυθμίσεις',
 			tags: ['verbs'],
 			difficulty: 'a1',
-			estimatedTimeMinutes: 5,
 			settings: {
 				autoAdvance: true,
 				autoAdvanceDelayMs: 1500,
@@ -151,7 +148,6 @@ describe('exercise domain adapters', () => {
 			description: 'Άσκηση με μερικές ρυθμίσεις',
 			tags: ['verbs'],
 			difficulty: 'a1',
-			estimatedTimeMinutes: 5,
 			settings: {
 				autoAdvance: true
 			},
@@ -190,7 +186,6 @@ describe('exercise domain adapters', () => {
 			description: 'Άσκηση χωρίς ρυθμίσεις',
 			tags: ['verbs'],
 			difficulty: 'a1',
-			estimatedTimeMinutes: 5,
 			blocks: [
 				{
 					id: 'block-1',

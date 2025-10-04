@@ -82,7 +82,6 @@ export const WordFormExerciseSchema = v.object({
 	descriptionI18n: v.optional(I18nStringSchema),
 	tags: v.optional(v.array(v.string()), []),
 	difficulty: DifficultySchema,
-	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
 	settings: v.optional(WordFormSettingsSchema),
 	blocks: v.pipe(v.array(WordFormBlockSchema), v.minLength(1))
 })
@@ -119,7 +118,6 @@ export const FlashcardExerciseSchema = v.object({
 	descriptionI18n: v.optional(I18nStringSchema),
 	tags: v.optional(v.array(v.string()), []),
 	difficulty: DifficultySchema,
-	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
 	settings: v.optional(FlashcardSettingsSchema),
 	cards: v.pipe(v.array(FlashCardSchema), v.minLength(1)),
 	srsSettings: v.optional(SRSSettingsSchema)
@@ -136,7 +134,6 @@ export const ExerciseMetadataSchema = v.object({
 	descriptionI18n: v.optional(I18nStringSchema),
 	tags: v.array(v.string()),
 	difficulty: DifficultySchema,
-	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
 	totalBlocks: v.pipe(v.number(), v.minValue(0)),
 	totalCases: v.pipe(v.number(), v.minValue(0)),
 	enabled: v.boolean()
@@ -208,7 +205,6 @@ export const MultipleChoiceExerciseSchema = v.object({
 	descriptionI18n: v.optional(I18nStringSchema),
 	tags: v.optional(v.array(v.string()), []),
 	difficulty: DifficultySchema,
-	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
 	settings: v.optional(MultipleChoiceSettingsSchema),
 	questions: v.pipe(v.array(MultipleChoiceQuestionSchema), v.minLength(1))
 })

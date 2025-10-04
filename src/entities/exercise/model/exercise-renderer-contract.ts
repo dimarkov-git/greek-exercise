@@ -135,8 +135,6 @@ export interface ExerciseSummary {
 	tags: string[]
 	/** Difficulty level */
 	difficulty: Difficulty
-	/** Estimated time in minutes */
-	estimatedTimeMinutes: number
 	/** Total number of blocks/sections */
 	totalBlocks: number
 	/** Total number of questions/cases */

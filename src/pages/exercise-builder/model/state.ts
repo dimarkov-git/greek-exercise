@@ -48,7 +48,6 @@ const DEFAULT_WORD_FORM_TEMPLATE: WordFormExerciseJSON = {
 	},
 	tags: ['custom', 'verbs', 'present'],
 	difficulty: 'a1',
-	estimatedTimeMinutes: 6,
 	settings: {
 		autoAdvance: true,
 		autoAdvanceDelayMs: 1500,
@@ -114,7 +113,6 @@ const DEFAULT_FLASHCARD_TEMPLATE: FlashcardExerciseJSON = {
 	},
 	tags: ['custom', 'nouns', 'vocabulary'],
 	difficulty: 'a1',
-	estimatedTimeMinutes: 10,
 	settings: {
 		autoAdvance: true,
 		autoAdvanceDelayMs: 1500,
@@ -202,7 +200,6 @@ const DEFAULT_MULTIPLE_CHOICE_TEMPLATE: MultipleChoiceExerciseJSON = {
 	},
 	tags: ['custom', 'vocabulary', 'multiple-choice'],
 	difficulty: 'a1',
-	estimatedTimeMinutes: 5,
 	settings: {
 		autoAdvance: true,
 		autoAdvanceDelayMs: 1500,

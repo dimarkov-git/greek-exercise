@@ -15,7 +15,6 @@
 	},
 	"tags": ["nouns", "vocabulary"],
 	"difficulty": "a1",
-	"estimatedTimeMinutes": 8,
 	"settings": {
 		"autoAdvance": false,
 		"allowSkip": true

@@ -36,7 +36,6 @@ function createExercise(
 		title: 'Conjugation Basics',
 		description: 'Practice present tense verb forms',
 		difficulty: 'a1',
-		estimatedTimeMinutes: 5,
 		settings: {
 			autoAdvance: true,
 			autoAdvanceDelayMs: 25,

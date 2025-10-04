@@ -29,10 +29,6 @@ export function TableView({exercise}: TableViewProps) {
 						{t(translations.colon)}
 						{exercise.difficulty.toUpperCase()}
 					</span>
-					<span className='inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-green-800 dark:bg-green-900/30 dark:text-green-300'>
-						{t(translations.clockIcon)} {exercise.estimatedTimeMinutes}{' '}
-						{t(translations.minutes)}
-					</span>
 					<span className='inline-flex items-center rounded-full bg-purple-100 px-3 py-1 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300'>
 						{t(translations.booksIcon)} {exercise.blocks.length}{' '}
 						{t(translations.blocks)}

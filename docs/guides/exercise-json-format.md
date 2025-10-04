@@ -38,7 +38,6 @@ Currently supported exercise type:
     "irregular-verbs"
   ],
   "difficulty": "a1",
-  "estimatedTimeMinutes": 10,
   "settings": {
     "autoAdvance": true,
     "autoAdvanceDelayMs": 1500,
@@ -63,7 +62,6 @@ Currently supported exercise type:
 | `title`                | `string`          | Exercise title in Greek                  | Required                                                   |
 | `description`          | `string`          | Exercise description in Greek            | Required                                                   |
 | `difficulty`           | `Difficulty`      | Exercise difficulty level                | Required, one of: "a0", "a1", "a2", "b1", "b2", "c1", "c2" |
-| `estimatedTimeMinutes` | `number`          | Estimated completion time                | Required, must be ≥ 0                                      |
 | `blocks`               | `WordFormBlock[]` | Exercise content blocks                  | Required, must contain ≥ 1 block                           |
 
 #### Optional fields
@@ -241,7 +239,6 @@ The hint system provides contextual help through interactive buttons:
   "title": "Παράδειγμα",
   "description": "Απλό παράδειγμα",
   "difficulty": "a1",
-  "estimatedTimeMinutes": 5,
   "blocks": [
     {
       "id": "block-1",
@@ -281,7 +278,6 @@ The hint system provides contextual help through interactive buttons:
     "example"
   ],
   "difficulty": "a1",
-  "estimatedTimeMinutes": 5,
   "blocks": [
     {
       "id": "block-1",
@@ -327,7 +323,6 @@ The hint system provides contextual help through interactive buttons:
     "verbs"
   ],
   "difficulty": "b1",
-  "estimatedTimeMinutes": 15,
   "settings": {
     "autoAdvance": false,
     "autoAdvanceDelayMs": 2000,

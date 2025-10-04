@@ -41,7 +41,6 @@ Every exercise follows this basic structure:
   },
   "tags": ["tag1", "tag2"],
   "difficulty": "beginner",
-  "estimatedTimeMinutes": 5,
   "settings": {},
   "blocks": []
 }
@@ -70,7 +69,6 @@ Based on the existing `verbs-be.json`:
   },
   "tags": ["verbs", "irregular-verbs", "basic", "conjugation"],
   "difficulty": "beginner",
-  "estimatedTimeMinutes": 5,
   "settings": {
     "autoAdvance": true,
     "autoAdvanceDelayMs": 1500,
@@ -118,7 +116,6 @@ Based on the existing `verbs-be.json`:
 | `descriptionI18n`      | object   | ✅        | Translated descriptions                            |
 | `tags`                 | string[] | ✅        | Tags for filtering/grouping                        |
 | `difficulty`           | string   | ✅        | `"beginner"` \\| `"intermediate"` \\| `"advanced"` |
-| `estimatedTimeMinutes` | number   | ✅        | Estimated completion time                          |
 
 #### Exercise settings
 
@@ -472,7 +469,6 @@ Add visual context:
   },
   "tags": ["verbs", "conjugation"],
   "difficulty": "beginner",
-  "estimatedTimeMinutes": 5,
   "blocks": [
     {
       "id": "{verb}-present",

@@ -51,7 +51,6 @@ const mockExercise: WordFormExerciseType = {
 	title: 'Test Exercise',
 	description: 'A test word form exercise',
 	difficulty: 'a0',
-	estimatedTimeMinutes: 10,
 	blocks: [
 		{
 			id: 'block-1',
@@ -151,7 +150,6 @@ describe('WordFormExercise', () => {
 			title: 'Different Exercise',
 			description: 'Another test exercise',
 			difficulty: 'a1',
-			estimatedTimeMinutes: 15,
 			blocks: [
 				{
 					id: 'block-2',

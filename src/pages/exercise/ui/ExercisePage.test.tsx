@@ -103,7 +103,6 @@ const mockWordFormExercise: WordFormExerciseWithDefaults = {
 	title: 'Test Word Form Exercise',
 	description: 'A test exercise',
 	difficulty: 'a0',
-	estimatedTimeMinutes: 10,
 	blocks: [
 		{
 			id: 'block-1',
