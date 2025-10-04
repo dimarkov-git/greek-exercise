@@ -116,13 +116,18 @@ describe('FlashcardRenderer', () => {
 		vi.clearAllMocks()
 	})
 
-	it('renders loading state initially', () => {
+	it('renders loading state initially', async () => {
 		render(<FlashcardRenderer exercise={mockExercise} />, {
 			wrapper: createWrapper()
 		})
 
 		// Should show loading indicator
 		expect(screen.getByText('Loading cards...')).toBeInTheDocument()
+
+		// Wait for async state updates to complete
+		await waitFor(() => {
+			expect(screen.queryByText('Loading cards...')).not.toBeInTheDocument()
+		})
 	})
 
 	it('renders flashcard with front side visible', async () => {
