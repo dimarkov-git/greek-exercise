@@ -4,7 +4,5 @@ export const translations = {
 	exerciseLibrary: 'exerciseLibrary',
 	exerciseLibraryDesc: 'exerciseLibraryDesc',
 	exerciseBuilder: 'exerciseBuilder',
-	exerciseBuilderDesc: 'exerciseBuilderDesc',
-	testSection: 'testSection',
-	testSectionDesc: 'testSectionDesc'
+	exerciseBuilderDesc: 'exerciseBuilderDesc'
 } as const satisfies TranslationDictionary

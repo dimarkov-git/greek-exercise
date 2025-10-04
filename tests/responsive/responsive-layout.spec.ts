@@ -33,7 +33,7 @@ test.describe('Mobile responsive layout', () => {
 		const exercisePage = new ExercisePage(page)
 
 		await exerciseLibrary.goto()
-		await exerciseLibrary.startFirstExercise()
+		await exerciseLibrary.startExerciseById('verbs-be')
 		await exercisePage.expectInputFocused()
 
 		await exercisePage.submitAnswer(EXERCISE_DATA.verbsBe.correctAnswers[0])

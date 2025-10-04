@@ -58,6 +58,14 @@ export class ExerciseLibrary {
 		await startButton.click()
 	}
 
+	async startExerciseById(exerciseId: string) {
+		const exerciseCard = this.page.locator(
+			`[data-testid="exercise-card"][data-exercise-id="${exerciseId}"]`
+		)
+		const startButton = exerciseCard.locator(SELECTORS.startExerciseButton)
+		await startButton.click()
+	}
+
 	// Assertions
 	async expectPageLoaded() {
 		await expect(this.exerciseCards.first()).toBeVisible()

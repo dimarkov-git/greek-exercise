@@ -12,7 +12,7 @@ interface UserSettingsProps {
 }
 
 export function UserSettings({t, translations}: UserSettingsProps) {
-	const [isCollapsed, setIsCollapsed] = useState(false)
+	const [isCollapsed, setIsCollapsed] = useState(true)
 
 	return (
 		<motion.div

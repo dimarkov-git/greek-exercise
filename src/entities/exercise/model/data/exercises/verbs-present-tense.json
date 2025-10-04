@@ -13,9 +13,8 @@
 		"en": "Practice conjugating verbs from all groups in the present tense.",
 		"ru": "Упражнение по спряжению глаголов всех групп в настоящем времени."
 	},
-	"tags": ["word-form", "verbs"],
+	"tags": ["verbs"],
 	"difficulty": "a1",
-	"estimatedTimeMinutes": 10,
 	"settings": {
 		"shuffleCases": true
 	},

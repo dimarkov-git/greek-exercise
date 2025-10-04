@@ -25,7 +25,7 @@ function DropdownButton({
 	return (
 		<motion.button
 			animate={{opacity: 1, scale: 1}}
-			className='flex items-center justify-center rounded-lg border border-gray-300 bg-white p-2 text-sm transition-all hover:border-gray-400 hover:shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:hover:border-gray-500'
+			className='flex cursor-pointer items-center justify-center rounded-lg border border-gray-300 bg-white p-2 text-sm transition-all hover:border-gray-400 hover:shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:hover:border-gray-500'
 			data-current-language={uiLanguage}
 			data-is-open={isOpen}
 			data-testid='ui-language-dropdown'
@@ -87,7 +87,7 @@ function DropdownMenu({
 						const isActive = language.code === currentLanguage
 						return (
 							<button
-								className={`flex w-full items-center gap-2 px-4 py-2 text-left text-sm transition-colors ${
+								className={`flex w-full cursor-pointer items-center gap-2 px-4 py-2 text-left text-sm transition-colors ${
 									isActive
 										? 'cursor-default bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
 										: 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'

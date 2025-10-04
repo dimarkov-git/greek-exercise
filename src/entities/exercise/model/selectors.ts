@@ -63,7 +63,8 @@ export const selectFilteredExercises = createMemoizedSelector(
 		if (
 			filters.tags.length === 0 &&
 			filters.difficulties.length === 0 &&
-			filters.languages.length === 0
+			filters.languages.length === 0 &&
+			filters.types.length === 0
 		) {
 			return exercises
 		}
@@ -91,7 +92,14 @@ export const selectFilteredExercises = createMemoizedSelector(
 					exercise.availableLanguages.includes(language)
 				)
 
-			return matchesLanguages
+			if (!matchesLanguages) {
+				return false
+			}
+
+			const matchesTypes =
+				filters.types.length === 0 || filters.types.includes(exercise.type)
+
+			return matchesTypes
 		})
 	}
 )
@@ -112,4 +120,9 @@ export const selectTagOptions = createMemoizedSelector(
 
 export const selectLanguageOptions = createMemoizedSelector(
 	(viewModel: ExerciseLibraryViewModel) => viewModel.filterOptions.languages
+)
+
+export const selectTypeOptions = createMemoizedSelector(
+	(viewModel: ExerciseLibraryViewModel): ExerciseMetadata['type'][] =>
+		viewModel.filterOptions.types
 )

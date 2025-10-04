@@ -29,7 +29,6 @@ const baseExercise = {
 	description: 'Κλίση του ρήματος',
 	tags: ['verbs'],
 	difficulty: 'a1' as const,
-	estimatedTimeMinutes: 5,
 	blocks: [baseBlock]
 }
 
@@ -59,7 +58,6 @@ it('validates metadata lists for the exercise library', () => {
 		description: 'Κλίση του ρήματος',
 		tags: ['verbs'],
 		difficulty: 'a1',
-		estimatedTimeMinutes: 5,
 		totalBlocks: 1,
 		totalCases: 1,
 		enabled: true

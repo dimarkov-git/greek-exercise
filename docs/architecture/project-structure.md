@@ -311,7 +311,7 @@ Import rules enforced by dependency-cruiser:
 
 ### FSD Layer: features/
 
-- **`src/features/word-form-exercise/`** - Word form exercise implementation
+- **`src/features/word-form/`** - Word form exercise implementation
 - **`src/features/hint-system/`** - Multilingual hint system
 - **`src/features/settings-panel/`** - Application settings interface
 

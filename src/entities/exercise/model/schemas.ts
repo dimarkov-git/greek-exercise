@@ -15,12 +15,41 @@ const DifficultySchema = v.picklist([
 // Schema for multilingual strings (Record<Language, string>)
 const I18nStringSchema = v.record(LanguageSchema, v.string())
 
-// Exercise settings schema (all fields optional for partial overrides)
+// Base exercise settings schema (all fields optional for partial overrides)
 export const ExerciseSettingsSchema = v.object({
 	autoAdvance: v.optional(v.boolean()),
 	autoAdvanceDelayMs: v.optional(v.pipe(v.number(), v.minValue(0))),
 	allowSkip: v.optional(v.boolean()),
 	shuffleCases: v.optional(v.boolean())
+})
+
+// Word-form settings schema
+export const WordFormSettingsSchema = v.object({
+	autoAdvance: v.optional(v.boolean()),
+	autoAdvanceDelayMs: v.optional(v.pipe(v.number(), v.minValue(0))),
+	allowSkip: v.optional(v.boolean()),
+	shuffleCases: v.optional(v.boolean()),
+	shuffleBlocks: v.optional(v.boolean()),
+	allowSkipTone: v.optional(v.boolean())
+})
+
+// Flashcard settings schema
+export const FlashcardSettingsSchema = v.object({
+	autoAdvance: v.optional(v.boolean()),
+	autoAdvanceDelayMs: v.optional(v.pipe(v.number(), v.minValue(0))),
+	allowSkip: v.optional(v.boolean()),
+	shuffleCases: v.optional(v.boolean()),
+	shuffleCards: v.optional(v.boolean())
+})
+
+// Multiple-choice settings schema
+export const MultipleChoiceSettingsSchema = v.object({
+	autoAdvance: v.optional(v.boolean()),
+	autoAdvanceDelayMs: v.optional(v.pipe(v.number(), v.minValue(0))),
+	allowSkip: v.optional(v.boolean()),
+	shuffleCases: v.optional(v.boolean()),
+	shuffleQuestions: v.optional(v.boolean()),
+	shuffleAnswers: v.optional(v.boolean())
 })
 
 // Individual case schema
@@ -41,7 +70,7 @@ export const WordFormBlockSchema = v.object({
 	cases: v.pipe(v.array(WordFormCaseSchema), v.minLength(1))
 })
 
-// Complete exercise schema
+// Complete word-form exercise schema
 export const WordFormExerciseSchema = v.object({
 	enabled: v.boolean(),
 	id: v.string(),
@@ -53,20 +82,51 @@ export const WordFormExerciseSchema = v.object({
 	descriptionI18n: v.optional(I18nStringSchema),
 	tags: v.optional(v.array(v.string()), []),
 	difficulty: DifficultySchema,
-	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
-	settings: v.optional(ExerciseSettingsSchema),
+	settings: v.optional(WordFormSettingsSchema),
 	blocks: v.pipe(v.array(WordFormBlockSchema), v.minLength(1))
+})
+
+// Flashcard schema
+export const FlashCardSchema = v.object({
+	id: v.string(),
+	front: v.string(),
+	frontHintI18n: v.optional(I18nStringSchema),
+	back: v.string(),
+	backHintI18n: v.optional(I18nStringSchema),
+	additionalHint: v.optional(v.string()),
+	additionalHintI18n: v.optional(I18nStringSchema),
+	tags: v.optional(v.array(v.string()), [])
+})
+
+// SRS settings schema
+export const SRSSettingsSchema = v.object({
+	newCardsPerDay: v.optional(v.pipe(v.number(), v.minValue(1))),
+	reviewsPerDay: v.optional(v.pipe(v.number(), v.minValue(1))),
+	graduatingInterval: v.optional(v.pipe(v.number(), v.minValue(1))),
+	easyInterval: v.optional(v.pipe(v.number(), v.minValue(1)))
+})
+
+// Complete flashcard exercise schema
+export const FlashcardExerciseSchema = v.object({
+	enabled: v.boolean(),
+	id: v.string(),
+	type: v.literal('flashcard'),
+	language: LanguageSchema,
+	title: v.string(),
+	titleI18n: v.optional(I18nStringSchema),
+	description: v.string(),
+	descriptionI18n: v.optional(I18nStringSchema),
+	tags: v.optional(v.array(v.string()), []),
+	difficulty: DifficultySchema,
+	settings: v.optional(FlashcardSettingsSchema),
+	cards: v.pipe(v.array(FlashCardSchema), v.minLength(1)),
+	srsSettings: v.optional(SRSSettingsSchema)
 })
 
 // Exercise metadata schema (for list display)
 export const ExerciseMetadataSchema = v.object({
 	id: v.string(),
-	type: v.picklist([
-		'word-form',
-		'translation',
-		'flashcard',
-		'multiple-choice'
-	]),
+	type: v.picklist(['word-form', 'flashcard', 'multiple-choice']),
 	language: LanguageSchema,
 	title: v.string(),
 	titleI18n: v.optional(I18nStringSchema),
@@ -74,7 +134,6 @@ export const ExerciseMetadataSchema = v.object({
 	descriptionI18n: v.optional(I18nStringSchema),
 	tags: v.array(v.string()),
 	difficulty: DifficultySchema,
-	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
 	totalBlocks: v.pipe(v.number(), v.minValue(0)),
 	totalCases: v.pipe(v.number(), v.minValue(0)),
 	enabled: v.boolean()
@@ -87,12 +146,19 @@ export type ExerciseSettingsDto = v.InferOutput<typeof ExerciseSettingsSchema>
 export type WordFormCaseDto = v.InferOutput<typeof WordFormCaseSchema>
 export type WordFormBlockDto = v.InferOutput<typeof WordFormBlockSchema>
 export type WordFormExerciseDto = v.InferOutput<typeof WordFormExerciseSchema>
+export type FlashCardDto = v.InferOutput<typeof FlashCardSchema>
+export type SRSSettingsDto = v.InferOutput<typeof SRSSettingsSchema>
+export type FlashcardExerciseDto = v.InferOutput<typeof FlashcardExerciseSchema>
 export type ExerciseMetadataDto = v.InferOutput<typeof ExerciseMetadataSchema>
 export type ExercisesListDto = v.InferOutput<typeof ExercisesListSchema>
 
 // Validation utility functions
 export function validateWordFormExercise(data: unknown): WordFormExerciseDto {
 	return v.parse(WordFormExerciseSchema, data)
+}
+
+export function validateFlashcardExercise(data: unknown): FlashcardExerciseDto {
+	return v.parse(FlashcardExerciseSchema, data)
 }
 
 export function validateExercisesList(data: unknown): ExercisesListDto {
@@ -105,4 +171,56 @@ export function validateWordFormBlock(data: unknown): WordFormBlockDto {
 
 export function validateExerciseMetadata(data: unknown): ExerciseMetadataDto {
 	return v.parse(ExerciseMetadataSchema, data)
+}
+
+// Multiple-choice schemas
+export const MultipleChoiceOptionSchema = v.object({
+	id: v.string(),
+	text: v.string(),
+	textI18n: v.optional(I18nStringSchema)
+})
+
+export const MultipleChoiceQuestionSchema = v.object({
+	id: v.string(),
+	text: v.string(),
+	textI18n: v.optional(I18nStringSchema),
+	options: v.pipe(
+		v.array(MultipleChoiceOptionSchema),
+		v.minLength(2),
+		v.maxLength(6)
+	),
+	correctOptionId: v.string(),
+	hint: v.optional(v.string()),
+	hintI18n: v.optional(I18nStringSchema)
+})
+
+export const MultipleChoiceExerciseSchema = v.object({
+	enabled: v.boolean(),
+	id: v.string(),
+	type: v.literal('multiple-choice'),
+	language: LanguageSchema,
+	title: v.string(),
+	titleI18n: v.optional(I18nStringSchema),
+	description: v.string(),
+	descriptionI18n: v.optional(I18nStringSchema),
+	tags: v.optional(v.array(v.string()), []),
+	difficulty: DifficultySchema,
+	settings: v.optional(MultipleChoiceSettingsSchema),
+	questions: v.pipe(v.array(MultipleChoiceQuestionSchema), v.minLength(1))
+})
+
+export type MultipleChoiceOptionDto = v.InferOutput<
+	typeof MultipleChoiceOptionSchema
+>
+export type MultipleChoiceQuestionDto = v.InferOutput<
+	typeof MultipleChoiceQuestionSchema
+>
+export type MultipleChoiceExerciseDto = v.InferOutput<
+	typeof MultipleChoiceExerciseSchema
+>
+
+export function validateMultipleChoiceExercise(
+	data: unknown
+): MultipleChoiceExerciseDto {
+	return v.parse(MultipleChoiceExerciseSchema, data)
 }

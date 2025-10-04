@@ -34,8 +34,7 @@ const mockT = vi.fn((key: string) => {
 		'ui.hashSymbol': '#',
 		'ui.plusSymbol': '+',
 		'exercise.cases': 'cases',
-		'exercise.blocks': 'blocks',
-		'exercise.minutes': 'min'
+		'exercise.blocks': 'blocks'
 	}
 	return translations[key] || key
 })
@@ -61,7 +60,6 @@ const createMockExercise = (
 	},
 	tags: ['verbs', 'beginner', 'grammar'],
 	difficulty: 'a1',
-	estimatedTimeMinutes: 15,
 	totalBlocks: 3,
 	totalCases: 12,
 	enabled: true,
@@ -333,7 +331,6 @@ describe('ExerciseGrid', () => {
 
 				expect(screen.getByText('📄 12 cases')).toBeInTheDocument()
 				expect(screen.getByText('📚 3 blocks')).toBeInTheDocument()
-				expect(screen.getByText('⏱️ 15 min')).toBeInTheDocument()
 			})
 
 			it('calls translation functions for statistics', () => {
@@ -341,10 +338,8 @@ describe('ExerciseGrid', () => {
 
 				expect(mockT).toHaveBeenCalledWith('ui.documentEmoji')
 				expect(mockT).toHaveBeenCalledWith('ui.booksEmoji')
-				expect(mockT).toHaveBeenCalledWith('ui.timerEmoji')
 				expect(mockT).toHaveBeenCalledWith('exercise.cases')
 				expect(mockT).toHaveBeenCalledWith('exercise.blocks')
-				expect(mockT).toHaveBeenCalledWith('exercise.minutes')
 			})
 		})
 
@@ -527,7 +522,6 @@ describe('ExerciseGrid', () => {
 			expect(mockT).toHaveBeenCalledWith('ui.hashSymbol')
 			expect(mockT).toHaveBeenCalledWith('ui.documentEmoji')
 			expect(mockT).toHaveBeenCalledWith('ui.booksEmoji')
-			expect(mockT).toHaveBeenCalledWith('ui.timerEmoji')
 		})
 
 		it('handles translation function returning keys when translation missing', () => {
@@ -580,8 +574,7 @@ describe('ExerciseGrid', () => {
 		it('handles exercises with zero statistics', () => {
 			const exerciseWithZeroStats = createMockExercise({
 				totalBlocks: 0,
-				totalCases: 0,
-				estimatedTimeMinutes: 0
+				totalCases: 0
 			})
 
 			render(
@@ -590,14 +583,12 @@ describe('ExerciseGrid', () => {
 
 			expect(screen.getByText('📄 0 cases')).toBeInTheDocument()
 			expect(screen.getByText('📚 0 blocks')).toBeInTheDocument()
-			expect(screen.getByText('⏱️ 0 min')).toBeInTheDocument()
 		})
 
 		it('handles very large numbers in statistics', () => {
 			const exerciseWithLargeStats = createMockExercise({
 				totalBlocks: 999,
-				totalCases: 9999,
-				estimatedTimeMinutes: 999
+				totalCases: 9999
 			})
 
 			render(
@@ -606,7 +597,6 @@ describe('ExerciseGrid', () => {
 
 			expect(screen.getByText('📄 9999 cases')).toBeInTheDocument()
 			expect(screen.getByText('📚 999 blocks')).toBeInTheDocument()
-			expect(screen.getByText('⏱️ 999 min')).toBeInTheDocument()
 		})
 	})
 })

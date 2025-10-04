@@ -1,6 +1,5 @@
 import {AnimatePresence, motion} from 'framer-motion'
 import {Link, useLocation} from 'react-router'
-import {shouldShowTestSection} from '@/shared/config'
 import {cn} from '@/shared/lib'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {LanguageDropdown} from '@/shared/ui/language-dropdown'
@@ -10,39 +9,26 @@ import {mobileMenuTranslations} from './translations'
 const HOME_ICON = '🏠'
 const LIBRARY_ICON = '📚'
 const BUILDER_ICON = '🔧'
-const TEST_ICON = '🧪'
 
 const createNavigationItems = (
 	t: ReturnType<typeof loadTranslations<typeof mobileMenuTranslations>>['t']
-) => {
-	const items = [
-		{
-			path: '/',
-			label: t(mobileMenuTranslations.home),
-			icon: <span className='text-base'>{HOME_ICON}</span>
-		},
-		{
-			path: '/exercises',
-			label: t(mobileMenuTranslations.library),
-			icon: <span className='text-base'>{LIBRARY_ICON}</span>
-		},
-		{
-			path: '/builder',
-			label: t(mobileMenuTranslations.builder),
-			icon: <span className='text-base'>{BUILDER_ICON}</span>
-		}
-	]
-
-	if (shouldShowTestSection()) {
-		items.push({
-			path: '/test/i18n',
-			label: t(mobileMenuTranslations.testSection),
-			icon: <span className='text-base'>{TEST_ICON}</span>
-		})
+) => [
+	{
+		path: '/',
+		label: t(mobileMenuTranslations.home),
+		icon: <span className='text-base'>{HOME_ICON}</span>
+	},
+	{
+		path: '/exercises',
+		label: t(mobileMenuTranslations.library),
+		icon: <span className='text-base'>{LIBRARY_ICON}</span>
+	},
+	{
+		path: '/builder',
+		label: t(mobileMenuTranslations.builder),
+		icon: <span className='text-base'>{BUILDER_ICON}</span>
 	}
-
-	return items
-}
+]
 
 interface MobileMenuProps {
 	readonly id: string

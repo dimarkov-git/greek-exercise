@@ -222,7 +222,6 @@ const mockExerciseSummary1: ExerciseSummary = {
 	title: 'Basic Nouns',
 	description: 'Learn basic Greek nouns',
 	difficulty: 'a1',
-	estimatedTimeMinutes: 15,
 	enabled: true,
 	tags: ['nouns', 'grammar'],
 	totalBlocks: 2,
@@ -237,7 +236,6 @@ const mockExerciseSummary2: ExerciseSummary = {
 	title: 'Verb Conjugation',
 	description: 'Practice verb conjugation',
 	difficulty: 'a2',
-	estimatedTimeMinutes: 20,
 	enabled: true,
 	tags: ['verbs', 'grammar'],
 	totalBlocks: 3,
@@ -250,7 +248,8 @@ const mockExerciseLibrary: ExerciseLibraryViewModel = {
 	filterOptions: {
 		tags: ['nouns', 'verbs', 'grammar'],
 		difficulties: ['a1', 'a2'],
-		languages: ['el']
+		languages: ['el'],
+		types: ['word-form']
 	},
 	totals: {
 		total: 2,

@@ -13,9 +13,8 @@
 		"en": "Conjugation of 'to have' in all basic tenses",
 		"ru": "Спряжение глагола «иметь» во всех основных временах"
 	},
-	"tags": ["word-form", "verbs", "irregular-verbs"],
+	"tags": ["verbs", "irregular-verbs"],
 	"difficulty": "a1",
-	"estimatedTimeMinutes": 10,
 	"blocks": [
 		{
 			"id": "have-present",

@@ -15,6 +15,7 @@ export const exerciseLibraryTranslations = {
 	difficulty: 'difficulty',
 	language: 'language',
 	tags: 'tags',
+	type: 'exerciseLibrary.type',
 	all: 'all',
 
 	// Exercise Grid
@@ -35,11 +36,20 @@ export const exerciseLibraryTranslations = {
 	'ui.booksEmoji': 'ui.booksEmoji',
 	'ui.timerEmoji': 'ui.timerEmoji',
 	'ui.searchEmoji': 'ui.searchEmoji',
+	'ui.questionEmoji': 'ui.questionEmoji',
+	'ui.cardEmoji': 'ui.cardEmoji',
 
 	// Exercise metadata
 	'exercise.cases': 'exercise.cases',
 	'exercise.blocks': 'exercise.blocks',
 	'exercise.minutes': 'exercise.minutes',
+	'exercise.questions': 'exercise.questions',
+	'exercise.cards': 'exercise.cards',
+
+	// Exercise types
+	'exerciseType.word-form': 'builder.wordFormType',
+	'exerciseType.multiple-choice': 'builder.multipleChoiceType',
+	'exerciseType.flashcard': 'builder.flashcardType',
 
 	// Builder
 	'builder.customBadge': 'builder.customBadge',

@@ -1,7 +1,7 @@
 import type {KnipConfig} from 'knip'
 
 const config: KnipConfig = {
-	entry: ['src/main.tsx'],
+	entry: ['src/app/main.tsx'],
 	project: ['**/*.{js,ts}']
 }
 

@@ -33,7 +33,6 @@ const sampleExercise: WordFormExercise = {
 	description: 'Ρήμα είμαι',
 	tags: ['verbs', 'a1'],
 	difficulty: 'a1',
-	estimatedTimeMinutes: 5,
 	settings: {
 		autoAdvance: true,
 		autoAdvanceDelayMs: 1500,

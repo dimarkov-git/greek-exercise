@@ -5,12 +5,6 @@ support and customizable exercise system.
 
 ## 📋 Project Overview
 
-### Current status
-
-- **Version**: 0.0.0 (MVP)
-- **Stage**: Functional prototype with word-form exercises
-- **Phases completed**: 0-6 (foundation through FSD migration)
-
 ### Purpose
 
 Create a modern, interactive language learning platform focused on Greek language practice with:

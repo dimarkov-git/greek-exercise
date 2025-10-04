@@ -13,9 +13,8 @@
 		"en": "Practice with countries and their nationalities",
 		"ru": "Упражнение со странами и национальностями"
 	},
-	"tags": ["word-form", "countries", "nationalities"],
+	"tags": ["countries", "nationalities"],
 	"difficulty": "a1",
-	"estimatedTimeMinutes": 15,
 	"blocks": [
 		{
 			"id": "america",

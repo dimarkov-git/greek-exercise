@@ -63,9 +63,9 @@ export function NavigationCard({
 						>
 							{icon}
 						</div>
-						<h3 className='font-bold text-gray-900 text-xl group-hover:text-gray-700 dark:text-white dark:group-hover:text-gray-200'>
+						<h2 className='font-bold text-gray-900 text-xl group-hover:text-gray-700 dark:text-white dark:group-hover:text-gray-200'>
 							{title}
-						</h3>
+						</h2>
 					</div>
 
 					<p className='text-gray-600 leading-relaxed group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-300'>

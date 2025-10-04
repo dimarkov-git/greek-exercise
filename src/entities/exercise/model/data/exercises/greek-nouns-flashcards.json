@@ -1,0 +1,200 @@
+{
+	"enabled": true,
+	"id": "greek-nouns-flashcards-1",
+	"type": "flashcard",
+	"language": "el",
+	"title": "Βασικά ουσιαστικά",
+	"titleI18n": {
+		"en": "Basic Nouns",
+		"ru": "Основные существительные"
+	},
+	"description": "Κοινά ελληνικά ουσιαστικά",
+	"descriptionI18n": {
+		"en": "Common Greek nouns with articles",
+		"ru": "Распространённые греческие существительные с артиклями"
+	},
+	"tags": ["nouns", "vocabulary"],
+	"difficulty": "a1",
+	"settings": {
+		"autoAdvance": false,
+		"allowSkip": true
+	},
+	"cards": [
+		{
+			"id": "noun-1",
+			"front": "το νερό",
+			"frontHintI18n": {
+				"en": "water",
+				"ru": "вода"
+			},
+			"back": "το νερό (neuter)",
+			"backHintI18n": {
+				"en": "the water (neuter noun)",
+				"ru": "вода (средний род)"
+			},
+			"additionalHint": "Neutral gender",
+			"tags": ["noun", "common"]
+		},
+		{
+			"id": "noun-2",
+			"front": "η μέρα",
+			"frontHintI18n": {
+				"en": "day",
+				"ru": "день"
+			},
+			"back": "η μέρα (feminine)",
+			"backHintI18n": {
+				"en": "the day (feminine noun)",
+				"ru": "день (женский род)"
+			},
+			"additionalHint": "Feminine gender",
+			"tags": ["noun", "time"]
+		},
+		{
+			"id": "noun-3",
+			"front": "ο άνθρωπος",
+			"frontHintI18n": {
+				"en": "person/human",
+				"ru": "человек"
+			},
+			"back": "ο άνθρωπος (masculine)",
+			"backHintI18n": {
+				"en": "the person (masculine noun)",
+				"ru": "человек (мужской род)"
+			},
+			"additionalHint": "Masculine gender",
+			"tags": ["noun", "people"]
+		},
+		{
+			"id": "noun-4",
+			"front": "το σπίτι",
+			"frontHintI18n": {
+				"en": "house",
+				"ru": "дом"
+			},
+			"back": "το σπίτι (neuter)",
+			"backHintI18n": {
+				"en": "the house (neuter noun)",
+				"ru": "дом (средний род)"
+			},
+			"tags": ["noun", "places"]
+		},
+		{
+			"id": "noun-5",
+			"front": "η γυναίκα",
+			"frontHintI18n": {
+				"en": "woman",
+				"ru": "женщина"
+			},
+			"back": "η γυναίκα (feminine)",
+			"backHintI18n": {
+				"en": "the woman (feminine noun)",
+				"ru": "женщина (женский род)"
+			},
+			"tags": ["noun", "people"]
+		},
+		{
+			"id": "noun-6",
+			"front": "ο άντρας",
+			"frontHintI18n": {
+				"en": "man",
+				"ru": "мужчина"
+			},
+			"back": "ο άντρας (masculine)",
+			"backHintI18n": {
+				"en": "the man (masculine noun)",
+				"ru": "мужчина (мужской род)"
+			},
+			"tags": ["noun", "people"]
+		},
+		{
+			"id": "noun-7",
+			"front": "το παιδί",
+			"frontHintI18n": {
+				"en": "child",
+				"ru": "ребёнок"
+			},
+			"back": "το παιδί (neuter)",
+			"backHintI18n": {
+				"en": "the child (neuter noun)",
+				"ru": "ребёнок (средний род)"
+			},
+			"tags": ["noun", "people"]
+		},
+		{
+			"id": "noun-8",
+			"front": "η φίλη / ο φίλος",
+			"frontHintI18n": {
+				"en": "friend",
+				"ru": "друг/подруга"
+			},
+			"back": "η φίλη (f.) / ο φίλος (m.)",
+			"backHintI18n": {
+				"en": "the friend (feminine/masculine)",
+				"ru": "подруга/друг (женский/мужской род)"
+			},
+			"additionalHint": "Gender varies",
+			"additionalHintI18n": {
+				"en": "Use φίλη for female friends, φίλος for male friends",
+				"ru": "Используйте φίλη для женщин, φίλος для мужчин"
+			},
+			"tags": ["noun", "people"]
+		},
+		{
+			"id": "noun-9",
+			"front": "το φαγητό",
+			"frontHintI18n": {
+				"en": "food",
+				"ru": "еда"
+			},
+			"back": "το φαγητό (neuter)",
+			"backHintI18n": {
+				"en": "the food (neuter noun)",
+				"ru": "еда (средний род)"
+			},
+			"tags": ["noun", "food"]
+		},
+		{
+			"id": "noun-10",
+			"front": "η δουλειά",
+			"frontHintI18n": {
+				"en": "work/job",
+				"ru": "работа"
+			},
+			"back": "η δουλειά (feminine)",
+			"backHintI18n": {
+				"en": "the work/job (feminine noun)",
+				"ru": "работа (женский род)"
+			},
+			"tags": ["noun", "common"]
+		},
+		{
+			"id": "noun-11",
+			"front": "ο καφές",
+			"frontHintI18n": {
+				"en": "coffee",
+				"ru": "кофе"
+			},
+			"back": "ο καφές (masculine)",
+			"backHintI18n": {
+				"en": "the coffee (masculine noun)",
+				"ru": "кофе (мужской род)"
+			},
+			"tags": ["noun", "food", "drinks"]
+		},
+		{
+			"id": "noun-12",
+			"front": "το βιβλίο",
+			"frontHintI18n": {
+				"en": "book",
+				"ru": "книга"
+			},
+			"back": "το βιβλίο (neuter)",
+			"backHintI18n": {
+				"en": "the book (neuter noun)",
+				"ru": "книга (средний род)"
+			},
+			"tags": ["noun", "objects"]
+		}
+	]
+}

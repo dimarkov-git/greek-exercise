@@ -1,3 +1,5 @@
+import {Link} from 'react-router'
+import {shouldShowTestSection} from '@/shared/config'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {TranslatedText} from '@/shared/ui/translated-text'
 import {translations} from './translations'
@@ -24,10 +26,18 @@ export function Footer() {
 							text={t(translations.madeWith)}
 						/>
 					</div>
-					<div className='flex space-x-6'>
+					<div className='flex items-center space-x-6'>
+						{shouldShowTestSection() && (
+							<Link
+								className='cursor-pointer text-gray-400 text-sm transition-colors hover:text-gray-300'
+								to='/test/i18n'
+							>
+								Test
+							</Link>
+						)}
 						<a
 							aria-label={t(translations.github)}
-							className='text-gray-400 transition-colors hover:text-gray-300'
+							className='cursor-pointer text-gray-400 transition-colors hover:text-gray-300'
 							href={repoURL}
 							rel='noopener noreferrer'
 							target='_blank'

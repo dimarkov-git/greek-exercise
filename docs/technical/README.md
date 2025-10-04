@@ -6,14 +6,11 @@ Complete technical reference for the Learn Greek application.
 
 ### Core Technical Information
 - **[Technical Overview](overview.md)** - Project overview, technology stack, and system architecture
-- **[API Specification](api-specification.md)** - Mock API endpoints, request/response formats, and caching strategy
-- **[Data Models](data-models.md)** - TypeScript interfaces, validation schemas, and data flow patterns
 
 ### Architecture Guides
 - **[Project Structure](../architecture/project-structure.md)** - File organization and module boundaries
 - **[Component Architecture](../architecture/component-architecture.md)** - React component patterns and design principles
 - **[Performance Guidelines](../architecture/performance.md)** - Performance budgets and optimization strategies
-- **[Internationalization](../architecture/i18n-system.md)** - Multi-language support implementation
 - **[Exercise System](../architecture/exercise-system.md)** - Exercise engine architecture and extensibility
 
 ### Development Resources
@@ -68,13 +65,12 @@ pnpm validate     # Full validation (lint + test + e2e)
 1. Check [Technical Overview](overview.md) for architecture patterns
 2. Review [Component Architecture](../architecture/component-architecture.md) for React patterns
 3. Follow [Testing Guide](../guides/testing-guide.md) for test requirements
-4. Update [Data Models](data-models.md) if adding new types
 
 ### Performance Optimization
 1. Check [Performance Guidelines](../architecture/performance.md) for budgets
 2. Use bundle analyzer: `pnpm build:analyze`
 3. Monitor Core Web Vitals in production
-4. Review [optimization strategies](../architecture/performance.md#optimization-strategies)
+4. Review [optimization strategies](../architecture/performance.md)
 
 ## 📋 Documentation Standards
 

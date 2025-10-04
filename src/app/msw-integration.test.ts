@@ -88,7 +88,7 @@ describe('MSW integration with httpClient', () => {
 		expect(exercises[0]).toMatchObject({
 			id: expect.any(String),
 			title: expect.any(String),
-			type: 'word-form'
+			type: expect.any(String) // Can be any supported type (word-form, flashcard, etc.)
 		})
 		expect(fallbackSpy).not.toHaveBeenCalled()
 	})

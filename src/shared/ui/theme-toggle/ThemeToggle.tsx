@@ -14,7 +14,7 @@ export function ThemeToggle() {
 	return (
 		<motion.button
 			animate={{opacity: 1, scale: 1}}
-			className='flex items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] p-3 text-sm transition-all hover:border-[var(--color-border-strong)] hover:shadow-[var(--shadow-sm)]'
+			className='flex cursor-pointer items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] p-3 text-sm transition-all hover:border-[var(--color-border-strong)] hover:shadow-[var(--shadow-sm)]'
 			data-current-theme={theme}
 			data-testid='theme-toggle'
 			initial={{opacity: 0, scale: 0.9}}

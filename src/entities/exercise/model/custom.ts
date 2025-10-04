@@ -1,5 +1,6 @@
-import type {ExerciseMetadataDto} from '@/entities/exercise'
+import type {CustomExerciseJSON, ExerciseMetadataDto} from '@/entities/exercise'
 import type {WordFormExerciseWithDefaults} from './domain-types'
+import type {FlashcardExerciseJSON} from './flashcard-types'
 import type {WordFormExerciseJSON} from './types'
 
 function normalizeTags(tags: readonly string[] | undefined): string[] {
@@ -29,7 +30,6 @@ export function wordFormExerciseJsonToMetadata(
 		descriptionI18n: exercise.descriptionI18n,
 		tags: normalizeTags(exercise.tags),
 		difficulty: exercise.difficulty,
-		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
 		totalBlocks,
 		totalCases,
 		enabled: exercise.enabled
@@ -43,5 +43,41 @@ export function wordFormExerciseJsonToExercise(
 		...exercise,
 		tags: normalizeTags(exercise.tags),
 		settings: exercise.settings
+	}
+}
+
+export function flashcardExerciseJsonToMetadata(
+	exercise: FlashcardExerciseJSON
+): ExerciseMetadataDto {
+	const totalBlocks = 1
+	const totalCases = exercise.cards.length
+
+	return {
+		id: exercise.id,
+		type: 'flashcard',
+		language: exercise.language,
+		title: exercise.title,
+		titleI18n: exercise.titleI18n,
+		description: exercise.description,
+		descriptionI18n: exercise.descriptionI18n,
+		tags: normalizeTags(exercise.tags),
+		difficulty: exercise.difficulty,
+		totalBlocks,
+		totalCases,
+		enabled: exercise.enabled
+	}
+}
+
+export function customExerciseJsonToMetadata(
+	exercise: CustomExerciseJSON
+): ExerciseMetadataDto {
+	switch (exercise.type) {
+		case 'word-form':
+			return wordFormExerciseJsonToMetadata(exercise)
+		case 'flashcard':
+			return flashcardExerciseJsonToMetadata(exercise)
+		default:
+			// TypeScript exhaustiveness check - this should never happen
+			return exercise satisfies never
 	}
 }

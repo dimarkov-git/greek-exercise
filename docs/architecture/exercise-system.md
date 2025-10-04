@@ -42,7 +42,6 @@ interface WordFormExercise {
     // Classification
     tags: string[]
     difficulty: 'beginner' | 'intermediate' | 'advanced'
-    estimatedTimeMinutes: number
 
     // Exercise configuration
     settings: ExerciseSettings
@@ -194,7 +193,6 @@ ExerciseMetadata[] = [{
     titleI18n: Record<Language, string>
     tags: string[]
     difficulty: string
-    estimatedTimeMinutes: number
     totalBlocks: number
     totalCases: number
 }]
@@ -249,22 +247,6 @@ src/mocks/data/exercises/
 **Data format**: See JSON structure above
 
 ### Future exercise types
-
-#### Translation exercises
-
-```typescript
-interface TranslationExercise {
-    type: 'translation'
-    direction: 'greek-to-english' | 'english-to-greek'
-    content: TranslationCase[]
-}
-
-interface TranslationCase {
-    source: string
-    targets: string[]
-    context?: string
-}
-```
 
 #### Flashcard exercises
 

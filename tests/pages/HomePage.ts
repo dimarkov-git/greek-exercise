@@ -32,6 +32,18 @@ export class HomePage {
 		return this.page.locator(SELECTORS.mainHeading)
 	}
 
+	// Helper methods
+	isMobile(): boolean {
+		const viewport = this.page.viewportSize()
+		return viewport ? viewport.width < 768 : false
+	}
+
+	async openMobileMenu() {
+		const menuButton = this.page.getByRole('button', {name: /menu/i}).first()
+		await menuButton.click()
+		await this.expectMobileMenuVisible()
+	}
+
 	// Actions
 	async goto() {
 		await this.page.goto(ROUTES.home)
@@ -47,17 +59,46 @@ export class HomePage {
 	}
 
 	async toggleTheme() {
-		await this.themeToggle.click()
+		const mobile = await this.isMobile()
+		if (mobile) {
+			await this.openMobileMenu()
+			// In mobile menu, use visible theme toggle
+			const mobileThemeToggle = this.page
+				.locator('[data-testid="mobile-menu"]')
+				.locator(SELECTORS.themeToggle)
+			await mobileThemeToggle.click()
+			// Close mobile menu after interaction
+			await this.page.keyboard.press('Escape')
+		} else {
+			await this.themeToggle.click()
+		}
 	}
 
 	async openLanguageDropdown() {
-		await this.uiLanguageDropdown.click()
+		const mobile = await this.isMobile()
+		if (mobile) {
+			await this.openMobileMenu()
+			// In mobile menu, use visible language dropdown
+			const mobileLanguageDropdown = this.page
+				.locator('[data-testid="mobile-menu"]')
+				.locator(SELECTORS.uiLanguageDropdown)
+			await mobileLanguageDropdown.click()
+		} else {
+			await this.uiLanguageDropdown.click()
+		}
 	}
 
 	async selectUILanguage(language: string) {
 		await this.openLanguageDropdown()
 		const option = this.page.locator(SELECTORS.uiLanguageOption(language))
 		await option.click()
+		const mobile = await this.isMobile()
+		if (mobile) {
+			// Close mobile menu after selection
+			await this.page.keyboard.press('Escape')
+			// Wait for menu animation to complete
+			await this.page.waitForTimeout(300)
+		}
 	}
 
 	// Assertions

@@ -1,6 +1,7 @@
 import type {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {useEffect, useState} from 'react'
-import {AppModeEnum, environment} from '@/app/config'
+import {environment} from '@/app/config'
+import {logger} from '@/shared/lib'
 
 let DevtoolsComponent: typeof ReactQueryDevtools | null = null
 
@@ -26,10 +27,7 @@ export function QueryDevtools() {
 				setDevtools(() => DevtoolsComponent)
 			})
 			.catch(error => {
-				if (environment.mode === AppModeEnum.development) {
-					// biome-ignore lint/suspicious/noConsole: development diagnostics
-					console.warn('Failed to load React Query Devtools', error)
-				}
+				logger.warn('Failed to load React Query Devtools', error)
 			})
 
 		return () => {

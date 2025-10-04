@@ -14,15 +14,36 @@ vi.mock('react-router', async () => {
 	}
 })
 
-vi.mock('@/entities/exercise', () => ({
-	useExercise: vi.fn(),
-	DEFAULT_EXERCISE_SETTINGS: {
-		autoAdvance: true,
-		autoAdvanceDelayMs: 1500,
-		allowSkip: false,
-		shuffleCases: false
+// Mock exercise type registry - define inline to avoid hoisting issues
+vi.mock('@/entities/exercise', async importOriginal => {
+	const actual = (await importOriginal()) as Record<string, unknown>
+	const mockRegistry = new Map()
+	return {
+		...actual,
+		useExercise: vi.fn(),
+		exerciseTypeRegistry: {
+			register: vi.fn((type: string, components: unknown) => {
+				mockRegistry.set(type, components)
+			}),
+			get: vi.fn((type: string) => mockRegistry.get(type)),
+			has: vi.fn((type: string) => mockRegistry.has(type)),
+			unregister: vi.fn(),
+			clear: vi.fn(),
+			getRegisteredTypes: vi.fn(() => Array.from(mockRegistry.keys())),
+			size: 0
+		},
+		getExerciseLearnView: vi.fn((type: string) => {
+			const components = mockRegistry.get(type)
+			return components?.learnView || null
+		}),
+		DEFAULT_EXERCISE_SETTINGS: {
+			autoAdvance: true,
+			autoAdvanceDelayMs: 1500,
+			allowSkip: false,
+			shuffleCases: false
+		}
 	}
-}))
+})
 
 vi.mock('@/shared/lib', async () => {
 	const actual = await vi.importActual('@/shared/lib')
@@ -50,39 +71,6 @@ vi.mock('@/shared/ui/loading-or-error', () => ({
 			<div data-testid='loading-error'>Error: {error.message}</div>
 		) : (
 			<div data-testid='loading-error'>Loading...</div>
-		)
-	)
-}))
-
-vi.mock('@/features/learn-view', () => ({
-	JsonView: vi.fn(({exercise}: {exercise: WordFormExerciseWithDefaults}) => (
-		<div data-testid='json-view'>JsonView: {exercise.title}</div>
-	)),
-	TableView: vi.fn(({exercise}: {exercise: WordFormExerciseWithDefaults}) => (
-		<div data-testid='table-view'>TableView: {exercise.title}</div>
-	)),
-	ViewToggle: vi.fn(
-		({
-			viewMode,
-			onViewModeChange
-		}: {
-			viewMode: string
-			onViewModeChange: (mode: string) => void
-		}) => (
-			<div data-testid='view-toggle'>
-				<button
-					data-testid='table-mode-btn'
-					onClick={() => onViewModeChange('table')}
-				>
-					Table ({viewMode})
-				</button>
-				<button
-					data-testid='json-mode-btn'
-					onClick={() => onViewModeChange('json')}
-				>
-					JSON ({viewMode})
-				</button>
-			</div>
 		)
 	)
 }))
@@ -132,7 +120,6 @@ const mockWordFormExercise: WordFormExerciseWithDefaults = {
 		'Learn the present tense forms of the verb "to be" in Ancient Greek',
 	tags: ['verbs', 'present-tense', 'essential'],
 	difficulty: 'a1',
-	estimatedTimeMinutes: 15,
 	blocks: [
 		{
 			id: 'block-1',
@@ -168,12 +155,11 @@ const mockWordFormExercise: WordFormExerciseWithDefaults = {
 const mockUnsupportedExercise = {
 	id: 'unsupported-exercise',
 	enabled: true,
-	type: 'flashcard',
-	title: 'Flashcard Exercise',
-	description: 'A flashcard exercise',
+	type: 'matching-pairs',
+	title: 'Matching Pairs Exercise',
+	description: 'A matching pairs exercise',
 	tags: [],
 	difficulty: 'a1' as const,
-	estimatedTimeMinutes: 10,
 	blocks: []
 } as unknown as WordFormExerciseWithDefaults
 
@@ -293,7 +279,9 @@ describe('LearnPage', () => {
 
 			expect(screen.getByText('Unsupported Exercise Type')).toBeInTheDocument()
 			expect(
-				screen.getByText('Exercise type "flashcard" is not implemented yet.')
+				screen.getByText(
+					'Exercise type "matching-pairs" is not implemented yet.'
+				)
 			).toBeInTheDocument()
 			expect(
 				screen.getByRole('button', {name: 'Back to Library'})
@@ -349,13 +337,13 @@ describe('LearnPage', () => {
 		it('renders LearnPageContent with correct props', () => {
 			render(<LearnPage />)
 
-			// Check that the main content is rendered
-			expect(screen.getByText('Present Tense of εἰμί')).toBeInTheDocument()
-			expect(
-				screen.getByText(
-					'Learn the present tense forms of the verb "to be" in Ancient Greek'
-				)
-			).toBeInTheDocument()
+			// Check that the main content is rendered - both title and description appear in multiple places
+			const titles = screen.getAllByText('Present Tense of εἰμί')
+			expect(titles.length).toBeGreaterThan(0)
+			const descriptions = screen.getAllByText(
+				'Learn the present tense forms of the verb "to be" in Ancient Greek'
+			)
+			expect(descriptions.length).toBeGreaterThan(0)
 		})
 
 		it('sets correct page title', () => {
@@ -370,18 +358,19 @@ describe('LearnPage', () => {
 		it('displays exercise stats correctly', () => {
 			render(<LearnPage />)
 
-			expect(screen.getByText('A1')).toBeInTheDocument() // difficulty uppercase
-			expect(screen.getByText('15')).toBeInTheDocument() // minutes
-			expect(screen.getByText('2')).toBeInTheDocument() // blocks count
-			expect(screen.getByText('3')).toBeInTheDocument() // total cases count
+			// Stats appear in both header and table view
+			expect(screen.getAllByText('A1').length).toBeGreaterThan(0) // difficulty uppercase
+			expect(screen.getAllByText('2').length).toBeGreaterThan(0) // blocks count
+			expect(screen.getAllByText('3').length).toBeGreaterThan(0) // total cases count
 		})
 
 		it('displays exercise tags when present', () => {
 			render(<LearnPage />)
 
-			expect(screen.getByText('#verbs')).toBeInTheDocument()
-			expect(screen.getByText('#present-tense')).toBeInTheDocument()
-			expect(screen.getByText('#essential')).toBeInTheDocument()
+			// Tags appear in both header and table view
+			expect(screen.getAllByText('#verbs').length).toBeGreaterThan(0)
+			expect(screen.getAllByText('#present-tense').length).toBeGreaterThan(0)
+			expect(screen.getAllByText('#essential').length).toBeGreaterThan(0)
 		})
 
 		it('does not display tags section when tags are empty', () => {
@@ -402,26 +391,29 @@ describe('LearnPage', () => {
 		it('shows table view by default', () => {
 			render(<LearnPage />)
 
-			expect(screen.getByTestId('table-view')).toBeInTheDocument()
-			expect(
-				screen.getByText('TableView: Present Tense of εἰμί')
-			).toBeInTheDocument()
-			expect(screen.queryByTestId('json-view')).not.toBeInTheDocument()
+			// Check that Table View button is active
+			const tableViewBtn = screen.getByRole('button', {name: /Table View/i})
+			expect(tableViewBtn).toHaveClass('text-blue-600')
+
+			// Check that JSON View button is not active
+			const jsonViewBtn = screen.getByRole('button', {name: /JSON View/i})
+			expect(jsonViewBtn).not.toHaveClass('text-blue-600')
 		})
 
 		it('handles view mode toggle correctly', async () => {
 			const {user} = render(<LearnPage />)
 
-			expect(screen.getByTestId('table-view')).toBeInTheDocument()
+			// Initially Table View is active
+			const tableViewBtn = screen.getByRole('button', {name: /Table View/i})
+			const jsonViewBtn = screen.getByRole('button', {name: /JSON View/i})
+			expect(tableViewBtn).toHaveClass('text-blue-600')
 
-			const jsonButton = screen.getByTestId('json-mode-btn')
-			await user.click(jsonButton)
+			// Click JSON View button
+			await user.click(jsonViewBtn)
 
-			expect(screen.getByTestId('json-view')).toBeInTheDocument()
-			expect(
-				screen.getByText('JsonView: Present Tense of εἰμί')
-			).toBeInTheDocument()
-			expect(screen.queryByTestId('table-view')).not.toBeInTheDocument()
+			// JSON View should now be active
+			expect(jsonViewBtn).toHaveClass('text-blue-600')
+			expect(tableViewBtn).not.toHaveClass('text-blue-600')
 		})
 	})
 
@@ -482,12 +474,15 @@ describe('LearnPage', () => {
 				render(<LearnPage />)
 
 				expect(screen.getByRole('heading', {level: 1})).toBeInTheDocument()
-				expect(screen.getByText('Present Tense of εἰμί')).toBeInTheDocument()
+				// Title and description appear in multiple places
 				expect(
-					screen.getByText(
+					screen.getAllByText('Present Tense of εἰμί').length
+				).toBeGreaterThan(0)
+				expect(
+					screen.getAllByText(
 						'Learn the present tense forms of the verb "to be" in Ancient Greek'
-					)
-				).toBeInTheDocument()
+					).length
+				).toBeGreaterThan(0)
 			})
 
 			it('displays learn exercise label', () => {
@@ -515,7 +510,6 @@ describe('LearnPage', () => {
 				render(<LearnPage />)
 
 				expect(screen.getByText('Difficulty')).toBeInTheDocument()
-				expect(screen.getByText('Minutes')).toBeInTheDocument()
 				expect(screen.getByText('Blocks')).toBeInTheDocument()
 				expect(screen.getByText('Cases')).toBeInTheDocument()
 			})
@@ -525,9 +519,9 @@ describe('LearnPage', () => {
 			it('renders stat cards with correct structure', () => {
 				render(<LearnPage />)
 
-				// Check that all stat values are present
+				// Check that all stat values are present - may appear multiple times due to table view
 				const statCards = screen.getAllByText(/^(A1|15|2|3)$/)
-				expect(statCards).toHaveLength(4)
+				expect(statCards.length).toBeGreaterThanOrEqual(4)
 			})
 		})
 
@@ -535,8 +529,13 @@ describe('LearnPage', () => {
 			it('renders ViewToggle with correct props', () => {
 				render(<LearnPage />)
 
-				expect(screen.getByTestId('view-toggle')).toBeInTheDocument()
-				expect(screen.getByText('Table (table)')).toBeInTheDocument()
+				// Check that both view buttons are present
+				expect(
+					screen.getByRole('button', {name: /Table View/i})
+				).toBeInTheDocument()
+				expect(
+					screen.getByRole('button', {name: /JSON View/i})
+				).toBeInTheDocument()
 			})
 
 			it('renders start exercise button with correct styling and content', () => {
@@ -562,15 +561,18 @@ describe('LearnPage', () => {
 			it('renders all tags correctly', () => {
 				render(<LearnPage />)
 
-				expect(screen.getByText('#verbs')).toBeInTheDocument()
-				expect(screen.getByText('#present-tense')).toBeInTheDocument()
-				expect(screen.getByText('#essential')).toBeInTheDocument()
+				// Tags appear in both header and table view
+				expect(screen.getAllByText('#verbs').length).toBeGreaterThan(0)
+				expect(screen.getAllByText('#present-tense').length).toBeGreaterThan(0)
+				expect(screen.getAllByText('#essential').length).toBeGreaterThan(0)
 			})
 
 			it('applies correct styling to tags', () => {
 				render(<LearnPage />)
 
-				const verbsTag = screen.getByText('#verbs')
+				// Get the first occurrence (header version)
+				const verbsTags = screen.getAllByText('#verbs')
+				const verbsTag = verbsTags[0]
 				expect(verbsTag).toHaveClass(
 					'inline-flex',
 					'items-center',

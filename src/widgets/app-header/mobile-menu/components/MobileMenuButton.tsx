@@ -25,7 +25,7 @@ export function MobileMenuButton({
 					? t(mobileMenuButtonTranslations.close)
 					: t(mobileMenuButtonTranslations.menu)
 			}
-			className='flex items-center justify-center rounded-lg border border-gray-300 bg-white p-2 md:hidden dark:border-gray-600 dark:bg-gray-800'
+			className='flex cursor-pointer items-center justify-center rounded-lg border border-gray-300 bg-white p-2 md:hidden dark:border-gray-600 dark:bg-gray-800'
 			initial={{opacity: 0, scale: 0.9}}
 			onClick={onClick}
 			transition={{delay: 0.3}}

@@ -54,12 +54,12 @@ async function accelerateTimers(page: Page) {
 	})
 }
 
-async function navigateToFirstExercise(page: Page) {
+async function navigateToVerbsBeExercise(page: Page) {
 	const exerciseLibrary = new ExerciseLibrary(page)
 	await exerciseLibrary.goto()
 	await accelerateTimers(page)
 	await exerciseLibrary.expectPageLoaded()
-	await exerciseLibrary.startFirstExercise()
+	await exerciseLibrary.startExerciseById('verbs-be')
 }
 
 async function completeExerciseTest(page: Page): Promise<void> {
@@ -121,7 +121,7 @@ async function completeVerbsHaveExercise(page: Page): Promise<void> {
 
 test.describe('Word-form exercise flow', () => {
 	test('loads exercise and auto-advance is enabled', async ({page}) => {
-		await navigateToFirstExercise(page)
+		await navigateToVerbsBeExercise(page)
 
 		const exercisePage = new ExercisePage(page)
 		await expect(page).toHaveURL(ROUTES.exerciseVerbsBe)
@@ -130,7 +130,7 @@ test.describe('Word-form exercise flow', () => {
 	})
 
 	test('handles correct and incorrect answers', async ({page}) => {
-		await navigateToFirstExercise(page)
+		await navigateToVerbsBeExercise(page)
 
 		const exercisePage = new ExercisePage(page)
 
@@ -153,7 +153,7 @@ test.describe('Word-form exercise flow', () => {
 			test.skip()
 		}
 
-		await navigateToFirstExercise(page)
+		await navigateToVerbsBeExercise(page)
 		await completeExerciseTest(page)
 	})
 })
@@ -174,7 +174,7 @@ test.describe('Alternative word-form exercise', () => {
 		await exerciseLibrary.goto()
 		await accelerateTimers(page)
 		await exerciseLibrary.expectPageLoaded()
-		await exerciseLibrary.startSecondExercise()
+		await exerciseLibrary.startExerciseById('verbs-have')
 
 		await expect(page).toHaveURL(ROUTES.exerciseVerbsHave)
 		await exercisePage.expectPageLoaded()

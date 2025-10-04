@@ -1,8 +1,11 @@
 import {useCallback, useEffect, useState} from 'react'
 import {useNavigate, useParams} from 'react-router'
-import type {WordFormExercise} from '@/entities/exercise'
-import {useExercise} from '@/entities/exercise'
-import {JsonView, TableView, ViewToggle} from '@/features/learn-view'
+import {getExerciseLearnView, useExercise} from '@/entities/exercise'
+// Import exercise types to trigger auto-registration
+import '@/features/word-form'
+import '@/features/flashcard'
+import '@/features/multiple-choice'
+import {ViewToggle} from '@/features/word-form'
 import {useLayout} from '@/shared/lib'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {UI_LANGUAGES, USER_LANGUAGES, useSettingsStore} from '@/shared/model'
@@ -48,7 +51,10 @@ export function LearnPage() {
 		return <LoadingOrError {...errorProps} />
 	}
 
-	if (exercise.type !== 'word-form') {
+	// Get learn view component from factory
+	const LearnView = getExerciseLearnView(exercise.type)
+
+	if (!LearnView) {
 		return (
 			<UnsupportedExerciseNotice
 				exerciseType={exercise.type}
@@ -61,6 +67,7 @@ export function LearnPage() {
 	return (
 		<LearnPageContent
 			exercise={exercise}
+			learnViewComponent={LearnView}
 			onBack={handleBack}
 			onStart={handleStartExercise}
 			onViewModeChange={setViewMode}
@@ -107,7 +114,13 @@ function UnsupportedExerciseNotice({
 }
 
 interface LearnPageContentProps {
-	readonly exercise: WordFormExercise
+	// Use any for exercise since we're dealing with different exercise types
+	// biome-ignore lint/suspicious/noExplicitAny: Multi-type exercise support requires flexible typing
+	readonly exercise: any
+	readonly learnViewComponent: React.ComponentType<{
+		exercise: unknown
+		viewMode: ViewMode
+	}>
 	readonly onBack: () => void
 	readonly onStart: () => void
 	readonly onViewModeChange: (mode: ViewMode) => void
@@ -117,6 +130,7 @@ interface LearnPageContentProps {
 
 function LearnPageContent({
 	exercise,
+	learnViewComponent: LearnViewComponent,
 	onBack,
 	onStart,
 	onViewModeChange,
@@ -139,11 +153,7 @@ function LearnPageContent({
 				<ExerciseTags t={t} tags={exercise.tags ?? []} />
 				<CurrentSettings t={t} />
 				<section className='mt-10 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-xl dark:border-gray-800 dark:bg-gray-900'>
-					{viewMode === 'table' ? (
-						<TableView exercise={exercise} />
-					) : (
-						<JsonView exercise={exercise} />
-					)}
+					<LearnViewComponent exercise={exercise} viewMode={viewMode} />
 				</section>
 			</main>
 		</div>
@@ -151,7 +161,9 @@ function LearnPageContent({
 }
 
 interface LearnPageHeroProps {
-	readonly exercise: WordFormExercise
+	// Use any for exercise since we're dealing with different exercise types
+	// biome-ignore lint/suspicious/noExplicitAny: Multi-type exercise support requires flexible typing
+	readonly exercise: any
 	readonly onBack: () => void
 	readonly t: LearnPageTranslator
 }
@@ -184,15 +196,75 @@ function LearnPageHero({exercise, onBack, t}: LearnPageHeroProps) {
 }
 
 interface ExerciseStatsProps {
-	readonly exercise: WordFormExercise
+	// Use any for exercise since we're dealing with different exercise types
+	// biome-ignore lint/suspicious/noExplicitAny: Multi-type exercise support requires flexible typing
+	readonly exercise: any
 	readonly t: LearnPageTranslator
 }
 
+/**
+ * Helper to detect exercise structure and extract stats
+ */
+function getExerciseStats(exercise: {
+	type: string
+	blocks?: {cases: unknown[]}[]
+	cards?: unknown[]
+}): {
+	primaryCount: number
+	primaryLabel: 'blocks' | 'cases' | 'cards' | 'items'
+	secondaryCount: number | null
+	secondaryLabel: 'blocks' | 'cases' | 'cards' | 'items' | null
+} {
+	// Word-form exercises have blocks with cases
+	if (exercise.type === 'word-form' && exercise.blocks) {
+		const totalCases = exercise.blocks.reduce(
+			(total: number, block) => total + block.cases.length,
+			0
+		)
+		return {
+			primaryCount: exercise.blocks.length,
+			primaryLabel: 'blocks',
+			secondaryCount: totalCases,
+			secondaryLabel: 'cases'
+		}
+	}
+
+	// Flashcard exercises have cards
+	if (exercise.type === 'flashcard' && exercise.cards) {
+		return {
+			primaryCount: exercise.cards.length,
+			primaryLabel: 'cards',
+			secondaryCount: null,
+			secondaryLabel: null
+		}
+	}
+
+	// Fallback for unknown types
+	return {
+		primaryCount: 0,
+		primaryLabel: 'items',
+		secondaryCount: null,
+		secondaryLabel: null
+	}
+}
+
+/**
+ * Map stats label to translation key
+ */
+function getTranslationKey(
+	label: 'blocks' | 'cases' | 'cards' | 'items' | null
+): string | null {
+	if (label === 'blocks') return learnPageTranslations['exercise.blocks']
+	if (label === 'cases') return learnPageTranslations['exercise.cases']
+	if (label === 'cards') return learnPageTranslations['exercise.cards']
+	if (label === 'items') return learnPageTranslations['exercise.items']
+	return null
+}
+
 function ExerciseStats({exercise, t}: ExerciseStatsProps) {
-	const totalCases = exercise.blocks.reduce(
-		(total, block) => total + block.cases.length,
-		0
-	)
+	const stats = getExerciseStats(exercise)
+	const primaryKey = getTranslationKey(stats.primaryLabel)
+	const secondaryKey = getTranslationKey(stats.secondaryLabel)
 
 	return (
 		<dl className='mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
@@ -200,18 +272,12 @@ function ExerciseStats({exercise, t}: ExerciseStatsProps) {
 				label={t(learnPageTranslations['exercise.difficulty'])}
 				value={exercise.difficulty.toUpperCase()}
 			/>
-			<StatCard
-				label={t(learnPageTranslations['exercise.minutes'])}
-				value={`${exercise.estimatedTimeMinutes}`}
-			/>
-			<StatCard
-				label={t(learnPageTranslations['exercise.blocks'])}
-				value={`${exercise.blocks.length}`}
-			/>
-			<StatCard
-				label={t(learnPageTranslations['exercise.cases'])}
-				value={`${totalCases}`}
-			/>
+			{primaryKey && (
+				<StatCard label={t(primaryKey)} value={`${stats.primaryCount}`} />
+			)}
+			{stats.secondaryCount !== null && secondaryKey && (
+				<StatCard label={t(secondaryKey)} value={`${stats.secondaryCount}`} />
+			)}
 		</dl>
 	)
 }

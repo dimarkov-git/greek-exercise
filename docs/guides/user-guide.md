@@ -3,11 +3,14 @@
 ## Key features
 
 - Interactive Greek language exercises with instant feedback
+- **Flashcard system with spaced repetition (SRS)** for vocabulary memorization
+- Word-form exercises for grammar practice
 - Multilingual interface (English, Russian, Greek)
 - Custom exercise creation and management
 - Hint system with localized translations
 - Responsive design for desktop and mobile
 - Dark/light theme support
+- Progress tracking with IndexedDB storage
 
 ---
 
@@ -486,6 +489,48 @@
 2. **Language Setup**: Select UI and hints languages
 3. **Settings Persistence**: Automatic saving across sessions
 4. **Consistent Experience**: Settings applied across all pages
+
+---
+
+## Exercise types
+
+### Flashcard exercises
+
+**Purpose**: Vocabulary memorization using spaced repetition system (SRS)
+
+**Features**:
+- **Spaced Repetition (SM-2 Algorithm)**: Cards appear at optimal intervals based on your performance
+- **Quality Ratings**: Rate each card from "Again" (1) to "Easy" (4)
+- **Progress Tracking**: IndexedDB storage tracks review history and card intervals
+- **Interactive Cards**: Click to flip between front (term) and back (definition)
+- **Hints**: Localized hints available in multiple languages
+- **Statistics**: View cards due today, new cards, and review progress
+
+**How to use**:
+1. Select a flashcard exercise from the library
+2. Review the front of the card (Greek term)
+3. Click to reveal the back (translation/definition)
+4. Rate your recall: Again / Hard / Good / Easy
+5. Continue until all due cards are reviewed
+
+**SRS Settings** (configurable per exercise):
+- New cards per day: Controls learning pace
+- Reviews per day: Maximum daily review limit
+- Graduating interval: Days before card moves to review state
+- Easy interval: Initial interval for cards marked "easy"
+
+### Word-form exercises
+
+**Purpose**: Grammar practice with verb conjugations and noun declensions
+
+**Features**:
+- Interactive input fields for Greek text
+- Instant feedback on correct/incorrect answers
+- Hint system with grammatical context
+- Progress tracking and accuracy metrics
+- Keyboard navigation support
+
+---
 
 This documentation provides a comprehensive overview of the Learn Greek application's functionality, architecture, and
 user experience patterns. The application demonstrates modern web development practices with a focus on accessibility,

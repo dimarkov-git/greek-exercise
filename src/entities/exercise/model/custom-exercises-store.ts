@@ -1,17 +1,22 @@
 import {create} from 'zustand'
 import {persist} from 'zustand/middleware'
-import type {WordFormExerciseJSON} from '@/entities/exercise'
+import type {
+	FlashcardExerciseJSON,
+	WordFormExerciseJSON
+} from '@/entities/exercise'
 
 const STORAGE_KEY = 'greek-exercise-custom-exercises'
 
+export type CustomExerciseJSON = WordFormExerciseJSON | FlashcardExerciseJSON
+
 export interface CustomExerciseRecord {
-	readonly exercise: WordFormExerciseJSON
+	readonly exercise: CustomExerciseJSON
 	readonly updatedAt: number
 }
 
 export interface CustomExercisesState {
 	readonly records: Record<string, CustomExerciseRecord>
-	readonly saveExercise: (exercise: WordFormExerciseJSON) => void
+	readonly saveExercise: (exercise: CustomExerciseJSON) => void
 	readonly deleteExercise: (id: string) => void
 	readonly clearExercises: () => void
 }
@@ -24,14 +29,14 @@ const sortByUpdatedAtDesc = (
 let cachedRecordsReference: CustomExercisesState['records'] | null = null
 let cachedList: readonly CustomExerciseRecord[] = []
 let cachedExercisesReference: readonly CustomExerciseRecord[] | null = null
-let cachedExercises: readonly WordFormExerciseJSON[] = []
+let cachedExercises: readonly CustomExerciseJSON[] = []
 let lastUpdatedTimestamp = 0
 
 export const useCustomExercisesStore = create<CustomExercisesState>()(
 	persist(
 		set => ({
 			records: {},
-			saveExercise: (exercise: WordFormExerciseJSON) =>
+			saveExercise: (exercise: CustomExerciseJSON) =>
 				set(state => {
 					const now = Date.now()
 					const nextTimestamp =
@@ -82,7 +87,7 @@ export function selectCustomExerciseList(
 
 export function selectCustomExercises(
 	state: CustomExercisesState
-): readonly WordFormExerciseJSON[] {
+): readonly CustomExerciseJSON[] {
 	const list = selectCustomExerciseList(state)
 
 	if (list === cachedExercisesReference) {

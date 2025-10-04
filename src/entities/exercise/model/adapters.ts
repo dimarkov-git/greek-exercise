@@ -1,6 +1,11 @@
 import type {
 	ExerciseMetadataDto,
 	ExercisesListDto,
+	FlashCardDto,
+	FlashcardExerciseDto,
+	MultipleChoiceExerciseDto,
+	MultipleChoiceOptionDto,
+	MultipleChoiceQuestionDto,
 	WordFormBlockDto,
 	WordFormCaseDto,
 	WordFormExerciseDto
@@ -10,8 +15,12 @@ import type {
 	ExerciseLibraryViewModel,
 	ExerciseSource,
 	ExerciseSummary,
+	FlashcardExerciseWithDefaults,
+	MultipleChoiceExerciseWithDefaults,
 	WordFormExerciseWithDefaults
 } from './domain-types'
+import type {FlashCard, SRSSettings} from './flashcard-types'
+import {DEFAULT_SRS_SETTINGS} from './flashcard-types'
 import type {
 	ExerciseMetadata,
 	ExerciseSettings,
@@ -151,6 +160,23 @@ function collectUniqueLanguages(exercises: ExerciseSummary[]): Language[] {
 	return LANGUAGE_ORDER.filter(language => languages.has(language))
 }
 
+function collectUniqueTypes(
+	exercises: ExerciseSummary[]
+): ExerciseMetadata['type'][] {
+	const types = new Set<ExerciseMetadata['type']>()
+
+	for (const exercise of exercises) {
+		types.add(exercise.type)
+	}
+
+	const TypeOrder: ExerciseMetadata['type'][] = [
+		'word-form',
+		'multiple-choice',
+		'flashcard'
+	]
+	return TypeOrder.filter(type => types.has(type))
+}
+
 export function createExerciseLibraryViewModel(
 	metadataList: ExercisesListDto
 ): ExerciseLibraryViewModel {
@@ -162,7 +188,8 @@ export function createExerciseLibraryViewModel(
 		filterOptions: {
 			tags: collectUniqueTags(exercises),
 			difficulties: collectUniqueDifficulties(exercises),
-			languages: collectUniqueLanguages(exercises)
+			languages: collectUniqueLanguages(exercises),
+			types: collectUniqueTypes(exercises)
 		},
 		totals: {
 			total: exercises.length,
@@ -226,9 +253,148 @@ export function toWordFormExerciseWithDefaults(
 		description: exercise.description,
 		tags: normalizedTags,
 		difficulty: exercise.difficulty,
-		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
 		settings,
 		blocks: exercise.blocks.map(normalizeWordFormBlock),
+		...(titleI18n ? {titleI18n} : {}),
+		...(descriptionI18n ? {descriptionI18n} : {})
+	}
+
+	return normalizedExercise
+}
+
+function normalizeFlashCard(cardDto: FlashCardDto): FlashCard {
+	const frontHintI18n = normalizeI18nRecord(cardDto.frontHintI18n)
+	const backHintI18n = normalizeI18nRecord(cardDto.backHintI18n)
+	const additionalHintI18n = normalizeI18nRecord(cardDto.additionalHintI18n)
+
+	return {
+		id: cardDto.id,
+		front: cardDto.front,
+		back: cardDto.back,
+		...(frontHintI18n ? {frontHintI18n} : {}),
+		...(backHintI18n ? {backHintI18n} : {}),
+		...(cardDto.additionalHint ? {additionalHint: cardDto.additionalHint} : {}),
+		...(additionalHintI18n ? {additionalHintI18n} : {}),
+		...(cardDto.tags ? {tags: sortTags(cardDto.tags)} : {})
+	}
+}
+
+export function toFlashcardExerciseWithDefaults(
+	exercise: FlashcardExerciseDto
+): FlashcardExerciseWithDefaults {
+	const normalizedTags = Array.isArray(exercise.tags)
+		? sortTags(exercise.tags)
+		: []
+
+	const settings: ExerciseSettings = {
+		autoAdvance:
+			exercise.settings?.autoAdvance ?? DEFAULT_EXERCISE_SETTINGS.autoAdvance,
+		autoAdvanceDelayMs:
+			exercise.settings?.autoAdvanceDelayMs ??
+			DEFAULT_EXERCISE_SETTINGS.autoAdvanceDelayMs,
+		allowSkip:
+			exercise.settings?.allowSkip ?? DEFAULT_EXERCISE_SETTINGS.allowSkip,
+		shuffleCases:
+			exercise.settings?.shuffleCases ?? DEFAULT_EXERCISE_SETTINGS.shuffleCases
+	}
+
+	const srsSettings: SRSSettings = {
+		newCardsPerDay:
+			exercise.srsSettings?.newCardsPerDay ??
+			DEFAULT_SRS_SETTINGS.newCardsPerDay,
+		reviewsPerDay:
+			exercise.srsSettings?.reviewsPerDay ?? DEFAULT_SRS_SETTINGS.reviewsPerDay,
+		graduatingInterval:
+			exercise.srsSettings?.graduatingInterval ??
+			DEFAULT_SRS_SETTINGS.graduatingInterval,
+		easyInterval:
+			exercise.srsSettings?.easyInterval ?? DEFAULT_SRS_SETTINGS.easyInterval
+	}
+
+	const titleI18n = normalizeI18nRecord(exercise.titleI18n)
+	const descriptionI18n = normalizeI18nRecord(exercise.descriptionI18n)
+
+	const normalizedExercise: FlashcardExerciseWithDefaults = {
+		enabled: exercise.enabled,
+		id: exercise.id,
+		type: exercise.type,
+		language: exercise.language,
+		title: exercise.title,
+		description: exercise.description,
+		tags: normalizedTags,
+		difficulty: exercise.difficulty,
+		settings,
+		srsSettings,
+		cards: exercise.cards.map(normalizeFlashCard),
+		...(titleI18n ? {titleI18n} : {}),
+		...(descriptionI18n ? {descriptionI18n} : {})
+	}
+
+	return normalizedExercise
+}
+
+function normalizeMultipleChoiceOption(
+	optionDto: MultipleChoiceOptionDto
+): import('./multiple-choice-types').MultipleChoiceOption {
+	const textI18n = normalizeI18nRecord(optionDto.textI18n)
+
+	return {
+		id: optionDto.id,
+		text: optionDto.text,
+		...(textI18n ? {textI18n} : {})
+	}
+}
+
+function normalizeMultipleChoiceQuestion(
+	questionDto: MultipleChoiceQuestionDto
+): import('./multiple-choice-types').MultipleChoiceQuestion {
+	const textI18n = normalizeI18nRecord(questionDto.textI18n)
+	const hintI18n = normalizeI18nRecord(questionDto.hintI18n)
+
+	return {
+		id: questionDto.id,
+		text: questionDto.text,
+		options: questionDto.options.map(normalizeMultipleChoiceOption),
+		correctOptionId: questionDto.correctOptionId,
+		...(textI18n ? {textI18n} : {}),
+		...(questionDto.hint ? {hint: questionDto.hint} : {}),
+		...(hintI18n ? {hintI18n} : {})
+	}
+}
+
+export function toMultipleChoiceExerciseWithDefaults(
+	exercise: MultipleChoiceExerciseDto
+): MultipleChoiceExerciseWithDefaults {
+	const normalizedTags = Array.isArray(exercise.tags)
+		? sortTags(exercise.tags)
+		: []
+
+	const settings: import('@/entities/exercise').ExerciseSettings = {
+		autoAdvance:
+			exercise.settings?.autoAdvance ?? DEFAULT_EXERCISE_SETTINGS.autoAdvance,
+		autoAdvanceDelayMs:
+			exercise.settings?.autoAdvanceDelayMs ??
+			DEFAULT_EXERCISE_SETTINGS.autoAdvanceDelayMs,
+		allowSkip:
+			exercise.settings?.allowSkip ?? DEFAULT_EXERCISE_SETTINGS.allowSkip,
+		shuffleCases:
+			exercise.settings?.shuffleCases ?? DEFAULT_EXERCISE_SETTINGS.shuffleCases
+	}
+
+	const titleI18n = normalizeI18nRecord(exercise.titleI18n)
+	const descriptionI18n = normalizeI18nRecord(exercise.descriptionI18n)
+
+	const normalizedExercise: MultipleChoiceExerciseWithDefaults = {
+		enabled: exercise.enabled,
+		id: exercise.id,
+		type: exercise.type,
+		language: exercise.language,
+		title: exercise.title,
+		description: exercise.description,
+		tags: normalizedTags,
+		difficulty: exercise.difficulty,
+		settings,
+		questions: exercise.questions.map(normalizeMultipleChoiceQuestion),
 		...(titleI18n ? {titleI18n} : {}),
 		...(descriptionI18n ? {descriptionI18n} : {})
 	}
