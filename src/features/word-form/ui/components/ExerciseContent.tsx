@@ -158,7 +158,9 @@ export function ExerciseContent({
 							correctAnswers={currentCase.correct}
 							isCorrect={isCorrect}
 							status={status}
-							userAnswer={originalUserAnswer || userAnswer}
+							userAnswer={
+								isCorrect ? userAnswer : originalUserAnswer || userAnswer
+							}
 						/>
 					)}
 				</AnimatePresence>

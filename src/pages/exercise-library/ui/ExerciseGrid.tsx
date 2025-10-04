@@ -135,7 +135,8 @@ function ExerciseCard({exercise, index, t, translations}: ExerciseCardProps) {
 						{exercise.type === 'word-form' && (
 							<>
 								<span>
-									{t(translations['ui.booksEmoji'])} {t(translations['exercise.blocks'])}
+									{t(translations['ui.booksEmoji'])}{' '}
+									{t(translations['exercise.blocks'])}
 									{t(translations['ui.colon'])} {exercise.totalBlocks}
 								</span>
 								<span>
@@ -154,7 +155,8 @@ function ExerciseCard({exercise, index, t, translations}: ExerciseCardProps) {
 						)}
 						{exercise.type === 'flashcard' && (
 							<span>
-								{t(translations['ui.cardEmoji'])} {t(translations['exercise.cards'])}
+								{t(translations['ui.cardEmoji'])}{' '}
+								{t(translations['exercise.cards'])}
 								{t(translations['ui.colon'])} {exercise.totalCases}
 							</span>
 						)}
