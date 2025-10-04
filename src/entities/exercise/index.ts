@@ -47,11 +47,14 @@ export {
 } from './model/adapters'
 // Custom exercise utilities
 export {
+	customExerciseJsonToMetadata,
+	flashcardExerciseJsonToMetadata,
 	wordFormExerciseJsonToExercise,
 	wordFormExerciseJsonToMetadata
 } from './model/custom'
 // Custom exercises store
 export {
+	type CustomExerciseJSON,
 	type CustomExerciseRecord,
 	type CustomExercisesState,
 	selectCustomExerciseList,
@@ -104,6 +107,7 @@ export type {
 	CardState,
 	FlashCard,
 	FlashcardExercise,
+	FlashcardExerciseJSON,
 	FlashcardExerciseResult,
 	FlashcardExerciseStats,
 	FlashcardReviewResult,
@@ -115,6 +119,7 @@ export type {
 } from './model/flashcard-types'
 export {
 	DEFAULT_SRS_SETTINGS,
+	flashcardExerciseToJSON,
 	getSRSSettings,
 	QUALITY_LABELS
 } from './model/flashcard-types'

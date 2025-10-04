@@ -104,11 +104,9 @@ test.describe('Home Page - Navigation', () => {
 		await homePage.clickExercisesCard()
 		await expect(page).toHaveURL(ROUTES.exercises)
 
-		// Click logo to go back home
-		await page
-			.getByRole('link', {name: /ΜΕ.*Learn Greek/i})
-			.first()
-			.click()
+		// Click logo to go back home (works on both mobile and desktop)
+		const logo = page.getByRole('link', {name: /ΜΕ/i}).first()
+		await logo.click()
 		await expect(page).toHaveURL(ROUTES.home)
 	})
 
@@ -117,19 +115,35 @@ test.describe('Home Page - Navigation', () => {
 
 		await homePage.goto()
 
-		// Click Library in header
-		await page
-			.getByRole('navigation')
-			.getByRole('link', {name: /library/i})
-			.click()
-		await expect(page).toHaveURL(ROUTES.exercises)
+		const viewport = page.viewportSize()
+		const isMobile = viewport ? viewport.width < 768 : false
 
-		// Navigate back
-		await page
-			.getByRole('navigation')
-			.getByRole('link', {name: /home/i})
-			.click()
-		await expect(page).toHaveURL(ROUTES.home)
+		if (isMobile) {
+			// Mobile: use mobile menu
+			await homePage.openMobileMenu()
+			const mobileMenu = page.locator('[data-testid="mobile-menu"]')
+			await mobileMenu.getByRole('link', {name: /library/i}).click()
+			await expect(page).toHaveURL(ROUTES.exercises)
+
+			// Navigate back via mobile menu
+			await homePage.openMobileMenu()
+			await mobileMenu.getByRole('link', {name: /home/i}).click()
+			await expect(page).toHaveURL(ROUTES.home)
+		} else {
+			// Desktop: use header navigation
+			await page
+				.getByRole('navigation')
+				.getByRole('link', {name: /library/i})
+				.click()
+			await expect(page).toHaveURL(ROUTES.exercises)
+
+			// Navigate back
+			await page
+				.getByRole('navigation')
+				.getByRole('link', {name: /home/i})
+				.click()
+			await expect(page).toHaveURL(ROUTES.home)
+		}
 	})
 })
 
@@ -163,8 +177,20 @@ test.describe('Home Page - Theme Toggle', () => {
 		await page.reload()
 		await page.waitForLoadState('networkidle')
 
-		// Theme toggle should still be present
-		await expect(homePage.themeToggle).toBeVisible()
+		const viewport = page.viewportSize()
+		const isMobile = viewport ? viewport.width < 768 : false
+
+		if (isMobile) {
+			// On mobile, verify we can open menu and see theme toggle
+			await homePage.openMobileMenu()
+			const mobileThemeToggle = page
+				.locator('[data-testid="mobile-menu"]')
+				.getByTestId('theme-toggle')
+			await expect(mobileThemeToggle).toBeVisible()
+		} else {
+			// On desktop, theme toggle should be visible in header
+			await expect(homePage.themeToggle).toBeVisible()
+		}
 	})
 
 	test('should display all elements correctly in both themes', async ({
@@ -320,11 +346,7 @@ test.describe('Home Page - Accessibility', () => {
 			.exclude('[data-testid="mobile-menu"]') // Exclude mobile menu when closed
 			.analyze()
 
-		// Log violations if any
-		if (accessibilityScanResults.violations.length > 0) {
-		}
-
-		expect(accessibilityScanResults.violations.length).toBe(0)
+		expect(accessibilityScanResults.violations).toEqual([])
 	})
 
 	test('should have proper cursor pointer on interactive elements', async ({
@@ -333,34 +355,52 @@ test.describe('Home Page - Accessibility', () => {
 		const homePage = new HomePage(page)
 		await homePage.goto()
 
-		// Check cursor for various elements
-		const logo = page.getByRole('link', {name: /ΜΕ.*Learn Greek/i}).first()
+		const viewport = page.viewportSize()
+		const isMobile = viewport ? viewport.width < 768 : false
+
+		// Check cursor for logo (works on both mobile and desktop)
+		const logo = page.getByRole('link', {name: /ΜΕ/i}).first()
 		await expect(logo).toHaveCSS('cursor', 'pointer')
 
-		const themeToggle = homePage.themeToggle
-		await expect(themeToggle).toHaveCSS('cursor', 'pointer')
+		if (isMobile) {
+			// On mobile, check menu button
+			const menuButton = page.getByRole('button', {name: /menu/i}).first()
+			await expect(menuButton).toHaveCSS('cursor', 'pointer')
+		} else {
+			// On desktop, check theme toggle and language dropdown
+			const themeToggle = homePage.themeToggle
+			await expect(themeToggle).toHaveCSS('cursor', 'pointer')
 
-		const languageDropdown = homePage.uiLanguageDropdown
-		await expect(languageDropdown).toHaveCSS('cursor', 'pointer')
+			const languageDropdown = homePage.uiLanguageDropdown
+			await expect(languageDropdown).toHaveCSS('cursor', 'pointer')
+		}
 	})
 
 	test('should support keyboard navigation', async ({page}) => {
 		const homePage = new HomePage(page)
 		await homePage.goto()
 
+		const viewport = page.viewportSize()
+		const isMobile = viewport ? viewport.width < 768 : false
+
 		// Tab through interactive elements
 		await page.keyboard.press('Tab')
-		await expect(
-			page.getByRole('link', {name: /ΜΕ.*Learn Greek/i}).first()
-		).toBeFocused()
+		await expect(page.getByRole('link', {name: /ΜΕ/i}).first()).toBeFocused()
 
-		// Continue tabbing
-		await page.keyboard.press('Tab')
-		await page.keyboard.press('Tab')
-		await page.keyboard.press('Tab')
+		if (isMobile) {
+			// On mobile, tab to menu button
+			await page.keyboard.press('Tab')
+			const menuButton = page.getByRole('button', {name: /menu/i}).first()
+			await expect(menuButton).toBeFocused()
+		} else {
+			// Continue tabbing on desktop
+			await page.keyboard.press('Tab')
+			await page.keyboard.press('Tab')
+			await page.keyboard.press('Tab')
 
-		// Should be able to activate with Enter
-		await page.keyboard.press('Enter')
+			// Should be able to activate with Enter
+			await page.keyboard.press('Enter')
+		}
 	})
 
 	test('should have visible focus indicators', async ({page}) => {

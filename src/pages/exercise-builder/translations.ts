@@ -10,6 +10,7 @@ export const exerciseBuilderPageTranslations = {
 	'builder.typeSectionTitle': 'builder.typeSectionTitle',
 	'builder.typeHelp': 'builder.typeHelp',
 	'builder.wordFormType': 'builder.wordFormType',
+	'builder.flashcardType': 'builder.flashcardType',
 	'builder.jsonEditorHelp': 'builder.jsonEditorHelp',
 	'builder.jsonEditorTitle': 'builder.jsonEditorTitle',
 	'builder.formatJson': 'builder.formatJson',

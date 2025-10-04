@@ -248,6 +248,26 @@ export interface FlashcardExerciseStats {
 }
 
 /**
+ * JSON serialization type for flashcard exercises
+ */
+export interface FlashcardExerciseJSON {
+	enabled: boolean
+	id: string
+	type: 'flashcard'
+	language: Language
+	title: string
+	titleI18n?: I18nText
+	description: string
+	descriptionI18n?: I18nText
+	tags: string[]
+	difficulty: Difficulty
+	estimatedTimeMinutes: number
+	settings: import('@/shared/model').ExerciseSettings
+	cards: FlashCard[]
+	srsSettings: Required<SRSSettings>
+}
+
+/**
  * Get SRS settings with defaults applied
  */
 export function getSRSSettings(
@@ -263,4 +283,41 @@ export function getSRSSettings(
 			settings?.graduatingInterval ?? DEFAULT_SRS_SETTINGS.graduatingInterval,
 		easyInterval: settings?.easyInterval ?? DEFAULT_SRS_SETTINGS.easyInterval
 	}
+}
+
+/**
+ * Convert flashcard exercise to serializable JSON
+ */
+export function flashcardExerciseToJSON(
+	exercise: FlashcardExercise
+): FlashcardExerciseJSON {
+	const result: FlashcardExerciseJSON = {
+		enabled: exercise.enabled,
+		id: exercise.id,
+		type: exercise.type,
+		language: exercise.language,
+		title: exercise.title,
+		description: exercise.description,
+		tags: exercise.tags || [],
+		difficulty: exercise.difficulty,
+		estimatedTimeMinutes: exercise.estimatedTimeMinutes,
+		settings: {
+			autoAdvance: exercise.settings?.autoAdvance ?? true,
+			autoAdvanceDelayMs: exercise.settings?.autoAdvanceDelayMs ?? 1500,
+			allowSkip: exercise.settings?.allowSkip ?? false,
+			shuffleCases: exercise.settings?.shuffleCases ?? false
+		},
+		cards: exercise.cards,
+		srsSettings: getSRSSettings(exercise)
+	}
+
+	if (exercise.titleI18n) {
+		result.titleI18n = exercise.titleI18n
+	}
+
+	if (exercise.descriptionI18n) {
+		result.descriptionI18n = exercise.descriptionI18n
+	}
+
+	return result
 }

@@ -3,13 +3,13 @@ import {useEffect, useMemo} from 'react'
 import {
 	type CustomExercisesState,
 	createExerciseLibraryViewModel,
+	customExerciseJsonToMetadata,
 	type ExerciseLibraryViewModel,
 	exerciseLibraryQueryOptions,
 	exerciseQueryOptions,
 	selectCustomExercises,
 	useCustomExercisesStore,
-	wordFormExerciseJsonToExercise,
-	wordFormExerciseJsonToMetadata
+	wordFormExerciseJsonToExercise
 } from '@/entities/exercise'
 
 /**
@@ -19,7 +19,7 @@ export function useExercises() {
 	const customExercises = useCustomExercisesStore(selectCustomExercises)
 
 	const customMetadata = useMemo(
-		() => customExercises.map(wordFormExerciseJsonToMetadata),
+		() => customExercises.map(customExerciseJsonToMetadata),
 		[customExercises]
 	)
 
@@ -87,13 +87,20 @@ export function useExercise(id: string | undefined) {
 		[id]
 	)
 	const customExerciseJson = useCustomExercisesStore(selectExercise)
-	const customExercise = useMemo(
-		() =>
-			customExerciseJson
-				? wordFormExerciseJsonToExercise(customExerciseJson)
-				: undefined,
-		[customExerciseJson]
-	)
+	const customExercise = useMemo(() => {
+		if (!customExerciseJson) {
+			return
+		}
+
+		// For custom exercises, just return them with defaults already applied from the store
+		// The store already has normalized data with defaults
+		if (customExerciseJson.type === 'word-form') {
+			return wordFormExerciseJsonToExercise(customExerciseJson)
+		}
+
+		// For flashcard and other types, the JSON is already in the correct format
+		return customExerciseJson
+	}, [customExerciseJson])
 	const queryClient = useQueryClient()
 
 	useEffect(() => {

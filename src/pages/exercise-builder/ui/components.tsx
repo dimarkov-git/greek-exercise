@@ -2,11 +2,14 @@ import {motion} from 'framer-motion'
 import type {ChangeEvent} from 'react'
 import {Link} from 'react-router'
 import type {
+	CustomExerciseJSON,
 	CustomExerciseRecord,
-	WordFormExerciseJSON,
+	FlashcardExerciseWithDefaults,
 	WordFormExerciseWithDefaults
 } from '@/entities/exercise'
+import {FlashcardLearnView} from '@/features/flashcard'
 import {TableView} from '@/features/word-form'
+import type {ExerciseType} from '@/shared/model'
 import type {BuilderSaveStatus, BuilderTranslator} from '../model/state'
 
 export function BuilderHero({t}: {readonly t: BuilderTranslator}) {
@@ -50,8 +53,8 @@ export function BuilderHero({t}: {readonly t: BuilderTranslator}) {
 }
 
 export interface TypeSelectorPanelProps {
-	readonly selectedType: 'word-form'
-	readonly onTypeChange: (type: 'word-form') => void
+	readonly selectedType: ExerciseType
+	readonly onTypeChange: (type: ExerciseType) => void
 	readonly t: BuilderTranslator
 }
 
@@ -79,11 +82,12 @@ export function TypeSelectorPanel({
 				<select
 					className='cursor-pointer rounded-full border border-gray-200 bg-white px-4 py-2 font-medium text-gray-700 text-sm shadow-sm transition focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 md:self-start md:justify-self-end dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'
 					onChange={(event: ChangeEvent<HTMLSelectElement>) =>
-						onTypeChange(event.target.value as 'word-form')
+						onTypeChange(event.target.value as ExerciseType)
 					}
 					value={selectedType}
 				>
 					<option value='word-form'>{t('builder.wordFormType')}</option>
+					<option value='flashcard'>{t('builder.flashcardType')}</option>
 				</select>
 			</div>
 			<p className='mt-4 rounded-xl bg-purple-50 p-4 text-purple-900 text-sm dark:bg-purple-900/20 dark:text-purple-200'>
@@ -226,7 +230,10 @@ export function PreviewPanel({
 	previewExercise,
 	t
 }: {
-	readonly previewExercise: WordFormExerciseWithDefaults | null
+	readonly previewExercise:
+		| WordFormExerciseWithDefaults
+		| FlashcardExerciseWithDefaults
+		| null
 	readonly t: BuilderTranslator
 }) {
 	return (
@@ -241,7 +248,12 @@ export function PreviewPanel({
 			</h2>
 			{previewExercise ? (
 				<div className='mt-4 overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800'>
-					<TableView exercise={previewExercise} />
+					{previewExercise.type === 'word-form' && (
+						<TableView exercise={previewExercise} />
+					)}
+					{previewExercise.type === 'flashcard' && (
+						<FlashcardLearnView exercise={previewExercise} viewMode='table' />
+					)}
 				</div>
 			) : (
 				<div className='mt-4 rounded-2xl border border-gray-300 border-dashed bg-gray-50 p-6 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-800/40 dark:text-gray-400'>
@@ -257,7 +269,7 @@ export interface SavedExercisesSectionProps {
 	readonly formattedSavedExercises: readonly (CustomExerciseRecord & {
 		readonly formattedDate: string
 	})[]
-	readonly onLoad: (exercise: WordFormExerciseJSON) => void
+	readonly onLoad: (exercise: CustomExerciseJSON) => void
 	readonly onDelete: (id: string) => void
 	readonly t: BuilderTranslator
 }
@@ -301,7 +313,7 @@ export function SavedExercisesSection({
 
 interface SavedExerciseCardProps {
 	readonly record: CustomExerciseRecord & {readonly formattedDate: string}
-	readonly onLoad: (exercise: WordFormExerciseJSON) => void
+	readonly onLoad: (exercise: CustomExerciseJSON) => void
 	readonly onDelete: (id: string) => void
 	readonly t: BuilderTranslator
 }

@@ -2,23 +2,31 @@ import type {ChangeEvent} from 'react'
 import {useCallback, useEffect, useMemo, useState} from 'react'
 import {type BaseIssue, safeParse} from 'valibot'
 import type {
+	CustomExerciseJSON,
 	CustomExerciseRecord,
+	FlashcardExerciseWithDefaults,
 	WordFormExerciseWithDefaults
 } from '@/entities/exercise'
 import {
 	exerciseToJSON,
+	FlashcardExerciseSchema,
+	flashcardExerciseToJSON,
 	selectCustomExerciseList,
+	toFlashcardExerciseWithDefaults,
 	toWordFormExerciseWithDefaults,
 	useCustomExercisesStore,
-	type WordFormExerciseJSON,
 	WordFormExerciseSchema
 } from '@/entities/exercise'
+import type {ExerciseType} from '@/shared/model'
 import type {exerciseBuilderPageTranslations} from '../translations'
 
 export type BuilderTranslator = (
 	entry: (typeof exerciseBuilderPageTranslations)[keyof typeof exerciseBuilderPageTranslations]
 ) => string
 export type BuilderSaveStatus = 'idle' | 'success' | 'error'
+
+type WordFormExerciseJSON = import('@/entities/exercise').WordFormExerciseJSON
+type FlashcardExerciseJSON = import('@/entities/exercise').FlashcardExerciseJSON
 
 const DEFAULT_WORD_FORM_TEMPLATE: WordFormExerciseJSON = {
 	enabled: true,
@@ -86,11 +94,101 @@ const DEFAULT_WORD_FORM_TEMPLATE: WordFormExerciseJSON = {
 	]
 }
 
-const DEFAULT_TEMPLATE_JSON = JSON.stringify(
+const DEFAULT_FLASHCARD_TEMPLATE: FlashcardExerciseJSON = {
+	enabled: true,
+	id: 'custom-flashcard-basic',
+	type: 'flashcard',
+	language: 'el',
+	title: 'Βασικά ελληνικά ουσιαστικά',
+	titleI18n: {
+		en: 'Basic Greek nouns',
+		ru: 'Базовые греческие существительные'
+	},
+	description: 'Πρακτική για βασικά ουσιαστικά',
+	descriptionI18n: {
+		en: 'Practice basic nouns',
+		ru: 'Практика базовых существительных'
+	},
+	tags: ['custom', 'nouns', 'vocabulary'],
+	difficulty: 'a1',
+	estimatedTimeMinutes: 10,
+	settings: {
+		autoAdvance: true,
+		autoAdvanceDelayMs: 1500,
+		allowSkip: false,
+		shuffleCases: true
+	},
+	cards: [
+		{
+			id: 'card-1',
+			front: 'το νερό',
+			frontHintI18n: {
+				en: 'the water',
+				ru: 'вода'
+			},
+			back: 'water',
+			backHintI18n: {
+				en: 'a liquid',
+				ru: 'жидкость'
+			}
+		},
+		{
+			id: 'card-2',
+			front: 'το ψωμί',
+			frontHintI18n: {
+				en: 'the bread',
+				ru: 'хлеб'
+			},
+			back: 'bread',
+			backHintI18n: {
+				en: 'a food',
+				ru: 'еда'
+			}
+		},
+		{
+			id: 'card-3',
+			front: 'το σπίτι',
+			frontHintI18n: {
+				en: 'the house',
+				ru: 'дом'
+			},
+			back: 'house',
+			backHintI18n: {
+				en: 'a building',
+				ru: 'здание'
+			}
+		}
+	],
+	srsSettings: {
+		newCardsPerDay: 20,
+		reviewsPerDay: 100,
+		graduatingInterval: 1,
+		easyInterval: 4
+	}
+}
+
+const DEFAULT_WORD_FORM_TEMPLATE_JSON = JSON.stringify(
 	DEFAULT_WORD_FORM_TEMPLATE,
 	null,
 	2
 )
+
+const DEFAULT_FLASHCARD_TEMPLATE_JSON = JSON.stringify(
+	DEFAULT_FLASHCARD_TEMPLATE,
+	null,
+	2
+)
+
+function getDefaultTemplateForType(type: ExerciseType): string {
+	switch (type) {
+		case 'word-form':
+			return DEFAULT_WORD_FORM_TEMPLATE_JSON
+		case 'flashcard':
+			return DEFAULT_FLASHCARD_TEMPLATE_JSON
+		default:
+			return DEFAULT_WORD_FORM_TEMPLATE_JSON
+	}
+}
 
 type RawValidationError =
 	| {kind: 'empty'}
@@ -98,51 +196,63 @@ type RawValidationError =
 	| {kind: 'schema'; message: string}
 
 interface RawValidationState {
-	readonly exercise: WordFormExerciseWithDefaults | null
+	readonly exercise:
+		| WordFormExerciseWithDefaults
+		| FlashcardExerciseWithDefaults
+		| null
 	readonly errors: readonly RawValidationError[]
 }
 
 export interface ValidationState {
-	readonly exercise: WordFormExerciseWithDefaults | null
+	readonly exercise:
+		| WordFormExerciseWithDefaults
+		| FlashcardExerciseWithDefaults
+		| null
 	readonly rawErrors: readonly RawValidationError[]
 	readonly errors: readonly string[]
 }
 
 export interface ExerciseValidationResult {
-	readonly selectedType: 'word-form'
+	readonly selectedType: ExerciseType
 	readonly jsonValue: string
 	readonly validation: ValidationState
-	readonly previewExercise: WordFormExerciseWithDefaults | null
+	readonly previewExercise:
+		| WordFormExerciseWithDefaults
+		| FlashcardExerciseWithDefaults
+		| null
 	readonly hasErrors: boolean
-	readonly handleTypeChange: (type: 'word-form') => void
+	readonly handleTypeChange: (type: ExerciseType) => void
 	readonly handleJsonChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
 	readonly handleResetTemplate: () => void
 	readonly handleFormatJson: () => void
-	readonly loadExerciseJson: (exercise: WordFormExerciseJSON) => void
+	readonly loadExerciseJson: (exercise: CustomExerciseJSON) => void
 }
 
 export interface ExercisePersistenceResult {
 	readonly saveStatus: BuilderSaveStatus
 	readonly savedExercises: readonly CustomExerciseRecord[]
 	readonly handleSaveExercise: () => void
-	readonly handleLoadExercise: (exercise: WordFormExerciseJSON) => void
+	readonly handleLoadExercise: (exercise: CustomExerciseJSON) => void
 	readonly handleDeleteExercise: (id: string) => void
 }
 
 export interface ExerciseBuilderState {
-	readonly selectedType: 'word-form'
+	readonly selectedType: ExerciseType
 	readonly jsonValue: string
 	readonly validation: ValidationState
 	readonly saveStatus: BuilderSaveStatus
 	readonly savedExercises: readonly CustomExerciseRecord[]
-	readonly previewExercise: WordFormExerciseWithDefaults | null
+	readonly previewExercise:
+		| WordFormExerciseWithDefaults
+		| FlashcardExerciseWithDefaults
+		| null
 	readonly hasErrors: boolean
-	readonly handleTypeChange: (type: 'word-form') => void
+	readonly handleTypeChange: (type: ExerciseType) => void
 	readonly handleJsonChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
 	readonly handleReset: () => void
 	readonly handleFormat: () => void
 	readonly handleSave: () => void
-	readonly handleLoadSaved: (exercise: WordFormExerciseJSON) => void
+	readonly handleLoadSaved: (exercise: CustomExerciseJSON) => void
 	readonly handleDeleteSaved: (id: string) => void
 }
 
@@ -173,28 +283,73 @@ function formatIssue(issue: BaseIssue<unknown>): string {
 	return `${prefix}${issue.message ?? 'Invalid value'}`
 }
 
-function validateExerciseJson(json: string): RawValidationState {
+function validateWordFormJson(parsed: unknown): RawValidationState {
+	const result = safeParse(WordFormExerciseSchema, parsed)
+
+	if (!result.success) {
+		const errors = result.issues.map(
+			issue =>
+				({
+					kind: 'schema',
+					message: formatIssue(issue)
+				}) as RawValidationError
+		)
+		return {exercise: null, errors}
+	}
+
+	const normalized = toWordFormExerciseWithDefaults(result.output)
+	return {exercise: normalized, errors: []}
+}
+
+function validateFlashcardJson(parsed: unknown): RawValidationState {
+	const result = safeParse(FlashcardExerciseSchema, parsed)
+
+	if (!result.success) {
+		const errors = result.issues.map(
+			issue =>
+				({
+					kind: 'schema',
+					message: formatIssue(issue)
+				}) as RawValidationError
+		)
+		return {exercise: null, errors}
+	}
+
+	const normalized = toFlashcardExerciseWithDefaults(result.output)
+	return {exercise: normalized, errors: []}
+}
+
+function validateExerciseJson(
+	json: string,
+	expectedType?: ExerciseType
+): RawValidationState {
 	if (json.trim().length === 0) {
 		return {exercise: null, errors: [{kind: 'empty'}]}
 	}
 
 	try {
 		const parsed = JSON.parse(json)
-		const result = safeParse(WordFormExerciseSchema, parsed)
+		const parsedType = parsed.type as ExerciseType | undefined
 
-		if (!result.success) {
-			const errors = result.issues.map(
-				issue =>
-					({
-						kind: 'schema',
-						message: formatIssue(issue)
-					}) as RawValidationError
-			)
-			return {exercise: null, errors}
+		// Determine which schema to use
+		const typeToValidate = expectedType || parsedType || 'word-form'
+
+		switch (typeToValidate) {
+			case 'word-form':
+				return validateWordFormJson(parsed)
+			case 'flashcard':
+				return validateFlashcardJson(parsed)
+			default:
+				return {
+					exercise: null,
+					errors: [
+						{
+							kind: 'schema',
+							message: `Unsupported exercise type: ${typeToValidate}`
+						}
+					]
+				}
 		}
-
-		const normalized = toWordFormExerciseWithDefaults(result.output)
-		return {exercise: normalized, errors: []}
 	} catch (error) {
 		const message =
 			error instanceof Error ? error.message : 'Unknown JSON parse error'
@@ -210,7 +365,10 @@ function validateExerciseJson(json: string): RawValidationState {
 	}
 }
 
-const INITIAL_RAW_VALIDATION = validateExerciseJson(DEFAULT_TEMPLATE_JSON)
+const INITIAL_RAW_VALIDATION = validateExerciseJson(
+	DEFAULT_WORD_FORM_TEMPLATE_JSON,
+	'word-form'
+)
 
 function areArraysEqual(
 	left: readonly string[],
@@ -259,8 +417,8 @@ function useValidationState(
 	}))
 
 	const applyValidation = useCallback(
-		(value: string) => {
-			const nextValidation = validateExerciseJson(value)
+		(value: string, expectedType?: ExerciseType) => {
+			const nextValidation = validateExerciseJson(value, expectedType)
 			setValidation({
 				exercise: nextValidation.exercise,
 				rawErrors: nextValidation.errors,
@@ -295,36 +453,40 @@ function useValidationSync(
 	}, [formatErrors, setValidation])
 }
 
-function useBuilderJsonControls(applyValidation: (value: string) => void) {
-	const [selectedType, setSelectedType] = useState<'word-form'>('word-form')
-	const [jsonValue, setJsonValue] = useState(DEFAULT_TEMPLATE_JSON)
+function useBuilderJsonControls(
+	applyValidation: (value: string, expectedType?: ExerciseType) => void
+) {
+	const [selectedType, setSelectedType] = useState<ExerciseType>('word-form')
+	const [jsonValue, setJsonValue] = useState(DEFAULT_WORD_FORM_TEMPLATE_JSON)
 
 	const setAndValidate = useCallback(
-		(value: string) => {
+		(value: string, type?: ExerciseType) => {
 			setJsonValue(value)
-			applyValidation(value)
+			applyValidation(value, type)
 		},
 		[applyValidation]
 	)
 
 	const handleTypeChange = useCallback(
-		(type: 'word-form') => {
+		(type: ExerciseType) => {
 			setSelectedType(type)
-			setAndValidate(DEFAULT_TEMPLATE_JSON)
+			const template = getDefaultTemplateForType(type)
+			setAndValidate(template, type)
 		},
 		[setAndValidate]
 	)
 
 	const handleJsonChange = useCallback(
 		(event: ChangeEvent<HTMLTextAreaElement>) => {
-			setAndValidate(event.target.value)
+			setAndValidate(event.target.value, selectedType)
 		},
-		[setAndValidate]
+		[setAndValidate, selectedType]
 	)
 
 	const handleResetTemplate = useCallback(() => {
-		setAndValidate(DEFAULT_TEMPLATE_JSON)
-	}, [setAndValidate])
+		const template = getDefaultTemplateForType(selectedType)
+		setAndValidate(template, selectedType)
+	}, [setAndValidate, selectedType])
 
 	return {
 		selectedType,
@@ -332,8 +494,22 @@ function useBuilderJsonControls(applyValidation: (value: string) => void) {
 		handleTypeChange,
 		handleJsonChange,
 		handleResetTemplate,
-		setJsonValueDirect: setAndValidate
+		setJsonValueDirect: (value: string) => setAndValidate(value, selectedType)
 	}
+}
+
+function formatExerciseJson(
+	exercise: WordFormExerciseWithDefaults | FlashcardExerciseWithDefaults
+): string {
+	if (exercise.type === 'word-form') {
+		return JSON.stringify(exerciseToJSON(exercise), null, 2)
+	}
+
+	if (exercise.type === 'flashcard') {
+		return JSON.stringify(flashcardExerciseToJSON(exercise), null, 2)
+	}
+
+	return JSON.stringify(exercise, null, 2)
 }
 
 function useExerciseValidation(t: BuilderTranslator): ExerciseValidationResult {
@@ -356,18 +532,23 @@ function useExerciseValidation(t: BuilderTranslator): ExerciseValidationResult {
 
 	const handleFormatJson = useCallback(() => {
 		if (!previewExercise) {
-			applyValidation(jsonValue)
+			applyValidation(jsonValue, selectedType)
 			return
 		}
 
-		const formatted = JSON.stringify(exerciseToJSON(previewExercise), null, 2)
+		const formatted = formatExerciseJson(previewExercise)
 		setJsonValueDirect(formatted)
-	}, [applyValidation, jsonValue, previewExercise, setJsonValueDirect])
+	}, [
+		applyValidation,
+		jsonValue,
+		previewExercise,
+		selectedType,
+		setJsonValueDirect
+	])
 
 	const loadExerciseJson = useCallback(
-		(exercise: WordFormExerciseJSON) => {
-			const serialized = JSON.stringify(exercise, null, 2)
-			setJsonValueDirect(serialized)
+		(exercise: CustomExerciseJSON) => {
+			setJsonValueDirect(JSON.stringify(exercise, null, 2))
 		},
 		[setJsonValueDirect]
 	)
@@ -387,8 +568,11 @@ function useExerciseValidation(t: BuilderTranslator): ExerciseValidationResult {
 }
 
 function useExercisePersistence(
-	previewExercise: WordFormExerciseWithDefaults | null,
-	loadExerciseJson: (exercise: WordFormExerciseJSON) => void
+	previewExercise:
+		| WordFormExerciseWithDefaults
+		| FlashcardExerciseWithDefaults
+		| null,
+	loadExerciseJson: (exercise: CustomExerciseJSON) => void
 ): ExercisePersistenceResult {
 	const [saveStatus, setSaveStatus] = useState<BuilderSaveStatus>('idle')
 	const saveExercise = useCustomExercisesStore(state => state.saveExercise)
@@ -402,7 +586,16 @@ function useExercisePersistence(
 		}
 
 		try {
-			const serialized = exerciseToJSON(previewExercise)
+			let serialized: CustomExerciseJSON
+			if (previewExercise.type === 'word-form') {
+				serialized = exerciseToJSON(previewExercise)
+			} else if (previewExercise.type === 'flashcard') {
+				serialized = flashcardExerciseToJSON(previewExercise)
+			} else {
+				setSaveStatus('error')
+				return
+			}
+
 			saveExercise(serialized)
 			setSaveStatus('success')
 		} catch {
@@ -411,7 +604,7 @@ function useExercisePersistence(
 	}, [previewExercise, saveExercise])
 
 	const handleLoadExercise = useCallback(
-		(exercise: WordFormExerciseJSON) => {
+		(exercise: CustomExerciseJSON) => {
 			loadExerciseJson(exercise)
 		},
 		[loadExerciseJson]
