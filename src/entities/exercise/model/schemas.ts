@@ -146,3 +146,56 @@ export function validateWordFormBlock(data: unknown): WordFormBlockDto {
 export function validateExerciseMetadata(data: unknown): ExerciseMetadataDto {
 	return v.parse(ExerciseMetadataSchema, data)
 }
+
+// Multiple-choice schemas
+export const MultipleChoiceOptionSchema = v.object({
+	id: v.string(),
+	text: v.string(),
+	textI18n: v.optional(I18nStringSchema)
+})
+
+export const MultipleChoiceQuestionSchema = v.object({
+	id: v.string(),
+	text: v.string(),
+	textI18n: v.optional(I18nStringSchema),
+	options: v.pipe(
+		v.array(MultipleChoiceOptionSchema),
+		v.minLength(2),
+		v.maxLength(6)
+	),
+	correctOptionId: v.string(),
+	hint: v.optional(v.string()),
+	hintI18n: v.optional(I18nStringSchema)
+})
+
+export const MultipleChoiceExerciseSchema = v.object({
+	enabled: v.boolean(),
+	id: v.string(),
+	type: v.literal('multiple-choice'),
+	language: LanguageSchema,
+	title: v.string(),
+	titleI18n: v.optional(I18nStringSchema),
+	description: v.string(),
+	descriptionI18n: v.optional(I18nStringSchema),
+	tags: v.optional(v.array(v.string()), []),
+	difficulty: DifficultySchema,
+	estimatedTimeMinutes: v.pipe(v.number(), v.minValue(0)),
+	settings: v.optional(ExerciseSettingsSchema),
+	questions: v.pipe(v.array(MultipleChoiceQuestionSchema), v.minLength(1))
+})
+
+export type MultipleChoiceOptionDto = v.InferOutput<
+	typeof MultipleChoiceOptionSchema
+>
+export type MultipleChoiceQuestionDto = v.InferOutput<
+	typeof MultipleChoiceQuestionSchema
+>
+export type MultipleChoiceExerciseDto = v.InferOutput<
+	typeof MultipleChoiceExerciseSchema
+>
+
+export function validateMultipleChoiceExercise(
+	data: unknown
+): MultipleChoiceExerciseDto {
+	return v.parse(MultipleChoiceExerciseSchema, data)
+}

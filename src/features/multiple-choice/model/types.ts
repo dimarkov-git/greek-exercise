@@ -1,21 +1,12 @@
 /**
- * Multiple-choice exercise types (stub)
+ * Multiple-choice exercise types
  *
- * Placeholder types for multiple-choice exercises.
- * Full implementation coming in Phase 7.3.
+ * Re-exports types from entities layer for convenience.
+ * Actual type definitions are in @/entities/exercise/model/multiple-choice-types
  */
 
-import type {ExerciseMetadata, ExerciseSettings} from '@/entities/exercise'
-
-/**
- * Multiple-choice exercise structure (stub)
- */
-export interface MultipleChoiceExercise {
-	id: string
-	type: 'multiple-choice'
-	title: string
-	description?: string
-	metadata: ExerciseMetadata
-	settings: ExerciseSettings
-	// Additional fields will be added in Phase 7.3
-}
+export type {
+	MultipleChoiceExercise,
+	MultipleChoiceOption,
+	MultipleChoiceQuestion
+} from '@/entities/exercise'

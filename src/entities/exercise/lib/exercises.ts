@@ -80,6 +80,7 @@ export function extractExerciseMetadata(
 	exercise:
 		| WordFormExercise
 		| import('../model/flashcard-types').FlashcardExercise
+		| import('../model/multiple-choice-types').MultipleChoiceExercise
 ): ExerciseMetadata {
 	// Determine totalBlocks and totalCases based on exercise type
 	let totalBlocks: number
@@ -92,6 +93,10 @@ export function extractExerciseMetadata(
 		// For flashcards, we treat the entire deck as one "block" and each card as a "case"
 		totalBlocks = 1
 		totalCases = exercise.cards.length
+	} else if (exercise.type === 'multiple-choice') {
+		// For multiple-choice, we treat all questions as one "block"
+		totalBlocks = 1
+		totalCases = exercise.questions.length
 	} else {
 		// Default for unknown types
 		totalBlocks = 0

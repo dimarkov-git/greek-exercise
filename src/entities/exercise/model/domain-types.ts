@@ -1,5 +1,6 @@
 import type {Language} from '@/shared/model'
 import type {FlashcardExercise} from './flashcard-types'
+import type {MultipleChoiceExercise} from './multiple-choice-types'
 import type {ExerciseMetadata, WordFormExercise} from './types'
 
 export type ExerciseSource = 'builtin' | 'custom'
@@ -46,4 +47,9 @@ export type FlashcardExerciseWithDefaults = FlashcardExercise & {
 	tags: string[]
 	settings: import('@/entities/exercise').ExerciseSettings
 	srsSettings: import('@/entities/exercise').SRSSettings
+}
+
+export type MultipleChoiceExerciseWithDefaults = MultipleChoiceExercise & {
+	tags: string[]
+	settings: import('@/entities/exercise').ExerciseSettings
 }

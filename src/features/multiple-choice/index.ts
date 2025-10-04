@@ -16,6 +16,12 @@ exerciseTypeRegistry.register('multiple-choice', {
 	// libraryCard is optional - uses default card
 })
 
-export {MultipleChoiceLearnView} from './ui/MultipleChoiceLearnView'
+// Re-export types from entities (for convenience)
+export type {
+	MultipleChoiceExercise,
+	MultipleChoiceOption,
+	MultipleChoiceQuestion
+} from '@/entities/exercise'
 // Export components
+export {MultipleChoiceLearnView} from './ui/MultipleChoiceLearnView'
 export {MultipleChoiceRenderer} from './ui/MultipleChoiceRenderer'

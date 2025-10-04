@@ -1,0 +1,374 @@
+{
+	"enabled": true,
+	"id": "grammar-concepts-choice",
+	"type": "multiple-choice",
+	"language": "el",
+	"title": "Γραμματικές έννοιες - Επιλογή απάντησης",
+	"titleI18n": {
+		"en": "Grammar Concepts - Multiple Choice",
+		"ru": "Грамматические концепции - Множественный выбор"
+	},
+	"description": "Εξάσκηση γραμματικών εννοιών με πολλαπλή επιλογή",
+	"descriptionI18n": {
+		"en": "Practice Greek grammar concepts with multiple choice questions",
+		"ru": "Практика греческой грамматики с вопросами множественного выбора"
+	},
+	"tags": ["grammar", "multiple-choice", "a2"],
+	"difficulty": "a2",
+	"estimatedTimeMinutes": 8,
+	"settings": {
+		"autoAdvance": true,
+		"autoAdvanceDelayMs": 2000,
+		"allowSkip": true,
+		"shuffleCases": false
+	},
+	"questions": [
+		{
+			"id": "q1",
+			"text": "Ποιος είναι ο σωστός τύπος του ρήματος 'είμαι' για το 'εμείς';",
+			"textI18n": {
+				"en": "What is the correct form of the verb 'to be' for 'we'?",
+				"ru": "Какая правильная форма глагола 'быть' для 'мы'?"
+			},
+			"options": [
+				{
+					"id": "q1-o1",
+					"text": "είμαστε",
+					"textI18n": { "en": "eímaste", "ru": "имасте" }
+				},
+				{
+					"id": "q1-o2",
+					"text": "είστε",
+					"textI18n": { "en": "eíste", "ru": "исте" }
+				},
+				{
+					"id": "q1-o3",
+					"text": "είναι",
+					"textI18n": { "en": "eínai", "ru": "инэ" }
+				}
+			],
+			"correctOptionId": "q1-o1",
+			"hint": "First person plural",
+			"hintI18n": {
+				"en": "We are - first person plural",
+				"ru": "Мы есть - первое лицо множественного числа"
+			}
+		},
+		{
+			"id": "q2",
+			"text": "Ποιο είναι το αρσενικό του 'η μητέρα';",
+			"textI18n": {
+				"en": "What is the masculine of 'η μητέρα' (mother)?",
+				"ru": "Какой мужской род для 'η μητέρα' (мать)?"
+			},
+			"options": [
+				{
+					"id": "q2-o1",
+					"text": "ο πατέρας",
+					"textI18n": { "en": "o patéras (father)", "ru": "о патерас (отец)" }
+				},
+				{
+					"id": "q2-o2",
+					"text": "ο αδελφός",
+					"textI18n": { "en": "o adelfós (brother)", "ru": "о аделфос (брат)" }
+				}
+			],
+			"correctOptionId": "q2-o1"
+		},
+		{
+			"id": "q3",
+			"text": "Συμπληρώστε: 'Εγώ ___ από την Ελλάδα'",
+			"textI18n": {
+				"en": "Complete: 'I ___ from Greece'",
+				"ru": "Дополните: 'Я ___ из Греции'"
+			},
+			"options": [
+				{
+					"id": "q3-o1",
+					"text": "είμαι",
+					"textI18n": { "en": "am", "ru": "есть" }
+				},
+				{
+					"id": "q3-o2",
+					"text": "έχω",
+					"textI18n": { "en": "have", "ru": "имею" }
+				},
+				{
+					"id": "q3-o3",
+					"text": "πάω",
+					"textI18n": { "en": "go", "ru": "иду" }
+				},
+				{
+					"id": "q3-o4",
+					"text": "έρχομαι",
+					"textI18n": { "en": "come", "ru": "прихожу" }
+				}
+			],
+			"correctOptionId": "q3-o1",
+			"hint": "Use the verb 'to be'",
+			"hintI18n": {
+				"en": "You need the verb 'to be' here",
+				"ru": "Вам нужен глагол 'быть'"
+			}
+		},
+		{
+			"id": "q4",
+			"text": "Ποιο άρθρο χρησιμοποιούμε με το 'βιβλίο';",
+			"textI18n": {
+				"en": "Which article do we use with 'βιβλίο' (book)?",
+				"ru": "Какой артикль используется с 'βιβλίο' (книга)?"
+			},
+			"options": [
+				{
+					"id": "q4-o1",
+					"text": "ο",
+					"textI18n": { "en": "o (masculine)", "ru": "о (мужской род)" }
+				},
+				{
+					"id": "q4-o2",
+					"text": "η",
+					"textI18n": { "en": "i (feminine)", "ru": "и (женский род)" }
+				},
+				{
+					"id": "q4-o3",
+					"text": "το",
+					"textI18n": { "en": "to (neuter)", "ru": "то (средний род)" }
+				},
+				{
+					"id": "q4-o4",
+					"text": "οι",
+					"textI18n": { "en": "oi (plural)", "ru": "ои (множественное число)" }
+				}
+			],
+			"correctOptionId": "q4-o3",
+			"hint": "Neuter gender",
+			"hintI18n": {
+				"en": "Book is neuter in Greek",
+				"ru": "Книга - среднего рода в греческом"
+			}
+		},
+		{
+			"id": "q5",
+			"text": "Επιλέξτε τον σωστό πληθυντικό του 'το παιδί':",
+			"textI18n": {
+				"en": "Select the correct plural of 'το παιδί' (child):",
+				"ru": "Выберите правильную форму множественного числа для 'το παιδί' (ребёнок):"
+			},
+			"options": [
+				{
+					"id": "q5-o1",
+					"text": "τα παιδιά",
+					"textI18n": { "en": "ta paidiá", "ru": "та педья" }
+				},
+				{
+					"id": "q5-o2",
+					"text": "οι παιδές",
+					"textI18n": { "en": "oi paidés", "ru": "ои педес" }
+				},
+				{
+					"id": "q5-o3",
+					"text": "τα παίδες",
+					"textI18n": { "en": "ta paídes", "ru": "та педес" }
+				},
+				{
+					"id": "q5-o4",
+					"text": "το παιδιά",
+					"textI18n": { "en": "to paidiá", "ru": "то педья" }
+				},
+				{
+					"id": "q5-o5",
+					"text": "οι παιδιά",
+					"textI18n": { "en": "oi paidiá", "ru": "ои педья" }
+				}
+			],
+			"correctOptionId": "q5-o1"
+		},
+		{
+			"id": "q6",
+			"text": "Ποια πρόταση είναι σωστή;",
+			"textI18n": {
+				"en": "Which sentence is correct?",
+				"ru": "Какое предложение правильное?"
+			},
+			"options": [
+				{
+					"id": "q6-o1",
+					"text": "Εγώ πάω στο σχολείο",
+					"textI18n": { "en": "I go to school", "ru": "Я иду в школу" }
+				},
+				{
+					"id": "q6-o2",
+					"text": "Εγώ πάει στο σχολείο",
+					"textI18n": { "en": "I goes to school", "ru": "Я идёт в школу" }
+				},
+				{
+					"id": "q6-o3",
+					"text": "Εγώ πάμε στο σχολείο",
+					"textI18n": { "en": "I we go to school", "ru": "Я идём в школу" }
+				},
+				{
+					"id": "q6-o4",
+					"text": "Εγώ πάνε στο σχολείο",
+					"textI18n": { "en": "I they go to school", "ru": "Я идут в школу" }
+				}
+			],
+			"correctOptionId": "q6-o1",
+			"hint": "First person singular",
+			"hintI18n": {
+				"en": "Match the verb with 'I' (first person singular)",
+				"ru": "Согласуйте глагол с 'я' (первое лицо единственного числа)"
+			}
+		},
+		{
+			"id": "q7",
+			"text": "Τι δηλώνει το γένος των λέξεων που τελειώνουν σε '-ος';",
+			"textI18n": {
+				"en": "What gender do words ending in '-ος' usually have?",
+				"ru": "Какой род обычно имеют слова, оканчивающиеся на '-ος'?"
+			},
+			"options": [
+				{
+					"id": "q7-o1",
+					"text": "Αρσενικό",
+					"textI18n": { "en": "Masculine", "ru": "Мужской" }
+				},
+				{
+					"id": "q7-o2",
+					"text": "Θηλυκό",
+					"textI18n": { "en": "Feminine", "ru": "Женский" }
+				},
+				{
+					"id": "q7-o3",
+					"text": "Ουδέτερο",
+					"textI18n": { "en": "Neuter", "ru": "Средний" }
+				},
+				{
+					"id": "q7-o4",
+					"text": "Μπορεί να είναι οποιοδήποτε",
+					"textI18n": { "en": "Can be any", "ru": "Может быть любым" }
+				}
+			],
+			"correctOptionId": "q7-o1"
+		},
+		{
+			"id": "q8",
+			"text": "Ποιο είναι το παρελθόν του 'τρώω' (I eat);",
+			"textI18n": {
+				"en": "What is the past tense of 'τρώω' (I eat)?",
+				"ru": "Какое прошедшее время у 'τρώω' (я ем)?"
+			},
+			"options": [
+				{
+					"id": "q8-o1",
+					"text": "έφαγα",
+					"textI18n": { "en": "éfaga (I ate)", "ru": "эфага (я ел)" }
+				},
+				{
+					"id": "q8-o2",
+					"text": "έτρωγα",
+					"textI18n": {
+						"en": "étroga (I was eating)",
+						"ru": "этрога (я ел - несовершенный вид)"
+					}
+				},
+				{
+					"id": "q8-o3",
+					"text": "θα φάω",
+					"textI18n": {
+						"en": "tha fáo (I will eat)",
+						"ru": "та фао (я буду есть)"
+					}
+				},
+				{
+					"id": "q8-o4",
+					"text": "τρώγω",
+					"textI18n": { "en": "trógo (I eat)", "ru": "трого (я ем)" }
+				},
+				{
+					"id": "q8-o5",
+					"text": "φάγω",
+					"textI18n": {
+						"en": "fágo (to eat - subjunctive)",
+						"ru": "фаго (есть - сослагательное)"
+					}
+				},
+				{
+					"id": "q8-o6",
+					"text": "έτρωξα",
+					"textI18n": {
+						"en": "étroxsa (incorrect)",
+						"ru": "этрокса (неправильно)"
+					}
+				}
+			],
+			"correctOptionId": "q8-o1",
+			"hint": "Irregular verb - simple past",
+			"hintI18n": {
+				"en": "This is an irregular verb. Use simple past (aorist) form",
+				"ru": "Это неправильный глагол. Используйте форму простого прошедшего (аорист)"
+			}
+		},
+		{
+			"id": "q9",
+			"text": "Ποιο ρήμα σημαίνει 'to want'?",
+			"textI18n": {
+				"en": "Which verb means 'to want'?",
+				"ru": "Какой глагол означает 'хотеть'?"
+			},
+			"options": [
+				{
+					"id": "q9-o1",
+					"text": "θέλω",
+					"textI18n": { "en": "thélo", "ru": "тело" }
+				},
+				{
+					"id": "q9-o2",
+					"text": "έχω",
+					"textI18n": { "en": "écho (to have)", "ru": "эхо (иметь)" }
+				},
+				{
+					"id": "q9-o3",
+					"text": "μπορώ",
+					"textI18n": { "en": "boró (can)", "ru": "боро (мочь)" }
+				},
+				{
+					"id": "q9-o4",
+					"text": "πρέπει",
+					"textI18n": { "en": "prépei (must)", "ru": "препи (должен)" }
+				}
+			],
+			"correctOptionId": "q9-o1"
+		},
+		{
+			"id": "q10",
+			"text": "Συμπληρώστε: '___ μια καλή μέρα σήμερα'",
+			"textI18n": {
+				"en": "Complete: '___ a good day today'",
+				"ru": "Дополните: '___ хороший день сегодня'"
+			},
+			"options": [
+				{
+					"id": "q10-o1",
+					"text": "Έχει",
+					"textI18n": { "en": "Has", "ru": "Имеет" }
+				},
+				{
+					"id": "q10-o2",
+					"text": "Είναι",
+					"textI18n": { "en": "Is", "ru": "Есть" }
+				},
+				{
+					"id": "q10-o3",
+					"text": "Κάνει",
+					"textI18n": { "en": "Makes/Does", "ru": "Делает" }
+				}
+			],
+			"correctOptionId": "q10-o2",
+			"hint": "Weather expression uses 'to be'",
+			"hintI18n": {
+				"en": "In Greek, weather expressions use 'to be' (είναι)",
+				"ru": "В греческом языке выражения о погоде используют 'быть' (είναι)"
+			}
+		}
+	]
+}

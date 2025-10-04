@@ -43,6 +43,7 @@ export {
 	createExerciseLibraryViewModel,
 	toExerciseSummary,
 	toFlashcardExerciseWithDefaults,
+	toMultipleChoiceExerciseWithDefaults,
 	toWordFormExerciseWithDefaults
 } from './model/adapters'
 // Custom exercise utilities
@@ -70,6 +71,7 @@ export type {
 	ExerciseSource,
 	ExerciseSummary,
 	FlashcardExerciseWithDefaults,
+	MultipleChoiceExerciseWithDefaults,
 	WordFormExerciseWithDefaults
 } from './model/domain-types'
 // Exercise renderer contracts (multi-type architecture)
@@ -123,6 +125,12 @@ export {
 	getSRSSettings,
 	QUALITY_LABELS
 } from './model/flashcard-types'
+// Multiple-choice types (kept in entities for FSD compliance)
+export type {
+	MultipleChoiceExercise,
+	MultipleChoiceOption,
+	MultipleChoiceQuestion
+} from './model/multiple-choice-types'
 // Schema DTO types
 export type {
 	ExerciseMetadataDto,
@@ -130,6 +138,9 @@ export type {
 	ExercisesListDto,
 	FlashCardDto,
 	FlashcardExerciseDto,
+	MultipleChoiceExerciseDto,
+	MultipleChoiceOptionDto,
+	MultipleChoiceQuestionDto,
 	SRSSettingsDto,
 	WordFormBlockDto,
 	WordFormCaseDto,
@@ -142,9 +153,13 @@ export {
 	ExercisesListSchema,
 	FlashCardSchema,
 	FlashcardExerciseSchema,
+	MultipleChoiceExerciseSchema,
+	MultipleChoiceOptionSchema,
+	MultipleChoiceQuestionSchema,
 	SRSSettingsSchema,
 	validateExercisesList,
 	validateFlashcardExercise,
+	validateMultipleChoiceExercise,
 	validateWordFormExercise,
 	WordFormBlockSchema,
 	WordFormCaseSchema,

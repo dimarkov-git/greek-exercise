@@ -5,14 +5,17 @@ import type {
 	CustomExerciseJSON,
 	CustomExerciseRecord,
 	FlashcardExerciseWithDefaults,
+	MultipleChoiceExerciseWithDefaults,
 	WordFormExerciseWithDefaults
 } from '@/entities/exercise'
 import {
 	exerciseToJSON,
 	FlashcardExerciseSchema,
 	flashcardExerciseToJSON,
+	MultipleChoiceExerciseSchema,
 	selectCustomExerciseList,
 	toFlashcardExerciseWithDefaults,
+	toMultipleChoiceExerciseWithDefaults,
 	toWordFormExerciseWithDefaults,
 	useCustomExercisesStore,
 	WordFormExerciseSchema
@@ -179,12 +182,108 @@ const DEFAULT_FLASHCARD_TEMPLATE_JSON = JSON.stringify(
 	2
 )
 
+type MultipleChoiceExerciseJSON =
+	import('@/entities/exercise').MultipleChoiceExercise
+
+const DEFAULT_MULTIPLE_CHOICE_TEMPLATE: MultipleChoiceExerciseJSON = {
+	enabled: true,
+	id: 'custom-multiple-choice',
+	type: 'multiple-choice',
+	language: 'el',
+	title: 'Βασική λεξιλόγιο - Επιλογή απάντησης',
+	titleI18n: {
+		en: 'Basic Vocabulary - Multiple Choice',
+		ru: 'Базовая лексика - Множественный выбор'
+	},
+	description: 'Εξάσκηση βασικών ελληνικών λέξεων με πολλαπλή επιλογή',
+	descriptionI18n: {
+		en: 'Practice basic Greek words with multiple choice questions',
+		ru: 'Практика базовых греческих слов с вопросами множественного выбора'
+	},
+	tags: ['custom', 'vocabulary', 'multiple-choice'],
+	difficulty: 'a1',
+	estimatedTimeMinutes: 5,
+	settings: {
+		autoAdvance: true,
+		autoAdvanceDelayMs: 1500,
+		allowSkip: false,
+		shuffleCases: true
+	},
+	questions: [
+		{
+			id: 'q1',
+			text: "Τι σημαίνει 'καλημέρα';",
+			textI18n: {
+				en: "What does 'καλημέρα' mean?",
+				ru: "Что означает 'καλημέρα'?"
+			},
+			options: [
+				{
+					id: 'q1-o1',
+					text: 'Good morning',
+					textI18n: {ru: 'Доброе утро'}
+				},
+				{
+					id: 'q1-o2',
+					text: 'Good night',
+					textI18n: {ru: 'Спокойной ночи'}
+				},
+				{
+					id: 'q1-o3',
+					text: 'Goodbye',
+					textI18n: {ru: 'До свидания'}
+				}
+			],
+			correctOptionId: 'q1-o1',
+			hint: 'Used in morning greetings',
+			hintI18n: {
+				en: 'Used when greeting someone in the morning',
+				ru: 'Используется при приветствии утром'
+			}
+		},
+		{
+			id: 'q2',
+			text: "Πώς λέμε 'thank you' στα ελληνικά;",
+			textI18n: {
+				en: "How do you say 'thank you' in Greek?",
+				ru: "Как сказать 'спасибо' по-гречески?"
+			},
+			options: [
+				{
+					id: 'q2-o1',
+					text: 'παρακαλώ',
+					textI18n: {en: 'parakaló', ru: 'паракало'}
+				},
+				{
+					id: 'q2-o2',
+					text: 'ευχαριστώ',
+					textI18n: {en: 'efcharistó', ru: 'эфхаристо'}
+				},
+				{
+					id: 'q2-o3',
+					text: 'συγγνώμη',
+					textI18n: {en: 'signómi', ru: 'сигноми'}
+				}
+			],
+			correctOptionId: 'q2-o2'
+		}
+	]
+}
+
+const DEFAULT_MULTIPLE_CHOICE_TEMPLATE_JSON = JSON.stringify(
+	DEFAULT_MULTIPLE_CHOICE_TEMPLATE,
+	null,
+	2
+)
+
 function getDefaultTemplateForType(type: ExerciseType): string {
 	switch (type) {
 		case 'word-form':
 			return DEFAULT_WORD_FORM_TEMPLATE_JSON
 		case 'flashcard':
 			return DEFAULT_FLASHCARD_TEMPLATE_JSON
+		case 'multiple-choice':
+			return DEFAULT_MULTIPLE_CHOICE_TEMPLATE_JSON
 		default:
 			return DEFAULT_WORD_FORM_TEMPLATE_JSON
 	}
@@ -199,6 +298,7 @@ interface RawValidationState {
 	readonly exercise:
 		| WordFormExerciseWithDefaults
 		| FlashcardExerciseWithDefaults
+		| MultipleChoiceExerciseWithDefaults
 		| null
 	readonly errors: readonly RawValidationError[]
 }
@@ -207,6 +307,7 @@ export interface ValidationState {
 	readonly exercise:
 		| WordFormExerciseWithDefaults
 		| FlashcardExerciseWithDefaults
+		| MultipleChoiceExerciseWithDefaults
 		| null
 	readonly rawErrors: readonly RawValidationError[]
 	readonly errors: readonly string[]
@@ -219,6 +320,7 @@ export interface ExerciseValidationResult {
 	readonly previewExercise:
 		| WordFormExerciseWithDefaults
 		| FlashcardExerciseWithDefaults
+		| MultipleChoiceExerciseWithDefaults
 		| null
 	readonly hasErrors: boolean
 	readonly handleTypeChange: (type: ExerciseType) => void
@@ -245,6 +347,7 @@ export interface ExerciseBuilderState {
 	readonly previewExercise:
 		| WordFormExerciseWithDefaults
 		| FlashcardExerciseWithDefaults
+		| MultipleChoiceExerciseWithDefaults
 		| null
 	readonly hasErrors: boolean
 	readonly handleTypeChange: (type: ExerciseType) => void
@@ -319,6 +422,24 @@ function validateFlashcardJson(parsed: unknown): RawValidationState {
 	return {exercise: normalized, errors: []}
 }
 
+function validateMultipleChoiceJson(parsed: unknown): RawValidationState {
+	const result = safeParse(MultipleChoiceExerciseSchema, parsed)
+
+	if (!result.success) {
+		const errors = result.issues.map(
+			issue =>
+				({
+					kind: 'schema',
+					message: formatIssue(issue)
+				}) as RawValidationError
+		)
+		return {exercise: null, errors}
+	}
+
+	const normalized = toMultipleChoiceExerciseWithDefaults(result.output)
+	return {exercise: normalized, errors: []}
+}
+
 function validateExerciseJson(
 	json: string,
 	expectedType?: ExerciseType
@@ -339,6 +460,8 @@ function validateExerciseJson(
 				return validateWordFormJson(parsed)
 			case 'flashcard':
 				return validateFlashcardJson(parsed)
+			case 'multiple-choice':
+				return validateMultipleChoiceJson(parsed)
 			default:
 				return {
 					exercise: null,
@@ -499,7 +622,10 @@ function useBuilderJsonControls(
 }
 
 function formatExerciseJson(
-	exercise: WordFormExerciseWithDefaults | FlashcardExerciseWithDefaults
+	exercise:
+		| WordFormExerciseWithDefaults
+		| FlashcardExerciseWithDefaults
+		| MultipleChoiceExerciseWithDefaults
 ): string {
 	if (exercise.type === 'word-form') {
 		return JSON.stringify(exerciseToJSON(exercise), null, 2)
@@ -507,6 +633,10 @@ function formatExerciseJson(
 
 	if (exercise.type === 'flashcard') {
 		return JSON.stringify(flashcardExerciseToJSON(exercise), null, 2)
+	}
+
+	if (exercise.type === 'multiple-choice') {
+		return JSON.stringify(exercise, null, 2)
 	}
 
 	return JSON.stringify(exercise, null, 2)
@@ -571,6 +701,7 @@ function useExercisePersistence(
 	previewExercise:
 		| WordFormExerciseWithDefaults
 		| FlashcardExerciseWithDefaults
+		| MultipleChoiceExerciseWithDefaults
 		| null,
 	loadExerciseJson: (exercise: CustomExerciseJSON) => void
 ): ExercisePersistenceResult {

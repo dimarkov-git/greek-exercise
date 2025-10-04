@@ -13,13 +13,21 @@ import {
 	toWordFormExerciseWithDefaults
 } from '../adapters'
 import type {FlashcardExercise} from '../flashcard-types'
-import {validateFlashcardExercise, validateWordFormExercise} from '../schemas'
+import type {MultipleChoiceExercise} from '../multiple-choice-types'
+import {
+	validateFlashcardExercise,
+	validateMultipleChoiceExercise,
+	validateWordFormExercise
+} from '../schemas'
 import type {WordFormBlock, WordFormExercise} from '../types'
 
 /**
  * Union type for all supported exercise types
  */
-export type AnyExercise = WordFormExercise | FlashcardExercise
+export type AnyExercise =
+	| WordFormExercise
+	| FlashcardExercise
+	| MultipleChoiceExercise
 
 const EXERCISE_CASE_LIMIT_KEY = '__EXERCISE_CASE_LIMIT__' as const
 
@@ -103,6 +111,11 @@ function loadAndValidateExercise(
 			case 'flashcard': {
 				const validated = validateFlashcardExercise(exerciseData)
 				return toFlashcardExerciseWithDefaults(validated)
+			}
+			case 'multiple-choice': {
+				const validated = validateMultipleChoiceExercise(exerciseData)
+				// Multiple-choice exercises don't need additional normalization
+				return validated as MultipleChoiceExercise
 			}
 			default:
 				// biome-ignore lint/suspicious/noConsole: Intentional debug logging

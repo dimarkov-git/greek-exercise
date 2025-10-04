@@ -2,11 +2,13 @@ import {queryOptions} from '@tanstack/react-query'
 import {
 	validateExercisesList,
 	validateFlashcardExercise,
+	validateMultipleChoiceExercise,
 	validateWordFormExercise
 } from '@/entities/exercise'
 import {HttpError, requestJson} from '@/shared/api'
 import {
 	toFlashcardExerciseWithDefaults,
+	toMultipleChoiceExerciseWithDefaults,
 	toWordFormExerciseWithDefaults
 } from '../model/adapters'
 
@@ -63,8 +65,13 @@ export function exerciseQueryOptions(id: string | undefined) {
 				return toWordFormExerciseWithDefaults(parsed)
 			}
 
+			if (exerciseType === 'multiple-choice') {
+				const parsed = validateMultipleChoiceExercise(data)
+				return toMultipleChoiceExerciseWithDefaults(parsed)
+			}
+
 			throw new Error(
-				`Unsupported exercise type: ${exerciseType}. Supported types: word-form, flashcard`
+				`Unsupported exercise type: ${exerciseType}. Supported types: word-form, flashcard, multiple-choice`
 			)
 		},
 		retry: (failureCount: number, error: unknown) => {

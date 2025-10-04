@@ -33,7 +33,7 @@ export class HomePage {
 	}
 
 	// Helper methods
-	async isMobile(): Promise<boolean> {
+	isMobile(): boolean {
 		const viewport = this.page.viewportSize()
 		return viewport ? viewport.width < 768 : false
 	}

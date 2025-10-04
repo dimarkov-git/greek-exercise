@@ -5,6 +5,7 @@ import type {
 	CustomExerciseJSON,
 	CustomExerciseRecord,
 	FlashcardExerciseWithDefaults,
+	MultipleChoiceExerciseWithDefaults,
 	WordFormExerciseWithDefaults
 } from '@/entities/exercise'
 import {FlashcardLearnView} from '@/features/flashcard'
@@ -88,6 +89,9 @@ export function TypeSelectorPanel({
 				>
 					<option value='word-form'>{t('builder.wordFormType')}</option>
 					<option value='flashcard'>{t('builder.flashcardType')}</option>
+					<option value='multiple-choice'>
+						{t('builder.multipleChoiceType')}
+					</option>
 				</select>
 			</div>
 			<p className='mt-4 rounded-xl bg-purple-50 p-4 text-purple-900 text-sm dark:bg-purple-900/20 dark:text-purple-200'>
@@ -233,6 +237,7 @@ export function PreviewPanel({
 	readonly previewExercise:
 		| WordFormExerciseWithDefaults
 		| FlashcardExerciseWithDefaults
+		| MultipleChoiceExerciseWithDefaults
 		| null
 	readonly t: BuilderTranslator
 }) {

@@ -1,0 +1,295 @@
+{
+	"enabled": true,
+	"id": "basic-vocabulary-choice",
+	"type": "multiple-choice",
+	"language": "el",
+	"title": "Βασική λεξιλόγιο - Επιλογή απάντησης",
+	"titleI18n": {
+		"en": "Basic Vocabulary - Multiple Choice",
+		"ru": "Базовая лексика - Множественный выбор"
+	},
+	"description": "Εξάσκηση βασικών ελληνικών λέξεων με πολλαπλή επιλογή",
+	"descriptionI18n": {
+		"en": "Practice basic Greek words with multiple choice questions",
+		"ru": "Практика базовых греческих слов с вопросами множественного выбора"
+	},
+	"tags": ["vocabulary", "multiple-choice", "a1"],
+	"difficulty": "a1",
+	"estimatedTimeMinutes": 5,
+	"settings": {
+		"autoAdvance": true,
+		"autoAdvanceDelayMs": 1500,
+		"allowSkip": false,
+		"shuffleCases": true
+	},
+	"questions": [
+		{
+			"id": "q1",
+			"text": "Τι σημαίνει 'καλημέρα';",
+			"textI18n": {
+				"en": "What does 'καλημέρα' mean?",
+				"ru": "Что означает 'καλημέρα'?"
+			},
+			"options": [
+				{
+					"id": "q1-o1",
+					"text": "Good morning",
+					"textI18n": { "ru": "Доброе утро" }
+				},
+				{
+					"id": "q1-o2",
+					"text": "Good night",
+					"textI18n": { "ru": "Спокойной ночи" }
+				},
+				{
+					"id": "q1-o3",
+					"text": "Goodbye",
+					"textI18n": { "ru": "До свидания" }
+				},
+				{
+					"id": "q1-o4",
+					"text": "Thank you",
+					"textI18n": { "ru": "Спасибо" }
+				}
+			],
+			"correctOptionId": "q1-o1",
+			"hint": "Used in morning greetings",
+			"hintI18n": {
+				"en": "Used when greeting someone in the morning",
+				"ru": "Используется при приветствии утром"
+			}
+		},
+		{
+			"id": "q2",
+			"text": "Πώς λέμε 'thank you' στα ελληνικά;",
+			"textI18n": {
+				"en": "How do you say 'thank you' in Greek?",
+				"ru": "Как сказать 'спасибо' по-гречески?"
+			},
+			"options": [
+				{
+					"id": "q2-o1",
+					"text": "παρακαλώ",
+					"textI18n": { "en": "parakaló", "ru": "паракало" }
+				},
+				{
+					"id": "q2-o2",
+					"text": "ευχαριστώ",
+					"textI18n": { "en": "efcharistó", "ru": "эфхаристо" }
+				},
+				{
+					"id": "q2-o3",
+					"text": "συγγνώμη",
+					"textI18n": { "en": "signómi", "ru": "сигноми" }
+				},
+				{
+					"id": "q2-o4",
+					"text": "γεια σου",
+					"textI18n": { "en": "ya sou", "ru": "я су" }
+				}
+			],
+			"correctOptionId": "q2-o2"
+		},
+		{
+			"id": "q3",
+			"text": "Τι σημαίνει 'νερό';",
+			"textI18n": {
+				"en": "What does 'νερό' mean?",
+				"ru": "Что означает 'νερό'?"
+			},
+			"options": [
+				{
+					"id": "q3-o1",
+					"text": "Bread",
+					"textI18n": { "ru": "Хлеб" }
+				},
+				{
+					"id": "q3-o2",
+					"text": "Water",
+					"textI18n": { "ru": "Вода" }
+				},
+				{
+					"id": "q3-o3",
+					"text": "Wine",
+					"textI18n": { "ru": "Вино" }
+				},
+				{
+					"id": "q3-o4",
+					"text": "Milk",
+					"textI18n": { "ru": "Молоко" }
+				}
+			],
+			"correctOptionId": "q3-o2",
+			"hint": "Essential for life",
+			"hintI18n": {
+				"en": "A liquid essential for life",
+				"ru": "Жидкость, необходимая для жизни"
+			}
+		},
+		{
+			"id": "q4",
+			"text": "Ποια λέξη σημαίνει 'house'?",
+			"textI18n": {
+				"en": "Which word means 'house'?",
+				"ru": "Какое слово означает 'дом'?"
+			},
+			"options": [
+				{
+					"id": "q4-o1",
+					"text": "σπίτι",
+					"textI18n": { "en": "spíti", "ru": "спити" }
+				},
+				{
+					"id": "q4-o2",
+					"text": "δρόμος",
+					"textI18n": { "en": "drómos", "ru": "дромос" }
+				},
+				{
+					"id": "q4-o3",
+					"text": "πόλη",
+					"textI18n": { "en": "póli", "ru": "поли" }
+				},
+				{
+					"id": "q4-o4",
+					"text": "χωριό",
+					"textI18n": { "en": "chorió", "ru": "хорио" }
+				}
+			],
+			"correctOptionId": "q4-o1"
+		},
+		{
+			"id": "q5",
+			"text": "Τι σημαίνει 'φαγητό';",
+			"textI18n": {
+				"en": "What does 'φαγητό' mean?",
+				"ru": "Что означает 'φαγητό'?"
+			},
+			"options": [
+				{
+					"id": "q5-o1",
+					"text": "Drink",
+					"textI18n": { "ru": "Напиток" }
+				},
+				{
+					"id": "q5-o2",
+					"text": "Food",
+					"textI18n": { "ru": "Еда" }
+				},
+				{
+					"id": "q5-o3",
+					"text": "Book",
+					"textI18n": { "ru": "Книга" }
+				},
+				{
+					"id": "q5-o4",
+					"text": "Money",
+					"textI18n": { "ru": "Деньги" }
+				}
+			],
+			"correctOptionId": "q5-o2"
+		},
+		{
+			"id": "q6",
+			"text": "Πώς λέμε 'friend' στα ελληνικά;",
+			"textI18n": {
+				"en": "How do you say 'friend' in Greek?",
+				"ru": "Как сказать 'друг' по-гречески?"
+			},
+			"options": [
+				{
+					"id": "q6-o1",
+					"text": "οικογένεια",
+					"textI18n": { "en": "oikogéneia", "ru": "икогения" }
+				},
+				{
+					"id": "q6-o2",
+					"text": "γονείς",
+					"textI18n": { "en": "goneís", "ru": "гонис" }
+				},
+				{
+					"id": "q6-o3",
+					"text": "φίλος",
+					"textI18n": { "en": "fílos", "ru": "филос" }
+				},
+				{
+					"id": "q6-o4",
+					"text": "γείτονας",
+					"textI18n": { "en": "gítonas", "ru": "итонас" }
+				}
+			],
+			"correctOptionId": "q6-o3",
+			"hint": "Related to philosophy",
+			"hintI18n": {
+				"en": "The root of the word 'philosophy'",
+				"ru": "Корень слова 'философия'"
+			}
+		},
+		{
+			"id": "q7",
+			"text": "Τι σημαίνει 'ωραίος';",
+			"textI18n": {
+				"en": "What does 'ωραίος' mean?",
+				"ru": "Что означает 'ωραίος'?"
+			},
+			"options": [
+				{
+					"id": "q7-o1",
+					"text": "Ugly",
+					"textI18n": { "ru": "Уродливый" }
+				},
+				{
+					"id": "q7-o2",
+					"text": "Beautiful/Nice",
+					"textI18n": { "ru": "Красивый/Хороший" }
+				},
+				{
+					"id": "q7-o3",
+					"text": "Bad",
+					"textI18n": { "ru": "Плохой" }
+				},
+				{
+					"id": "q7-o4",
+					"text": "Old",
+					"textI18n": { "ru": "Старый" }
+				}
+			],
+			"correctOptionId": "q7-o2"
+		},
+		{
+			"id": "q8",
+			"text": "Ποια λέξη σημαίνει 'book'?",
+			"textI18n": {
+				"en": "Which word means 'book'?",
+				"ru": "Какое слово означает 'книга'?"
+			},
+			"options": [
+				{
+					"id": "q8-o1",
+					"text": "βιβλίο",
+					"textI18n": { "en": "vivlío", "ru": "вивлио" }
+				},
+				{
+					"id": "q8-o2",
+					"text": "τραπέζι",
+					"textI18n": { "en": "trapézi", "ru": "трапези" }
+				},
+				{
+					"id": "q8-o3",
+					"text": "καρέκλα",
+					"textI18n": { "en": "karékla", "ru": "карекла" }
+				},
+				{
+					"id": "q8-o4",
+					"text": "παράθυρο",
+					"textI18n": { "en": "paráthyro", "ru": "паратиро" }
+				}
+			],
+			"correctOptionId": "q8-o1",
+			"hint": "Related to Bible",
+			"hintI18n": {
+				"en": "The root of the word 'Bible'",
+				"ru": "Корень слова 'Библия'"
+			}
+		}
+	]
+}
