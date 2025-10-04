@@ -83,16 +83,24 @@ describe('ExerciseFilters', () => {
 			expect(toggleButton).toHaveAttribute('type', 'button')
 		})
 
-		it('shows filter content by default (expanded state)', () => {
+		it('shows filter content by default (expanded state)', async () => {
+			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			expect(screen.getByText('Difficulty')).toBeInTheDocument()
 			expect(screen.getByText('Language')).toBeInTheDocument()
 			expect(screen.getByText('Tags')).toBeInTheDocument()
 		})
 
-		it('displays correct SVG title for expanded state', () => {
+		it('displays correct SVG title for expanded state', async () => {
+			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			const svg = screen.getByTitle('Collapse')
 			expect(svg).toBeInTheDocument()
@@ -106,20 +114,27 @@ describe('ExerciseFilters', () => {
 
 			const toggleButton = screen.getByRole('button', {name: /filters/i})
 
-			// Initially expanded - should show filter content
-			expect(screen.getByText('Difficulty')).toBeInTheDocument()
+			// Initially collapsed - should show Expand icon
+			expect(screen.getByTitle('Expand')).toBeInTheDocument()
 
-			// Click to collapse
+			// Click to expand
 			await user.click(toggleButton)
 
-			// Should show inline summary instead
+			// Should show filter content
+			await waitFor(() => {
+				expect(screen.getByText('Difficulty')).toBeInTheDocument()
+			})
+
+			// Click again to collapse
+			await user.click(toggleButton)
+
+			// Should show Expand icon again
 			await waitFor(() => {
 				expect(screen.getByTitle('Expand')).toBeInTheDocument()
 			})
 		})
 
 		it('shows FilterSummaryInline when collapsed with selections', async () => {
-			const user = userEvent.setup()
 			const props = {
 				...defaultProps,
 				selectedDifficulties: ['a1'] as Difficulty[],
@@ -129,9 +144,7 @@ describe('ExerciseFilters', () => {
 
 			render(<ExerciseFilters {...props} />)
 
-			const toggleButton = screen.getByRole('button', {name: /filters/i})
-			await user.click(toggleButton)
-
+			// When collapsed with selections, should show inline summary
 			await waitFor(() => {
 				expect(screen.getByText('A1')).toBeInTheDocument()
 				expect(screen.getByText('🇺🇸 English')).toBeInTheDocument()
@@ -141,35 +154,51 @@ describe('ExerciseFilters', () => {
 	})
 
 	describe('DifficultyFilter', () => {
-		it('renders all difficulty options', () => {
+		it('renders all difficulty options', async () => {
+			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			expect(screen.getByText('A1')).toBeInTheDocument()
 			expect(screen.getByText('A2')).toBeInTheDocument()
 			expect(screen.getByText('B1')).toBeInTheDocument()
 		})
 
-		it('renders "All" button for difficulties', () => {
+		it('renders "All" button for difficulties', async () => {
+			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
 
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
+
 			const allButtons = screen.getAllByRole('button', {name: 'All'})
-			expect(allButtons).toHaveLength(2) // One for difficulty, one for language
+			expect(allButtons).toHaveLength(3) // One for type, one for difficulty, one for language
 		})
 
-		it('highlights "All" button when no difficulties are selected', () => {
+		it('highlights "All" button when no difficulties are selected', async () => {
+			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
 
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
+
 			const allButtons = screen.getAllByRole('button', {name: 'All'})
-			expect(allButtons).toHaveLength(2) // One for difficulty, one for language
+			expect(allButtons).toHaveLength(3) // One for type, one for difficulty, one for language
 			expect(allButtons.at(0)).toHaveClass('bg-blue-600', 'text-white')
 		})
 
-		it('highlights selected difficulty buttons', () => {
+		it('highlights selected difficulty buttons', async () => {
+			const user = userEvent.setup()
 			const props = {
 				...defaultProps,
 				selectedDifficulties: ['a1'] as Difficulty[]
 			}
 			render(<ExerciseFilters {...props} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			const a1Button = screen.getByRole('button', {name: 'A1'})
 			expect(a1Button).toHaveClass('bg-blue-600', 'text-white')
@@ -183,9 +212,12 @@ describe('ExerciseFilters', () => {
 			}
 			render(<ExerciseFilters {...props} />)
 
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
+
 			const allButtons = screen.getAllByRole('button', {name: 'All'})
-			expect(allButtons).toHaveLength(2)
-			const difficultyAllButton = allButtons.at(0)
+			expect(allButtons).toHaveLength(3)
+			const difficultyAllButton = allButtons.at(1) // Type is first, then difficulty
 			expect(difficultyAllButton).toBeDefined()
 			await user.click(difficultyAllButton as HTMLElement)
 
@@ -195,6 +227,9 @@ describe('ExerciseFilters', () => {
 		it('adds difficulty to selection when clicked', async () => {
 			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			const a1Button = screen.getByRole('button', {name: 'A1'})
 			await user.click(a1Button)
@@ -210,6 +245,9 @@ describe('ExerciseFilters', () => {
 			}
 			render(<ExerciseFilters {...props} />)
 
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
+
 			const a1Button = screen.getByRole('button', {name: 'A1'})
 			await user.click(a1Button)
 
@@ -218,46 +256,66 @@ describe('ExerciseFilters', () => {
 	})
 
 	describe('LanguageFilter', () => {
-		it('renders all language options with flags and names', () => {
+		it('renders all language options with flags and names', async () => {
+			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			expect(screen.getByText('🇺🇸 English')).toBeInTheDocument()
 			expect(screen.getByText('🇬🇷 Ελληνικά')).toBeInTheDocument()
 			expect(screen.getByText('🇷🇺 Русский')).toBeInTheDocument()
 		})
 
-		it('does not render when languageOptions is empty', () => {
+		it('does not render when languageOptions is empty', async () => {
+			const user = userEvent.setup()
 			const props = {
 				...defaultProps,
 				languageOptions: [] as Language[]
 			}
 			render(<ExerciseFilters {...props} />)
 
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
+
 			expect(screen.queryByText('Language')).not.toBeInTheDocument()
 		})
 
-		it('renders "All" button for languages', () => {
+		it('renders "All" button for languages', async () => {
+			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			// Get all "All" buttons and find the one in the language section
 			const allButtons = screen.getAllByRole('button', {name: 'All'})
-			expect(allButtons).toHaveLength(2) // One for difficulty, one for language
+			expect(allButtons).toHaveLength(3) // One for type, one for difficulty, one for language
 		})
 
-		it('highlights "All" button when no languages are selected', () => {
+		it('highlights "All" button when no languages are selected', async () => {
+			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
 
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
+
 			const allButtons = screen.getAllByRole('button', {name: 'All'})
-			expect(allButtons).toHaveLength(2)
-			expect(allButtons.at(1)).toHaveClass('bg-blue-600', 'text-white')
+			expect(allButtons).toHaveLength(3)
+			expect(allButtons.at(2)).toHaveClass('bg-blue-600', 'text-white')
 		})
 
-		it('highlights selected language buttons', () => {
+		it('highlights selected language buttons', async () => {
+			const user = userEvent.setup()
 			const props = {
 				...defaultProps,
 				selectedLanguages: ['en'] as Language[]
 			}
 			render(<ExerciseFilters {...props} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			const enButton = screen.getByRole('button', {name: '🇺🇸 English'})
 			expect(enButton).toHaveClass('bg-blue-600', 'text-white')
@@ -271,9 +329,12 @@ describe('ExerciseFilters', () => {
 			}
 			render(<ExerciseFilters {...props} />)
 
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
+
 			const allButtons = screen.getAllByRole('button', {name: 'All'})
-			expect(allButtons).toHaveLength(2)
-			const languageAllButton = allButtons.at(1)
+			expect(allButtons).toHaveLength(3)
+			const languageAllButton = allButtons.at(2)
 			expect(languageAllButton).toBeDefined()
 			await user.click(languageAllButton as HTMLElement)
 
@@ -283,6 +344,9 @@ describe('ExerciseFilters', () => {
 		it('adds language to selection when clicked', async () => {
 			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			const enButton = screen.getByRole('button', {name: '🇺🇸 English'})
 			await user.click(enButton)
@@ -298,48 +362,67 @@ describe('ExerciseFilters', () => {
 			}
 			render(<ExerciseFilters {...props} />)
 
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
+
 			const enButton = screen.getByRole('button', {name: '🇺🇸 English'})
 			await user.click(enButton)
 
 			expect(props.setSelectedLanguages).toHaveBeenCalledWith(['el'])
 		})
 
-		it('handles unknown languages gracefully', () => {
+		it('handles unknown languages gracefully', async () => {
+			const user = userEvent.setup()
 			const props = {
 				...defaultProps,
 				languageOptions: ['unknown' as Language]
 			}
 			render(<ExerciseFilters {...props} />)
 
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
+
 			expect(screen.getByText('UNKNOWN')).toBeInTheDocument()
 		})
 	})
 
 	describe('TagsFilter', () => {
-		it('renders all tag options with hash symbols', () => {
+		it('renders all tag options with hash symbols', async () => {
+			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			expect(screen.getByRole('button', {name: '#grammar'})).toBeInTheDocument()
 			expect(screen.getByRole('button', {name: '#verbs'})).toBeInTheDocument()
 			expect(screen.getByRole('button', {name: '#nouns'})).toBeInTheDocument()
 		})
 
-		it('does not render when allTags is empty', () => {
+		it('does not render when allTags is empty', async () => {
+			const user = userEvent.setup()
 			const props = {
 				...defaultProps,
 				tagOptions: []
 			}
 			render(<ExerciseFilters {...props} />)
 
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
+
 			expect(screen.queryByText('Tags')).not.toBeInTheDocument()
 		})
 
-		it('highlights selected tag buttons', () => {
+		it('highlights selected tag buttons', async () => {
+			const user = userEvent.setup()
 			const props = {
 				...defaultProps,
 				selectedTags: ['grammar']
 			}
 			render(<ExerciseFilters {...props} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			const grammarButton = screen.getByRole('button', {name: '#grammar'})
 			expect(grammarButton).toHaveClass('bg-blue-600', 'text-white')
@@ -348,6 +431,9 @@ describe('ExerciseFilters', () => {
 		it('adds tag to selection when clicked', async () => {
 			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			const grammarButton = screen.getByRole('button', {name: '#grammar'})
 			await user.click(grammarButton)
@@ -363,6 +449,9 @@ describe('ExerciseFilters', () => {
 			}
 			render(<ExerciseFilters {...props} />)
 
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
+
 			const grammarButton = screen.getByRole('button', {name: '#grammar'})
 			await user.click(grammarButton)
 
@@ -371,42 +460,22 @@ describe('ExerciseFilters', () => {
 	})
 
 	describe('FilterSummaryInline', () => {
-		it('shows "All" for empty difficulty selection', async () => {
-			const user = userEvent.setup()
+		it('shows "All" when no filters are selected', async () => {
 			render(<ExerciseFilters {...defaultProps} />)
 
-			const toggleButton = screen.getByRole('button', {name: /filters/i})
-			await user.click(toggleButton)
-
 			await waitFor(() => {
-				const difficultySection = screen.getByText('Difficulty:').parentElement
-				expect(difficultySection).toHaveTextContent('All')
-			})
-		})
-
-		it('shows "All" for empty language selection', async () => {
-			const user = userEvent.setup()
-			render(<ExerciseFilters {...defaultProps} />)
-
-			const toggleButton = screen.getByRole('button', {name: /filters/i})
-			await user.click(toggleButton)
-
-			await waitFor(() => {
-				const languageSection = screen.getByText('Language:').parentElement
-				expect(languageSection).toHaveTextContent('All')
+				expect(screen.getByText('All')).toBeInTheDocument()
+				expect(screen.queryByText('Difficulty:')).not.toBeInTheDocument()
+				expect(screen.queryByText('Language:')).not.toBeInTheDocument()
 			})
 		})
 
 		it('shows selected difficulties', async () => {
-			const user = userEvent.setup()
 			const props = {
 				...defaultProps,
 				selectedDifficulties: ['a1', 'b1'] as Difficulty[]
 			}
 			render(<ExerciseFilters {...props} />)
-
-			const toggleButton = screen.getByRole('button', {name: /filters/i})
-			await user.click(toggleButton)
 
 			await waitFor(() => {
 				expect(screen.getByText('A1')).toBeInTheDocument()
@@ -415,15 +484,11 @@ describe('ExerciseFilters', () => {
 		})
 
 		it('shows selected languages with flags', async () => {
-			const user = userEvent.setup()
 			const props = {
 				...defaultProps,
 				selectedLanguages: ['en', 'ru'] as Language[]
 			}
 			render(<ExerciseFilters {...props} />)
-
-			const toggleButton = screen.getByRole('button', {name: /filters/i})
-			await user.click(toggleButton)
 
 			await waitFor(() => {
 				expect(screen.getByText('🇺🇸 English')).toBeInTheDocument()
@@ -432,15 +497,11 @@ describe('ExerciseFilters', () => {
 		})
 
 		it('shows first 3 tags and overflow count', async () => {
-			const user = userEvent.setup()
 			const props = {
 				...defaultProps,
 				selectedTags: ['grammar', 'verbs', 'nouns', 'adjectives', 'pronouns']
 			}
 			render(<ExerciseFilters {...props} />)
-
-			const toggleButton = screen.getByRole('button', {name: /filters/i})
-			await user.click(toggleButton)
 
 			await waitFor(() => {
 				expect(screen.getByText('grammar')).toBeInTheDocument()
@@ -452,11 +513,7 @@ describe('ExerciseFilters', () => {
 		})
 
 		it('does not show tags section when no tags are selected', async () => {
-			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
-
-			const toggleButton = screen.getByRole('button', {name: /filters/i})
-			await user.click(toggleButton)
 
 			await waitFor(() => {
 				const tagsLabel = screen.queryByText('Tags:')
@@ -478,7 +535,7 @@ describe('ExerciseFilters', () => {
 		it('has proper SVG title for screen readers', () => {
 			render(<ExerciseFilters {...defaultProps} />)
 
-			const svg = screen.getByTitle('Collapse')
+			const svg = screen.getByTitle('Expand')
 			expect(svg).toBeInTheDocument()
 		})
 
@@ -496,7 +553,8 @@ describe('ExerciseFilters', () => {
 	})
 
 	describe('Prop validation', () => {
-		it('handles empty arrays for all options', () => {
+		it('handles empty arrays for all options', async () => {
+			const user = userEvent.setup()
 			const props = {
 				...defaultProps,
 				difficultyOptions: [] as Difficulty[],
@@ -505,13 +563,17 @@ describe('ExerciseFilters', () => {
 			}
 			render(<ExerciseFilters {...props} />)
 
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
+
 			expect(screen.getByText('Filters')).toBeInTheDocument()
 			expect(screen.getByText('Difficulty')).toBeInTheDocument()
 			expect(screen.queryByText('Language')).not.toBeInTheDocument()
 			expect(screen.queryByText('Tags')).not.toBeInTheDocument()
 		})
 
-		it('handles multiple selections correctly', () => {
+		it('handles multiple selections correctly', async () => {
+			const user = userEvent.setup()
 			const props = {
 				...defaultProps,
 				selectedDifficulties: ['a1', 'a2'] as Difficulty[],
@@ -519,6 +581,9 @@ describe('ExerciseFilters', () => {
 				selectedTags: ['grammar', 'verbs']
 			}
 			render(<ExerciseFilters {...props} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			// Difficulty buttons
 			const a1Button = screen.getByRole('button', {name: 'A1'})
@@ -541,8 +606,12 @@ describe('ExerciseFilters', () => {
 	})
 
 	describe('Translation integration', () => {
-		it('calls translation function with correct keys', () => {
+		it('calls translation function with correct keys', async () => {
+			const user = userEvent.setup()
 			render(<ExerciseFilters {...defaultProps} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			expect(mockT).toHaveBeenCalledWith('filters')
 			expect(mockT).toHaveBeenCalledWith('difficulty')
@@ -555,13 +624,17 @@ describe('ExerciseFilters', () => {
 			expect(mockT).toHaveBeenCalledWith('ui.hashSymbol')
 		})
 
-		it('handles translation function returning keys when translation missing', () => {
+		it('handles translation function returning keys when translation missing', async () => {
+			const user = userEvent.setup()
 			const fallbackT = vi.fn((key: string) => key)
 			const props = {
 				...defaultProps,
 				t: fallbackT
 			}
 			render(<ExerciseFilters {...props} />)
+
+			const toggleButton = screen.getByRole('button', {name: /filters/i})
+			await user.click(toggleButton)
 
 			expect(screen.getByText('filters')).toBeInTheDocument()
 			expect(screen.getByText('difficulty')).toBeInTheDocument()

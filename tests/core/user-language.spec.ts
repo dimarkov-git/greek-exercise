@@ -54,6 +54,9 @@ test.describe('User Language - Visual Indication', () => {
 
 		await exerciseLibrary.goto()
 
+		// Expand settings to access user language selector
+		await exerciseLibrary.expandSettings()
+
 		// English should be selected by default (green background)
 		const englishOption = page.locator(
 			SELECTORS.userLanguageOption(LANGUAGES.user.english)

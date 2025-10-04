@@ -72,6 +72,51 @@ interface ExerciseCardProps {
 	translations: typeof exerciseLibraryTranslations
 }
 
+interface ExerciseMetadataProps {
+	exercise: ExerciseSummary
+	t: (
+		entry: (typeof exerciseLibraryTranslations)[keyof typeof exerciseLibraryTranslations]
+	) => string
+	translations: typeof exerciseLibraryTranslations
+}
+
+function ExerciseMetadata({exercise, t, translations}: ExerciseMetadataProps) {
+	return (
+		<div className='mb-4 flex items-center justify-between text-gray-500 text-sm dark:text-gray-400'>
+			<div className='flex items-center gap-4'>
+				{exercise.type === 'word-form' && (
+					<>
+						<span>
+							{t(translations['ui.booksEmoji'])}{' '}
+							{t(translations['exercise.blocks'])}
+							{t(translations['ui.colon'])} {exercise.totalBlocks}
+						</span>
+						<span>
+							{t(translations['ui.documentEmoji'])}{' '}
+							{t(translations['exercise.cases'])}
+							{t(translations['ui.colon'])} {exercise.totalCases}
+						</span>
+					</>
+				)}
+				{exercise.type === 'multiple-choice' && (
+					<span>
+						{t(translations['ui.questionEmoji'])}{' '}
+						{t(translations['exercise.questions'])}
+						{t(translations['ui.colon'])} {exercise.totalCases}
+					</span>
+				)}
+				{exercise.type === 'flashcard' && (
+					<span>
+						{t(translations['ui.cardEmoji'])}{' '}
+						{t(translations['exercise.cards'])}
+						{t(translations['ui.colon'])} {exercise.totalCases}
+					</span>
+				)}
+			</div>
+		</div>
+	)
+}
+
 function ExerciseCard({exercise, index, t, translations}: ExerciseCardProps) {
 	const {uiLanguage} = useSettingsStore()
 
@@ -130,38 +175,11 @@ function ExerciseCard({exercise, index, t, translations}: ExerciseCardProps) {
 					</div>
 				)}
 
-				<div className='mb-4 flex items-center justify-between text-gray-500 text-sm dark:text-gray-400'>
-					<div className='flex items-center gap-4'>
-						{exercise.type === 'word-form' && (
-							<>
-								<span>
-									{t(translations['ui.booksEmoji'])}{' '}
-									{t(translations['exercise.blocks'])}
-									{t(translations['ui.colon'])} {exercise.totalBlocks}
-								</span>
-								<span>
-									{t(translations['ui.documentEmoji'])}{' '}
-									{t(translations['exercise.cases'])}
-									{t(translations['ui.colon'])} {exercise.totalCases}
-								</span>
-							</>
-						)}
-						{exercise.type === 'multiple-choice' && (
-							<span>
-								{t(translations['ui.questionEmoji'])}{' '}
-								{t(translations['exercise.questions'])}
-								{t(translations['ui.colon'])} {exercise.totalCases}
-							</span>
-						)}
-						{exercise.type === 'flashcard' && (
-							<span>
-								{t(translations['ui.cardEmoji'])}{' '}
-								{t(translations['exercise.cards'])}
-								{t(translations['ui.colon'])} {exercise.totalCases}
-							</span>
-						)}
-					</div>
-				</div>
+				<ExerciseMetadata
+					exercise={exercise}
+					t={t}
+					translations={translations}
+				/>
 
 				<div className='flex gap-2'>
 					<Link

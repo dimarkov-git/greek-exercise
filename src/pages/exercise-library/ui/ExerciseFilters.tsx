@@ -437,6 +437,29 @@ interface FilterSummaryInlineProps {
 	translations: typeof exerciseLibraryTranslations
 }
 
+interface FilterBadgeGroupProps {
+	label: string
+	items: Array<{key: string; display: string}>
+}
+
+function FilterBadgeGroup({label, items}: FilterBadgeGroupProps) {
+	return (
+		<div className='flex items-center gap-1'>
+			<span className='text-gray-600 dark:text-gray-400'>{label}</span>
+			<div className='flex gap-1'>
+				{items.map(({key, display}) => (
+					<span
+						className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'
+						key={key}
+					>
+						{display}
+					</span>
+				))}
+			</div>
+		</div>
+	)
+}
+
 function FilterSummaryInline({
 	selectedDifficulties,
 	selectedLanguages,
@@ -462,66 +485,37 @@ function FilterSummaryInline({
 	return (
 		<div className='flex items-center gap-2 text-sm'>
 			{selectedTypes.length > 0 && (
-				<div className='flex items-center gap-1'>
-					<span className='text-gray-600 dark:text-gray-400'>
-						{t(translations.type)}
-						{t(translations['ui.colon'])}
-					</span>
-					<div className='flex gap-1'>
-						{selectedTypes.map(type => (
-							<span
-								className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'
-								key={type}
-							>
-								{t(
-									translations[
-										`exerciseType.${type}` as keyof typeof translations
-									]
-								)}
-							</span>
-						))}
-					</div>
-				</div>
+				<FilterBadgeGroup
+					items={selectedTypes.map(type => ({
+						key: type,
+						display: t(
+							translations[`exerciseType.${type}` as keyof typeof translations]
+						)
+					}))}
+					label={`${t(translations.type)}${t(translations['ui.colon'])}`}
+				/>
 			)}
 			{selectedDifficulties.length > 0 && (
-				<div className='flex items-center gap-1'>
-					<span className='text-gray-600 dark:text-gray-400'>
-						{t(translations.difficulty)}
-						{t(translations['ui.colon'])}
-					</span>
-					<div className='flex gap-1'>
-						{selectedDifficulties.map(difficulty => (
-							<span
-								className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'
-								key={difficulty}
-							>
-								{t(
-									translations[
-										`difficulty.${difficulty}` as keyof typeof translations
-									]
-								)}
-							</span>
-						))}
-					</div>
-				</div>
+				<FilterBadgeGroup
+					items={selectedDifficulties.map(difficulty => ({
+						key: difficulty,
+						display: t(
+							translations[
+								`difficulty.${difficulty}` as keyof typeof translations
+							]
+						)
+					}))}
+					label={`${t(translations.difficulty)}${t(translations['ui.colon'])}`}
+				/>
 			)}
 			{selectedLanguages.length > 0 && (
-				<div className='flex items-center gap-1'>
-					<span className='text-gray-600 dark:text-gray-400'>
-						{t(translations.language)}
-						{t(translations['ui.colon'])}
-					</span>
-					<div className='flex gap-1'>
-						{selectedLanguages.map(language => (
-							<span
-								className='inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-blue-800 text-xs dark:bg-blue-900/50 dark:text-blue-300'
-								key={language}
-							>
-								{LANGUAGE_DISPLAY.get(language) ?? language.toUpperCase()}
-							</span>
-						))}
-					</div>
-				</div>
+				<FilterBadgeGroup
+					items={selectedLanguages.map(language => ({
+						key: language,
+						display: LANGUAGE_DISPLAY.get(language) ?? language.toUpperCase()
+					}))}
+					label={`${t(translations.language)}${t(translations['ui.colon'])}`}
+				/>
 			)}
 			{selectedTags.length > 0 && (
 				<div className='flex items-center gap-1'>

@@ -13,6 +13,26 @@ import {
 } from '@/entities/exercise'
 import type {Language} from '@/shared/model'
 
+function useFilterOptions(viewModel: ExerciseLibraryViewModel | undefined) {
+	return useMemo(() => {
+		if (!viewModel) {
+			return {
+				tagOptions: [],
+				difficultyOptions: [] as Difficulty[],
+				languageOptions: [] as Language[],
+				typeOptions: [] as ExerciseType[]
+			}
+		}
+
+		return {
+			tagOptions: selectTagOptions(viewModel),
+			difficultyOptions: selectDifficultyOptions(viewModel),
+			languageOptions: selectLanguageOptions(viewModel),
+			typeOptions: selectTypeOptions(viewModel)
+		}
+	}, [viewModel])
+}
+
 export function useExerciseFiltering(
 	viewModel: ExerciseLibraryViewModel | undefined
 ) {
@@ -43,23 +63,7 @@ export function useExerciseFiltering(
 	])
 
 	const {tagOptions, difficultyOptions, languageOptions, typeOptions} =
-		useMemo(() => {
-			if (!viewModel) {
-				return {
-					tagOptions: [],
-					difficultyOptions: [] as Difficulty[],
-					languageOptions: [] as Language[],
-					typeOptions: [] as ExerciseType[]
-				}
-			}
-
-			return {
-				tagOptions: selectTagOptions(viewModel),
-				difficultyOptions: selectDifficultyOptions(viewModel),
-				languageOptions: selectLanguageOptions(viewModel),
-				typeOptions: selectTypeOptions(viewModel)
-			}
-		}, [viewModel])
+		useFilterOptions(viewModel)
 
 	const clearFilters = useCallback(() => {
 		setSelectedTags([])

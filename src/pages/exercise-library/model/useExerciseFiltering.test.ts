@@ -12,7 +12,8 @@ const selectorsModule = vi.hoisted(() => ({
 	selectFilteredExercises: vi.fn(),
 	selectTagOptions: vi.fn(),
 	selectDifficultyOptions: vi.fn(),
-	selectLanguageOptions: vi.fn()
+	selectLanguageOptions: vi.fn(),
+	selectTypeOptions: vi.fn()
 }))
 
 vi.mock('@/entities/exercise', () => ({
@@ -74,6 +75,7 @@ describe('useExerciseFiltering', () => {
 		selectorsModule.selectTagOptions.mockReset()
 		selectorsModule.selectDifficultyOptions.mockReset()
 		selectorsModule.selectLanguageOptions.mockReset()
+		selectorsModule.selectTypeOptions.mockReset()
 	})
 
 	describe('initialization', () => {
@@ -155,7 +157,8 @@ describe('useExerciseFiltering', () => {
 				{
 					tags: ['verbs'],
 					difficulties: ['a1'],
-					languages: ['el']
+					languages: ['el'],
+					types: []
 				}
 			)
 			expect(result.current.filteredExercises).toBe(expectedExercises)
@@ -352,7 +355,8 @@ describe('useExerciseFiltering', () => {
 				{
 					tags: ['verbs', 'present', 'nouns'],
 					difficulties: [],
-					languages: []
+					languages: [],
+					types: []
 				}
 			)
 		})
@@ -375,7 +379,8 @@ describe('useExerciseFiltering', () => {
 				{
 					tags: ['verbs'],
 					difficulties: ['a1', 'b1'],
-					languages: ['el', 'en']
+					languages: ['el', 'en'],
+					types: []
 				}
 			)
 		})
@@ -407,7 +412,8 @@ describe('useExerciseFiltering', () => {
 				{
 					tags: [],
 					difficulties: ['a1'],
-					languages: ['el']
+					languages: ['el'],
+					types: []
 				}
 			)
 		})
@@ -423,7 +429,8 @@ describe('useExerciseFiltering', () => {
 			expect(selectorsModule.selectFilteredExercises).toHaveBeenCalledWith([], {
 				tags: [],
 				difficulties: [],
-				languages: []
+				languages: [],
+				types: []
 			})
 			expect(result.current.filteredExercises).toEqual([])
 		})
@@ -495,7 +502,8 @@ describe('useExerciseFiltering', () => {
 				{
 					tags: ['verbs', 'verbs', 'present'],
 					difficulties: ['a1', 'a1'],
-					languages: ['el', 'el', 'en']
+					languages: ['el', 'el', 'en'],
+					types: []
 				}
 			)
 		})

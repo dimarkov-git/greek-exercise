@@ -134,8 +134,12 @@ describe('UserSettings', () => {
 			expect(toggleButton).toHaveClass('flex', 'w-full', 'cursor-pointer')
 		})
 
-		it('shows settings content by default (expanded state)', () => {
+		it('shows settings content when expanded', async () => {
+			const user = userEvent.setup()
 			render(<UserSettings {...defaultProps} />)
+
+			const toggleButton = screen.getByRole('button', {name: /settings/i})
+			await user.click(toggleButton)
 
 			expect(
 				screen.getByText(
@@ -145,17 +149,19 @@ describe('UserSettings', () => {
 			expect(screen.getByTestId('user-language-selector')).toBeInTheDocument()
 		})
 
-		it('displays correct SVG title for expanded state', () => {
+		it('displays correct SVG title for collapsed state', () => {
 			render(<UserSettings {...defaultProps} />)
 
-			const svg = screen.getByTitle('Collapse')
+			const svg = screen.getByTitle('Expand')
 			expect(svg).toBeInTheDocument()
 		})
 
-		it('does not show inline summary when expanded', () => {
+		it('shows inline summary when collapsed', () => {
 			render(<UserSettings {...defaultProps} />)
 
-			expect(screen.queryByText('Hint language')).not.toBeInTheDocument()
+			expect(
+				screen.getByText('Hint language', {exact: false})
+			).toBeInTheDocument()
 		})
 	})
 
@@ -166,27 +172,16 @@ describe('UserSettings', () => {
 
 			const toggleButton = screen.getByText('Settings').closest('button')!
 
-			// Initially expanded - should show settings content
+			// Initially collapsed - should show inline summary
 			expect(
-				screen.getByText(
-					'Choose your native language for hints and explanations'
-				)
+				screen.getByText('Hint language', {exact: false})
 			).toBeInTheDocument()
+			expect(screen.getByTitle('Expand')).toBeInTheDocument()
 
-			// Click to collapse
+			// Click to expand
 			await user.click(toggleButton)
 
-			// Should show inline summary and hide content
-			await waitFor(() => {
-				expect(screen.getByTitle('Expand')).toBeInTheDocument()
-				expect(
-					screen.getByText('Hint language', {exact: false})
-				).toBeInTheDocument()
-			})
-
-			// Click to expand again
-			await user.click(toggleButton)
-
+			// Should show settings content and hide summary
 			await waitFor(() => {
 				expect(screen.getByTitle('Collapse')).toBeInTheDocument()
 				expect(
@@ -195,21 +190,25 @@ describe('UserSettings', () => {
 					)
 				).toBeInTheDocument()
 			})
-		})
 
-		it('shows SettingsSummaryInline when collapsed', async () => {
-			const user = userEvent.setup()
-			render(<UserSettings {...defaultProps} />)
-
-			const toggleButton = screen.getByText('Settings').closest('button')!
+			// Click to collapse again
 			await user.click(toggleButton)
 
 			await waitFor(() => {
+				expect(screen.getByTitle('Expand')).toBeInTheDocument()
 				expect(
 					screen.getByText('Hint language', {exact: false})
 				).toBeInTheDocument()
-				expect(screen.getByText(':', {exact: false})).toBeInTheDocument()
 			})
+		})
+
+		it('shows SettingsSummaryInline when collapsed', () => {
+			render(<UserSettings {...defaultProps} />)
+
+			expect(
+				screen.getByText('Hint language', {exact: false})
+			).toBeInTheDocument()
+			expect(screen.getByText(':', {exact: false})).toBeInTheDocument()
 		})
 
 		it('hides UserLanguageSelector when collapsed', async () => {
@@ -218,24 +217,22 @@ describe('UserSettings', () => {
 
 			const toggleButton = screen.getByText('Settings').closest('button')!
 
-			// Initially expanded - selector should be visible
-			expect(screen.getByTestId('user-language-selector')).toBeInTheDocument()
+			// Initially collapsed - selector should not be visible
+			expect(
+				screen.queryByTestId('user-language-selector')
+			).not.toBeInTheDocument()
 
-			// Click to collapse
+			// Click to expand
 			await user.click(toggleButton)
 
 			await waitFor(() => {
-				expect(
-					screen.queryByTestId('user-language-selector')
-				).not.toBeInTheDocument()
+				expect(screen.getByTestId('user-language-selector')).toBeInTheDocument()
 			})
 		})
 	})
 
 	describe('SettingsSummaryInline', () => {
-		it('shows correct flag for Russian user language', async () => {
-			const user = userEvent.setup()
-
+		it('shows correct flag for Russian user language', () => {
 			act(() => {
 				useSettingsStore.setState(state => ({
 					...state,
@@ -245,20 +242,13 @@ describe('UserSettings', () => {
 
 			render(<UserSettings {...defaultProps} />)
 
-			const toggleButton = screen.getByText('Settings').closest('button')!
-			await user.click(toggleButton)
-
-			await waitFor(() => {
-				const summarySpan = screen.getByText('Hint language', {
-					exact: false
-				}).parentElement
-				expect(summarySpan).toHaveTextContent('🇷🇺')
-			})
+			const summarySpan = screen.getByText('Hint language', {
+				exact: false
+			}).parentElement
+			expect(summarySpan).toHaveTextContent('🇷🇺')
 		})
 
-		it('shows correct flag for English user language', async () => {
-			const user = userEvent.setup()
-
+		it('shows correct flag for English user language', () => {
 			act(() => {
 				useSettingsStore.setState(state => ({
 					...state,
@@ -268,20 +258,13 @@ describe('UserSettings', () => {
 
 			render(<UserSettings {...defaultProps} />)
 
-			const toggleButton = screen.getByText('Settings').closest('button')!
-			await user.click(toggleButton)
-
-			await waitFor(() => {
-				const summarySpan = screen.getByText('Hint language', {
-					exact: false
-				}).parentElement
-				expect(summarySpan).toHaveTextContent('🇺🇸')
-			})
+			const summarySpan = screen.getByText('Hint language', {
+				exact: false
+			}).parentElement
+			expect(summarySpan).toHaveTextContent('🇺🇸')
 		})
 
-		it('shows fallback flag for unknown language', async () => {
-			const user = userEvent.setup()
-
+		it('shows fallback flag for unknown language', () => {
 			act(() => {
 				useSettingsStore.setState(state => ({
 					...state,
@@ -292,31 +275,20 @@ describe('UserSettings', () => {
 
 			render(<UserSettings {...defaultProps} />)
 
-			const toggleButton = screen.getByText('Settings').closest('button')!
-			await user.click(toggleButton)
-
-			await waitFor(() => {
-				const summarySpan = screen.getByText('Hint language', {
-					exact: false
-				}).parentElement
-				expect(summarySpan).toHaveTextContent('🌐')
-			})
+			const summarySpan = screen.getByText('Hint language', {
+				exact: false
+			}).parentElement
+			expect(summarySpan).toHaveTextContent('🌐')
 		})
 
 		it('reacts to userLanguage changes from the store', async () => {
-			const user = userEvent.setup()
 			render(<UserSettings {...defaultProps} />)
 
-			const toggleButton = screen.getByText('Settings').closest('button')!
-			await user.click(toggleButton)
-
-			// Initially should show default English flag
-			await waitFor(() => {
-				const summarySpan = screen.getByText('Hint language', {
-					exact: false
-				}).parentElement
-				expect(summarySpan).toHaveTextContent('🇺🇸')
-			})
+			// Initially should show default English flag (collapsed state)
+			const summarySpan = screen.getByText('Hint language', {
+				exact: false
+			}).parentElement
+			expect(summarySpan).toHaveTextContent('🇺🇸')
 
 			// Change to Russian
 			act(() => {
@@ -327,24 +299,46 @@ describe('UserSettings', () => {
 			})
 
 			await waitFor(() => {
-				const summarySpan = screen.getByText('Hint language', {
+				const updatedSummarySpan = screen.getByText('Hint language', {
 					exact: false
 				}).parentElement
-				expect(summarySpan).toHaveTextContent('🇷🇺')
-				expect(summarySpan).not.toHaveTextContent('🇺🇸')
+				expect(updatedSummarySpan).toHaveTextContent('🇷🇺')
+			})
+
+			// Change back to English
+			act(() => {
+				useSettingsStore.setState(state => ({
+					...state,
+					userLanguage: 'en'
+				}))
+			})
+
+			await waitFor(() => {
+				const finalSummarySpan = screen.getByText('Hint language', {
+					exact: false
+				}).parentElement
+				expect(finalSummarySpan).toHaveTextContent('🇺🇸')
 			})
 		})
 	})
 
 	describe('UserLanguageSelector integration', () => {
-		it('renders UserLanguageSelector component when expanded', () => {
+		it('renders UserLanguageSelector component when expanded', async () => {
+			const user = userEvent.setup()
 			render(<UserSettings {...defaultProps} />)
+
+			const toggleButton = screen.getByText('Settings').closest('button')!
+			await user.click(toggleButton)
 
 			expect(screen.getByTestId('user-language-selector')).toBeInTheDocument()
 		})
 
-		it('includes all user language options', () => {
+		it('includes all user language options', async () => {
+			const user = userEvent.setup()
 			render(<UserSettings {...defaultProps} />)
+
+			const toggleButton = screen.getByText('Settings').closest('button')!
+			await user.click(toggleButton)
 
 			for (const language of USER_LANGUAGES) {
 				expect(
@@ -353,8 +347,12 @@ describe('UserSettings', () => {
 			}
 		})
 
-		it('shows user language description', () => {
+		it('shows user language description', async () => {
+			const user = userEvent.setup()
 			render(<UserSettings {...defaultProps} />)
+
+			const toggleButton = screen.getByText('Settings').closest('button')!
+			await user.click(toggleButton)
 
 			expect(
 				screen.getByText(
@@ -369,25 +367,18 @@ describe('UserSettings', () => {
 			render(<UserSettings {...defaultProps} />)
 
 			expect(mockT).toHaveBeenCalledWith('settings')
-			expect(mockT).toHaveBeenCalledWith('userLanguageDescription')
-			expect(mockT).toHaveBeenCalledWith('ui.collapse')
+			expect(mockT).toHaveBeenCalledWith('ui.expand')
 		})
 
-		it('calls translation function for inline summary when collapsed', async () => {
-			const user = userEvent.setup()
+		it('calls translation function for inline summary when collapsed', () => {
 			render(<UserSettings {...defaultProps} />)
 
-			const toggleButton = screen.getByText('Settings').closest('button')!
-			await user.click(toggleButton)
-
-			await waitFor(() => {
-				expect(mockT).toHaveBeenCalledWith('hintLanguage')
-				expect(mockT).toHaveBeenCalledWith('ui.colon')
-				expect(mockT).toHaveBeenCalledWith('ui.expand')
-			})
+			expect(mockT).toHaveBeenCalledWith('hintLanguage')
+			expect(mockT).toHaveBeenCalledWith('ui.colon')
 		})
 
-		it('handles missing translations gracefully', () => {
+		it('handles missing translations gracefully', async () => {
+			const user = userEvent.setup()
 			const fallbackT = vi.fn((key: string) => key)
 			render(
 				<UserSettings
@@ -397,6 +388,10 @@ describe('UserSettings', () => {
 			)
 
 			expect(screen.getByText('settings')).toBeInTheDocument()
+
+			const toggleButton = screen.getByText('settings').closest('button')!
+			await user.click(toggleButton)
+
 			expect(screen.getByText('userLanguageDescription')).toBeInTheDocument()
 		})
 	})
@@ -412,7 +407,7 @@ describe('UserSettings', () => {
 		it('has proper SVG title for screen readers', () => {
 			render(<UserSettings {...defaultProps} />)
 
-			const svg = screen.getByTitle('Collapse')
+			const svg = screen.getByTitle('Expand')
 			expect(svg).toBeInTheDocument()
 		})
 
@@ -421,15 +416,15 @@ describe('UserSettings', () => {
 			render(<UserSettings {...defaultProps} />)
 
 			// Initially collapsed
-			expect(screen.getByTitle('Collapse')).toBeInTheDocument()
+			expect(screen.getByTitle('Expand')).toBeInTheDocument()
 
 			// Click to expand
 			const toggleButton = screen.getByText('Settings').closest('button')!
 			await user.click(toggleButton)
 
 			await waitFor(() => {
-				expect(screen.getByTitle('Expand')).toBeInTheDocument()
-				expect(screen.queryByTitle('Collapse')).not.toBeInTheDocument()
+				expect(screen.getByTitle('Collapse')).toBeInTheDocument()
+				expect(screen.queryByTitle('Expand')).not.toBeInTheDocument()
 			})
 		})
 
@@ -445,11 +440,15 @@ describe('UserSettings', () => {
 			)
 		})
 
-		it('has proper contrast classes for dark mode support', () => {
+		it('has proper contrast classes for dark mode support', async () => {
+			const user = userEvent.setup()
 			render(<UserSettings {...defaultProps} />)
 
 			const heading = screen.getByRole('heading', {level: 3})
 			expect(heading).toHaveClass('dark:text-white')
+
+			const toggleButton = screen.getByText('Settings').closest('button')!
+			await user.click(toggleButton)
 
 			const description = screen.getByText(
 				'Choose your native language for hints and explanations'
@@ -499,7 +498,7 @@ describe('UserSettings', () => {
 			expect(toggleButton).toHaveClass('transition-all')
 
 			// SVG classes are mocked away by framer-motion mock, but the title is still there
-			const svg = screen.getByTitle('Collapse')
+			const svg = screen.getByTitle('Expand')
 			expect(svg).toBeInTheDocument()
 		})
 	})
@@ -539,29 +538,25 @@ describe('UserSettings', () => {
 		it('maintains state after multiple renders', () => {
 			const {rerender} = render(<UserSettings {...defaultProps} />)
 
-			// Initially expanded
+			// Initially collapsed
 			expect(
-				screen.getByText(
-					'Choose your native language for hints and explanations'
-				)
+				screen.getByText('Hint language', {exact: false})
 			).toBeInTheDocument()
+			expect(screen.getByTitle('Expand')).toBeInTheDocument()
 
 			// Rerender with same props
 			rerender(<UserSettings {...defaultProps} />)
 
-			// Should still be expanded
+			// Should still be collapsed
 			expect(
-				screen.getByText(
-					'Choose your native language for hints and explanations'
-				)
+				screen.getByText('Hint language', {exact: false})
 			).toBeInTheDocument()
+			expect(screen.getByTitle('Expand')).toBeInTheDocument()
 		})
 	})
 
 	describe('Settings store integration', () => {
-		it('reads userLanguage from settings store', async () => {
-			const user = userEvent.setup()
-
+		it('reads userLanguage from settings store', () => {
 			act(() => {
 				useSettingsStore.setState(state => ({
 					...state,
@@ -571,23 +566,20 @@ describe('UserSettings', () => {
 
 			render(<UserSettings {...defaultProps} />)
 
-			const toggleButton = screen.getByText('Settings').closest('button')!
-			await user.click(toggleButton)
-
-			await waitFor(() => {
-				const summarySpan = screen.getByText('Hint language', {
-					exact: false
-				}).parentElement
-				expect(summarySpan).toHaveTextContent('🇷🇺')
-			})
+			const summarySpan = screen.getByText('Hint language', {
+				exact: false
+			}).parentElement
+			expect(summarySpan).toHaveTextContent('🇷🇺')
 		})
 
 		it('updates when settings store changes', async () => {
-			const user = userEvent.setup()
 			render(<UserSettings {...defaultProps} />)
 
-			const toggleButton = screen.getByText('Settings').closest('button')!
-			await user.click(toggleButton)
+			// Initially should show English flag (collapsed state)
+			const summarySpan = screen.getByText('Hint language', {
+				exact: false
+			}).parentElement
+			expect(summarySpan).toHaveTextContent('🇺🇸')
 
 			// Change language in store
 			act(() => {
@@ -598,10 +590,10 @@ describe('UserSettings', () => {
 			})
 
 			await waitFor(() => {
-				const summarySpan = screen.getByText('Hint language', {
+				const ruSummarySpan = screen.getByText('Hint language', {
 					exact: false
 				}).parentElement
-				expect(summarySpan).toHaveTextContent('🇷🇺')
+				expect(ruSummarySpan).toHaveTextContent('🇷🇺')
 			})
 
 			// Change back to English
@@ -613,10 +605,10 @@ describe('UserSettings', () => {
 			})
 
 			await waitFor(() => {
-				const summarySpan = screen.getByText('Hint language', {
+				const enSummarySpan = screen.getByText('Hint language', {
 					exact: false
 				}).parentElement
-				expect(summarySpan).toHaveTextContent('🇺🇸')
+				expect(enSummarySpan).toHaveTextContent('🇺🇸')
 			})
 		})
 	})

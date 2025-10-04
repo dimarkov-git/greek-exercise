@@ -33,7 +33,20 @@ export class ExerciseLibrary {
 			.waitFor({state: 'visible', timeout: 10_000})
 	}
 
+	async expandSettings() {
+		// Click the Settings button to expand the collapsed settings panel
+		const settingsButton = this.page.getByRole('button', {name: /settings/i})
+		await settingsButton.click()
+		// Wait for the user language selector to be visible
+		await this.userLanguageSelector.waitFor({state: 'visible'})
+	}
+
 	async selectUserLanguage(language: string) {
+		// Expand settings first if collapsed
+		const isVisible = await this.userLanguageSelector.isVisible()
+		if (!isVisible) {
+			await this.expandSettings()
+		}
 		const option = this.page.locator(SELECTORS.userLanguageOption(language))
 		await option.click()
 	}
@@ -69,10 +82,14 @@ export class ExerciseLibrary {
 	// Assertions
 	async expectPageLoaded() {
 		await expect(this.exerciseCards.first()).toBeVisible()
-		await expect(this.userLanguageSelector).toBeVisible()
 	}
 
 	async expectUserLanguageSelected(language: string) {
+		// Expand settings first if collapsed
+		const isVisible = await this.userLanguageSelector.isVisible()
+		if (!isVisible) {
+			await this.expandSettings()
+		}
 		const option = this.page.locator(SELECTORS.userLanguageOption(language))
 		const isSelected = await option.getAttribute('data-selected')
 		expect(isSelected).toBe('true')

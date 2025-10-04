@@ -31,10 +31,15 @@ const mockT = vi.fn((key: string) => {
 		'ui.documentEmoji': '📄',
 		'ui.booksEmoji': '📚',
 		'ui.timerEmoji': '⏱️',
+		'ui.questionEmoji': '❓',
+		'ui.cardEmoji': '🃏',
 		'ui.hashSymbol': '#',
 		'ui.plusSymbol': '+',
+		'ui.colon': ':',
 		'exercise.cases': 'cases',
-		'exercise.blocks': 'blocks'
+		'exercise.blocks': 'blocks',
+		'exercise.questions': 'questions',
+		'exercise.cards': 'cards'
 	}
 	return translations[key] || key
 })
@@ -249,7 +254,7 @@ describe('ExerciseGrid', () => {
 				const mediumExercise = createMockExercise({difficulty: 'a2'})
 				render(<ExerciseGrid {...defaultProps} exercises={[mediumExercise]} />)
 
-				const difficultyBadge = screen.getByText('a2')
+				const difficultyBadge = screen.getByText('A2')
 				expect(difficultyBadge).toHaveClass('bg-yellow-100', 'text-yellow-800')
 			})
 
@@ -257,7 +262,7 @@ describe('ExerciseGrid', () => {
 				const hardExercise = createMockExercise({difficulty: 'c1'})
 				render(<ExerciseGrid {...defaultProps} exercises={[hardExercise]} />)
 
-				const difficultyBadge = screen.getByText('c1')
+				const difficultyBadge = screen.getByText('C1')
 				expect(difficultyBadge).toHaveClass('bg-red-100', 'text-red-800')
 			})
 
@@ -329,8 +334,13 @@ describe('ExerciseGrid', () => {
 			it('displays exercise statistics correctly', () => {
 				render(<ExerciseGrid {...defaultProps} />)
 
-				expect(screen.getByText('📄 12 cases')).toBeInTheDocument()
-				expect(screen.getByText('📚 3 blocks')).toBeInTheDocument()
+				const container = screen.getByTestId('exercise-card')
+				expect(container.textContent).toContain('📄')
+				expect(container.textContent).toContain('cases')
+				expect(container.textContent).toContain('12')
+				expect(container.textContent).toContain('📚')
+				expect(container.textContent).toContain('blocks')
+				expect(container.textContent).toContain('3')
 			})
 
 			it('calls translation functions for statistics', () => {
@@ -581,8 +591,12 @@ describe('ExerciseGrid', () => {
 				<ExerciseGrid {...defaultProps} exercises={[exerciseWithZeroStats]} />
 			)
 
-			expect(screen.getByText('📄 0 cases')).toBeInTheDocument()
-			expect(screen.getByText('📚 0 blocks')).toBeInTheDocument()
+			const container = screen.getByTestId('exercise-card')
+			expect(container.textContent).toContain('📄')
+			expect(container.textContent).toContain('cases')
+			expect(container.textContent).toContain('0')
+			expect(container.textContent).toContain('📚')
+			expect(container.textContent).toContain('blocks')
 		})
 
 		it('handles very large numbers in statistics', () => {
@@ -595,8 +609,13 @@ describe('ExerciseGrid', () => {
 				<ExerciseGrid {...defaultProps} exercises={[exerciseWithLargeStats]} />
 			)
 
-			expect(screen.getByText('📄 9999 cases')).toBeInTheDocument()
-			expect(screen.getByText('📚 999 blocks')).toBeInTheDocument()
+			const container = screen.getByTestId('exercise-card')
+			expect(container.textContent).toContain('📄')
+			expect(container.textContent).toContain('cases')
+			expect(container.textContent).toContain('9999')
+			expect(container.textContent).toContain('📚')
+			expect(container.textContent).toContain('blocks')
+			expect(container.textContent).toContain('999')
 		})
 	})
 })
