@@ -12,7 +12,7 @@ import type {
 import {loadTranslations} from '@/shared/lib/i18n'
 import {DEFAULT_FLASHCARD_SETTINGS, useSettingsStore} from '@/shared/model'
 import {
-	ExerciseSettingsPanel,
+	ExerciseControls,
 	exerciseSettingsTranslations,
 	type SettingField
 } from '@/shared/ui'
@@ -172,56 +172,53 @@ export function FlashcardRenderer({
 
 	// Show flashcard review interface
 	return (
-		<div className='flex min-h-screen flex-col items-center justify-center bg-gray-50 p-4 dark:bg-gray-900'>
-			{/* Settings button (top right) */}
-			<div className='absolute top-4 right-4'>
-				<ExerciseSettingsPanel
-					currentSettings={currentSettings}
-					fields={settingsFields}
-					onApply={handleSettingsChange}
-					onReset={() => handleSettingsChange(DEFAULT_FLASHCARD_SETTINGS)}
-				/>
-			</div>
-
-			{/* Header with progress */}
-			<div className='mb-8 w-full max-w-2xl'>
-				<div className='mb-2 flex justify-between text-gray-600 text-sm dark:text-gray-400'>
-					<span>
-						Progress: {state.progress.current} / {state.progress.total}
-					</span>
-					<span>Due today: {state.stats.dueToday}</span>
-				</div>
-				<div className='h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700'>
-					<div
-						className='h-full bg-blue-600 transition-all duration-300'
-						style={{
-							width: `${(state.progress.current / state.progress.total) * 100}%`
+		<div className='flex min-h-screen flex-col bg-gray-50 p-4 dark:bg-gray-900'>
+			<div className='flex flex-1 flex-col items-center'>
+				{/* Top controls */}
+				<div className='mb-8 w-full max-w-2xl'>
+					<ExerciseControls
+						settingsProps={{
+							currentSettings: {...currentSettings} as Record<string, unknown>,
+							fields: settingsFields,
+							onApply: handleSettingsChange as (
+								newSettings: Record<string, unknown>
+							) => void,
+							onReset: () => handleSettingsChange(DEFAULT_FLASHCARD_SETTINGS)
 						}}
+						showAutoAdvanceToggle={false}
+						showBackButton={true}
+						showSettings={true}
 					/>
 				</div>
+				{/* Header with progress */}
+				<div className='mb-8 w-full max-w-2xl'>
+					<div className='mb-2 flex justify-between text-gray-600 text-sm dark:text-gray-400'>
+						<span>
+							Progress: {state.progress.current} / {state.progress.total}
+						</span>
+						<span>Due today: {state.stats.dueToday}</span>
+					</div>
+					<div className='h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700'>
+						<div
+							className='h-full bg-blue-600 transition-all duration-300'
+							style={{
+								width: `${(state.progress.current / state.progress.total) * 100}%`
+							}}
+						/>
+					</div>
+				</div>
+
+				{/* Flashcard */}
+				<FlashcardView
+					card={state.currentCard}
+					isFlipped={state.isFlipped}
+					onFlip={handleFlip}
+					{...(state.isFlipped && {onRate: handleRate})}
+				/>
+
+				{/* Rating buttons (desktop only, only show when flipped) */}
+				{state.isFlipped && <FlashcardRating onRate={handleRate} />}
 			</div>
-
-			{/* Flashcard */}
-			<FlashcardView
-				card={state.currentCard}
-				isFlipped={state.isFlipped}
-				onFlip={handleFlip}
-				{...(state.isFlipped && {onRate: handleRate})}
-			/>
-
-			{/* Rating buttons (desktop only, only show when flipped) */}
-			{state.isFlipped && <FlashcardRating onRate={handleRate} />}
-
-			{/* Exit button */}
-			{onExit && (
-				<button
-					className='mt-8 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
-					onClick={onExit}
-					type='button'
-				>
-					Exit
-				</button>
-			)}
 		</div>
 	)
 }

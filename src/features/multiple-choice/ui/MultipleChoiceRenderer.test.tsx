@@ -6,6 +6,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {render, screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import type {ReactNode} from 'react'
+import {BrowserRouter} from 'react-router'
 import {describe, expect, it, vi} from 'vitest'
 import type {MultipleChoiceExercise} from '../model/types'
 import {MultipleChoiceRenderer} from './MultipleChoiceRenderer'
@@ -19,7 +20,11 @@ function createWrapper() {
 
 	return function Wrapper({children}: {children: ReactNode}) {
 		return (
-			<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+			<BrowserRouter>
+				<QueryClientProvider client={queryClient}>
+					{children}
+				</QueryClientProvider>
+			</BrowserRouter>
 		)
 	}
 }
@@ -255,27 +260,24 @@ describe('MultipleChoiceRenderer', () => {
 		})
 	})
 
-	it('calls onExit when exit button is clicked', async () => {
-		const user = userEvent.setup()
+	it('shows back to library link', () => {
+		render(<MultipleChoiceRenderer exercise={mockExercise} />, {
+			wrapper: createWrapper()
+		})
+
+		const backLink = screen.getByTestId('exercise-back-button')
+		expect(backLink).toBeInTheDocument()
+		expect(backLink).toHaveAttribute('href', '/exercises')
+	})
+
+	it('does not call onExit (back to library is handled by router)', () => {
 		const onExit = vi.fn()
 		render(<MultipleChoiceRenderer exercise={mockExercise} onExit={onExit} />, {
 			wrapper: createWrapper()
 		})
 
-		const exitButton = screen.getByRole('button', {name: /back/i})
-		await user.click(exitButton)
-
-		expect(onExit).toHaveBeenCalledOnce()
-	})
-
-	it('does not show exit button when onExit is not provided', () => {
-		render(<MultipleChoiceRenderer exercise={mockExercise} />, {
-			wrapper: createWrapper()
-		})
-
-		expect(
-			screen.queryByRole('button', {name: /back/i})
-		).not.toBeInTheDocument()
+		// onExit is not called because navigation is handled by the Link component
+		expect(onExit).not.toHaveBeenCalled()
 	})
 
 	it('shows progress information', () => {

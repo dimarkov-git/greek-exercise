@@ -1,6 +1,5 @@
 import {motion} from 'framer-motion'
 import {useMemo} from 'react'
-import {Link} from 'react-router'
 import type {WordFormExercise} from '@/entities/exercise'
 import {
 	DEFAULT_WORD_FORM_SETTINGS,
@@ -10,7 +9,7 @@ import type {TranslationEntry} from '@/shared/lib/i18n'
 import {loadTranslations} from '@/shared/lib/i18n'
 import type {WordFormSettings} from '@/shared/model'
 import {
-	ExerciseSettingsPanel,
+	ExerciseControls,
 	exerciseSettingsTranslations,
 	type SettingField
 } from '@/shared/ui'
@@ -31,94 +30,6 @@ interface ExerciseHeaderProps {
 }
 
 type ExerciseTranslator = (entry: string | TranslationEntry) => string
-
-function BackButton({t}: {t: ExerciseTranslator}) {
-	return (
-		<Link
-			className='flex items-center gap-2 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
-			data-testid='exercise-back-button'
-			to='/exercises'
-		>
-			<svg
-				className='h-5 w-5'
-				fill='none'
-				stroke='currentColor'
-				viewBox='0 0 24 24'
-			>
-				<title>{t(translations.backArrow)}</title>
-				<path
-					d='M15 19l-7-7 7-7'
-					strokeLinecap='round'
-					strokeLinejoin='round'
-					strokeWidth={2}
-				/>
-			</svg>
-			{t(translations.backToLibrary)}
-		</Link>
-	)
-}
-
-function AutoAdvanceToggle({
-	t,
-	onToggleAutoAdvance,
-	autoAdvanceEnabled
-}: {
-	t: ExerciseTranslator
-	onToggleAutoAdvance: () => void
-	autoAdvanceEnabled: boolean
-}) {
-	return (
-		<button
-			className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors ${
-				autoAdvanceEnabled
-					? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-					: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
-			}`}
-			data-enabled={autoAdvanceEnabled}
-			data-testid='auto-advance-toggle'
-			onClick={onToggleAutoAdvance}
-			title={
-				autoAdvanceEnabled
-					? t(translations.autoAdvanceEnabled)
-					: t(translations.autoAdvanceDisabled)
-			}
-			type='button'
-		>
-			{autoAdvanceEnabled ? (
-				<svg
-					className='h-4 w-4'
-					fill='none'
-					stroke='currentColor'
-					viewBox='0 0 24 24'
-				>
-					<title>{t(translations.autoAdvanceEnabledIcon)}</title>
-					<path
-						d='M14.828 14.828a4 4 0 01-5.656 0M9 10h6m-3-3v6m3.586-5.414L16 7.172V20a2 2 0 01-2 2H10a2 2 0 01-2-2V7.172l.414-.414A2 2 0 009.828 6h4.344a2 2 0 011.414.586z'
-						strokeLinecap='round'
-						strokeLinejoin='round'
-						strokeWidth={2}
-					/>
-				</svg>
-			) : (
-				<svg
-					className='h-4 w-4'
-					fill='none'
-					stroke='currentColor'
-					viewBox='0 0 24 24'
-				>
-					<title>{t(translations.autoAdvanceDisabledIcon)}</title>
-					<path
-						d='M10 9v6m4-6v6'
-						strokeLinecap='round'
-						strokeLinejoin='round'
-						strokeWidth={2}
-					/>
-				</svg>
-			)}
-			{t(translations.autoAdvance)}
-		</button>
-	)
-}
 
 function ProgressBar({
 	progress,
@@ -261,27 +172,28 @@ export function ExerciseHeader({
 			initial={{opacity: 0, y: -20}}
 		>
 			{/* Top row with back button and controls */}
-			<div className='mb-4 flex items-center justify-between'>
-				{showBackButton && <BackButton t={t as ExerciseTranslator} />}
-
-				<div className='flex items-center gap-2'>
-					{onToggleAutoAdvance && (
-						<AutoAdvanceToggle
-							autoAdvanceEnabled={autoAdvanceEnabled}
-							onToggleAutoAdvance={onToggleAutoAdvance}
-							t={t as ExerciseTranslator}
-						/>
-					)}
-					{onSettingsChange && exercise && (
-						<ExerciseSettingsPanel
-							currentSettings={currentSettings}
-							fields={settingsFields}
-							onApply={onSettingsChange}
-							onReset={() => onSettingsChange(DEFAULT_WORD_FORM_SETTINGS)}
-						/>
-					)}
-				</div>
-			</div>
+			<ExerciseControls
+				autoAdvanceEnabled={autoAdvanceEnabled}
+				onToggleAutoAdvance={onToggleAutoAdvance ?? undefined}
+				settingsProps={
+					onSettingsChange && exercise
+						? {
+								currentSettings: {...currentSettings} as Record<
+									string,
+									unknown
+								>,
+								fields: settingsFields,
+								onApply: onSettingsChange as (
+									newSettings: Record<string, unknown>
+								) => void,
+								onReset: () => onSettingsChange(DEFAULT_WORD_FORM_SETTINGS)
+							}
+						: undefined
+				}
+				showAutoAdvanceToggle={Boolean(onToggleAutoAdvance)}
+				showBackButton={showBackButton}
+				showSettings={Boolean(onSettingsChange && exercise)}
+			/>
 
 			{/* Заголовок упражнения */}
 			<div className='mb-4 text-center'>

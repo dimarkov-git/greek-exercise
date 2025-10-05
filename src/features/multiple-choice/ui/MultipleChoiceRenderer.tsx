@@ -12,7 +12,7 @@ import {
 	useSettingsStore
 } from '@/shared/model'
 import {
-	ExerciseSettingsPanel,
+	ExerciseControls,
 	exerciseSettingsTranslations,
 	type SettingField
 } from '@/shared/ui'
@@ -27,7 +27,6 @@ import {MultipleChoiceQuestionComponent} from './components/MultipleChoiceQuesti
 import {multipleChoiceTranslations} from './components/translations'
 
 interface ExerciseHeaderProps {
-	onExit: (() => void) | undefined
 	progress: MultipleChoiceViewState['progress']
 	stats: MultipleChoiceViewState['stats']
 	exercise: MultipleChoiceExercise
@@ -38,7 +37,6 @@ interface ExerciseHeaderProps {
 
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: Complex header with settings panel
 function ExerciseHeader({
-	onExit,
 	progress,
 	stats,
 	exercise,
@@ -113,27 +111,23 @@ function ExerciseHeader({
 	)
 
 	return (
-		<div className='mb-4 flex items-center justify-between'>
-			{onExit && (
-				<button
-					className='rounded-lg bg-gray-200 px-4 py-2 font-medium text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
-					onClick={onExit}
-					type='button'
-				>
-					← Back
-				</button>
-			)}
-			<div className='ml-auto flex items-center gap-2'>
-				<div className='text-gray-600 text-sm dark:text-gray-400'>
-					Question {progress.current} of {progress.total} | ✓ {stats.correct} /{' '}
-					✗ {stats.incorrect}
-				</div>
-				<ExerciseSettingsPanel
-					currentSettings={currentSettings}
-					fields={settingsFields}
-					onApply={onSettingsChange}
-					onReset={() => onSettingsChange(DEFAULT_MULTIPLE_CHOICE_SETTINGS)}
-				/>
+		<div className='mb-4'>
+			<ExerciseControls
+				settingsProps={{
+					currentSettings: {...currentSettings} as Record<string, unknown>,
+					fields: settingsFields,
+					onApply: onSettingsChange as (
+						newSettings: Record<string, unknown>
+					) => void,
+					onReset: () => onSettingsChange(DEFAULT_MULTIPLE_CHOICE_SETTINGS)
+				}}
+				showAutoAdvanceToggle={false}
+				showBackButton={true}
+				showSettings={true}
+			/>
+			<div className='mt-2 text-center text-gray-600 text-sm dark:text-gray-400'>
+				Question {progress.current} of {progress.total} | ✓ {stats.correct} / ✗{' '}
+				{stats.incorrect}
 			</div>
 		</div>
 	)
@@ -387,7 +381,6 @@ export function MultipleChoiceRenderer({
 		<ExerciseLayout title={exerciseTitle}>
 			<ExerciseHeader
 				exercise={exercise}
-				onExit={onExit}
 				onSettingsChange={handleSettingsChange}
 				progress={state.progress}
 				stats={state.stats}

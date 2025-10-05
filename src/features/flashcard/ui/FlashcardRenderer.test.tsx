@@ -6,6 +6,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {render, screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import type {ReactNode} from 'react'
+import {BrowserRouter} from 'react-router'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
 import type {FlashcardExercise} from '@/entities/exercise'
 import {FlashcardRenderer} from './FlashcardRenderer'
@@ -105,9 +106,11 @@ describe('FlashcardRenderer', () => {
 
 		return function Wrapper({children}: {children: ReactNode}) {
 			return (
-				<QueryClientProvider client={queryClient}>
-					{children}
-				</QueryClientProvider>
+				<BrowserRouter>
+					<QueryClientProvider client={queryClient}>
+						{children}
+					</QueryClientProvider>
+				</BrowserRouter>
 			)
 		}
 	}
@@ -212,8 +215,21 @@ describe('FlashcardRenderer', () => {
 		expect(screen.getByText(/Due today:/)).toBeInTheDocument()
 	})
 
-	it('calls onExit when exit button is clicked', async () => {
-		const user = userEvent.setup()
+	it('shows back to library link', async () => {
+		render(<FlashcardRenderer exercise={mockExercise} />, {
+			wrapper: createWrapper()
+		})
+
+		await waitFor(() => {
+			expect(screen.getByText('το νερό')).toBeInTheDocument()
+		})
+
+		const backLink = screen.getByTestId('exercise-back-button')
+		expect(backLink).toBeInTheDocument()
+		expect(backLink).toHaveAttribute('href', '/exercises')
+	})
+
+	it('does not call onExit (back to library is handled by router)', async () => {
 		const onExit = vi.fn()
 
 		render(<FlashcardRenderer exercise={mockExercise} onExit={onExit} />, {
@@ -224,10 +240,8 @@ describe('FlashcardRenderer', () => {
 			expect(screen.getByText('το νερό')).toBeInTheDocument()
 		})
 
-		const exitButton = screen.getByRole('button', {name: /exit/i})
-		await user.click(exitButton)
-
-		expect(onExit).toHaveBeenCalledOnce()
+		// onExit is not called because navigation is handled by the Link component
+		expect(onExit).not.toHaveBeenCalled()
 	})
 
 	it('shows completion screen when no cards are due', async () => {

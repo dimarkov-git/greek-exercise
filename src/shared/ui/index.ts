@@ -2,6 +2,7 @@
 export * from './button'
 export * from './card'
 // Specialized UI components
+export * from './exercise-controls'
 export * from './exercise-layout'
 export * from './exercise-settings-panel'
 export * from './head'
