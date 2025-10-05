@@ -95,9 +95,6 @@ export function TableView({exercise}: TableViewProps) {
 										<th className='px-4 py-3 text-left font-medium text-gray-600 text-sm dark:text-gray-400'>
 											{t(translations.answer)}
 										</th>
-										<th className='px-4 py-3 text-left font-medium text-gray-600 text-sm dark:text-gray-400'>
-											{t(translations.hint)}
-										</th>
 									</tr>
 								</thead>
 								<tbody className='divide-y divide-gray-200 dark:divide-gray-700'>
@@ -129,26 +126,6 @@ export function TableView({exercise}: TableViewProps) {
 														</div>
 													))}
 												</div>
-											</td>
-											<td className='px-4 py-3'>
-												{caseItem.hint || caseItem.hintI18n?.[userLanguage] ? (
-													<div className='space-y-1'>
-														{caseItem.hint && (
-															<div className='text-gray-600 text-sm dark:text-gray-400'>
-																{caseItem.hint}
-															</div>
-														)}
-														{caseItem.hintI18n?.[userLanguage] && (
-															<div className='text-blue-600 text-sm dark:text-blue-400'>
-																{caseItem.hintI18n[userLanguage]}
-															</div>
-														)}
-													</div>
-												) : (
-													<span className='text-gray-400 text-sm dark:text-gray-600'>
-														{t(translations.emptyHint)}
-													</span>
-												)}
 											</td>
 										</tr>
 									))}

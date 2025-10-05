@@ -72,8 +72,7 @@ it('initialises deterministic state with defaults applied', () => {
 	expect(state.startedAt).toBe(1000)
 	expect(selectHintVisibility(state)).toEqual({
 		name: false,
-		prompt: false,
-		additional: false
+		prompt: false
 	})
 })
 

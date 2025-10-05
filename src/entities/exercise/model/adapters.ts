@@ -200,15 +200,12 @@ export function createExerciseLibraryViewModel(
 
 function normalizeWordFormCase(caseDto: WordFormCaseDto): WordFormCase {
 	const promptHintI18n = normalizeI18nRecord(caseDto.promptHintI18n)
-	const hintI18n = normalizeI18nRecord(caseDto.hintI18n)
 
 	return {
 		id: caseDto.id,
 		prompt: caseDto.prompt,
 		correct: caseDto.correct,
-		...(caseDto.hint ? {hint: caseDto.hint} : {}),
-		...(promptHintI18n ? {promptHintI18n} : {}),
-		...(hintI18n ? {hintI18n} : {})
+		...(promptHintI18n ? {promptHintI18n} : {})
 	}
 }
 

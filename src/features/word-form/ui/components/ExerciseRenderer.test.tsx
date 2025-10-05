@@ -80,9 +80,7 @@ const exercise: WordFormExercise = {
 					id: 'case-1',
 					prompt: 'εγώ ___',
 					promptHintI18n: {en: 'I'},
-					correct: ['είμαι'],
-					hint: 'ρήμα',
-					hintI18n: {en: 'verb'}
+					correct: ['είμαι']
 				}
 			]
 		}
@@ -101,7 +99,7 @@ const baseState: WordFormViewState = {
 	status: 'WAITING_INPUT',
 	progress: {completed: 0, current: 1, total: 1},
 	stats: {correct: 0, incorrect: 0},
-	hints: {name: false, prompt: false, additional: false},
+	hints: {name: false, prompt: false},
 	startedAt: 1000,
 	exercise,
 	currentBlock: exercise.blocks[0],

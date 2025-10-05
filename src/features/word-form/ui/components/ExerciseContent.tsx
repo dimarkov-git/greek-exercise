@@ -29,24 +29,6 @@ function PromptWithHint({currentCase}: {currentCase: WordFormCase}) {
 	)
 }
 
-function AdditionalHint({currentCase}: {currentCase: WordFormCase}) {
-	if (!currentCase.hint) return null
-
-	return (
-		<div className='text-center text-gray-600 text-sm dark:text-gray-400'>
-			{currentCase.hintI18n ? (
-				<HintSystem
-					className='italic'
-					hints={currentCase.hintI18n}
-					primaryText={currentCase.hint}
-				/>
-			) : (
-				<span className='italic'>{currentCase.hint}</span>
-			)}
-		</div>
-	)
-}
-
 interface ExerciseContentProps {
 	exercise: WordFormExercise
 	currentBlock: WordFormBlock
@@ -126,9 +108,6 @@ export function ExerciseContent({
 
 				{/* Current prompt with hint */}
 				<PromptWithHint currentCase={currentCase} />
-
-				{/* Additional hint (if exists) */}
-				<AdditionalHint currentCase={currentCase} />
 
 				{/* Input area with pulse effect */}
 				<PulseEffect

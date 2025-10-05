@@ -57,9 +57,7 @@ export const WordFormCaseSchema = v.object({
 	id: v.string(),
 	prompt: v.string(),
 	promptHintI18n: v.optional(I18nStringSchema),
-	correct: v.pipe(v.array(v.string()), v.minLength(1)),
-	hint: v.optional(v.string()),
-	hintI18n: v.optional(I18nStringSchema)
+	correct: v.pipe(v.array(v.string()), v.minLength(1))
 })
 
 // Exercise block schema

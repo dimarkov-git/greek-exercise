@@ -50,8 +50,7 @@ function createExercise(
 					{
 						id: 'case-1',
 						prompt: 'εγώ',
-						correct: ['είμαι'],
-						hint: 'to be'
+						correct: ['είμαι']
 					},
 					{
 						id: 'case-2',

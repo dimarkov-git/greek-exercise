@@ -79,8 +79,7 @@ const DEFAULT_WORD_FORM_TEMPLATE: WordFormExerciseJSON = {
 						en: 'you are',
 						ru: 'ты есть'
 					},
-					correct: ['είσαι'],
-					hint: 'εί___'
+					correct: ['είσαι']
 				},
 				{
 					id: 'present-3s',

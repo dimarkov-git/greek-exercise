@@ -32,8 +32,6 @@ export interface WordFormCase {
 	prompt: string // question in Greek (main study language)
 	promptHintI18n?: I18nText // hints in user's language (optional)
 	correct: string[] // correct answers in Greek (multiple answers supported)
-	hint?: string // additional hint in Greek (optional)
-	hintI18n?: I18nText // additional hint in user's language (optional)
 }
 
 // Complete exercise structure
@@ -66,7 +64,6 @@ export interface ExerciseState {
 	// Hint system state
 	showNameHint: boolean // show block name translation
 	showPromptHint: boolean // show question translation
-	showAdditionalHint: boolean // show additional hint
 }
 
 // Exercise metadata for library display
@@ -121,7 +118,7 @@ export type ExerciseEvent =
 	| {type: 'CONTINUE'}
 	| {type: 'SKIP'}
 	| {type: 'RESTART'}
-	| {type: 'TOGGLE_HINT'; hintType: 'name' | 'prompt' | 'additional'}
+	| {type: 'TOGGLE_HINT'; hintType: 'name' | 'prompt'}
 	| {type: 'TOGGLE_AUTO_ADVANCE'}
 
 // JSON serialization type for exercises

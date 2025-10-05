@@ -19,7 +19,6 @@ export interface WordFormStats {
 export interface WordFormHintVisibility {
 	name: boolean
 	prompt: boolean
-	additional: boolean
 }
 
 export interface WordFormMachineState {
@@ -50,7 +49,7 @@ export type WordFormMachineAction =
 	| {type: 'RESTART_WITH_SETTINGS'; exercise: WordFormExercise}
 	| {type: 'RESET_FROM_PROPS'; exercise: WordFormExercise}
 	| {type: 'TOGGLE_AUTO_ADVANCE'}
-	| {type: 'TOGGLE_HINT'; hintType: 'name' | 'prompt' | 'additional'}
+	| {type: 'TOGGLE_HINT'; hintType: 'name' | 'prompt'}
 	| {type: 'REQUIRE_CORRECTION'}
 	| {type: 'REQUIRE_CONTINUE'}
 
@@ -74,8 +73,7 @@ function createInitialState(exercise: WordFormExercise): WordFormMachineState {
 		stats: {correct: 0, incorrect: 0},
 		hints: {
 			name: false,
-			prompt: false,
-			additional: false
+			prompt: false
 		}
 	}
 }
