@@ -37,6 +37,10 @@ export type MultipleChoiceMachineAction =
 	| {type: 'RESTART_WITH_SETTINGS'; exercise: MultipleChoiceExercise}
 	| {type: 'TOGGLE_AUTO_ADVANCE'}
 	| {type: 'TOGGLE_HINT'}
+	| {
+			type: 'UPDATE_SETTINGS'
+			settings: Partial<MultipleChoiceExercise['settings']>
+	  }
 
 /**
  * Shuffle array using Fisher-Yates algorithm
@@ -223,6 +227,22 @@ export function multipleChoiceReducer(
 			return {
 				...state,
 				showHint: !state.showHint
+			}
+
+		case 'UPDATE_SETTINGS':
+			return {
+				...state,
+				exercise: {
+					...state.exercise,
+					settings: {
+						...state.exercise.settings,
+						...action.settings
+					}
+				},
+				// Update autoAdvanceEnabled if it's in the settings
+				...(action.settings?.autoAdvance !== undefined
+					? {autoAdvanceEnabled: action.settings.autoAdvance}
+					: {})
 			}
 
 		default:

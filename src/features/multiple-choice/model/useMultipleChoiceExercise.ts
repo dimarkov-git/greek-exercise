@@ -168,15 +168,26 @@ export function useMultipleChoiceExercise(
 
 	const handleSettingsChange = useCallback(
 		(newSettings: Partial<import('@/shared/model').MultipleChoiceSettings>) => {
-			const updatedExercise = {
-				...exercise,
-				settings: {
-					...exercise.settings,
-					...newSettings
+			// Check if any setting that requires reload changed
+			const requiresReload =
+				'shuffleQuestions' in newSettings || 'shuffleAnswers' in newSettings
+
+			if (requiresReload) {
+				// Settings that require reload - restart the exercise
+				const updatedExercise = {
+					...exercise,
+					settings: {
+						...exercise.settings,
+						...newSettings
+					}
 				}
+				completionHandledRef.current = false
+				dispatch({type: 'RESTART_WITH_SETTINGS', exercise: updatedExercise})
+			} else {
+				// Settings that don't require reload (like autoAdvance, allowSkip) - just update settings
+				// This preserves the current progress while updating settings
+				dispatch({type: 'UPDATE_SETTINGS', settings: newSettings})
 			}
-			completionHandledRef.current = false
-			dispatch({type: 'RESTART_WITH_SETTINGS', exercise: updatedExercise})
 		},
 		[exercise]
 	)

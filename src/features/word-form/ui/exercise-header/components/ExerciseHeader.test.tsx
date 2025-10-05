@@ -16,30 +16,22 @@ vi.mock('@/shared/lib/i18n', () => ({
 }))
 
 describe('ExerciseHeader', () => {
-	it('renders title, block name and progress information', () => {
-		render(
-			<ExerciseHeader
-				blockName='Ενεστώτας'
-				progress={{current: 3, total: 5}}
-				title='Είμαι'
-			/>
-		)
+	it('renders title and progress information', () => {
+		render(<ExerciseHeader progress={{current: 3, total: 5}} title='Είμαι' />)
 
 		expect(screen.getByText('Είμαι')).toBeInTheDocument()
-		expect(screen.getByText('Ενεστώτας')).toBeInTheDocument()
 		expect(screen.getByTestId('progress-text')).toHaveTextContent(
 			'3 exercise.progressOf 5'
 		)
 		expect(screen.getByText('exercise.progress')).toBeInTheDocument()
 	})
 
-	it('renders title without block name when not provided', () => {
+	it('renders title when provided', () => {
 		render(
 			<ExerciseHeader progress={{current: 1, total: 3}} title='Solo Title' />
 		)
 
 		expect(screen.getByText('Solo Title')).toBeInTheDocument()
-		expect(screen.queryByText('Ενεστώτας')).not.toBeInTheDocument()
 	})
 
 	it('renders without progress bar when progress not provided', () => {
@@ -259,7 +251,6 @@ describe('ExerciseHeader', () => {
 		render(
 			<ExerciseHeader
 				autoAdvanceEnabled={false}
-				blockName='Test Block'
 				onToggleAutoAdvance={onToggle}
 				progress={{current: 3, total: 7}}
 				showBackButton={true}
@@ -269,7 +260,6 @@ describe('ExerciseHeader', () => {
 
 		// All elements should be present
 		expect(screen.getByText('Complete Test')).toBeInTheDocument()
-		expect(screen.getByText('Test Block')).toBeInTheDocument()
 		expect(screen.getByTestId('exercise-back-button')).toBeInTheDocument()
 		expect(screen.getByTestId('auto-advance-toggle')).toBeInTheDocument()
 		expect(screen.getByTestId('exercise-progress')).toBeInTheDocument()

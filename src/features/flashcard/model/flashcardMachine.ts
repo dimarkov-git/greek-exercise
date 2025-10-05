@@ -24,6 +24,7 @@ export type FlashcardEvent =
 	| {type: 'SKIP'}
 	| {type: 'RESTART'}
 	| {type: 'RESTART_WITH_SETTINGS'; exercise: FlashcardExercise}
+	| {type: 'UPDATE_SETTINGS'; settings: Partial<FlashcardExercise['settings']>}
 
 /**
  * Internal state machine context
@@ -146,6 +147,18 @@ export function flashcardReducer(
 				qualityRatings: new Map(),
 				isFlipped: false,
 				startedAt: Date.now()
+			}
+
+		case 'UPDATE_SETTINGS':
+			return {
+				...context,
+				exercise: {
+					...context.exercise,
+					settings: {
+						...context.exercise.settings,
+						...event.settings
+					}
+				}
 			}
 
 		default:

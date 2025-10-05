@@ -31,12 +31,7 @@
 						"en": "singular",
 						"ru": "ед. ч."
 					},
-					"correct": ["λέξη"],
-					"hint": "λέξ_",
-					"hintI18n": {
-						"en": "wor_",
-						"ru": "слов_"
-					}
+					"correct": ["λέξη"]
 				},
 				{
 					"id": "plural",
@@ -45,12 +40,7 @@
 						"en": "plural",
 						"ru": "мн. ч."
 					},
-					"correct": ["λέξεις"],
-					"hint": "λέξ__",
-					"hintI18n": {
-						"en": "wor__",
-						"ru": "слов_"
-					}
+					"correct": ["λέξεις"]
 				}
 			]
 		},
@@ -69,12 +59,7 @@
 						"en": "I don't have ___",
 						"ru": "У меня нет ___"
 					},
-					"correct": ["λέξη"],
-					"hint": "λέξ_",
-					"hintI18n": {
-						"en": "accusative singular",
-						"ru": "вин. п., ед. ч."
-					}
+					"correct": ["λέξη"]
 				},
 				{
 					"id": "nominative-plural",
@@ -83,12 +68,7 @@
 						"en": "What are the correct ___",
 						"ru": "Какие правильные ___"
 					},
-					"correct": ["λέξεις"],
-					"hint": "λέξ__",
-					"hintI18n": {
-						"en": "nominative plural",
-						"ru": "им. п., мн. ч."
-					}
+					"correct": ["λέξεις"]
 				}
 			]
 		},

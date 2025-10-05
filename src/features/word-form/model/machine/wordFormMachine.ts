@@ -182,7 +182,14 @@ export function wordFormReducer(
 		case 'TOGGLE_AUTO_ADVANCE':
 			return {
 				...state,
-				autoAdvanceEnabled: !state.autoAdvanceEnabled
+				autoAdvanceEnabled: !state.autoAdvanceEnabled,
+				exercise: {
+					...state.exercise,
+					settings: {
+						...state.exercise.settings,
+						autoAdvance: !state.autoAdvanceEnabled
+					}
+				}
 			}
 		case 'TOGGLE_HINT':
 			return handleToggleHint(state, action)

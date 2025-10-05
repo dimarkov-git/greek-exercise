@@ -5,7 +5,7 @@
  * Supports different setting types with validation and reset functionality.
  */
 
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {loadTranslations} from '@/shared/lib/i18n'
 import {Button, GhostButton, OutlineButton} from '../button'
 import {exerciseSettingsTranslations} from './translations'
@@ -56,6 +56,13 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 	const isOpen = controlledIsOpen ?? uncontrolledIsOpen
 	const handleToggle =
 		controlledOnToggle ?? (() => setUncontrolledIsOpen(!uncontrolledIsOpen))
+
+	// Sync local settings when currentSettings change from outside
+	useEffect(() => {
+		setLocalSettings(currentSettings)
+		setIsDirty(false)
+		setHasReloadRequiredChanges(false)
+	}, [currentSettings])
 
 	const handleFieldChange = (key: string, value: boolean | number) => {
 		setLocalSettings(prev => ({...prev, [key]: value}))
@@ -227,30 +234,36 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 						</div>
 
 						{/* Action buttons */}
-						<div className='mt-6 flex gap-3'>
+						<div className='mt-6 grid grid-cols-2 gap-3 overflow-hidden'>
 							<Button
-								className='min-w-[140px] flex-1'
+								className='min-w-0'
 								disabled={!isDirty}
+								motionEnabled={false}
 								onClick={handleApply}
 								size='default'
 								type='button'
 								variant='primary'
 							>
-								{hasReloadRequiredChanges
-									? t(
-											exerciseSettingsTranslations[
-												'exerciseSettings.applyAndReload'
-											]
-										)
-									: t(exerciseSettingsTranslations['exerciseSettings.apply'])}
+								<span className='block overflow-hidden text-ellipsis whitespace-nowrap'>
+									{hasReloadRequiredChanges
+										? t(
+												exerciseSettingsTranslations[
+													'exerciseSettings.applyAndReload'
+												]
+											)
+										: t(exerciseSettingsTranslations['exerciseSettings.apply'])}
+								</span>
 							</Button>
 							<OutlineButton
-								className='flex-1'
+								className='min-w-0'
+								motionEnabled={false}
 								onClick={handleResetToDefaults}
 								size='default'
 								type='button'
 							>
-								{t(exerciseSettingsTranslations['exerciseSettings.reset'])}
+								<span className='block overflow-hidden text-ellipsis whitespace-nowrap'>
+									{t(exerciseSettingsTranslations['exerciseSettings.reset'])}
+								</span>
 							</OutlineButton>
 						</div>
 

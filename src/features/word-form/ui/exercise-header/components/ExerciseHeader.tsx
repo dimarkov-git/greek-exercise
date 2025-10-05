@@ -74,7 +74,6 @@ function ProgressBar({
 // biome-ignore lint/complexity/noExcessiveLinesPerFunction: Complex header with settings panel
 export function ExerciseHeader({
 	title,
-	blockName,
 	progress,
 	onToggleAutoAdvance,
 	autoAdvanceEnabled = true,
@@ -168,22 +167,27 @@ export function ExerciseHeader({
 			exercise
 				? (getExerciseSettings(exercise) as unknown as WordFormSettings)
 				: DEFAULT_WORD_FORM_SETTINGS,
-		[exercise]
+		[exercise, exercise?.settings]
 	)
 
 	const handleSettingsApply = (newSettings: Record<string, unknown>) => {
-		// Call the original onSettingsChange
-		if (onSettingsChange) {
-			onSettingsChange(newSettings as Partial<WordFormSettings>)
-		}
+		if (!onSettingsChange) return
 
-		// If autoAdvance changed and we have the toggle handler, sync it
-		if (
-			onToggleAutoAdvance &&
-			'autoAdvance' in newSettings &&
-			newSettings.autoAdvance !== autoAdvanceEnabled
-		) {
-			onToggleAutoAdvance()
+		// Check if only autoAdvance changed (runtime setting)
+		const settingsKeys = Object.keys(newSettings)
+		const onlyAutoAdvanceChanged =
+			settingsKeys.length === 1 && settingsKeys[0] === 'autoAdvance'
+
+		if (onlyAutoAdvanceChanged) {
+			// For runtime settings like autoAdvance, just toggle without restarting
+			const settings = newSettings as Partial<WordFormSettings>
+			const autoAdvanceChanged = settings.autoAdvance !== autoAdvanceEnabled
+			if (onToggleAutoAdvance && autoAdvanceChanged) {
+				onToggleAutoAdvance()
+			}
+		} else {
+			// For other settings, pass them to onSettingsChange
+			onSettingsChange(newSettings as Partial<WordFormSettings>)
 		}
 	}
 
@@ -220,12 +224,6 @@ export function ExerciseHeader({
 				<h1 className='mb-2 font-bold text-3xl text-gray-900 dark:text-white'>
 					{title}
 				</h1>
-
-				{blockName && (
-					<h2 className='text-gray-600 text-xl dark:text-gray-400'>
-						{blockName}
-					</h2>
-				)}
 			</div>
 
 			{progress && (
