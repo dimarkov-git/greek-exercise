@@ -143,7 +143,7 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 								aria-label={t(
 									exerciseSettingsTranslations['exerciseSettings.close']
 								)}
-								className='rounded-lg p-1 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+								className='cursor-pointer rounded-lg p-1 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
 								onClick={handleCancel}
 								type='button'
 							>
@@ -229,7 +229,7 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 						{/* Action buttons */}
 						<div className='mt-6 flex gap-3'>
 							<Button
-								className='flex-1'
+								className='min-w-[140px] flex-1'
 								disabled={!isDirty}
 								onClick={handleApply}
 								size='default'

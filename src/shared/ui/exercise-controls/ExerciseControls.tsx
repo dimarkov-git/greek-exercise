@@ -61,7 +61,7 @@ function AutoAdvanceToggle({
 }: AutoAdvanceToggleProps) {
 	return (
 		<button
-			className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors ${
+			className={`flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors ${
 				autoAdvanceEnabled
 					? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
 					: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'

@@ -171,6 +171,22 @@ export function ExerciseHeader({
 		[exercise]
 	)
 
+	const handleSettingsApply = (newSettings: Record<string, unknown>) => {
+		// Call the original onSettingsChange
+		if (onSettingsChange) {
+			onSettingsChange(newSettings as Partial<WordFormSettings>)
+		}
+
+		// If autoAdvance changed and we have the toggle handler, sync it
+		if (
+			onToggleAutoAdvance &&
+			'autoAdvance' in newSettings &&
+			newSettings.autoAdvance !== autoAdvanceEnabled
+		) {
+			onToggleAutoAdvance()
+		}
+	}
+
 	return (
 		<motion.div
 			animate={{opacity: 1, y: 0}}
@@ -189,9 +205,7 @@ export function ExerciseHeader({
 									unknown
 								>,
 								fields: settingsFields,
-								onApply: onSettingsChange as (
-									newSettings: Record<string, unknown>
-								) => void,
+								onApply: handleSettingsApply,
 								onReset: () => onSettingsChange(DEFAULT_WORD_FORM_SETTINGS)
 							}
 						: undefined
