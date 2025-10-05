@@ -17,9 +17,23 @@ export const exerciseSettingsTranslations = {
 	},
 	'exerciseSettings.apply': {
 		translations: {
-			en: 'Apply & Restart',
-			ru: 'Применить и перезапустить',
-			el: 'Εφαρμογή & Επανεκκίνηση'
+			en: 'Save',
+			ru: 'Сохранить',
+			el: 'Αποθήκευση'
+		}
+	},
+	'exerciseSettings.applyAndReload': {
+		translations: {
+			en: 'Save & Reload',
+			ru: 'Сохранить и перезагрузить',
+			el: 'Αποθήκευση & Επαναφόρτωση'
+		}
+	},
+	'exerciseSettings.requiresReload': {
+		translations: {
+			en: 'Requires reload',
+			ru: 'Требует перезагрузки',
+			el: 'Απαιτεί επαναφόρτωση'
 		}
 	},
 	'exerciseSettings.reset': {

@@ -45,6 +45,7 @@ function ExerciseHeader({
 	const {t: tSettings} = loadTranslations(exerciseSettingsTranslations)
 
 	const settingsFields: SettingField[] = useMemo(
+		// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Settings field configuration array
 		() => [
 			{
 				key: 'autoAdvance',
@@ -54,7 +55,8 @@ function ExerciseHeader({
 				),
 				description: tSettings(
 					exerciseSettingsTranslations['exerciseSettings.autoAdvanceDesc']
-				)
+				),
+				requiresReload: false
 			},
 			{
 				key: 'autoAdvanceDelayMs',
@@ -69,7 +71,8 @@ function ExerciseHeader({
 				),
 				min: 0,
 				max: 5000,
-				step: 100
+				step: 100,
+				requiresReload: false
 			},
 			{
 				key: 'allowSkip',
@@ -79,7 +82,8 @@ function ExerciseHeader({
 				),
 				description: tSettings(
 					exerciseSettingsTranslations['exerciseSettings.allowSkipDesc']
-				)
+				),
+				requiresReload: false
 			},
 			{
 				key: 'shuffleQuestions',
@@ -89,7 +93,8 @@ function ExerciseHeader({
 				),
 				description: tSettings(
 					exerciseSettingsTranslations['exerciseSettings.shuffleQuestionsDesc']
-				)
+				),
+				requiresReload: true
 			},
 			{
 				key: 'shuffleAnswers',
@@ -99,7 +104,8 @@ function ExerciseHeader({
 				),
 				description: tSettings(
 					exerciseSettingsTranslations['exerciseSettings.shuffleAnswersDesc']
-				)
+				),
+				requiresReload: true
 			}
 		],
 		[tSettings]
@@ -113,6 +119,12 @@ function ExerciseHeader({
 	return (
 		<div className='mb-4'>
 			<ExerciseControls
+				autoAdvanceEnabled={currentSettings.autoAdvance}
+				onToggleAutoAdvance={() =>
+					onSettingsChange({
+						autoAdvance: !currentSettings.autoAdvance
+					})
+				}
 				settingsProps={{
 					currentSettings: {...currentSettings} as Record<string, unknown>,
 					fields: settingsFields,
@@ -121,7 +133,7 @@ function ExerciseHeader({
 					) => void,
 					onReset: () => onSettingsChange(DEFAULT_MULTIPLE_CHOICE_SETTINGS)
 				}}
-				showAutoAdvanceToggle={false}
+				showAutoAdvanceToggle={true}
 				showBackButton={true}
 				showSettings={true}
 			/>

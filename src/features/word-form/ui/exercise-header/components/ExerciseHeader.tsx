@@ -96,7 +96,8 @@ export function ExerciseHeader({
 				),
 				description: tSettings(
 					exerciseSettingsTranslations['exerciseSettings.autoAdvanceDesc']
-				)
+				),
+				requiresReload: false
 			},
 			{
 				key: 'autoAdvanceDelayMs',
@@ -111,7 +112,8 @@ export function ExerciseHeader({
 				),
 				min: 0,
 				max: 5000,
-				step: 100
+				step: 100,
+				requiresReload: false
 			},
 			{
 				key: 'allowSkip',
@@ -121,7 +123,8 @@ export function ExerciseHeader({
 				),
 				description: tSettings(
 					exerciseSettingsTranslations['exerciseSettings.allowSkipDesc']
-				)
+				),
+				requiresReload: false
 			},
 			{
 				key: 'shuffleCases',
@@ -131,7 +134,8 @@ export function ExerciseHeader({
 				),
 				description: tSettings(
 					exerciseSettingsTranslations['exerciseSettings.shuffleCasesDesc']
-				)
+				),
+				requiresReload: true
 			},
 			{
 				key: 'shuffleBlocks',
@@ -141,7 +145,8 @@ export function ExerciseHeader({
 				),
 				description: tSettings(
 					exerciseSettingsTranslations['exerciseSettings.shuffleBlocksDesc']
-				)
+				),
+				requiresReload: true
 			},
 			{
 				key: 'allowSkipTone',
@@ -151,7 +156,8 @@ export function ExerciseHeader({
 				),
 				description: tSettings(
 					exerciseSettingsTranslations['exerciseSettings.allowSkipToneDesc']
-				)
+				),
+				requiresReload: true
 			}
 		],
 		[tSettings]
@@ -190,7 +196,7 @@ export function ExerciseHeader({
 							}
 						: undefined
 				}
-				showAutoAdvanceToggle={Boolean(onToggleAutoAdvance)}
+				showAutoAdvanceToggle={true}
 				showBackButton={showBackButton}
 				showSettings={Boolean(onSettingsChange && exercise)}
 			/>

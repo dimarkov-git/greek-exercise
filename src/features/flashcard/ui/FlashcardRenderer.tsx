@@ -75,7 +75,8 @@ export function FlashcardRenderer({
 				),
 				description: tSettings(
 					exerciseSettingsTranslations['exerciseSettings.autoAdvanceDesc']
-				)
+				),
+				requiresReload: false
 			},
 			{
 				key: 'autoAdvanceDelayMs',
@@ -90,7 +91,8 @@ export function FlashcardRenderer({
 				),
 				min: 0,
 				max: 5000,
-				step: 100
+				step: 100,
+				requiresReload: false
 			},
 			{
 				key: 'shuffleCards',
@@ -100,7 +102,8 @@ export function FlashcardRenderer({
 				),
 				description: tSettings(
 					exerciseSettingsTranslations['exerciseSettings.shuffleCardsDesc']
-				)
+				),
+				requiresReload: true
 			}
 		],
 		[tSettings]
@@ -175,8 +178,14 @@ export function FlashcardRenderer({
 		<div className='flex min-h-screen flex-col bg-gray-50 p-4 dark:bg-gray-900'>
 			<div className='flex flex-1 flex-col items-center'>
 				{/* Top controls */}
-				<div className='mb-8 w-full max-w-2xl'>
+				<div className='mb-4 w-full max-w-4xl'>
 					<ExerciseControls
+						autoAdvanceEnabled={currentSettings.autoAdvance}
+						onToggleAutoAdvance={() =>
+							handleSettingsChange({
+								autoAdvance: !currentSettings.autoAdvance
+							})
+						}
 						settingsProps={{
 							currentSettings: {...currentSettings} as Record<string, unknown>,
 							fields: settingsFields,
@@ -185,13 +194,13 @@ export function FlashcardRenderer({
 							) => void,
 							onReset: () => handleSettingsChange(DEFAULT_FLASHCARD_SETTINGS)
 						}}
-						showAutoAdvanceToggle={false}
+						showAutoAdvanceToggle={true}
 						showBackButton={true}
 						showSettings={true}
 					/>
 				</div>
 				{/* Header with progress */}
-				<div className='mb-8 w-full max-w-2xl'>
+				<div className='mb-4 w-full max-w-2xl'>
 					<div className='mb-2 flex justify-between text-gray-600 text-sm dark:text-gray-400'>
 						<span>
 							Progress: {state.progress.current} / {state.progress.total}

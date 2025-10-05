@@ -18,6 +18,7 @@ export interface SettingField {
 	min?: number
 	max?: number
 	step?: number
+	requiresReload?: boolean
 }
 
 export interface ExerciseSettingsPanelProps<T extends Record<string, unknown>> {
@@ -48,6 +49,8 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 	const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(false)
 	const [localSettings, setLocalSettings] = useState<T>(currentSettings)
 	const [isDirty, setIsDirty] = useState(false)
+	const [hasReloadRequiredChanges, setHasReloadRequiredChanges] =
+		useState(false)
 
 	// Use controlled or uncontrolled state
 	const isOpen = controlledIsOpen ?? uncontrolledIsOpen
@@ -57,23 +60,40 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 	const handleFieldChange = (key: string, value: boolean | number) => {
 		setLocalSettings(prev => ({...prev, [key]: value}))
 		setIsDirty(true)
+
+		// Check if this field or any changed field requires reload
+		const changedField = fields.find(f => f.key === key)
+		if (changedField?.requiresReload) {
+			setHasReloadRequiredChanges(true)
+		} else {
+			// Check if any other changed field requires reload
+			const hasOtherReloadFields = fields.some(
+				field =>
+					field.requiresReload &&
+					localSettings[field.key] !== currentSettings[field.key]
+			)
+			setHasReloadRequiredChanges(hasOtherReloadFields)
+		}
 	}
 
 	const handleApply = () => {
 		onApply(localSettings)
 		setIsDirty(false)
+		setHasReloadRequiredChanges(false)
 		handleToggle()
 	}
 
 	const handleCancel = () => {
 		setLocalSettings(currentSettings)
 		setIsDirty(false)
+		setHasReloadRequiredChanges(false)
 		handleToggle()
 	}
 
 	const handleResetToDefaults = () => {
 		onReset()
 		setIsDirty(false)
+		setHasReloadRequiredChanges(false)
 		handleToggle()
 	}
 
@@ -83,7 +103,7 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 			<GhostButton
 				aria-expanded={isOpen}
 				aria-label={t(exerciseSettingsTranslations['exerciseSettings.title'])}
-				className='gap-2'
+				className='cursor-pointer gap-2'
 				onClick={handleToggle}
 				size='sm'
 				type='button'
@@ -166,6 +186,16 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 													{field.description}
 												</div>
 											)}
+											{field.requiresReload && (
+												<div className='mt-1 text-orange-600 text-xs dark:text-orange-400'>
+													⚠️{' '}
+													{t(
+														exerciseSettingsTranslations[
+															'exerciseSettings.requiresReload'
+														]
+													)}
+												</div>
+											)}
 										</div>
 										{field.type === 'boolean' ? (
 											<input
@@ -206,7 +236,13 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 								type='button'
 								variant='primary'
 							>
-								{t(exerciseSettingsTranslations['exerciseSettings.apply'])}
+								{hasReloadRequiredChanges
+									? t(
+											exerciseSettingsTranslations[
+												'exerciseSettings.applyAndReload'
+											]
+										)
+									: t(exerciseSettingsTranslations['exerciseSettings.apply'])}
 							</Button>
 							<OutlineButton
 								className='flex-1'
