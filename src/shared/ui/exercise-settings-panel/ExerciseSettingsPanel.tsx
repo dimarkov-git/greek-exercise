@@ -25,7 +25,7 @@ export interface ExerciseSettingsPanelProps<T extends Record<string, unknown>> {
 	currentSettings: T
 	fields: SettingField[]
 	onApply: (newSettings: T) => void
-	onReset: () => void
+	onReset: () => T
 	isOpen?: boolean
 	onToggle?: () => void
 }
@@ -98,10 +98,17 @@ export function ExerciseSettingsPanel<T extends Record<string, unknown>>({
 	}
 
 	const handleResetToDefaults = () => {
-		onReset()
-		setIsDirty(false)
-		setHasReloadRequiredChanges(false)
-		handleToggle()
+		const defaultSettings = onReset()
+		setLocalSettings(defaultSettings)
+		setIsDirty(true)
+
+		// Check if any default setting differs from current and requires reload
+		const needsReload = fields.some(
+			field =>
+				field.requiresReload &&
+				defaultSettings[field.key] !== currentSettings[field.key]
+		)
+		setHasReloadRequiredChanges(needsReload)
 	}
 
 	return (

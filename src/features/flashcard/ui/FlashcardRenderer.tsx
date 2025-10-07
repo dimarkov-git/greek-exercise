@@ -192,7 +192,8 @@ export function FlashcardRenderer({
 							onApply: handleSettingsChange as (
 								newSettings: Record<string, unknown>
 							) => void,
-							onReset: () => handleSettingsChange(DEFAULT_FLASHCARD_SETTINGS)
+							onReset: () =>
+								({...DEFAULT_FLASHCARD_SETTINGS}) as Record<string, unknown>
 						}}
 						showAutoAdvanceToggle={true}
 						showBackButton={true}

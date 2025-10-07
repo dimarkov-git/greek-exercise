@@ -210,7 +210,8 @@ export function ExerciseHeader({
 								>,
 								fields: settingsFields,
 								onApply: handleSettingsApply,
-								onReset: () => onSettingsChange(DEFAULT_WORD_FORM_SETTINGS)
+								onReset: () =>
+									({...DEFAULT_WORD_FORM_SETTINGS}) as Record<string, unknown>
 							}
 						: undefined
 				}

@@ -131,7 +131,8 @@ function ExerciseHeader({
 					onApply: onSettingsChange as (
 						newSettings: Record<string, unknown>
 					) => void,
-					onReset: () => onSettingsChange(DEFAULT_MULTIPLE_CHOICE_SETTINGS)
+					onReset: () =>
+						({...DEFAULT_MULTIPLE_CHOICE_SETTINGS}) as Record<string, unknown>
 				}}
 				showAutoAdvanceToggle={true}
 				showBackButton={true}
