@@ -39,6 +39,7 @@ export {
 	getCompletedCasesCount,
 	getNextIndices,
 	getTotalCases,
+	hasGreekTones,
 	normalizeGreekText,
 	normalizeGreekTextWithoutTones,
 	shuffleExerciseCases
@@ -203,7 +204,8 @@ export type {
 export {
 	DEFAULT_EXERCISE_SETTINGS,
 	exerciseToJSON,
-	getExerciseSettings
+	getExerciseSettings,
+	getWordFormExerciseSettings
 } from './model/types'
 
 // Testing utilities (not for production use)

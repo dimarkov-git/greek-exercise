@@ -15,6 +15,33 @@ export function normalizeGreekText(text: string): string {
 		.normalize('NFC') // normalize Unicode (NFD → NFC)
 }
 
+// Map of Greek characters with tone marks to their base forms
+const TONE_MAP: Record<string, string> = {
+	'\u03AC': '\u03B1', // ά -> α
+	'\u03AD': '\u03B5', // έ -> ε
+	'\u03AE': '\u03B7', // ή -> η
+	'\u03AF': '\u03B9', // ί -> ι
+	'\u03CC': '\u03BF', // ό -> ο
+	'\u03CD': '\u03C5', // ύ -> υ
+	'\u03CE': '\u03C9', // ώ -> ω
+	'\u03B0': '\u03C5', // ΰ -> υ (diaeresis with tone mark)
+	'\u0390': '\u03B9', // ΐ -> ι (diaeresis with tone mark)
+	'\u0386': '\u03B1', // Ά -> α
+	'\u0388': '\u03B5', // Έ -> ε
+	'\u0389': '\u03B7', // Ή -> η
+	'\u038A': '\u03B9', // Ί -> ι
+	'\u038C': '\u03BF', // Ό -> ο
+	'\u038E': '\u03C5', // Ύ -> υ
+	'\u038F': '\u03C9' // Ώ -> ω
+}
+
+/**
+ * Check if text contains Greek tone marks (accent marks)
+ */
+export function hasGreekTones(text: string): boolean {
+	return text.split('').some(char => char in TONE_MAP)
+}
+
 /**
  * Normalize Greek text by removing tone marks
  * Used for more lenient answer comparison
@@ -22,47 +49,52 @@ export function normalizeGreekText(text: string): string {
 export function normalizeGreekTextWithoutTones(text: string): string {
 	const normalized = normalizeGreekText(text)
 
-	// Map of Greek characters with tone marks to their base forms
-	const toneMap: Record<string, string> = {
-		'\u03AC': '\u03B1', // ά -> α
-		'\u03AD': '\u03B5', // έ -> ε
-		'\u03AE': '\u03B7', // ή -> η
-		'\u03AF': '\u03B9', // ί -> ι
-		'\u03CC': '\u03BF', // ό -> ο
-		'\u03CD': '\u03C5', // ύ -> υ
-		'\u03CE': '\u03C9', // ώ -> ω
-		'\u03B0': '\u03C5', // ΰ -> υ (diaeresis with tone mark)
-		'\u0390': '\u03B9', // ΐ -> ι (diaeresis with tone mark)
-		'\u0386': '\u03B1', // Ά -> α
-		'\u0388': '\u03B5', // Έ -> ε
-		'\u0389': '\u03B7', // Ή -> η
-		'\u038A': '\u03B9', // Ί -> ι
-		'\u038C': '\u03BF', // Ό -> ο
-		'\u038E': '\u03C5', // Ύ -> υ
-		'\u038F': '\u03C9' // Ώ -> ω
-	}
-
 	return normalized
 		.split('')
-		.map(char => toneMap[char] || char)
+		.map(char => TONE_MAP[char] || char)
 		.join('')
 }
 
 /**
  * Check answer correctness with support for multiple correct variants
+ *
+ * @param userAnswer - The answer provided by the user
+ * @param correctAnswers - Array of correct answers
+ * @param allowSkipTone - If true, allows answers without tone marks, but wrong tones are still incorrect
+ * @returns true if the answer is correct, false otherwise
+ *
+ * When allowSkipTone is true:
+ * - If user provides answer WITHOUT tones → accepted as correct (compare without tones)
+ * - If user provides answer WITH tones → tones must be correct (exact match required)
  */
 export function checkAnswer(
 	userAnswer: string,
 	correctAnswers: string[],
-	ignoreTones = false
+	allowSkipTone = false
 ): boolean {
-	const normalizeFunction = ignoreTones
-		? normalizeGreekTextWithoutTones
-		: normalizeGreekText
-	const normalizedUserAnswer = normalizeFunction(userAnswer)
+	if (!allowSkipTone) {
+		// Strict mode: exact match with tones required
+		const normalizedUserAnswer = normalizeGreekText(userAnswer)
+		return correctAnswers.some(
+			correct => normalizeGreekText(correct) === normalizedUserAnswer
+		)
+	}
 
+	// allowSkipTone mode: check if user answer contains tones
+	const userHasTones = hasGreekTones(userAnswer)
+
+	if (userHasTones) {
+		// User provided tones → they must be correct (exact match)
+		const normalizedUserAnswer = normalizeGreekText(userAnswer)
+		return correctAnswers.some(
+			correct => normalizeGreekText(correct) === normalizedUserAnswer
+		)
+	}
+
+	// User did NOT provide tones → compare without tones
+	const normalizedUserAnswer = normalizeGreekTextWithoutTones(userAnswer)
 	return correctAnswers.some(
-		correct => normalizeFunction(correct) === normalizedUserAnswer
+		correct => normalizeGreekTextWithoutTones(correct) === normalizedUserAnswer
 	)
 }
 

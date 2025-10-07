@@ -5,8 +5,6 @@
 Complete technical reference and API documentation:
 
 - [**Technical Overview**](technical/overview.md) – Technology stack, architecture, and system design
-- [**API Specification**](technical/api-specification.md) – Mock API endpoints and data flow patterns
-- [**Data Models**](technical/data-models.md) – TypeScript interfaces and validation schemas
 
 ### 🏛️ **Architecture Guides** [`architecture/`](architecture/)
 
@@ -28,30 +26,22 @@ Type-safe multi-language support system:
 ### 📖 **Developer Guides** [`guides/`](guides/)
 
 - [**Getting Started**](guides/getting-started.md) – Environment setup
-- [**Tailwind CSS Guide**](guides/tailwind-css-guide.md) – UI/UX development patterns
-- [**Testing Guide**](guides/testing-guide.md) – Unit, integration, E2E strategies
-- [**Accessibility Guide**](guides/accessibility.md) – WCAG AA compliance
-- [**Exercise Development**](guides/exercise-development.md) – Creating exercises
-- [**User Guide**](guides/user-guide.md) – App functionality from user perspective
+- [**Word-form Exercise Guide**](guides/exercise-word-form.md) – Word-form exercise JSON format
+- [**User Guide**](guides/user-guide.md) – App functionality from a user perspective
 
 ### 📋 **Project Planning**
 
 - [**Development Roadmap**](ROADMAP.md) – Current focus and future phases
-- [**Exercise JSON Format**](guides/exercise-json-format.md) – Exercise data structure
 
 ## 🎯 Quick navigation
 
-| Need to...               | Go to...                                               |
-|--------------------------|--------------------------------------------------------|
-| **Start developing**     | [Getting Started](guides/getting-started.md)           |
-| **Style with Tailwind**  | [Tailwind CSS Guide](guides/tailwind-css-guide.md)     |
-| **Learn app**            | [User Guide](guides/user-guide.md)                     |
-| **Add translations**     | [i18n Implementation](i18n/implementation.md)          |
-| **Create exercises**     | [Exercise Development](guides/exercise-development.md) |
-| **Write tests**          | [Testing Guide](guides/testing-guide.md)               |
-| **Understand structure** | [Project Structure](architecture/project-structure.md) |
-| **Plan future work**     | [Roadmap](ROADMAP.md)                                  |
-
+| Need to...                     | Go to...                                                 |
+|--------------------------------|----------------------------------------------------------|
+| **Start developing**           | [Getting Started](guides/getting-started.md)             |
+| **Add translations**           | [i18n Implementation](i18n/implementation.md)            |
+| **Create word-form exercises** | [Word-form Exercise Guide](guides/exercise-word-form.md) |
+| **Understand structure**       | [Project Structure](architecture/project-structure.md)   |
+| **Plan future work**           | [Roadmap](ROADMAP.md)                                    |
 
 ## 📊 Standards
 

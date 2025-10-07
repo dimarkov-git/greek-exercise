@@ -46,7 +46,7 @@ export interface WordFormExercise {
 	descriptionI18n?: I18nText // description in interface languages (optional)
 	tags?: string[] // filtering tags (optional, defaults to empty array)
 	difficulty: Difficulty
-	settings?: PartialExerciseSettings // optional settings, defaults will be applied
+	settings?: import('@/shared/model').PartialWordFormSettings // optional settings, defaults will be applied
 	blocks: WordFormBlock[]
 }
 
@@ -152,6 +152,26 @@ export function getExerciseSettings(
 		allowSkip: settings?.allowSkip ?? DEFAULT_EXERCISE_SETTINGS.allowSkip,
 		shuffleCases:
 			settings?.shuffleCases ?? DEFAULT_EXERCISE_SETTINGS.shuffleCases
+	}
+}
+
+/**
+ * Get word-form exercise settings with defaults applied for missing values
+ */
+export function getWordFormExerciseSettings(
+	exercise: WordFormExercise
+): import('@/shared/model').WordFormSettings {
+	const settings = exercise.settings
+	return {
+		autoAdvance: settings?.autoAdvance ?? DEFAULT_EXERCISE_SETTINGS.autoAdvance,
+		autoAdvanceDelayMs:
+			settings?.autoAdvanceDelayMs ??
+			DEFAULT_EXERCISE_SETTINGS.autoAdvanceDelayMs,
+		allowSkip: settings?.allowSkip ?? DEFAULT_EXERCISE_SETTINGS.allowSkip,
+		shuffleCases:
+			settings?.shuffleCases ?? DEFAULT_EXERCISE_SETTINGS.shuffleCases,
+		shuffleBlocks: settings?.shuffleBlocks ?? false,
+		allowSkipTone: settings?.allowSkipTone ?? false
 	}
 }
 

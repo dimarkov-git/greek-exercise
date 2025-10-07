@@ -17,6 +17,7 @@ import {
 	getCompletedCasesCount,
 	getNextIndices,
 	getTotalCases,
+	hasGreekTones,
 	normalizeGreekText,
 	normalizeGreekTextWithoutTones,
 	shuffleExerciseCases
@@ -65,10 +66,41 @@ describe('Greek text helpers', () => {
 		expect(normalizeGreekTextWithoutTones('ΕΊΜΑΙ')).toBe('ειμαι')
 	})
 
-	it('compares answers with optional tone sensitivity', () => {
-		expect(checkAnswer('είμαι', ['είμαι'])).toBe(true)
-		expect(checkAnswer('ειμαι', ['είμαι'])).toBe(false)
-		expect(checkAnswer('ειμαι', ['είμαι'], true)).toBe(true)
+	it('detects Greek tone marks', () => {
+		expect(hasGreekTones('είμαι')).toBe(true)
+		expect(hasGreekTones('ειμαι')).toBe(false)
+		expect(hasGreekTones('μιλάω')).toBe(true)
+		expect(hasGreekTones('μιλαω')).toBe(false)
+	})
+
+	describe('checkAnswer with allowSkipTone = false (strict mode)', () => {
+		it('requires exact match with tones', () => {
+			expect(checkAnswer('είμαι', ['είμαι'], false)).toBe(true)
+			expect(checkAnswer('ειμαι', ['είμαι'], false)).toBe(false)
+		})
+	})
+
+	describe('checkAnswer with allowSkipTone = true', () => {
+		it('accepts answers without tones', () => {
+			expect(checkAnswer('ειμαι', ['είμαι'], true)).toBe(true)
+			expect(checkAnswer('μιλαω', ['μιλάω'], true)).toBe(true)
+		})
+
+		it('requires correct tones when user provides them', () => {
+			expect(checkAnswer('είμαι', ['είμαι'], true)).toBe(true)
+			expect(checkAnswer('εἰμαι', ['είμαι'], true)).toBe(false)
+		})
+
+		it('rejects wrong tones', () => {
+			// Wrong tone position should fail
+			expect(checkAnswer('ειμαί', ['είμαι'], true)).toBe(false)
+		})
+
+		it('works with multiple correct answers', () => {
+			expect(checkAnswer('μιλαω', ['μιλάω', 'μιλώ'], true)).toBe(true)
+			expect(checkAnswer('μιλάω', ['μιλάω', 'μιλώ'], true)).toBe(true)
+			expect(checkAnswer('μιλώ', ['μιλάω', 'μιλώ'], true)).toBe(true)
+		})
 	})
 })
 

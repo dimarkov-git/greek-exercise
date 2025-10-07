@@ -14,7 +14,8 @@ import type {
 import {
 	checkAnswer,
 	type ExerciseStatus,
-	getExerciseSettings
+	getExerciseSettings,
+	getWordFormExerciseSettings
 } from '@/entities/exercise'
 import {detectAutomationEnvironment} from '@/shared/lib'
 import {usePulseEffect} from '@/shared/ui/hint-system'
@@ -254,7 +255,12 @@ function useSubmitHandler({
 
 			const isCorrect = (() => {
 				try {
-					return checkAnswer(trimmedAnswer, caseData.correct)
+					const settings = getWordFormExerciseSettings(state.exercise)
+					return checkAnswer(
+						trimmedAnswer,
+						caseData.correct,
+						settings.allowSkipTone
+					)
 				} catch {
 					return false
 				}
