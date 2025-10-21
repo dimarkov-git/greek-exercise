@@ -76,8 +76,10 @@ describe('useExercises', () => {
 		expect(exercises.every(exercise => exercise.source === 'builtin')).toBe(
 			true
 		)
-		// Should include the verbs-be exercise from MSW data
-		expect(exercises.find(exercise => exercise.id === 'verbs-be')).toBeDefined()
+		// Should include the word-form-verbs-be-1 exercise from MSW data
+		expect(
+			exercises.find(exercise => exercise.id === 'word-form-verbs-be-1')
+		).toBeDefined()
 	})
 
 	it('includes custom exercises and marks them with source', async () => {
@@ -108,7 +110,11 @@ describe('useExercises', () => {
 	it('prefers custom exercises when ids overlap', async () => {
 		const {saveExercise} = useCustomExercisesStore.getState()
 		// Use a real exercise ID from MSW data that we can override
-		saveExercise({...customExercise, id: 'verbs-be', title: 'Override'})
+		saveExercise({
+			...customExercise,
+			id: 'word-form-verbs-be-1',
+			title: 'Override'
+		})
 
 		const {result} = renderHook(() => useExercises(), {
 			wrapper: createWrapper()
@@ -120,7 +126,7 @@ describe('useExercises', () => {
 		const exercises = result.current.data?.exercises ?? []
 		// Find the overridden exercise
 		const verbsBeExercise = exercises.find(
-			exercise => exercise.id === 'verbs-be'
+			exercise => exercise.id === 'word-form-verbs-be-1'
 		)
 		expect(verbsBeExercise).toBeDefined()
 		expect(verbsBeExercise?.title).toBe('Override')
@@ -128,6 +134,8 @@ describe('useExercises', () => {
 
 		// Verify the custom exercise is stored
 		const stored = selectCustomExercises(useCustomExercisesStore.getState())
-		expect(stored.find(ex => ex.id === 'verbs-be')?.title).toBe('Override')
+		expect(stored.find(ex => ex.id === 'word-form-verbs-be-1')?.title).toBe(
+			'Override'
+		)
 	})
 })

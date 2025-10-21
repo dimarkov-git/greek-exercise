@@ -39,6 +39,8 @@ export interface FlashcardMachineContext {
 	correctCards: Set<string>
 	qualityRatings: Map<string, QualityRating>
 	isFlipped: boolean
+	isRated: boolean
+	lastRating: QualityRating | null
 	startedAt: number
 }
 
@@ -64,13 +66,15 @@ export function flashcardReducer(
 				correctCards: new Set(),
 				qualityRatings: new Map(),
 				isFlipped: false,
+				isRated: false,
+				lastRating: null,
 				startedAt: Date.now()
 			}
 
 		case 'FLIP':
 			return {
 				...context,
-				isFlipped: true
+				isFlipped: !context.isFlipped
 			}
 
 		case 'RATE': {
@@ -96,7 +100,9 @@ export function flashcardReducer(
 				...context,
 				reviewedCards,
 				correctCards,
-				qualityRatings
+				qualityRatings,
+				isRated: true,
+				lastRating: event.quality
 			}
 		}
 
@@ -105,7 +111,9 @@ export function flashcardReducer(
 			return {
 				...context,
 				currentCardIndex: nextIndex,
-				isFlipped: false
+				isFlipped: false,
+				isRated: false,
+				lastRating: null
 			}
 		}
 
@@ -122,6 +130,8 @@ export function flashcardReducer(
 				...context,
 				currentCardIndex: nextIndex,
 				isFlipped: false,
+				isRated: false,
+				lastRating: null,
 				reviewedCards
 			}
 		}
@@ -134,6 +144,8 @@ export function flashcardReducer(
 				correctCards: new Set(),
 				qualityRatings: new Map(),
 				isFlipped: false,
+				isRated: false,
+				lastRating: null,
 				startedAt: Date.now()
 			}
 
@@ -146,6 +158,8 @@ export function flashcardReducer(
 				correctCards: new Set(),
 				qualityRatings: new Map(),
 				isFlipped: false,
+				isRated: false,
+				lastRating: null,
 				startedAt: Date.now()
 			}
 

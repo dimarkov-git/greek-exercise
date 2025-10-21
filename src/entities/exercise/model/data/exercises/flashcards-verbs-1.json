@@ -1,6 +1,6 @@
 {
 	"enabled": true,
-	"id": "greek-verbs-flashcards-1",
+	"id": "flashcards-verbs-1",
 	"type": "flashcard",
 	"language": "el",
 	"title": "Βασικά ρήματα",
@@ -15,10 +15,6 @@
 	},
 	"tags": ["verbs"],
 	"difficulty": "a1",
-	"settings": {
-		"autoAdvance": false,
-		"allowSkip": true
-	},
 	"srsSettings": {
 		"newCardsPerDay": 10,
 		"reviewsPerDay": 50

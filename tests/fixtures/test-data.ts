@@ -2,11 +2,11 @@
  * Test data constants for stable, predictable testing
  */
 
-import verbsBeJson from '../../src/entities/exercise/model/data/exercises/verbs-be.json' with {
+import verbsBeJson from '../../src/entities/exercise/model/data/exercises/word-form-verbs-be-1.json' with {
 	type: 'json'
 }
 
-import verbsHaveJson from '../../src/entities/exercise/model/data/exercises/verbs-have.json' with {
+import verbsHaveJson from '../../src/entities/exercise/model/data/exercises/word-form-verbs-have-1.json' with {
 	type: 'json'
 }
 
@@ -116,7 +116,7 @@ export const UI_TEXT = {
 	progress: {
 		// Regex pattern for progress text like "2 of 6", "2 из 6", "2 από 6"
 		ofPattern: /of|из|από/,
-		// Helper function to create progress pattern for specific numbers
+		// Helper function to create a progress pattern for specific numbers
 		createPattern: (currentQuestion: number) =>
 			new RegExp(`${currentQuestion}.*(of|из|από).*\\d+`)
 	}

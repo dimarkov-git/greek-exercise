@@ -22,7 +22,7 @@ const baseBlock = {
 
 const baseExercise = {
 	enabled: true,
-	id: 'verbs-be',
+	id: 'word-form-verbs-be-1',
 	type: 'word-form' as const,
 	language: 'el' as const,
 	title: 'Είμαι',
@@ -51,7 +51,7 @@ it('rejects exercises missing required fields', () => {
 
 it('validates metadata lists for the exercise library', () => {
 	const metadata = {
-		id: 'verbs-be',
+		id: 'word-form-verbs-be-1',
 		type: 'word-form',
 		language: 'el',
 		title: 'Είμαι',
@@ -63,7 +63,9 @@ it('validates metadata lists for the exercise library', () => {
 		enabled: true
 	}
 
-	expect(v.parse(ExerciseMetadataSchema, metadata).id).toBe('verbs-be')
+	expect(v.parse(ExerciseMetadataSchema, metadata).id).toBe(
+		'word-form-verbs-be-1'
+	)
 	expect(v.parse(ExercisesListSchema, [metadata])).toHaveLength(1)
 	expect(() =>
 		v.parse(ExercisesListSchema, [{...metadata, totalCases: -1}])

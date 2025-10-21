@@ -32,13 +32,13 @@ test.describe('Navigation - Advanced', () => {
 		await exerciseLibrary.goto()
 
 		// Test verbs-be exercise
-		await exerciseLibrary.startExerciseById('verbs-be')
+		await exerciseLibrary.startExerciseById('word-form-verbs-be-1')
 		await expect(page).toHaveURL(ROUTES.exerciseVerbsBe)
 		await exercisePage.expectPageLoaded()
 
 		// Go back and test verbs-have exercise
 		await exercisePage.clickBackButton()
-		await exerciseLibrary.startExerciseById('verbs-have')
+		await exerciseLibrary.startExerciseById('word-form-verbs-have-1')
 		await expect(page).toHaveURL(ROUTES.exerciseVerbsHave)
 		await exercisePage.expectPageLoaded()
 	})
@@ -47,7 +47,7 @@ test.describe('Navigation - Advanced', () => {
 		const exercisePage = new ExercisePage(page)
 
 		// Direct navigation to exercise should work
-		await page.goto(ROUTES.exercisePath('verbs-be'))
+		await page.goto(ROUTES.exercisePath('word-form-verbs-be-1'))
 		await exercisePage.expectPageLoaded()
 
 		// Should be able to navigate back
@@ -62,7 +62,7 @@ test.describe('Navigation - Exercises', () => {
 		const exercisePage = new ExercisePage(page)
 
 		await exerciseLibrary.goto()
-		await exerciseLibrary.startExerciseById('verbs-be')
+		await exerciseLibrary.startExerciseById('word-form-verbs-be-1')
 
 		await expect(page).toHaveURL(ROUTES.exerciseVerbsBe)
 		await exercisePage.expectPageLoaded()
@@ -73,7 +73,7 @@ test.describe('Navigation - Exercises', () => {
 		const exercisePage = new ExercisePage(page)
 
 		await exerciseLibrary.goto()
-		await exerciseLibrary.startExerciseById('verbs-be')
+		await exerciseLibrary.startExerciseById('word-form-verbs-be-1')
 		await exercisePage.expectPageLoaded()
 
 		await exercisePage.clickBackButton()

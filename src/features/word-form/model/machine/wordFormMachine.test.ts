@@ -11,7 +11,7 @@ import {
 
 const baseExercise: WordFormExercise = {
 	enabled: true,
-	id: 'verbs-be',
+	id: 'word-form-verbs-be-1',
 	type: 'word-form',
 	language: 'el',
 	title: 'Είμαι',

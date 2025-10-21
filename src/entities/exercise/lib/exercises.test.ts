@@ -27,7 +27,7 @@ const CASE_IDENTIFIER_PATTERN = /^case-\d+-[a-z0-9]{0,7}$/
 
 const sampleExercise: WordFormExercise = {
 	enabled: true,
-	id: 'verbs-be',
+	id: 'word-form-verbs-be-1',
 	type: 'word-form',
 	language: 'el',
 	title: 'Είμαι',
@@ -139,7 +139,7 @@ describe('extractExerciseMetadata', () => {
 		const metadata = extractExerciseMetadata(exerciseWithTranslations)
 
 		expect(metadata).toMatchObject({
-			id: 'verbs-be',
+			id: 'word-form-verbs-be-1',
 			totalBlocks: 2,
 			totalCases: 3,
 			titleI18n: {en: 'Be'},

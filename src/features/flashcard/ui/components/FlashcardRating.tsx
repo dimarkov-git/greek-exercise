@@ -179,7 +179,7 @@ export function FlashcardRating({
 								scale: activeButton === quality ? 0.95 : 1
 							}}
 							aria-label={ariaLabel}
-							className={`relative overflow-hidden rounded-lg px-6 py-4 font-medium text-white text-xl transition-colors ${color} ${hoverColor} disabled:cursor-not-allowed disabled:opacity-50`}
+							className={`relative cursor-pointer overflow-hidden rounded-lg px-6 py-4 font-medium text-white text-xl transition-colors ${color} ${hoverColor} disabled:cursor-not-allowed disabled:opacity-50`}
 							disabled={disabled || activeButton !== null}
 							key={quality}
 							onClick={e => handleButtonClick(quality, effectType, e)}

@@ -4,7 +4,7 @@
  * Main component for flashcard review sessions with flip animations and SRS.
  */
 
-import {useMemo} from 'react'
+import {useEffect, useMemo} from 'react'
 import type {
 	ExerciseRendererProps,
 	FlashcardExercise
@@ -59,8 +59,14 @@ export function FlashcardRenderer({
 			}
 		: undefined
 
-	const {state, handleFlip, handleRate, handleRestart, handleSettingsChange} =
-		useFlashcardExercise(exercise, handleComplete)
+	const {
+		state,
+		handleFlip,
+		handleRate,
+		handleNext,
+		handleRestart,
+		handleSettingsChange
+	} = useFlashcardExercise(exercise, handleComplete)
 
 	// Handle effect triggers from both card swipes and button clicks
 	const handleEffectTrigger = (_effect: 'know' | 'dontKnow') => {
@@ -116,9 +122,24 @@ export function FlashcardRenderer({
 	)
 
 	const currentSettings = useMemo(
-		() => ({...DEFAULT_FLASHCARD_SETTINGS, ...exercise.settings}),
-		[exercise.settings]
+		() => ({...DEFAULT_FLASHCARD_SETTINGS, ...state.exercise.settings}),
+		[state.exercise.settings]
 	)
+
+	// Handle Enter key for manual advance when auto advance is off
+	useEffect(() => {
+		if (!currentSettings.autoAdvance && state.isRated) {
+			const handleKeyPress = (e: KeyboardEvent) => {
+				if (e.key === 'Enter') {
+					handleNext()
+				}
+			}
+
+			window.addEventListener('keydown', handleKeyPress)
+			return () => window.removeEventListener('keydown', handleKeyPress)
+		}
+		return
+	}, [currentSettings.autoAdvance, state.isRated, handleNext])
 
 	// Show loading state
 	if (state.isLoading) {
@@ -229,16 +250,46 @@ export function FlashcardRenderer({
 					card={state.currentCard}
 					isFlipped={state.isFlipped}
 					onFlip={handleFlip}
-					{...(state.isFlipped && {onRate: handleRate})}
+					{...(state.isFlipped &&
+						(!state.isRated || currentSettings.autoAdvance) && {
+							onRate: handleRate
+						})}
 					onEffectTrigger={handleEffectTrigger}
 				/>
 
-				{/* Rating buttons (desktop only, only show when flipped) */}
-				{state.isFlipped && (
+				{/* Rating buttons (desktop only, only show when flipped and not rated OR auto advance is on) */}
+				{state.isFlipped && (!state.isRated || currentSettings.autoAdvance) && (
 					<FlashcardRating
 						onEffectTrigger={handleEffectTrigger}
 						onRate={handleRate}
 					/>
+				)}
+
+				{/* Manual advance controls (when auto advance is off and card is rated) */}
+				{state.isFlipped && state.isRated && !currentSettings.autoAdvance && (
+					<div className='mt-8 w-full max-w-2xl text-center'>
+						{/* Rating result */}
+						<div className='mb-4'>
+							{state.lastRating && state.lastRating >= 3 ? (
+								<div className='mb-2 text-green-600 text-xl dark:text-green-400'>
+									✓ You know this card
+								</div>
+							) : (
+								<div className='mb-2 text-orange-600 text-xl dark:text-orange-400'>
+									○ Keep practicing this card
+								</div>
+							)}
+						</div>
+
+						{/* Next button */}
+						<button
+							className='rounded-lg bg-blue-600 px-8 py-3 font-medium text-white transition-colors hover:bg-blue-700'
+							onClick={handleNext}
+							type='button'
+						>
+							Next (Enter)
+						</button>
+					</div>
 				)}
 			</div>
 		</div>

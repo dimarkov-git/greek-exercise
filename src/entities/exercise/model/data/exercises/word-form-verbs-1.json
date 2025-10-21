@@ -1,6 +1,6 @@
 {
 	"enabled": true,
-	"id": "verbs-present-tense",
+	"id": "word-form-verbs-1",
 	"type": "word-form",
 	"language": "el",
 	"title": "Συζυγία ρημάτων στον Ενεστώτα",
@@ -15,9 +15,6 @@
 	},
 	"tags": ["verbs"],
 	"difficulty": "a1",
-	"settings": {
-		"shuffleCases": true
-	},
 	"blocks": [
 		{
 			"id": "read",

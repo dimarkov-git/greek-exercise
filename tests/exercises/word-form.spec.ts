@@ -59,7 +59,7 @@ async function navigateToVerbsBeExercise(page: Page) {
 	await exerciseLibrary.goto()
 	await accelerateTimers(page)
 	await exerciseLibrary.expectPageLoaded()
-	await exerciseLibrary.startExerciseById('verbs-be')
+	await exerciseLibrary.startExerciseById('word-form-verbs-be-1')
 }
 
 async function completeExerciseTest(page: Page): Promise<void> {
@@ -174,7 +174,7 @@ test.describe('Alternative word-form exercise', () => {
 		await exerciseLibrary.goto()
 		await accelerateTimers(page)
 		await exerciseLibrary.expectPageLoaded()
-		await exerciseLibrary.startExerciseById('verbs-have')
+		await exerciseLibrary.startExerciseById('word-form-verbs-have-1')
 
 		await expect(page).toHaveURL(ROUTES.exerciseVerbsHave)
 		await exercisePage.expectPageLoaded()

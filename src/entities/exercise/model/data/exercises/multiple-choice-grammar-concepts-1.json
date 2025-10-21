@@ -1,0 +1,359 @@
+{
+	"enabled": true,
+	"id": "multiple-choice-grammar-concepts-1",
+	"type": "multiple-choice",
+	"language": "el",
+	"title": "Γραμματικές έννοιες - Επιλογή απάντησης",
+	"titleI18n": {
+		"en": "Grammar Concepts - Multiple Choice",
+		"ru": "Грамматические концепции - Множественный выбор"
+	},
+	"description": "Εξάσκηση γραμματικών εννοιών με πολλαπλή επιλογή",
+	"descriptionI18n": {
+		"en": "Practice Greek grammar concepts with multiple choice questions",
+		"ru": "Практика греческой грамматики с вопросами множественного выбора"
+	},
+	"tags": ["grammar"],
+	"difficulty": "a2",
+	"settings": {
+		"autoAdvance": true,
+		"autoAdvanceDelayMs": 2000,
+		"allowSkip": true,
+		"shuffleCases": false
+	},
+	"questions": [
+		{
+			"id": "q1",
+			"text": "Πώς λέμε 'Γεια σου' στα Αγγλικά;",
+			"textI18n": {
+				"en": "How do you say 'Γεια σου' in English?",
+				"ru": "Как сказать 'Γεια σου' по-английски?"
+			},
+			"options": [
+				{
+					"id": "q1-o1",
+					"text": "Hello",
+					"textI18n": { "en": "Hello", "ru": "Привет" }
+				},
+				{
+					"id": "q1-o2",
+					"text": "Goodbye",
+					"textI18n": { "en": "Goodbye", "ru": "До свидания" }
+				},
+				{
+					"id": "q1-o3",
+					"text": "Thank you",
+					"textI18n": { "en": "Thank you", "ru": "Спасибо" }
+				},
+				{
+					"id": "q1-o4",
+					"text": "Please",
+					"textI18n": { "en": "Please", "ru": "Пожалуйста" }
+				}
+			],
+			"correctOptionId": "q1-o1"
+		},
+		{
+			"id": "q2",
+			"text": "Ποιο από αυτά σημαίνει 'ευχαριστώ';",
+			"textI18n": {
+				"en": "Which of these means 'thank you'?",
+				"ru": "Что из этого означает 'спасибо'?"
+			},
+			"options": [
+				{
+					"id": "q2-o1",
+					"text": "παρακαλώ",
+					"textI18n": {
+						"en": "parakaló (please)",
+						"ru": "паракало (пожалуйста)"
+					}
+				},
+				{
+					"id": "q2-o2",
+					"text": "ευχαριστώ",
+					"textI18n": {
+						"en": "efcharistó (thank you)",
+						"ru": "эфхаристо (спасибо)"
+					}
+				},
+				{
+					"id": "q2-o3",
+					"text": "συγγνώμη",
+					"textI18n": { "en": "signómi (sorry)", "ru": "сигноми (извините)" }
+				},
+				{
+					"id": "q2-o4",
+					"text": "καλημέρα",
+					"textI18n": {
+						"en": "kaliméra (good morning)",
+						"ru": "калимера (доброе утро)"
+					}
+				}
+			],
+			"correctOptionId": "q2-o2"
+		},
+		{
+			"id": "q3",
+			"text": "Πώς λέμε τον αριθμό '5' στα Ελληνικά;",
+			"textI18n": {
+				"en": "How do you say the number '5' in Greek?",
+				"ru": "Как сказать число '5' по-гречески?"
+			},
+			"options": [
+				{
+					"id": "q3-o1",
+					"text": "τέσσερα",
+					"textI18n": { "en": "téssera (4)", "ru": "тесера (4)" }
+				},
+				{
+					"id": "q3-o2",
+					"text": "πέντε",
+					"textI18n": { "en": "pénte (5)", "ru": "пенде (5)" }
+				},
+				{
+					"id": "q3-o3",
+					"text": "έξι",
+					"textI18n": { "en": "éxi (6)", "ru": "экси (6)" }
+				},
+				{
+					"id": "q3-o4",
+					"text": "τρία",
+					"textI18n": { "en": "tría (3)", "ru": "триа (3)" }
+				}
+			],
+			"correctOptionId": "q3-o2"
+		},
+		{
+			"id": "q4",
+			"text": "Ποιο χρώμα είναι το 'κόκκινο';",
+			"textI18n": {
+				"en": "What color is 'κόκκινο'?",
+				"ru": "Какой цвет 'κόκκινο'?"
+			},
+			"options": [
+				{
+					"id": "q4-o1",
+					"text": "Blue",
+					"textI18n": { "en": "Blue", "ru": "Синий" }
+				},
+				{
+					"id": "q4-o2",
+					"text": "Red",
+					"textI18n": { "en": "Red", "ru": "Красный" }
+				},
+				{
+					"id": "q4-o3",
+					"text": "Green",
+					"textI18n": { "en": "Green", "ru": "Зелёный" }
+				},
+				{
+					"id": "q4-o4",
+					"text": "Yellow",
+					"textI18n": { "en": "Yellow", "ru": "Жёлтый" }
+				}
+			],
+			"correctOptionId": "q4-o2",
+			"hint": "Think of tomatoes",
+			"hintI18n": {
+				"en": "Think of the color of tomatoes",
+				"ru": "Подумайте о цвете помидоров"
+			}
+		},
+		{
+			"id": "q5",
+			"text": "Ποια μέρα είναι η 'Δευτέρα';",
+			"textI18n": {
+				"en": "What day is 'Δευτέρα'?",
+				"ru": "Какой день 'Δευτέρα'?"
+			},
+			"options": [
+				{
+					"id": "q5-o1",
+					"text": "Monday",
+					"textI18n": { "en": "Monday", "ru": "Понедельник" }
+				},
+				{
+					"id": "q5-o2",
+					"text": "Tuesday",
+					"textI18n": { "en": "Tuesday", "ru": "Вторник" }
+				},
+				{
+					"id": "q5-o3",
+					"text": "Wednesday",
+					"textI18n": { "en": "Wednesday", "ru": "Среда" }
+				},
+				{
+					"id": "q5-o4",
+					"text": "Sunday",
+					"textI18n": { "en": "Sunday", "ru": "Воскресенье" }
+				}
+			],
+			"correctOptionId": "q5-o1"
+		},
+		{
+			"id": "q6",
+			"text": "Τι σημαίνει 'το νερό';",
+			"textI18n": {
+				"en": "What does 'το νερό' mean?",
+				"ru": "Что означает 'το νερό'?"
+			},
+			"options": [
+				{
+					"id": "q6-o1",
+					"text": "bread",
+					"textI18n": { "en": "bread", "ru": "хлеб" }
+				},
+				{
+					"id": "q6-o2",
+					"text": "water",
+					"textI18n": { "en": "water", "ru": "вода" }
+				},
+				{
+					"id": "q6-o3",
+					"text": "milk",
+					"textI18n": { "en": "milk", "ru": "молоко" }
+				},
+				{
+					"id": "q6-o4",
+					"text": "food",
+					"textI18n": { "en": "food", "ru": "еда" }
+				}
+			],
+			"correctOptionId": "q6-o2"
+		},
+		{
+			"id": "q7",
+			"text": "Πώς λέμε 'Πώς σε λένε;' στα Αγγλικά;",
+			"textI18n": {
+				"en": "How do you say 'Πώς σε λένε;' in English?",
+				"ru": "Как сказать 'Πώς σε λένε;' по-английски?"
+			},
+			"options": [
+				{
+					"id": "q7-o1",
+					"text": "How old are you?",
+					"textI18n": { "en": "How old are you?", "ru": "Сколько тебе лет?" }
+				},
+				{
+					"id": "q7-o2",
+					"text": "What is your name?",
+					"textI18n": { "en": "What is your name?", "ru": "Как тебя зовут?" }
+				},
+				{
+					"id": "q7-o3",
+					"text": "Where are you from?",
+					"textI18n": { "en": "Where are you from?", "ru": "Откуда ты?" }
+				},
+				{
+					"id": "q7-o4",
+					"text": "How are you?",
+					"textI18n": { "en": "How are you?", "ru": "Как дела?" }
+				}
+			],
+			"correctOptionId": "q7-o2"
+		},
+		{
+			"id": "q8",
+			"text": "Ποιο είναι το αντίθετο του 'μεγάλο';",
+			"textI18n": {
+				"en": "What is the opposite of 'μεγάλο' (big)?",
+				"ru": "Что противоположно слову 'μεγάλο' (большой)?"
+			},
+			"options": [
+				{
+					"id": "q8-o1",
+					"text": "μικρό",
+					"textI18n": { "en": "mikró (small)", "ru": "микро (маленький)" }
+				},
+				{
+					"id": "q8-o2",
+					"text": "ωραίο",
+					"textI18n": { "en": "oraío (beautiful)", "ru": "орео (красивый)" }
+				},
+				{
+					"id": "q8-o3",
+					"text": "καλό",
+					"textI18n": { "en": "kaló (good)", "ru": "кало (хороший)" }
+				},
+				{
+					"id": "q8-o4",
+					"text": "νέο",
+					"textI18n": { "en": "néo (new)", "ru": "нео (новый)" }
+				}
+			],
+			"correctOptionId": "q8-o1"
+		},
+		{
+			"id": "q9",
+			"text": "Τι σημαίνει 'Με λένε Μαρία';",
+			"textI18n": {
+				"en": "What does 'Με λένε Μαρία' mean?",
+				"ru": "Что означает 'Με λένε Μαρία'?"
+			},
+			"options": [
+				{
+					"id": "q9-o1",
+					"text": "My name is Maria",
+					"textI18n": { "en": "My name is Maria", "ru": "Меня зовут Мария" }
+				},
+				{
+					"id": "q9-o2",
+					"text": "I am from Maria",
+					"textI18n": { "en": "I am from Maria", "ru": "Я из Марии" }
+				},
+				{
+					"id": "q9-o3",
+					"text": "I like Maria",
+					"textI18n": { "en": "I like Maria", "ru": "Мне нравится Мария" }
+				},
+				{
+					"id": "q9-o4",
+					"text": "I see Maria",
+					"textI18n": { "en": "I see Maria", "ru": "Я вижу Марию" }
+				}
+			],
+			"correctOptionId": "q9-o1"
+		},
+		{
+			"id": "q10",
+			"text": "Πώς απαντάμε στο 'Καλημέρα';",
+			"textI18n": {
+				"en": "How do we respond to 'Καλημέρα' (Good morning)?",
+				"ru": "Как мы отвечаем на 'Καλημέρα' (Доброе утро)?"
+			},
+			"options": [
+				{
+					"id": "q10-o1",
+					"text": "Καληνύχτα",
+					"textI18n": {
+						"en": "Kaliníchta (Good night)",
+						"ru": "Калинихта (Спокойной ночи)"
+					}
+				},
+				{
+					"id": "q10-o2",
+					"text": "Αντίο",
+					"textI18n": { "en": "Antío (Goodbye)", "ru": "Андио (До свидания)" }
+				},
+				{
+					"id": "q10-o3",
+					"text": "Καλημέρα",
+					"textI18n": {
+						"en": "Kaliméra (Good morning)",
+						"ru": "Калимера (Доброе утро)"
+					}
+				},
+				{
+					"id": "q10-o4",
+					"text": "Ευχαριστώ",
+					"textI18n": {
+						"en": "Efcharistó (Thank you)",
+						"ru": "Эфхаристо (Спасибо)"
+					}
+				}
+			],
+			"correctOptionId": "q10-o3"
+		}
+	]
+}

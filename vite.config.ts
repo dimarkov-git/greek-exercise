@@ -81,9 +81,17 @@ export default defineConfig(() => ({
 					if (id.includes('src/shared/lib/i18n')) {
 						return 'i18n'
 					}
-					// Keep shared API modules together
-					if (id.includes('src/shared/api')) {
-						return 'shared-api'
+					// Group vendor dependencies
+					if (id.includes('node_modules')) {
+						if (id.includes('react') || id.includes('react-dom')) {
+							return 'react-vendor'
+						}
+						if (id.includes('@tanstack/react-query')) {
+							return 'react-query'
+						}
+						if (id.includes('framer-motion')) {
+							return 'framer-motion'
+						}
 					}
 				}
 			}

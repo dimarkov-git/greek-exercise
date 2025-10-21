@@ -1,6 +1,6 @@
 {
 	"enabled": true,
-	"id": "verbs-past-tense",
+	"id": "word-form-verbs-2",
 	"type": "word-form",
 	"language": "el",
 	"title": "Συζυγία ρημάτων στον Αόριστο",
@@ -15,9 +15,6 @@
 	},
 	"tags": ["verbs"],
 	"difficulty": "a1",
-	"settings": {
-		"shuffleCases": true
-	},
 	"blocks": [
 		{
 			"id": "read",

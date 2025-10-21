@@ -452,7 +452,7 @@ describe('WordFormExercise', () => {
 
 ```typescript
 test('exercise completion flow', async ({page}) => {
-    await page.goto('/exercise/verbs-be')
+    await page.goto('/exercise/word-form-verbs-be-1')
     await page.fill('[role="textbox"]', 'είμαι')
     await page.click('text=Check')
     await expect(page.locator('.pulse-success')).toBeVisible()

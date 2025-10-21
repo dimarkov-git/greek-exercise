@@ -39,6 +39,8 @@ export interface FlashcardViewState {
 	currentCard: FlashCard | null
 	currentSRS: SRSData | null
 	isFlipped: boolean
+	isRated: boolean
+	lastRating: QualityRating | null
 	status: FlashcardStatus
 	progress: {
 		current: number
@@ -74,6 +76,8 @@ export function useFlashcardExercise(
 		correctCards: new Set(),
 		qualityRatings: new Map(),
 		isFlipped: false,
+		isRated: false,
+		lastRating: null,
 		startedAt: Date.now()
 	} as FlashcardMachineContext)
 
@@ -144,10 +148,13 @@ export function useFlashcardExercise(
 				// Silently ignore save errors - user can still continue
 			}
 
-			// Auto-advance to next card after short delay
-			setTimeout(() => {
-				dispatch({type: 'NEXT'})
-			}, 300)
+			// Auto-advance to next card if enabled
+			if (context.exercise.settings?.autoAdvance !== false) {
+				const delay = context.exercise.settings?.autoAdvanceDelayMs ?? 300
+				setTimeout(() => {
+					dispatch({type: 'NEXT'})
+				}, delay)
+			}
 		},
 		[context, exercise.srsSettings]
 	)
@@ -155,6 +162,11 @@ export function useFlashcardExercise(
 	// Handle skip action
 	const handleSkip = useCallback(() => {
 		dispatch({type: 'SKIP'})
+	}, [])
+
+	// Handle next action (manual advance)
+	const handleNext = useCallback(() => {
+		dispatch({type: 'NEXT'})
 	}, [])
 
 	// Handle restart action
@@ -190,10 +202,12 @@ export function useFlashcardExercise(
 
 	// Build view state
 	const viewState: FlashcardViewState = {
-		exercise,
+		exercise: context.exercise,
 		currentCard: getCurrentCard(context),
 		currentSRS: getCurrentSRS(context),
 		isFlipped: context.isFlipped,
+		isRated: context.isRated,
+		lastRating: context.lastRating,
 		status: getFlashcardStatus(context),
 		progress: {
 			current: context.currentCardIndex + 1,
@@ -238,6 +252,7 @@ export function useFlashcardExercise(
 		handleFlip,
 		handleRate,
 		handleSkip,
+		handleNext,
 		handleRestart,
 		handleSettingsChange
 	}

@@ -89,6 +89,6 @@ export const ROUTES = {
 	home: withHashPath('/'),
 	exercises: withHashPath('/exercises'),
 	exercisePath: (slug: string) => withHashPath(`/exercise/${slug}`),
-	exerciseVerbsBe: withHashRegex('/exercise/verbs-be'),
-	exerciseVerbsHave: withHashRegex('/exercise/verbs-have')
+	exerciseVerbsBe: withHashRegex('/exercise/word-form-verbs-be-1'),
+	exerciseVerbsHave: withHashRegex('/exercise/word-form-verbs-have-1')
 } as const
