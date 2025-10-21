@@ -62,6 +62,12 @@ export function FlashcardRenderer({
 	const {state, handleFlip, handleRate, handleRestart, handleSettingsChange} =
 		useFlashcardExercise(exercise, handleComplete)
 
+	// Handle effect triggers from both card swipes and button clicks
+	const handleEffectTrigger = (_effect: 'know' | 'dontKnow') => {
+		// This can be extended to add haptic feedback, sound effects, etc.
+		// For now, it serves as a coordination point between components
+	}
+
 	// Settings configuration (hooks must be at top level before any returns)
 	const {t: tSettings} = loadTranslations(exerciseSettingsTranslations)
 
@@ -224,10 +230,16 @@ export function FlashcardRenderer({
 					isFlipped={state.isFlipped}
 					onFlip={handleFlip}
 					{...(state.isFlipped && {onRate: handleRate})}
+					onEffectTrigger={handleEffectTrigger}
 				/>
 
 				{/* Rating buttons (desktop only, only show when flipped) */}
-				{state.isFlipped && <FlashcardRating onRate={handleRate} />}
+				{state.isFlipped && (
+					<FlashcardRating
+						onEffectTrigger={handleEffectTrigger}
+						onRate={handleRate}
+					/>
+				)}
 			</div>
 		</div>
 	)

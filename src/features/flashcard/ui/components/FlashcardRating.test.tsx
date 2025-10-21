@@ -49,27 +49,60 @@ describe('FlashcardRating', () => {
 	})
 
 	it("calls onRate with quality 2 when Don't Know is clicked", async () => {
-		const user = userEvent.setup()
 		const onRate = vi.fn()
 
 		render(<FlashcardRating onRate={onRate} />, {wrapper: createWrapper()})
 
-		await user.click(screen.getByRole('button', {name: /don't know/i}))
+		const button = screen.getByRole('button', {name: /don't know/i})
+
+		// Click button
+		await userEvent.click(button)
+
+		// Wait for effect animation to complete (400ms + buffer)
+		await new Promise(resolve => setTimeout(resolve, 450))
 
 		expect(onRate).toHaveBeenCalledWith(2 as QualityRating)
 		expect(onRate).toHaveBeenCalledOnce()
 	})
 
 	it('calls onRate with quality 4 when Know is clicked', async () => {
-		const user = userEvent.setup()
 		const onRate = vi.fn()
 
 		render(<FlashcardRating onRate={onRate} />, {wrapper: createWrapper()})
 
-		await user.click(screen.getByRole('button', {name: /mark as know/i}))
+		const button = screen.getByRole('button', {name: /mark as know/i})
+
+		// Click button
+		await userEvent.click(button)
+
+		// Wait for effect animation to complete (400ms + buffer)
+		await new Promise(resolve => setTimeout(resolve, 450))
 
 		expect(onRate).toHaveBeenCalledWith(4 as QualityRating)
 		expect(onRate).toHaveBeenCalledOnce()
+	})
+
+	it('calls onEffectTrigger when button is clicked', async () => {
+		const onRate = vi.fn()
+		const onEffectTrigger = vi.fn()
+
+		render(
+			<FlashcardRating onEffectTrigger={onEffectTrigger} onRate={onRate} />,
+			{wrapper: createWrapper()}
+		)
+
+		const button = screen.getByRole('button', {name: /mark as know/i})
+
+		// Click button
+		await userEvent.click(button)
+
+		// onEffectTrigger should be called immediately
+		expect(onEffectTrigger).toHaveBeenCalledWith('know')
+		expect(onEffectTrigger).toHaveBeenCalledOnce()
+
+		// Wait for animation and check onRate was also called
+		await new Promise(resolve => setTimeout(resolve, 450))
+		expect(onRate).toHaveBeenCalledWith(4 as QualityRating)
 	})
 
 	it('disables all buttons when disabled prop is true', () => {

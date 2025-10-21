@@ -238,3 +238,70 @@
 
 /* Configure Tailwind dark mode to use data-theme attribute */
 @variant dark ([data-theme="dark"] &);
+
+/* Flashcard effect animations */
+@keyframes breathing {
+	0%,
+	100% {
+		opacity: 0.3;
+	}
+	50% {
+		opacity: 0.7;
+	}
+}
+
+@keyframes breathing-opposite {
+	0%,
+	100% {
+		opacity: 0.7;
+	}
+	50% {
+		opacity: 0.3;
+	}
+}
+
+@keyframes glow-pulse {
+	0% {
+		opacity: 0;
+		filter: blur(20px);
+	}
+	50% {
+		opacity: 1;
+		filter: blur(30px);
+	}
+	100% {
+		opacity: 0;
+		filter: blur(20px);
+	}
+}
+
+@keyframes ripple {
+	0% {
+		transform: scale(0);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(4);
+		opacity: 0;
+	}
+}
+
+@keyframes card-effect-in {
+	0% {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes card-effect-out {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
