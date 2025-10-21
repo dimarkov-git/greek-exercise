@@ -50,13 +50,15 @@
 			"linter": {
 				"rules": {
 					"correctness": {
-						"useImportExtensions": "off"
+						"useImportExtensions": "off",
+						"noSolidDestructuredProps": "off"
 					},
 					"nursery": {
 						"useExplicitType": "off",
 						"noUnresolvedImports": "off",
 						"useMaxParams": "off",
 						"noJsxLiterals": "off",
+						"useQwikValidLexicalScope": "off",
 						"noSecrets": {
 							"level": "error",
 							"options": {
@@ -124,7 +126,8 @@
 						"noExcessiveLinesPerFunction": "off"
 					},
 					"nursery": {
-						"noJsxLiterals": "off"
+						"noJsxLiterals": "off",
+						"noDeprecatedImports": "off"
 					},
 					"performance": {
 						"useTopLevelRegex": "off",

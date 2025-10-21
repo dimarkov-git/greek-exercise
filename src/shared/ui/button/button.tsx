@@ -1,6 +1,6 @@
 import {cva, type VariantProps} from 'class-variance-authority'
 import {motion} from 'framer-motion'
-import {type ButtonHTMLAttributes, forwardRef} from 'react'
+import type {ButtonHTMLAttributes, RefObject} from 'react'
 import {cn} from '@/shared/lib'
 
 const buttonVariants = cva(
@@ -50,65 +50,61 @@ export interface ButtonProps
 	loadingText?: string
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-	(
-		{
-			className,
-			variant,
-			size,
-			asChild = false,
-			loading = false,
-			motionEnabled = true,
-			loadingText,
-			disabled,
-			children,
-			...props
-		},
-		ref
-	) => {
-		const isDisabled = disabled || loading
+export const Button = ({
+	className,
+	variant,
+	size,
+	asChild = false,
+	loading = false,
+	motionEnabled = true,
+	loadingText,
+	disabled,
+	children,
+	ref,
+	...props
+}: ButtonProps & {ref?: RefObject<HTMLButtonElement | null>}) => {
+	const isDisabled = disabled || loading
 
-		const buttonContent = (
-			<>
-				{loading && (
-					<div
-						aria-hidden='true'
-						className='mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent'
-					/>
-				)}
-				{loading && loadingText ? loadingText : children}
-			</>
-		)
+	const buttonContent = (
+		<>
+			{loading && (
+				<div
+					aria-hidden='true'
+					className='mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent'
+				/>
+			)}
+			{loading && loadingText ? loadingText : children}
+		</>
+	)
 
-		const buttonElement = (
-			<button
-				aria-busy={loading}
-				aria-disabled={isDisabled}
-				className={cn(buttonVariants({variant, size, className}))}
-				disabled={isDisabled}
-				ref={ref}
-				{...props}
+	const buttonElement = (
+		<button
+			aria-busy={loading}
+			aria-disabled={isDisabled}
+			className={cn(buttonVariants({variant, size, className}))}
+			disabled={isDisabled}
+			ref={ref}
+			{...props}
+		>
+			{buttonContent}
+		</button>
+	)
+
+	// Enhanced button with motion effects
+	if (motionEnabled && !isDisabled) {
+		return (
+			<motion.div
+				transition={{type: 'spring', stiffness: 400, damping: 25}}
+				whileHover={{scale: 1.02}}
+				whileTap={{scale: 0.98}}
 			>
-				{buttonContent}
-			</button>
+				{buttonElement}
+			</motion.div>
 		)
-
-		// Enhanced button with motion effects
-		if (motionEnabled && !isDisabled) {
-			return (
-				<motion.div
-					transition={{type: 'spring', stiffness: 400, damping: 25}}
-					whileHover={{scale: 1.02}}
-					whileTap={{scale: 0.98}}
-				>
-					{buttonElement}
-				</motion.div>
-			)
-		}
-
-		return buttonElement
 	}
-)
+
+	return buttonElement
+}
 
 Button.displayName = 'Button'
 

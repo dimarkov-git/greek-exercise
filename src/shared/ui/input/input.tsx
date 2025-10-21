@@ -1,5 +1,5 @@
 import {cva, type VariantProps} from 'class-variance-authority'
-import {forwardRef, type InputHTMLAttributes} from 'react'
+import type {InputHTMLAttributes, RefObject} from 'react'
 import {cn} from '@/shared/lib'
 
 const inputVariants = cva(
@@ -166,76 +166,67 @@ function RightIcon({
 	)
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
-	(
-		{
-			className,
-			variant,
-			size,
-			type,
-			loading = false,
-			icon,
-			iconPosition = 'left',
-			clearable = false,
-			onClear,
-			value,
-			disabled,
-			...props
-		},
-		ref
-	) => {
-		const hasIcon = Boolean(icon)
-		const hasClearable = Boolean(clearable && value && !disabled)
-		const isLoading = Boolean(loading && !disabled)
+export const Input = ({
+	className,
+	variant,
+	size,
+	type,
+	loading = false,
+	icon,
+	iconPosition = 'left',
+	clearable = false,
+	onClear,
+	value,
+	disabled,
+	ref,
+	...props
+}: InputProps & {ref?: RefObject<HTMLInputElement | null>}) => {
+	const hasIcon = Boolean(icon)
+	const hasClearable = Boolean(clearable && value && !disabled)
+	const isLoading = Boolean(loading && !disabled)
 
-		const paddingClass = getPaddingClasses(
-			hasIcon,
-			iconPosition,
-			hasClearable,
-			isLoading,
-			size ?? 'default'
-		)
+	const paddingClass = getPaddingClasses(
+		hasIcon,
+		iconPosition,
+		hasClearable,
+		isLoading,
+		size ?? 'default'
+	)
 
-		return (
-			<div className='relative'>
-				{/* Left Icon */}
-				{hasIcon && iconPosition === 'left' && (
-					<LeftIcon icon={icon} size={size ?? 'default'} />
+	return (
+		<div className='relative'>
+			{/* Left Icon */}
+			{hasIcon && iconPosition === 'left' && (
+				<LeftIcon icon={icon} size={size ?? 'default'} />
+			)}
+
+			<input
+				className={cn(inputVariants({variant, size}), paddingClass, className)}
+				disabled={disabled || loading}
+				ref={ref}
+				type={type}
+				value={value}
+				{...props}
+			/>
+
+			{/* Right side content */}
+			<div className='-translate-y-1/2 absolute top-1/2 right-3 flex items-center gap-2'>
+				{/* Loading Spinner */}
+				{isLoading && <LoadingSpinner size={size ?? 'default'} />}
+
+				{/* Clear Button */}
+				{hasClearable && !isLoading && onClear && (
+					<ClearButton onClear={onClear} size={size ?? 'default'} />
 				)}
 
-				<input
-					className={cn(
-						inputVariants({variant, size}),
-						paddingClass,
-						className
-					)}
-					disabled={disabled || loading}
-					ref={ref}
-					type={type}
-					value={value}
-					{...props}
-				/>
-
-				{/* Right side content */}
-				<div className='-translate-y-1/2 absolute top-1/2 right-3 flex items-center gap-2'>
-					{/* Loading Spinner */}
-					{isLoading && <LoadingSpinner size={size ?? 'default'} />}
-
-					{/* Clear Button */}
-					{hasClearable && !isLoading && onClear && (
-						<ClearButton onClear={onClear} size={size ?? 'default'} />
-					)}
-
-					{/* Right Icon */}
-					{hasIcon &&
-						iconPosition === 'right' &&
-						!hasClearable &&
-						!isLoading && <RightIcon icon={icon} size={size ?? 'default'} />}
-				</div>
+				{/* Right Icon */}
+				{hasIcon && iconPosition === 'right' && !hasClearable && !isLoading && (
+					<RightIcon icon={icon} size={size ?? 'default'} />
+				)}
 			</div>
-		)
-	}
-)
+		</div>
+	)
+}
 
 Input.displayName = 'Input'
 

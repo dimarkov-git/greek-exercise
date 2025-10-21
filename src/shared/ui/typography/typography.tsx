@@ -1,5 +1,5 @@
 import {cva, type VariantProps} from 'class-variance-authority'
-import React, {createElement, forwardRef, type HTMLAttributes} from 'react'
+import React, {createElement, type HTMLAttributes} from 'react'
 import {cn} from '@/shared/lib'
 
 // Typography variants using design tokens
@@ -117,53 +117,49 @@ export interface TypographyProps
 	responsive?: boolean
 }
 
-export const Typography = forwardRef<HTMLElement, TypographyProps>(
-	(
+export const Typography = ({
+	className,
+	size,
+	weight,
+	color,
+	align,
+	transform,
+	decoration,
+	as = 'p',
+	truncate = false,
+	responsive = true,
+	children,
+	ref,
+	...props
+}: TypographyProps & {ref?: React.RefObject<HTMLElement | null>}) => {
+	// Use semantic defaults if size is not explicitly provided
+	const effectiveSize =
+		size ||
+		(elementSizeDefaults[
+			as as keyof typeof elementSizeDefaults
+		] as TypographyProps['size'])
+
+	return createElement(
+		as as string,
 		{
-			className,
-			size,
-			weight,
-			color,
-			align,
-			transform,
-			decoration,
-			as = 'p',
-			truncate = false,
-			responsive = true,
-			children,
+			className: cn(
+				typographyVariants({
+					size: effectiveSize,
+					weight,
+					color,
+					align,
+					transform,
+					decoration
+				}),
+				truncate && 'truncate',
+				className
+			),
+			ref,
 			...props
 		},
-		ref
-	) => {
-		// Use semantic defaults if size is not explicitly provided
-		const effectiveSize =
-			size ||
-			(elementSizeDefaults[
-				as as keyof typeof elementSizeDefaults
-			] as TypographyProps['size'])
-
-		return createElement(
-			as as string,
-			{
-				className: cn(
-					typographyVariants({
-						size: effectiveSize,
-						weight,
-						color,
-						align,
-						transform,
-						decoration
-					}),
-					truncate && 'truncate',
-					className
-				),
-				ref,
-				...props
-			},
-			children
-		)
-	}
-)
+		children
+	)
+}
 
 Typography.displayName = 'Typography'
 
