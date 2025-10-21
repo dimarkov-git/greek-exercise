@@ -1,6 +1,7 @@
-import type {CustomExerciseJSON, ExerciseMetadataDto} from '@/entities/exercise'
+import type {CustomExerciseJSON} from './custom-exercises-store'
 import type {WordFormExerciseWithDefaults} from './domain-types'
 import type {FlashcardExerciseJSON} from './flashcard-types'
+import type {ExerciseMetadataDto} from './schemas'
 import type {WordFormExerciseJSON} from './types'
 
 function normalizeTags(tags: readonly string[] | undefined): string[] {

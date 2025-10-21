@@ -73,5 +73,21 @@ export default defineConfig(() => ({
 			'@/shared': path.resolve(__dirname, './src/shared')
 		}
 	},
+	build: {
+		rollupOptions: {
+			output: {
+				manualChunks: id => {
+					// Keep i18n modules together to avoid circular chunk dependencies
+					if (id.includes('src/shared/lib/i18n')) {
+						return 'i18n'
+					}
+					// Keep shared API modules together
+					if (id.includes('src/shared/api')) {
+						return 'shared-api'
+					}
+				}
+			}
+		}
+	},
 	test: createTestConfiguration()
 }))

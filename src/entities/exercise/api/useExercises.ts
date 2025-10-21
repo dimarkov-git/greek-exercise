@@ -1,16 +1,17 @@
 import {useQuery, useQueryClient} from '@tanstack/react-query'
 import {useEffect, useMemo} from 'react'
+import {createExerciseLibraryViewModel} from '../model/adapters'
+import {
+	customExerciseJsonToMetadata,
+	wordFormExerciseJsonToExercise
+} from '../model/custom'
 import {
 	type CustomExercisesState,
-	createExerciseLibraryViewModel,
-	customExerciseJsonToMetadata,
-	type ExerciseLibraryViewModel,
-	exerciseLibraryQueryOptions,
-	exerciseQueryOptions,
 	selectCustomExercises,
-	useCustomExercisesStore,
-	wordFormExerciseJsonToExercise
-} from '@/entities/exercise'
+	useCustomExercisesStore
+} from '../model/custom-exercises-store'
+import type {ExerciseLibraryViewModel} from '../model/domain-types'
+import {exerciseLibraryQueryOptions, exerciseQueryOptions} from './queryOptions'
 
 /**
  * Hook to get list of all available exercises with view-model metadata

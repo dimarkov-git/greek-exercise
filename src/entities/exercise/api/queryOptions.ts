@@ -1,16 +1,16 @@
 import {queryOptions} from '@tanstack/react-query'
-import {
-	validateExercisesList,
-	validateFlashcardExercise,
-	validateMultipleChoiceExercise,
-	validateWordFormExercise
-} from '@/entities/exercise'
 import {HttpError, requestJson} from '@/shared/api'
 import {
 	toFlashcardExerciseWithDefaults,
 	toMultipleChoiceExerciseWithDefaults,
 	toWordFormExerciseWithDefaults
 } from '../model/adapters'
+import {
+	validateExercisesList,
+	validateFlashcardExercise,
+	validateMultipleChoiceExercise,
+	validateWordFormExercise
+} from '../model/schemas'
 
 const THIRTY_MINUTES = 30 * 60 * 1000
 const ONE_HOUR = 60 * 60 * 1000

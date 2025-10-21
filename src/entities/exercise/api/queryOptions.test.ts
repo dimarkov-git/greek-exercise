@@ -1,8 +1,8 @@
 import type {QueryFunctionContext} from '@tanstack/react-query'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
-import * as schemaModule from '@/entities/exercise'
 import * as httpClientModule from '@/shared/api'
 import * as adaptersModule from '../model/adapters'
+import * as schemaModule from '../model/schemas'
 import {
 	exerciseLibraryQueryOptions,
 	wordFormExerciseQueryOptions
