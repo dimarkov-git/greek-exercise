@@ -72,23 +72,17 @@ const mockExercise: FlashcardExercise = {
 		{
 			id: 'card-1',
 			front: 'το νερό',
-			frontHintI18n: {en: 'water', ru: 'вода'},
-			back: 'το νερό (neuter)',
-			backHintI18n: {en: 'the water', ru: 'вода'}
+			backHintI18n: {en: 'water', ru: 'вода'}
 		},
 		{
 			id: 'card-2',
 			front: 'η μέρα',
-			frontHintI18n: {en: 'day', ru: 'день'},
-			back: 'η μέρα (feminine)',
-			backHintI18n: {en: 'the day', ru: 'день'}
+			backHintI18n: {en: 'day', ru: 'день'}
 		},
 		{
 			id: 'card-3',
 			front: 'ο άνθρωπος',
-			frontHintI18n: {en: 'person', ru: 'человек'},
-			back: 'ο άνθρωπος (masculine)',
-			backHintI18n: {en: 'the person', ru: 'человек'}
+			backHintI18n: {en: 'person', ru: 'человек'}
 		}
 	]
 }
@@ -142,9 +136,8 @@ describe('FlashcardRenderer', () => {
 			expect(screen.getByText('το νερό')).toBeInTheDocument()
 		})
 
-		// Hint button should be available (both front and back have hints, but both exist in DOM)
-		const hintButtons = screen.getAllByRole('button', {name: /water/i})
-		expect(hintButtons.length).toBeGreaterThan(0)
+		// The translation is rendered on the back of the card (which exists in DOM but rotated)
+		expect(screen.getByText('water')).toBeInTheDocument()
 	})
 
 	it('flips card to show back when clicked', async () => {

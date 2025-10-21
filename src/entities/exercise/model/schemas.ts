@@ -88,12 +88,7 @@ export const WordFormExerciseSchema = v.object({
 export const FlashCardSchema = v.object({
 	id: v.string(),
 	front: v.string(),
-	frontHintI18n: v.optional(I18nStringSchema),
-	back: v.string(),
-	backHintI18n: v.optional(I18nStringSchema),
-	additionalHint: v.optional(v.string()),
-	additionalHintI18n: v.optional(I18nStringSchema),
-	tags: v.optional(v.array(v.string()), [])
+	backHintI18n: I18nStringSchema
 })
 
 // SRS settings schema

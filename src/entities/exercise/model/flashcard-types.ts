@@ -16,26 +16,16 @@ type I18nText = Partial<Record<Language, string>>
 /**
  * Individual flashcard
  *
- * A flashcard has a front (question) and back (answer), both in Greek.
- * Hints can be provided in multiple languages for user interface translation.
+ * A flashcard has a front (question) in Greek and a back (translation) in multiple languages.
+ * The back translation is displayed directly without tooltip hints.
  */
 export interface FlashCard {
 	/** Unique card identifier */
 	id: string
 	/** Front of card (question) in Greek */
 	front: string
-	/** Front translation hints in user's language */
-	frontHintI18n?: I18nText
-	/** Back of card (answer) in Greek */
-	back: string
-	/** Back translation hints in user's language */
-	backHintI18n?: I18nText
-	/** Additional hint/context in Greek */
-	additionalHint?: string
-	/** Additional hint translation */
-	additionalHintI18n?: I18nText
-	/** Tags for filtering (e.g., "verb", "noun", "adjective") */
-	tags?: string[]
+	/** Back translation in multiple languages */
+	backHintI18n: I18nText
 }
 
 /**

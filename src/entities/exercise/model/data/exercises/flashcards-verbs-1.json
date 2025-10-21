@@ -1,0 +1,148 @@
+{
+	"enabled": true,
+	"id": "greek-verbs-flashcards-1",
+	"type": "flashcard",
+	"language": "el",
+	"title": "Βασικά ρήματα",
+	"titleI18n": {
+		"en": "Basic Verbs",
+		"ru": "Основные глаголы"
+	},
+	"description": "Βασικά ελληνικά ρήματα",
+	"descriptionI18n": {
+		"en": "Basic Greek verbs for everyday use",
+		"ru": "Основные греческие глаголы для повседневного использования"
+	},
+	"tags": ["verbs"],
+	"difficulty": "a1",
+	"settings": {
+		"autoAdvance": false,
+		"allowSkip": true
+	},
+	"srsSettings": {
+		"newCardsPerDay": 10,
+		"reviewsPerDay": 50
+	},
+	"cards": [
+		{
+			"id": "verb-1",
+			"front": "είμαι",
+			"backHintI18n": {
+				"en": "to be",
+				"ru": "быть"
+			}
+		},
+		{
+			"id": "verb-2",
+			"front": "έχω",
+			"backHintI18n": {
+				"en": "to have",
+				"ru": "иметь"
+			}
+		},
+		{
+			"id": "verb-3",
+			"front": "κάνω",
+			"backHintI18n": {
+				"en": "to do/make",
+				"ru": "делать"
+			}
+		},
+		{
+			"id": "verb-4",
+			"front": "πάω",
+			"backHintI18n": {
+				"en": "to go",
+				"ru": "идти"
+			}
+		},
+		{
+			"id": "verb-5",
+			"front": "λέω",
+			"backHintI18n": {
+				"en": "to say/tell",
+				"ru": "говорить"
+			}
+		},
+		{
+			"id": "verb-6",
+			"front": "βλέπω",
+			"backHintI18n": {
+				"en": "to see",
+				"ru": "видеть"
+			}
+		},
+		{
+			"id": "verb-7",
+			"front": "ξέρω",
+			"backHintI18n": {
+				"en": "to know",
+				"ru": "знать"
+			}
+		},
+		{
+			"id": "verb-8",
+			"front": "θέλω",
+			"backHintI18n": {
+				"en": "to want",
+				"ru": "хотеть"
+			}
+		},
+		{
+			"id": "verb-9",
+			"front": "μπορώ",
+			"backHintI18n": {
+				"en": "can/to be able to",
+				"ru": "мочь"
+			}
+		},
+		{
+			"id": "verb-10",
+			"front": "δίνω",
+			"backHintI18n": {
+				"en": "to give",
+				"ru": "давать"
+			}
+		},
+		{
+			"id": "verb-11",
+			"front": "παίρνω",
+			"backHintI18n": {
+				"en": "to take",
+				"ru": "брать"
+			}
+		},
+		{
+			"id": "verb-12",
+			"front": "έρχομαι",
+			"backHintI18n": {
+				"en": "to come",
+				"ru": "приходить"
+			}
+		},
+		{
+			"id": "verb-13",
+			"front": "τρώω",
+			"backHintI18n": {
+				"en": "to eat",
+				"ru": "есть (кушать)"
+			}
+		},
+		{
+			"id": "verb-14",
+			"front": "πίνω",
+			"backHintI18n": {
+				"en": "to drink",
+				"ru": "пить"
+			}
+		},
+		{
+			"id": "verb-15",
+			"front": "μένω",
+			"backHintI18n": {
+				"en": "to stay/live",
+				"ru": "оставаться/жить"
+			}
+		}
+	]
+}

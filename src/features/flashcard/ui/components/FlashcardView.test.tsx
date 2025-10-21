@@ -32,9 +32,7 @@ describe('FlashcardView', () => {
 	const mockCard: FlashCard = {
 		id: 'test-card',
 		front: 'το νερό',
-		frontHintI18n: {en: 'water', ru: 'вода'},
-		back: 'το νερό (neuter)',
-		backHintI18n: {en: 'the water', ru: 'вода'}
+		backHintI18n: {en: 'water', ru: 'вода'}
 	}
 
 	it('renders front side by default', () => {
@@ -55,7 +53,7 @@ describe('FlashcardView', () => {
 			}
 		)
 
-		expect(screen.getByText('το νερό (neuter)')).toBeInTheDocument()
+		expect(screen.getByText('water')).toBeInTheDocument()
 		// Text changes based on onRate prop
 		expect(screen.getByText(/click to flip back/i)).toBeInTheDocument()
 	})
@@ -79,96 +77,6 @@ describe('FlashcardView', () => {
 		expect(onFlip).toHaveBeenCalledOnce()
 	})
 
-	it('renders card without hints', () => {
-		const cardWithoutHints: FlashCard = {
-			id: 'test-card-2',
-			front: 'η μέρα',
-			back: 'η μέρα (feminine)'
-		}
-
-		render(
-			<FlashcardView
-				card={cardWithoutHints}
-				isFlipped={false}
-				onFlip={vi.fn()}
-			/>,
-			{wrapper: createWrapper()}
-		)
-
-		expect(screen.getByText('η μέρα')).toBeInTheDocument()
-	})
-
-	it('renders additional hint on back side', () => {
-		const cardWithAdditionalHint: FlashCard = {
-			id: 'test-card-3',
-			front: 'ο φίλος',
-			back: 'ο φίλος (masculine)',
-			additionalHint: 'Masculine gender'
-		}
-
-		render(
-			<FlashcardView
-				card={cardWithAdditionalHint}
-				isFlipped={true}
-				onFlip={vi.fn()}
-			/>,
-			{wrapper: createWrapper()}
-		)
-
-		expect(screen.getByText('Masculine gender')).toBeInTheDocument()
-	})
-
-	it('renders additional hint with i18n', () => {
-		const cardWithI18nHint: FlashCard = {
-			id: 'test-card-4',
-			front: 'ο φίλος',
-			back: 'ο φίλος (masculine)',
-			additionalHint: 'Masculine gender',
-			additionalHintI18n: {
-				en: 'Masculine gender',
-				ru: 'Мужской род'
-			}
-		}
-
-		render(
-			<FlashcardView
-				card={cardWithI18nHint}
-				isFlipped={true}
-				onFlip={vi.fn()}
-			/>,
-			{wrapper: createWrapper()}
-		)
-
-		expect(screen.getByText('Masculine gender')).toBeInTheDocument()
-	})
-
-	it('does not render additional hint on front side', () => {
-		const cardWithAdditionalHint: FlashCard = {
-			id: 'test-card-5',
-			front: 'ο φίλος',
-			back: 'ο φίλος (masculine)',
-			additionalHint: 'Should not appear'
-		}
-
-		render(
-			<FlashcardView
-				card={cardWithAdditionalHint}
-				isFlipped={false}
-				onFlip={vi.fn()}
-			/>,
-			{wrapper: createWrapper()}
-		)
-
-		// Additional hint exists in DOM (back side) but should not be visible on front
-		// It's in the flipped card which has rotateY(180deg)
-		const hint = screen.getByText('Should not appear')
-		expect(hint).toBeInTheDocument()
-		// The hint's parent container should have the transform rotateY(180deg)
-		expect(hint.parentElement?.parentElement?.parentElement).toHaveStyle({
-			transform: 'rotateY(180deg)'
-		})
-	})
-
 	it('applies correct styling to front and back', () => {
 		const Wrapper = createWrapper()
 		const {rerender} = render(
@@ -176,12 +84,10 @@ describe('FlashcardView', () => {
 			{wrapper: Wrapper}
 		)
 
-		// Check front styling classes (classes are on HintSystem parent element)
+		// Check front styling classes
 		const frontText = screen.getByText('το νερό')
-		// Navigate up to find the element with styling classes
-		const frontContainer = frontText.closest('.font-bold')
-		expect(frontContainer).toHaveClass('text-3xl')
-		expect(frontContainer).toHaveClass('font-bold')
+		expect(frontText).toHaveClass('text-3xl')
+		expect(frontText).toHaveClass('font-bold')
 
 		// Flip the card
 		rerender(
@@ -190,10 +96,9 @@ describe('FlashcardView', () => {
 			</Wrapper>
 		)
 
-		// Check back styling classes (classes are on HintSystem parent element)
-		const backText = screen.getByText('το νερό (neuter)')
-		const backContainer = backText.closest('.font-semibold')
-		expect(backContainer).toHaveClass('text-2xl')
-		expect(backContainer).toHaveClass('font-semibold')
+		// Check back styling classes
+		const backText = screen.getByText('water')
+		expect(backText).toHaveClass('text-2xl')
+		expect(backText).toHaveClass('font-semibold')
 	})
 })

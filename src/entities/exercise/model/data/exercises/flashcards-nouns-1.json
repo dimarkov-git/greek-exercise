@@ -1,6 +1,6 @@
 {
 	"enabled": true,
-	"id": "greek-nouns-flashcards-1",
+	"id": "flashcards-nouns-1",
 	"type": "flashcard",
 	"language": "el",
 	"title": "Βασικά ουσιαστικά",
@@ -13,36 +13,24 @@
 		"en": "Common Greek nouns with articles",
 		"ru": "Распространённые греческие существительные с артиклями"
 	},
-	"tags": [],
+	"tags": ["nouns"],
 	"difficulty": "a1",
 	"cards": [
 		{
 			"id": "noun-1",
 			"front": "το νερό",
-			"frontHintI18n": {
+			"backHintI18n": {
 				"en": "water",
 				"ru": "вода"
-			},
-			"back": "το νερό (neuter)",
-			"backHintI18n": {
-				"en": "the water (neuter noun)",
-				"ru": "вода (средний род)"
-			},
-			"additionalHint": "Neutral gender"
+			}
 		},
 		{
 			"id": "noun-2",
 			"front": "η μέρα",
-			"frontHintI18n": {
+			"backHintI18n": {
 				"en": "day",
 				"ru": "день"
-			},
-			"back": "η μέρα (feminine)",
-			"backHintI18n": {
-				"en": "the day (feminine noun)",
-				"ru": "день (женский род)"
-			},
-			"additionalHint": "Feminine gender"
+			}
 		}
 	]
 }

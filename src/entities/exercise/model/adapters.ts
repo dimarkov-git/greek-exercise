@@ -260,19 +260,12 @@ export function toWordFormExerciseWithDefaults(
 }
 
 function normalizeFlashCard(cardDto: FlashCardDto): FlashCard {
-	const frontHintI18n = normalizeI18nRecord(cardDto.frontHintI18n)
 	const backHintI18n = normalizeI18nRecord(cardDto.backHintI18n)
-	const additionalHintI18n = normalizeI18nRecord(cardDto.additionalHintI18n)
 
 	return {
 		id: cardDto.id,
 		front: cardDto.front,
-		back: cardDto.back,
-		...(frontHintI18n ? {frontHintI18n} : {}),
-		...(backHintI18n ? {backHintI18n} : {}),
-		...(cardDto.additionalHint ? {additionalHint: cardDto.additionalHint} : {}),
-		...(additionalHintI18n ? {additionalHintI18n} : {}),
-		...(cardDto.tags ? {tags: sortTags(cardDto.tags)} : {})
+		backHintI18n: backHintI18n || {}
 	}
 }
 

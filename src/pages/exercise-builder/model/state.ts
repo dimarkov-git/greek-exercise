@@ -122,40 +122,25 @@ const DEFAULT_FLASHCARD_TEMPLATE: FlashcardExerciseJSON = {
 		{
 			id: 'card-1',
 			front: 'το νερό',
-			frontHintI18n: {
-				en: 'the water',
-				ru: 'вода'
-			},
-			back: 'water',
 			backHintI18n: {
-				en: 'a liquid',
-				ru: 'жидкость'
+				en: 'water',
+				ru: 'вода'
 			}
 		},
 		{
 			id: 'card-2',
 			front: 'το ψωμί',
-			frontHintI18n: {
-				en: 'the bread',
-				ru: 'хлеб'
-			},
-			back: 'bread',
 			backHintI18n: {
-				en: 'a food',
-				ru: 'еда'
+				en: 'bread',
+				ru: 'хлеб'
 			}
 		},
 		{
 			id: 'card-3',
 			front: 'το σπίτι',
-			frontHintI18n: {
-				en: 'the house',
-				ru: 'дом'
-			},
-			back: 'house',
 			backHintI18n: {
-				en: 'a building',
-				ru: 'здание'
+				en: 'house',
+				ru: 'дом'
 			}
 		}
 	],

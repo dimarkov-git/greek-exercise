@@ -8,31 +8,13 @@
 import {motion} from 'framer-motion'
 import {useState} from 'react'
 import type {FlashCard, QualityRating} from '@/entities/exercise'
-import {HintSystem} from '@/shared/ui/hint-system'
+import {useSettingsStore} from '@/shared/model'
 
 interface FlashcardViewProps {
 	card: FlashCard
 	isFlipped: boolean
 	onFlip: () => void
 	onRate?: (quality: QualityRating) => void
-}
-
-interface CardContentProps {
-	text: string
-	hintI18n?: Partial<Record<string, string>>
-	className: string
-}
-
-/**
- * Render card content with optional hints
- */
-function CardContent({text, hintI18n, className}: CardContentProps) {
-	if (hintI18n) {
-		return (
-			<HintSystem className={className} hints={hintI18n} primaryText={text} />
-		)
-	}
-	return <p className={className}>{text}</p>
 }
 
 /**
@@ -92,13 +74,13 @@ function getInstructionText(isFlipped: boolean, hasOnRate: boolean) {
 /**
  * Flashcard view with 3D flip animation and swipe support
  */
-// biome-ignore lint/complexity/noExcessiveLinesPerFunction: Complex UI component with animations
 export function FlashcardView({
 	card,
 	isFlipped,
 	onFlip,
 	onRate
 }: FlashcardViewProps) {
+	const userLanguage = useSettingsStore(s => s.userLanguage)
 	const {swipeDirection, handleDragEnd} = useSwipeGesture(isFlipped, onRate)
 
 	const handleClick = (e: React.MouseEvent) => {
@@ -129,11 +111,9 @@ export function FlashcardView({
 					style={{backfaceVisibility: 'hidden'}}
 				>
 					<div className='text-center'>
-						<CardContent
-							className='font-bold text-3xl text-gray-900 dark:text-white'
-							{...(card.frontHintI18n && {hintI18n: card.frontHintI18n})}
-							text={card.front}
-						/>
+						<p className='font-bold text-3xl text-gray-900 dark:text-white'>
+							{card.front}
+						</p>
 					</div>
 				</div>
 
@@ -146,25 +126,9 @@ export function FlashcardView({
 					}}
 				>
 					<div className='text-center'>
-						<CardContent
-							className='font-semibold text-2xl text-gray-900 dark:text-white'
-							{...(card.backHintI18n && {hintI18n: card.backHintI18n})}
-							text={card.back}
-						/>
-
-						{card.additionalHint && (
-							<div className='mt-4 text-gray-600 text-sm dark:text-gray-400'>
-								{card.additionalHintI18n ? (
-									<HintSystem
-										className='italic'
-										hints={card.additionalHintI18n}
-										primaryText={card.additionalHint}
-									/>
-								) : (
-									<span className='italic'>{card.additionalHint}</span>
-								)}
-							</div>
-						)}
+						<p className='font-semibold text-2xl text-gray-900 dark:text-white'>
+							{card.backHintI18n[userLanguage] || card.backHintI18n.en || ''}
+						</p>
 					</div>
 				</div>
 			</motion.div>

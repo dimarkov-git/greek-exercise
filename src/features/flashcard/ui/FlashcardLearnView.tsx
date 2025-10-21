@@ -105,9 +105,6 @@ function TableView({exercise}: {exercise: FlashcardExercise}) {
 							<th className='px-6 py-3 text-left font-medium text-gray-700 text-xs uppercase tracking-wider dark:text-gray-300'>
 								{t('flashcard.back')}
 							</th>
-							<th className='px-6 py-3 text-left font-medium text-gray-700 text-xs uppercase tracking-wider dark:text-gray-300'>
-								{t('flashcard.hint')}
-							</th>
 						</tr>
 					</thead>
 					<tbody className='divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900'>
@@ -120,24 +117,13 @@ function TableView({exercise}: {exercise: FlashcardExercise}) {
 									<div className='font-medium text-gray-900 dark:text-white'>
 										{card.front}
 									</div>
-									{card.frontHintI18n?.[userLanguage] && (
-										<div className='text-gray-500 text-sm dark:text-gray-400'>
-											{card.frontHintI18n[userLanguage]}
-										</div>
-									)}
 								</td>
 								<td className='px-6 py-4'>
 									<div className='font-medium text-gray-900 dark:text-white'>
-										{card.back}
+										{card.backHintI18n[userLanguage] ||
+											card.backHintI18n.en ||
+											''}
 									</div>
-									{card.backHintI18n?.[userLanguage] && (
-										<div className='text-gray-500 text-sm dark:text-gray-400'>
-											{card.backHintI18n[userLanguage]}
-										</div>
-									)}
-								</td>
-								<td className='px-6 py-4 text-gray-500 text-sm dark:text-gray-400'>
-									{card.additionalHint || '—'}
 								</td>
 							</tr>
 						))}
