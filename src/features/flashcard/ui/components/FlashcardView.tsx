@@ -7,7 +7,7 @@
  */
 
 import {AnimatePresence, motion} from 'framer-motion'
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import type {FlashCard, QualityRating} from '@/entities/exercise'
 import {useSettingsStore} from '@/shared/model'
 
@@ -19,10 +19,12 @@ interface FlashcardViewProps {
 	onFlip: () => void
 	onRate?: (quality: QualityRating) => void
 	onEffectTrigger?: (effect: 'know' | 'dontKnow') => void
+	externalEffectType?: EffectType
 }
 
 /**
  * Edge hints component - shows swipe direction hints with dynamic intensity
+ * Adapts opacity and intensity based on theme for better visibility
  */
 function EdgeHints({
 	isVisible,
@@ -44,8 +46,8 @@ function EdgeHints({
 				className='pointer-events-none fixed inset-y-0 left-0 z-10 w-16'
 				style={{
 					background:
-						'linear-gradient(to right, rgba(249, 115, 22, 0.2), transparent)',
-					opacity: leftIntensity > 0.1 ? 0.3 + leftIntensity * 0.7 : 0.3,
+						'linear-gradient(to right, rgba(249, 115, 22, 0.5), transparent)',
+					opacity: leftIntensity > 0.1 ? 0.5 + leftIntensity * 0.5 : 0.5,
 					animation:
 						leftIntensity > 0.1 ? 'none' : 'breathing 2s ease-in-out infinite'
 				}}
@@ -57,8 +59,8 @@ function EdgeHints({
 				className='pointer-events-none fixed inset-y-0 right-0 z-10 w-16'
 				style={{
 					background:
-						'linear-gradient(to left, rgba(34, 197, 94, 0.2), transparent)',
-					opacity: rightIntensity > 0.1 ? 0.3 + rightIntensity * 0.7 : 0.3,
+						'linear-gradient(to left, rgba(34, 197, 94, 0.5), transparent)',
+					opacity: rightIntensity > 0.1 ? 0.5 + rightIntensity * 0.5 : 0.5,
 					animation:
 						rightIntensity > 0.1
 							? 'none'
@@ -220,28 +222,21 @@ export function FlashcardView({
 	isFlipped,
 	onFlip,
 	onRate,
-	onEffectTrigger
+	onEffectTrigger,
+	externalEffectType
 }: FlashcardViewProps) {
 	const userLanguage = useSettingsStore(s => s.userLanguage)
+	const [dragOffset, setDragOffset] = useState(0)
+
 	const {swipeDirection, activeEffect, handleDragEnd} = useSwipeGesture(
 		isFlipped,
 		onRate,
 		onEffectTrigger
 	)
-	const [externalEffect, setExternalEffect] = useState<EffectType>(null)
-	const [dragOffset, setDragOffset] = useState(0)
-
-	// Cleanup external effects on unmount
-	useEffect(
-		() => () => {
-			setExternalEffect(null)
-		},
-		[]
-	)
 
 	const handleClick = (e: React.MouseEvent) => {
 		// Prevent flip if swiping or effect is active
-		if (swipeDirection || activeEffect || externalEffect) {
+		if (swipeDirection || activeEffect || externalEffectType) {
 			e.stopPropagation()
 			return
 		}
@@ -266,7 +261,7 @@ export function FlashcardView({
 		handleDragEnd(event, info)
 	}
 
-	const currentEffect = activeEffect || externalEffect
+	const currentEffect: EffectType = activeEffect || externalEffectType || null
 
 	return (
 		<>

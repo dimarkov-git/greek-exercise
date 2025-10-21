@@ -18,7 +18,7 @@ const mockExercise: MultipleChoiceExercise = {
 	difficulty: 'a1',
 	settings: {
 		autoAdvance: false,
-		autoAdvanceDelayMs: 1000,
+		autoAdvanceDelayMs: 300,
 		allowSkip: true,
 		shuffleQuestions: false,
 		shuffleAnswers: false

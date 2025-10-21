@@ -11,6 +11,11 @@ import type {
 	WordFormExerciseDto
 } from '@/entities/exercise'
 import type {Language} from '@/shared/model'
+import {
+	DEFAULT_FLASHCARD_SETTINGS,
+	DEFAULT_MULTIPLE_CHOICE_SETTINGS,
+	DEFAULT_WORD_FORM_SETTINGS
+} from '@/shared/model'
 import type {
 	ExerciseLibraryViewModel,
 	ExerciseSource,
@@ -27,7 +32,6 @@ import type {
 	WordFormBlock,
 	WordFormCase
 } from './types'
-import {DEFAULT_EXERCISE_SETTINGS} from './types'
 
 const DIFFICULTY_ORDER: ExerciseMetadata['difficulty'][] = [
 	'a0',
@@ -228,14 +232,14 @@ export function toWordFormExerciseWithDefaults(
 
 	const settings: ExerciseSettings = {
 		autoAdvance:
-			exercise.settings?.autoAdvance ?? DEFAULT_EXERCISE_SETTINGS.autoAdvance,
+			exercise.settings?.autoAdvance ?? DEFAULT_WORD_FORM_SETTINGS.autoAdvance,
 		autoAdvanceDelayMs:
 			exercise.settings?.autoAdvanceDelayMs ??
-			DEFAULT_EXERCISE_SETTINGS.autoAdvanceDelayMs,
+			DEFAULT_WORD_FORM_SETTINGS.autoAdvanceDelayMs,
 		allowSkip:
-			exercise.settings?.allowSkip ?? DEFAULT_EXERCISE_SETTINGS.allowSkip,
+			exercise.settings?.allowSkip ?? DEFAULT_WORD_FORM_SETTINGS.allowSkip,
 		shuffleCases:
-			exercise.settings?.shuffleCases ?? DEFAULT_EXERCISE_SETTINGS.shuffleCases
+			exercise.settings?.shuffleCases ?? DEFAULT_WORD_FORM_SETTINGS.shuffleCases
 	}
 
 	const titleI18n = normalizeI18nRecord(exercise.titleI18n)
@@ -278,14 +282,14 @@ export function toFlashcardExerciseWithDefaults(
 
 	const settings: ExerciseSettings = {
 		autoAdvance:
-			exercise.settings?.autoAdvance ?? DEFAULT_EXERCISE_SETTINGS.autoAdvance,
+			exercise.settings?.autoAdvance ?? DEFAULT_FLASHCARD_SETTINGS.autoAdvance,
 		autoAdvanceDelayMs:
 			exercise.settings?.autoAdvanceDelayMs ??
-			DEFAULT_EXERCISE_SETTINGS.autoAdvanceDelayMs,
+			DEFAULT_FLASHCARD_SETTINGS.autoAdvanceDelayMs,
 		allowSkip:
-			exercise.settings?.allowSkip ?? DEFAULT_EXERCISE_SETTINGS.allowSkip,
+			exercise.settings?.allowSkip ?? DEFAULT_FLASHCARD_SETTINGS.allowSkip,
 		shuffleCases:
-			exercise.settings?.shuffleCases ?? DEFAULT_EXERCISE_SETTINGS.shuffleCases
+			exercise.settings?.shuffleCases ?? DEFAULT_FLASHCARD_SETTINGS.shuffleCases
 	}
 
 	const srsSettings: SRSSettings = {
@@ -361,14 +365,17 @@ export function toMultipleChoiceExerciseWithDefaults(
 
 	const settings: import('@/entities/exercise').ExerciseSettings = {
 		autoAdvance:
-			exercise.settings?.autoAdvance ?? DEFAULT_EXERCISE_SETTINGS.autoAdvance,
+			exercise.settings?.autoAdvance ??
+			DEFAULT_MULTIPLE_CHOICE_SETTINGS.autoAdvance,
 		autoAdvanceDelayMs:
 			exercise.settings?.autoAdvanceDelayMs ??
-			DEFAULT_EXERCISE_SETTINGS.autoAdvanceDelayMs,
+			DEFAULT_MULTIPLE_CHOICE_SETTINGS.autoAdvanceDelayMs,
 		allowSkip:
-			exercise.settings?.allowSkip ?? DEFAULT_EXERCISE_SETTINGS.allowSkip,
+			exercise.settings?.allowSkip ??
+			DEFAULT_MULTIPLE_CHOICE_SETTINGS.allowSkip,
 		shuffleCases:
-			exercise.settings?.shuffleCases ?? DEFAULT_EXERCISE_SETTINGS.shuffleCases
+			exercise.settings?.shuffleCases ??
+			DEFAULT_MULTIPLE_CHOICE_SETTINGS.shuffleCases
 	}
 
 	const titleI18n = normalizeI18nRecord(exercise.titleI18n)

@@ -11,18 +11,18 @@ export interface ExerciseSettings {
 	shuffleCases: boolean // whether to shuffle question order
 }
 
-// Word-form specific settings
+// Word-form settings
 export interface WordFormSettings extends ExerciseSettings {
 	shuffleBlocks: boolean // whether to shuffle blocks
-	allowSkipTone: boolean // accept answer without tone marks (but incorrect tone is still wrong)
+	allowSkipTone: boolean // accept answer without tone marks (but the incorrect tone is still wrong)
 }
 
-// Flashcard specific settings
+// Flashcard settings
 export interface FlashcardSettings extends ExerciseSettings {
 	shuffleCards: boolean // whether to shuffle cards
 }
 
-// Multiple-choice specific settings
+// Multiple-choice settings
 export interface MultipleChoiceSettings extends ExerciseSettings {
 	shuffleQuestions: boolean // whether to shuffle questions
 	shuffleAnswers: boolean // whether to shuffle answer options
@@ -71,12 +71,14 @@ export const DEFAULT_WORD_FORM_SETTINGS: WordFormSettings = {
 // Default flashcard settings
 export const DEFAULT_FLASHCARD_SETTINGS: FlashcardSettings = {
 	...DEFAULT_EXERCISE_SETTINGS,
+	autoAdvanceDelayMs: 50,
 	shuffleCards: false
 } as const
 
 // Default multiple-choice settings
 export const DEFAULT_MULTIPLE_CHOICE_SETTINGS: MultipleChoiceSettings = {
 	...DEFAULT_EXERCISE_SETTINGS,
+	autoAdvanceDelayMs: 300,
 	shuffleQuestions: false,
 	shuffleAnswers: true
 } as const

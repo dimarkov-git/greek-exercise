@@ -14,6 +14,7 @@ import type {
 	QualityRating,
 	SRSData
 } from '@/entities/exercise'
+import {DEFAULT_FLASHCARD_SETTINGS} from '@/shared/model'
 import {flashcardStorage} from '../lib/flashcard-storage'
 import {
 	calculateNextReview,
@@ -150,7 +151,9 @@ export function useFlashcardExercise(
 
 			// Auto-advance to next card if enabled
 			if (context.exercise.settings?.autoAdvance !== false) {
-				const delay = context.exercise.settings?.autoAdvanceDelayMs ?? 300
+				const delay =
+					context.exercise.settings?.autoAdvanceDelayMs ??
+					DEFAULT_FLASHCARD_SETTINGS.autoAdvanceDelayMs
 				setTimeout(() => {
 					dispatch({type: 'NEXT'})
 				}, delay)

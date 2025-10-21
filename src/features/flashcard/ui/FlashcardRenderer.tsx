@@ -4,7 +4,7 @@
  * Main component for flashcard review sessions with flip animations and SRS.
  */
 
-import {useEffect, useMemo} from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import type {
 	ExerciseRendererProps,
 	FlashcardExercise
@@ -68,10 +68,20 @@ export function FlashcardRenderer({
 		handleSettingsChange
 	} = useFlashcardExercise(exercise, handleComplete)
 
+	// State for external effect triggered by button clicks
+	const [externalEffect, setExternalEffect] = useState<
+		'know' | 'dontKnow' | null
+	>(null)
+
 	// Handle effect triggers from both card swipes and button clicks
-	const handleEffectTrigger = (_effect: 'know' | 'dontKnow') => {
+	const handleEffectTrigger = (effect: 'know' | 'dontKnow') => {
+		// Set external effect for visual feedback on card
+		setExternalEffect(effect)
+		// Clear effect after animation duration (400ms)
+		setTimeout(() => {
+			setExternalEffect(null)
+		}, 400)
 		// This can be extended to add haptic feedback, sound effects, etc.
-		// For now, it serves as a coordination point between components
 	}
 
 	// Settings configuration (hooks must be at top level before any returns)
@@ -248,6 +258,7 @@ export function FlashcardRenderer({
 				{/* Flashcard */}
 				<FlashcardView
 					card={state.currentCard}
+					externalEffectType={externalEffect}
 					isFlipped={state.isFlipped}
 					onFlip={handleFlip}
 					{...(state.isFlipped &&

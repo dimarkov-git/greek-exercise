@@ -114,7 +114,7 @@ const DEFAULT_FLASHCARD_TEMPLATE: FlashcardExerciseJSON = {
 	difficulty: 'a1',
 	settings: {
 		autoAdvance: true,
-		autoAdvanceDelayMs: 1500,
+		autoAdvanceDelayMs: 50,
 		allowSkip: false,
 		shuffleCases: true
 	},
@@ -186,7 +186,7 @@ const DEFAULT_MULTIPLE_CHOICE_TEMPLATE: MultipleChoiceExerciseJSON = {
 	difficulty: 'a1',
 	settings: {
 		autoAdvance: true,
-		autoAdvanceDelayMs: 1500,
+		autoAdvanceDelayMs: 300,
 		allowSkip: false,
 		shuffleCases: true
 	},

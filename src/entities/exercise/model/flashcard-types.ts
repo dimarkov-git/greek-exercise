@@ -10,6 +10,7 @@ import type {
 	Language,
 	PartialExerciseSettings
 } from '@/shared/model'
+import {DEFAULT_FLASHCARD_SETTINGS} from '@/shared/model'
 
 type I18nText = Partial<Record<Language, string>>
 
@@ -289,7 +290,9 @@ export function flashcardExerciseToJSON(
 		difficulty: exercise.difficulty,
 		settings: {
 			autoAdvance: exercise.settings?.autoAdvance ?? true,
-			autoAdvanceDelayMs: exercise.settings?.autoAdvanceDelayMs ?? 1500,
+			autoAdvanceDelayMs:
+				exercise.settings?.autoAdvanceDelayMs ??
+				DEFAULT_FLASHCARD_SETTINGS.autoAdvanceDelayMs,
 			allowSkip: exercise.settings?.allowSkip ?? false,
 			shuffleCases: exercise.settings?.shuffleCases ?? false
 		},

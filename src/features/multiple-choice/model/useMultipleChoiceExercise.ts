@@ -6,6 +6,7 @@
 
 import {useCallback, useEffect, useReducer, useRef} from 'react'
 import type {ExerciseResult} from '@/entities/exercise'
+import {DEFAULT_MULTIPLE_CHOICE_SETTINGS} from '@/shared/model'
 import {
 	initializeMultipleChoiceState,
 	type MultipleChoiceMachineState,
@@ -106,7 +107,9 @@ export function useMultipleChoiceExercise(
 			selectCanAdvance(state)
 		) {
 			const settings = exercise.settings
-			const delay = settings?.autoAdvanceDelayMs ?? 1500
+			const delay =
+				settings?.autoAdvanceDelayMs ??
+				DEFAULT_MULTIPLE_CHOICE_SETTINGS.autoAdvanceDelayMs
 
 			const timeoutId = setTimeout(() => {
 				dispatch({type: 'ADVANCE'})
